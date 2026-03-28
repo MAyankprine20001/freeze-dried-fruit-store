@@ -16,6 +16,8 @@ const Chocolate = lazy(() => import("./src/pages/Chocolate"));
 const FAQ = lazy(() => import("./src/pages/FAQ"));
 const Contact = lazy(() => import("./src/pages/Contact"));
 const Products = lazy(() => import("./src/pages/Products"));
+const PrivacyPolicy = lazy(() => import("./src/pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./src/pages/TermsOfService"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-white">
@@ -38,6 +40,8 @@ const App: React.FC = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
           </Routes>
         </Suspense>
         <ToastContainer
