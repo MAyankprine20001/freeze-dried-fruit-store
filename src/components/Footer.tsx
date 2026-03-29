@@ -1,29 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Leaf, Instagram, Facebook, Twitter, Youtube } from 'lucide-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Leaf, Instagram, Facebook, Twitter, Youtube } from "lucide-react";
 
 const productLinks = [
-  { label: 'Fruit Powder', path: '/fruit-powder' },
-  { label: 'Fruit Chunks', path: '/fruit-chunks' },
-  { label: 'Chocolate', path: '/chocolate' },
+  { label: "Fruit Powder", path: "/fruit-powder" },
+  { label: "Fruit Chunks", path: "/fruit-chunks" },
+  { label: "Chocolate", path: "/chocolate" },
 ];
 
 const companyLinks = [
-  { label: 'About Us', path: '/about' },
-  { label: 'FAQ', path: '/faq' },
-  { label: 'Contact', path: '/contact' },
+  { label: "About Us", path: "/about" },
+  { label: "FAQ", path: "/faq" },
+  { label: "Contact", path: "/contact" },
 ];
 
 const legalLinks = [
-  { label: 'Privacy Policy', path: '/privacy' },
-  { label: 'Terms of Service', path: '/terms' },
+  { label: "Privacy Policy", path: "/privacy" },
+  { label: "Terms of Service", path: "/terms" },
 ];
 
 const socialLinks = [
-  { icon: Instagram, label: 'Instagram', href: '#' },
-  { icon: Facebook, label: 'Facebook', href: '#' },
-  { icon: Twitter, label: 'Twitter / X', href: '#' },
-  { icon: Youtube, label: 'YouTube', href: '#' },
+  { icon: Instagram, label: "Instagram", href: "#" },
+  { icon: Facebook, label: "Facebook", href: "#" },
+  { icon: Twitter, label: "Twitter / X", href: "#" },
+  { icon: Youtube, label: "YouTube", href: "#" },
 ];
 
 export default function Footer() {
@@ -32,16 +32,20 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-2 mb-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4a435] rounded-lg">
+            <Link
+              to="/"
+              className="flex items-center gap-2 mb-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4a435] rounded-lg"
+            >
               <div className="w-8 h-8 bg-gradient-to-br from-[#e85d26] to-[#f4a435] rounded-lg flex items-center justify-center">
                 <Leaf className="w-4 h-4 text-white" />
               </div>
               <span className="font-serif text-xl font-bold">
-                Frost<span className="text-[#f4a435]">Fruit</span>
+                The Dry<span className="text-[#f4a435]">Factory</span>
               </span>
             </Link>
             <p className="text-[#a0a0a0] text-sm leading-relaxed mb-6">
-              Nature's best, locked in at peak freshness. Pure fruit. Zero compromise.
+              Nature's best, locked in at peak freshness. Pure fruit. Zero
+              compromise.
             </p>
             <div className="flex items-center gap-3">
               {socialLinks.map(({ icon: Icon, label, href }) => (
@@ -58,7 +62,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4">Products</h3>
+            <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4">
+              Products
+            </h3>
             <ul className="space-y-3">
               {productLinks.map((link) => (
                 <li key={link.path}>
@@ -74,7 +80,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4">Company</h3>
+            <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4">
+              Company
+            </h3>
             <ul className="space-y-3">
               {companyLinks.map((link) => (
                 <li key={link.path}>
@@ -90,9 +98,16 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4">Trust Badges</h3>
+            <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4">
+              Trust Badges
+            </h3>
             <div className="grid grid-cols-2 gap-2">
-              {['No Preservatives', 'Non-GMO', 'Gluten Free', '100% Natural'].map((badge) => (
+              {[
+                "No Preservatives",
+                "Non-GMO",
+                "Gluten Free",
+                "100% Natural",
+              ].map((badge) => (
                 <div
                   key={badge}
                   className="px-2 py-2 bg-white/5 border border-white/10 rounded-lg text-center text-xs text-[#a0a0a0] font-medium"
