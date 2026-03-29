@@ -6,12 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
+  { label: "Products", path: "/products" },
   { label: "Fruit Powder", path: "/fruit-powder" },
   { label: "Fruit Chunks", path: "/fruit-chunks" },
   { label: "Chocolate", path: "/chocolate" },
   { label: "FAQ", path: "/faq" },
   { label: "Contact", path: "/contact" },
-  { label: "Products", path: "/products" },
 ];
 
 export default function Header() {

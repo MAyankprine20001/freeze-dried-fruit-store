@@ -14,14 +14,15 @@ import {
   ChevronDown,
   Heart,
   Eye,
+  Gift,
+  Package,
+  Ribbon,
+  Tag,
 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 // ─── Image component with guaranteed fallback ────────────────────────────────
-// If the src fails to load, it falls back to a beautiful gradient + emoji tile
-// so the client NEVER sees a broken image — no matter what.
-
 interface SafeImgProps {
   src: string;
   alt: string;
@@ -74,10 +75,10 @@ const categories = [
   { id: "powder", label: "Fruit Powder", emoji: "🌸" },
   { id: "chunks", label: "Fruit Chunks", emoji: "🍓" },
   { id: "chocolate", label: "Chocolate", emoji: "🍫" },
+  { id: "combo", label: "Combos", emoji: "📦" },
+  { id: "gift", label: "Gift Sets", emoji: "🎁" },
 ];
 
-// All image URLs are stable, widely-used Unsplash photos.
-// Every product ALSO carries emoji + gradient so the fallback is beautiful.
 const allProducts = [
   // ── POWDERS ──────────────────────────────────────────────────────────────
   {
@@ -98,7 +99,6 @@ const allProducts = [
     gradientFrom: "#e85d26",
     gradientTo: "#f4a435",
     emoji: "🍓",
-    // stable Unsplash photo of raspberries
     image:
       "https://images.unsplash.com/photo-1495584816685-4bdbf1b5057e?w=600&h=600&fit=crop&auto=format",
     path: "/fruit-powder",
@@ -385,6 +385,226 @@ const allProducts = [
     weight: "80g",
     stock: "In Stock",
   },
+
+  // ── COMBOS ────────────────────────────────────────────────────────────────
+  {
+    id: "co1",
+    category: "combo",
+    name: "Powder Trio Pack",
+    subtitle: "Best Value · 3 × 100g",
+    price: 999,
+    originalPrice: 1299,
+    rating: 4.9,
+    reviews: 312,
+    tag: "Save 23%",
+    tagColor: "#0a7a4a",
+    badge: "💰",
+    accent: "#0a7a4a",
+    bg: "from-[#edfff6] to-[#d4f5e5]",
+    borderColor: "#9de0c0",
+    gradientFrom: "#0a7a4a",
+    gradientTo: "#27ae60",
+    emoji: "📦",
+    image:
+      "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=600&fit=crop&auto=format",
+    path: "/combos",
+    highlights: [
+      "Raspberry + Mango + Strawberry",
+      "Free Shipping",
+      "Save ₹300",
+    ],
+    weight: "3 × 100g",
+    stock: "In Stock",
+    comboItems: ["Raspberry Powder", "Mango Powder", "Strawberry Powder"],
+  },
+  {
+    id: "co2",
+    category: "combo",
+    name: "Snacker's Bundle",
+    subtitle: "Chunks Variety · 4 × 150g",
+    price: 1199,
+    originalPrice: 1556,
+    rating: 4.8,
+    reviews: 198,
+    tag: "Top Value",
+    tagColor: "#1a6bb5",
+    badge: "🎯",
+    accent: "#1a6bb5",
+    bg: "from-[#eff6ff] to-[#dbeafe]",
+    borderColor: "#93c5fd",
+    gradientFrom: "#1a6bb5",
+    gradientTo: "#2563eb",
+    emoji: "📦",
+    image:
+      "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=600&h=600&fit=crop&auto=format",
+    path: "/combos",
+    highlights: ["All 4 Chunk Flavors", "No Refrigeration", "Save ₹357"],
+    weight: "4 × 150g",
+    stock: "In Stock",
+    comboItems: ["Mango", "Strawberry", "Pineapple", "Mixed Fruit"],
+  },
+  {
+    id: "co3",
+    category: "combo",
+    name: "Choco Lovers Duo",
+    subtitle: "Chocolate Bars · 2 × 80g",
+    price: 799,
+    originalPrice: 998,
+    rating: 5.0,
+    reviews: 134,
+    tag: "Fan Fave",
+    tagColor: "#7b2d2d",
+    badge: "❤️",
+    accent: "#7b2d2d",
+    bg: "from-[#fdf6f0] to-[#f5e8dc]",
+    borderColor: "#e0c8b0",
+    gradientFrom: "#7b2d2d",
+    gradientTo: "#4a1a0a",
+    emoji: "🍫",
+    image:
+      "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&h=600&fit=crop&auto=format",
+    path: "/combos",
+    highlights: ["Dark + Raspberry", "Milk + Strawberry", "Save ₹199"],
+    weight: "2 × 80g",
+    stock: "In Stock",
+    comboItems: ["Dark + Raspberry", "Milk + Strawberry"],
+  },
+  {
+    id: "co4",
+    category: "combo",
+    name: "The FrostFruit Sampler",
+    subtitle: "All Categories · 6-piece",
+    price: 1499,
+    originalPrice: 2024,
+    rating: 5.0,
+    reviews: 421,
+    tag: "Best Deal",
+    tagColor: "#e85d26",
+    badge: "🌟",
+    accent: "#e85d26",
+    bg: "from-[#fff2ee] to-[#ffe8df]",
+    borderColor: "#f5cfc0",
+    gradientFrom: "#e85d26",
+    gradientTo: "#f4a435",
+    emoji: "🌟",
+    image:
+      "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=600&fit=crop&auto=format",
+    path: "/combos",
+    highlights: ["Powder + Chunks + Choco", "All 3 Categories", "Save ₹525"],
+    weight: "6-piece set",
+    stock: "In Stock",
+    comboItems: ["2 Powders", "2 Chunks", "2 Chocolates"],
+  },
+
+  // ── GIFT SETS ─────────────────────────────────────────────────────────────
+  {
+    id: "g1",
+    category: "gift",
+    name: "Celebration Box",
+    subtitle: "Premium Gift · 5-piece",
+    price: 1799,
+    originalPrice: 2299,
+    rating: 5.0,
+    reviews: 267,
+    tag: "Top Gift",
+    tagColor: "#9b1d6a",
+    badge: "🎁",
+    accent: "#9b1d6a",
+    bg: "from-[#fdf0f8] to-[#f8e0f0]",
+    borderColor: "#e8b0d8",
+    gradientFrom: "#9b1d6a",
+    gradientTo: "#c0396a",
+    emoji: "🎁",
+    image:
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=600&fit=crop&auto=format",
+    path: "/gift-sets",
+    highlights: ["Luxury Packaging", "Handwritten Card", "Ribbon Wrapped"],
+    weight: "5-piece",
+    stock: "In Stock",
+    isGift: true,
+    giftNote: "Includes personalised message card",
+  },
+  {
+    id: "g2",
+    category: "gift",
+    name: "Wellness Hamper",
+    subtitle: "Health Gift · 4-piece",
+    price: 1599,
+    originalPrice: 1999,
+    rating: 4.9,
+    reviews: 183,
+    tag: "Gifted Most",
+    tagColor: "#2e7d32",
+    badge: "🌿",
+    accent: "#2e7d32",
+    bg: "from-[#f1f8f1] to-[#e0f0e0]",
+    borderColor: "#a0d0a0",
+    gradientFrom: "#2e7d32",
+    gradientTo: "#43a047",
+    emoji: "🌿",
+    image:
+      "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=600&h=600&fit=crop&auto=format",
+    path: "/gift-sets",
+    highlights: ["Superfoods Focus", "Eco Box", "Zero Waste Wrap"],
+    weight: "4-piece",
+    stock: "In Stock",
+    isGift: true,
+    giftNote: "Packed in recycled kraft box",
+  },
+  {
+    id: "g3",
+    category: "gift",
+    name: "Choco & Fruit Luxe",
+    subtitle: "Indulgence Gift · 6-piece",
+    price: 2199,
+    originalPrice: 2799,
+    rating: 5.0,
+    reviews: 309,
+    tag: "Luxury",
+    tagColor: "#b8860b",
+    badge: "✨",
+    accent: "#b8860b",
+    bg: "from-[#fffbf0] to-[#fef3c7]",
+    borderColor: "#f0d080",
+    gradientFrom: "#b8860b",
+    gradientTo: "#d4a017",
+    emoji: "✨",
+    image:
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=600&fit=crop&auto=format",
+    path: "/gift-sets",
+    highlights: ["Gold Foil Box", "3 Chocolates + 3 Snacks", "Save ₹600"],
+    weight: "6-piece",
+    stock: "Low Stock",
+    isGift: true,
+    giftNote: "Gold-embossed luxury box",
+  },
+  {
+    id: "g4",
+    category: "gift",
+    name: "Mini Surprise Set",
+    subtitle: "Starter Gift · 3-piece",
+    price: 899,
+    originalPrice: 1149,
+    rating: 4.8,
+    reviews: 145,
+    tag: "Budget Pick",
+    tagColor: "#1565c0",
+    badge: "🎀",
+    accent: "#1565c0",
+    bg: "from-[#eff3ff] to-[#dde8ff]",
+    borderColor: "#99b8f0",
+    gradientFrom: "#1565c0",
+    gradientTo: "#1976d2",
+    emoji: "🎀",
+    image:
+      "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=600&h=600&fit=crop&auto=format",
+    path: "/gift-sets",
+    highlights: ["Affordable Gift", "Cute Pouch", "Great Starter"],
+    weight: "3-piece",
+    stock: "In Stock",
+    isGift: true,
+    giftNote: "Comes in a drawstring pouch",
+  },
 ];
 
 const sortOptions = [
@@ -422,6 +642,18 @@ const categoryBanners: Record<
     sub: "Premium single-origin chocolate elevated with tangy, crunchy freeze-dried fruit.",
     color: "#4a1a0a",
     emoji: "🍫",
+  },
+  combo: {
+    title: "Value Combo Packs",
+    sub: "More flavors, bigger savings. Curated bundles that give you the best of FrostFruit at unbeatable prices.",
+    color: "#0a7a4a",
+    emoji: "📦",
+  },
+  gift: {
+    title: "Gift Sets & Hampers",
+    sub: "Beautifully boxed and ready to delight. The perfect gift for every occasion — from birthdays to corporate.",
+    color: "#9b1d6a",
+    emoji: "🎁",
   },
 };
 
@@ -468,6 +700,34 @@ const categoryCards = [
       "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&h=400&fit=crop&auto=format",
     desc: "Single-origin chocolate bars",
   },
+  {
+    id: "combo",
+    label: "Combo Packs",
+    emoji: "📦",
+    count: 4,
+    color: "#0a7a4a",
+    bg: "from-[#edfff6] to-[#d4f5e5]",
+    border: "#9de0c0",
+    gradientFrom: "#0a7a4a",
+    gradientTo: "#27ae60",
+    image:
+      "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=400&fit=crop&auto=format",
+    desc: "Curated bundles, bigger savings",
+  },
+  {
+    id: "gift",
+    label: "Gift Sets",
+    emoji: "🎁",
+    count: 4,
+    color: "#9b1d6a",
+    bg: "from-[#fdf0f8] to-[#f8e0f0]",
+    border: "#e8b0d8",
+    gradientFrom: "#9b1d6a",
+    gradientTo: "#c0396a",
+    image:
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=400&fit=crop&auto=format",
+    desc: "Beautifully boxed, ready to gift",
+  },
 ];
 
 // ─── Safe Category Card Image ─────────────────────────────────────────────────
@@ -498,6 +758,34 @@ function CatImg({
       } group-hover:scale-105`}
       onError={() => setBroken(true)}
     />
+  );
+}
+
+// ─── Combo Badge strip ─────────────────────────────────────────────────────────
+
+function ComboStrip({ items }: { items: string[] }) {
+  return (
+    <div className="flex flex-wrap gap-1 mb-3">
+      {items.map((item) => (
+        <span
+          key={item}
+          className="px-2 py-0.5 text-[9px] font-bold rounded-full bg-[#f0faf5] text-[#0a7a4a] border border-[#0a7a4a30]"
+        >
+          ✓ {item}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+// ─── Gift badge ───────────────────────────────────────────────────────────────
+
+function GiftNote({ note }: { note: string }) {
+  return (
+    <div className="flex items-center gap-1.5 mb-3 px-2.5 py-1.5 rounded-xl bg-[#fdf0f8] border border-[#e8b0d830]">
+      <span className="text-[10px]">🎀</span>
+      <span className="text-[10px] font-semibold text-[#9b1d6a]">{note}</span>
+    </div>
   );
 }
 
@@ -532,6 +820,16 @@ function ProductCard({
         boxShadow: "0 2px 16px rgba(0,0,0,0.05)",
       }}
     >
+      {/* Gift ribbon decoration */}
+      {product.isGift && (
+        <div
+          className="absolute top-0 left-0 right-0 h-1 z-20"
+          style={{
+            background: `linear-gradient(90deg, ${product.gradientFrom}, ${product.gradientTo})`,
+          }}
+        />
+      )}
+
       {/* ── Image ── */}
       <div
         className={`relative h-52 bg-gradient-to-br ${product.bg} overflow-hidden`}
@@ -623,22 +921,49 @@ function ProductCard({
           <span className="text-xs text-[#9a8a7a]">({product.reviews})</span>
         </div>
 
-        {/* Highlight chips */}
-        <div className="flex flex-wrap gap-1 mb-4">
-          {product.highlights.map((h) => (
-            <span
-              key={h}
-              className="px-2 py-0.5 text-[10px] font-semibold rounded-full border"
-              style={{
-                color: product.accent,
-                backgroundColor: `${product.accent}12`,
-                borderColor: `${product.accent}30`,
-              }}
-            >
-              {h}
-            </span>
-          ))}
-        </div>
+        {/* Combo items strip */}
+        {product.comboItems && <ComboStrip items={product.comboItems} />}
+
+        {/* Gift note */}
+        {product.giftNote && <GiftNote note={product.giftNote} />}
+
+        {/* Highlight chips — only if no combo items or gift note */}
+        {!product.comboItems && !product.giftNote && (
+          <div className="flex flex-wrap gap-1 mb-4">
+            {product.highlights.map((h) => (
+              <span
+                key={h}
+                className="px-2 py-0.5 text-[10px] font-semibold rounded-full border"
+                style={{
+                  color: product.accent,
+                  backgroundColor: `${product.accent}12`,
+                  borderColor: `${product.accent}30`,
+                }}
+              >
+                {h}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Highlight chips for combos/gifts (smaller, below combo strip) */}
+        {(product.comboItems || product.giftNote) && (
+          <div className="flex flex-wrap gap-1 mb-4">
+            {product.highlights.map((h) => (
+              <span
+                key={h}
+                className="px-2 py-0.5 text-[10px] font-semibold rounded-full border"
+                style={{
+                  color: product.accent,
+                  backgroundColor: `${product.accent}12`,
+                  borderColor: `${product.accent}30`,
+                }}
+              >
+                {h}
+              </span>
+            ))}
+          </div>
+        )}
 
         {/* Price + CTA */}
         <div className="flex items-center justify-between">
@@ -664,11 +989,175 @@ function ProductCard({
             }}
           >
             <ShoppingBag className="w-3.5 h-3.5" />
-            Buy Now
+            {product.isGift ? "Gift Now" : "Buy Now"}
           </Link>
         </div>
       </div>
     </motion.div>
+  );
+}
+
+// ─── Combo Section Banner ─────────────────────────────────────────────────────
+
+function ComboBanner() {
+  return (
+    <section className="px-6 lg:px-8 py-10 bg-gradient-to-br from-[#edfff6] to-[#d4f5e5]">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 rounded-3xl bg-white border border-[#9de0c0] p-8 lg:p-12 shadow-lg">
+          <div className="flex-1">
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#edfff6] text-[#0a7a4a] text-xs font-bold uppercase tracking-widest rounded-full border border-[#9de0c0] mb-4">
+              <Package className="w-3.5 h-3.5" />
+              Combo Packs
+            </span>
+            <h2 className="font-serif text-3xl lg:text-4xl font-bold text-[#1a1a1a] mb-3">
+              More Flavors,{" "}
+              <span className="text-[#0a7a4a]">Bigger Savings</span>
+            </h2>
+            <p className="text-[#4a5a4a] text-sm leading-relaxed mb-6 max-w-lg">
+              Can't choose just one? Our combos bundle the best of FrostFruit —
+              handpicked for taste, nutrition, and value. Save up to 25% versus
+              buying individually.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {[
+                { label: "Up to 25% Off", icon: "💰" },
+                { label: "Free Shipping", icon: "🚀" },
+                { label: "Mix & Match", icon: "🎨" },
+                { label: "Best Value", icon: "⭐" },
+              ].map((b) => (
+                <span
+                  key={b.label}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#edfff6] text-[#0a7a4a] text-xs font-bold rounded-full border border-[#9de0c0]"
+                >
+                  {b.icon} {b.label}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="flex-shrink-0 grid grid-cols-2 gap-3 w-full lg:w-auto lg:max-w-xs">
+            {[
+              { label: "Powder Trio", save: "₹300", emoji: "🌸" },
+              { label: "Snacker's Bundle", save: "₹357", emoji: "🍓" },
+              { label: "Choco Duo", save: "₹199", emoji: "🍫" },
+              { label: "Sampler", save: "₹525", emoji: "✨" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="bg-[#edfff6] rounded-2xl p-4 text-center border border-[#9de0c0]"
+              >
+                <div className="text-2xl mb-1">{item.emoji}</div>
+                <div className="text-[10px] font-bold text-[#1a1a1a] leading-tight">
+                  {item.label}
+                </div>
+                <div className="text-[10px] font-bold text-[#0a7a4a] mt-1">
+                  Save {item.save}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Gift Section Banner ──────────────────────────────────────────────────────
+
+function GiftBanner() {
+  return (
+    <section className="px-6 lg:px-8 py-10 bg-gradient-to-br from-[#fdf0f8] to-[#f5e0f0]">
+      <div className="max-w-7xl mx-auto">
+        <div
+          className="rounded-3xl p-8 lg:p-12 relative overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(135deg, #2d0a1a 0%, #5a1035 50%, #9b1d6a 100%)",
+            boxShadow: "0 20px 60px rgba(155,29,106,0.3)",
+          }}
+        >
+          {/* Decorative circles */}
+          <div
+            className="absolute top-0 right-0 w-72 h-72 rounded-full opacity-20 blur-3xl pointer-events-none"
+            style={{ background: "radial-gradient(#f4a435, transparent)" }}
+          />
+          <div
+            className="absolute bottom-0 left-0 w-56 h-56 rounded-full opacity-15 blur-3xl pointer-events-none"
+            style={{ background: "radial-gradient(#e85d26, transparent)" }}
+          />
+
+          <div className="relative z-10 flex flex-col lg:flex-row items-center gap-10">
+            {/* Left text */}
+            <div className="flex-1 text-center lg:text-left">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 text-[#f4d0e8] text-xs font-bold uppercase tracking-widest rounded-full border border-white/20 mb-5">
+                🎁 Gift Sets & Hampers
+              </span>
+              <h2 className="font-serif text-3xl lg:text-4xl font-bold text-white mb-3">
+                Gift Someone
+                <br />
+                <span style={{ color: "#f4a435" }}>Unforgettable.</span>
+              </h2>
+              <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-md">
+                Every gift box is hand-packed, ribbon-wrapped, and paired with a
+                personalised message card. Perfect for birthdays, festivals,
+                thank-yous, and everything in between.
+              </p>
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start mb-6">
+                {[
+                  { label: "Luxury Packaging", icon: "🎀" },
+                  { label: "Personalised Card", icon: "✉️" },
+                  { label: "Same-Day Dispatch", icon: "⚡" },
+                  { label: "Corporate Orders", icon: "🏢" },
+                ].map((b) => (
+                  <span
+                    key={b.label}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 text-white text-xs font-semibold rounded-full border border-white/20"
+                  >
+                    {b.icon} {b.label}
+                  </span>
+                ))}
+              </div>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white transition-all duration-300 hover:scale-105"
+                style={{
+                  background: "linear-gradient(90deg, #e85d26, #f4a435)",
+                }}
+              >
+                Order a Custom Gift Box <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Right: gift occasion pills */}
+            <div className="flex-shrink-0 w-full lg:w-72">
+              <p className="text-white/60 text-xs uppercase tracking-widest font-bold mb-3 text-center lg:text-left">
+                Perfect for every occasion
+              </p>
+              <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+                {[
+                  "🎂 Birthdays",
+                  "🪔 Diwali",
+                  "💐 Mother's Day",
+                  "🎄 Christmas",
+                  "💍 Weddings",
+                  "🤝 Corporate",
+                  "🏥 Get Well Soon",
+                  "🎓 Graduation",
+                  "❤️ Anniversary",
+                  "🎉 Just Because",
+                ].map((occ) => (
+                  <span
+                    key={occ}
+                    className="px-3 py-1.5 bg-white/10 text-white text-xs font-semibold rounded-full border border-white/20 hover:bg-white/20 transition-colors duration-200 cursor-default"
+                  >
+                    {occ}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -717,9 +1206,9 @@ export default function Products() {
             </p>
           </motion.div>
 
-          {/* ── Category Cards ── */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {categoryCards.map((cat, i) => (
+          {/* ── Category Cards — 3 + 2 grid ── */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+            {categoryCards.slice(0, 3).map((cat, i) => (
               <motion.button
                 key={cat.id}
                 initial={{ opacity: 0, y: 24 }}
@@ -752,6 +1241,82 @@ export default function Products() {
                   />
                   <div className="absolute top-4 left-4 z-10">
                     <span style={{ fontSize: "2rem" }}>{cat.emoji}</span>
+                  </div>
+                  {activeCategory === cat.id && (
+                    <div className="absolute top-4 right-4 z-10">
+                      <span
+                        className="inline-block px-2.5 py-1 text-[10px] font-bold text-white rounded-full uppercase tracking-wider"
+                        style={{ backgroundColor: cat.color }}
+                      >
+                        Selected
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div className="p-4 bg-white">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-serif text-lg font-bold text-[#1a1a1a]">
+                        {cat.label}
+                      </h3>
+                      <p className="text-xs text-[#9a8a7a] mt-0.5">
+                        {cat.desc}
+                      </p>
+                    </div>
+                    <div
+                      className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
+                      style={{ backgroundColor: cat.color }}
+                    >
+                      {cat.count}
+                    </div>
+                  </div>
+                </div>
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Combo + Gift cards row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {categoryCards.slice(3).map((cat, i) => (
+              <motion.button
+                key={cat.id}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: (i + 3) * 0.1 }}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`group relative rounded-2xl overflow-hidden border-2 text-left transition-all duration-300 ${
+                  activeCategory === cat.id
+                    ? "scale-[1.02] shadow-xl"
+                    : "hover:scale-[1.01] hover:shadow-lg"
+                }`}
+                style={{
+                  borderColor:
+                    activeCategory === cat.id ? cat.color : cat.border,
+                  boxShadow:
+                    activeCategory === cat.id
+                      ? `0 8px 32px ${cat.color}30`
+                      : undefined,
+                }}
+              >
+                <div
+                  className={`h-40 bg-gradient-to-br ${cat.bg} relative overflow-hidden`}
+                >
+                  <CatImg cat={cat} selected={activeCategory === cat.id} />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: `linear-gradient(135deg, ${cat.color}60 0%, transparent 70%)`,
+                    }}
+                  />
+                  <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
+                    <span style={{ fontSize: "2rem" }}>{cat.emoji}</span>
+                    {/* Special badge for combo/gift */}
+                    <span
+                      className="px-2 py-0.5 text-[9px] font-bold text-white rounded-full uppercase tracking-wider"
+                      style={{ backgroundColor: cat.color + "cc" }}
+                    >
+                      {cat.id === "combo" ? "Best Value" : "Gifting"}
+                    </span>
                   </div>
                   {activeCategory === cat.id && (
                     <div className="absolute top-4 right-4 z-10">
@@ -898,8 +1463,18 @@ export default function Products() {
         </div>
       </section>
 
+      {/* ── Combo Section Banner (shown for all or combo) ── */}
+      {(activeCategory === "all" || activeCategory === "combo") && (
+        <ComboBanner />
+      )}
+
+      {/* ── Gift Section Banner (shown for all or gift) ── */}
+      {(activeCategory === "all" || activeCategory === "gift") && (
+        <GiftBanner />
+      )}
+
       {/* ── Product Grid ── */}
-      <section className="pb-16 px-6 lg:px-8">
+      <section className="pb-16 px-6 lg:px-8 pt-8">
         <div className="max-w-7xl mx-auto">
           <p className="text-xs text-[#9a8a7a] font-medium mb-5">
             Showing{" "}
