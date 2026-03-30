@@ -221,15 +221,17 @@ export default function Header() {
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
-            {/* ── Logo ── */}
+            {/* ── Logo ── */}0
             <Link
               to="/"
               className="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26] rounded-lg"
               aria-label="FrostFruit Home"
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-[#e85d26] to-[#f4a435] rounded-lg flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-200">
-                <Leaf className="w-4 h-4 text-white" />
-              </div>
+              <img
+                src="/logo2.jpeg"
+                alt=""
+                className="w-16 h-16 object-contain"
+              />
               <span className="font-serif text-xl font-bold text-[#1a1a1a] tracking-tight">
                 The Dry<span className="text-[#e85d26]"> Factory</span>
               </span>
