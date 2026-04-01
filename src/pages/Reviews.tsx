@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import emailjs from "@emailjs/browser";
 import {
   Star,
   ThumbsUp,
@@ -505,23 +506,52 @@ function ReviewCard({
 
 // ─── Write Review Modal ───────────────────────────────────────────────────────
 
+// ─── Write Review Modal ───────────────────────────────────────────────────────
+
 function WriteReviewModal({ onClose }: { onClose: () => void }) {
   const [rating, setRating] = useState(0);
   const [hovered, setHovered] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
   const [form, setForm] = useState({
     name: "",
+    email: "",
     location: "",
     product: "",
     title: "",
     body: "",
   });
 
-  const handleSubmit = () => {
-    if (rating && form.name && form.title && form.body) {
+  const handleSubmit = async () => {
+    if (!rating || !form.name || !form.email || !form.title || !form.body)
+      return;
+
+    setSending(true);
+    try {
+      await emailjs.send(
+        (import.meta as any).env.VITE_EMAILJS_SERVICE_ID,
+        (import.meta as any).env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_name_initial: form.name.charAt(0).toUpperCase(),
+          from_email: form.email,
+          subject: `New Review (${rating}★) — ${form.product || "General"}`,
+          message: `⭐ Rating: ${rating}/5\n📦 Product: ${form.product || "Not specified"}\n📍 City: ${form.location || "Not specified"}\n\n📝 Title: ${form.title}\n\n${form.body}`,
+          reply_to: form.email,
+        },
+        (import.meta as any).env.VITE_EMAILJS_PUBLIC_KEY,
+      );
       setSubmitted(true);
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setSending(false);
     }
   };
+
+  const isValid =
+    rating > 0 && form.name && form.email && form.title && form.body;
 
   return (
     <motion.div
@@ -536,7 +566,7 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.92, y: 16 }}
         transition={{ type: "spring", damping: 24, stiffness: 260 }}
-        className="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden"
+        className="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="h-1.5 bg-gradient-to-r from-[#e85d26] to-[#f4a435]" />
@@ -591,7 +621,7 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
               </div>
             </div>
 
-            {/* Fields */}
+            {/* Name + City */}
             <div className="grid grid-cols-2 gap-3 mb-3">
               {[
                 { key: "name", label: "Your Name *", placeholder: "Ananya S." },
@@ -613,6 +643,24 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
               ))}
             </div>
 
+            {/* Email — full width */}
+            <div className="mb-3">
+              <label className="text-xs font-bold text-[#4a3a2a] uppercase tracking-wider mb-1.5 block">
+                Email Address *
+              </label>
+              <input
+                type="email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                placeholder="you@example.com"
+                className="w-full px-3 py-2.5 text-sm border border-[#e0d8d0] rounded-xl focus:outline-none focus:border-[#e85d26] transition-colors bg-[#faf8f5]"
+              />
+              <p className="text-[10px] text-[#b0a090] mt-1">
+                Your email won't be published. We may follow up if needed.
+              </p>
+            </div>
+
+            {/* Product */}
             <div className="mb-3">
               <label className="text-xs font-bold text-[#4a3a2a] uppercase tracking-wider mb-1.5 block">
                 Product
@@ -640,6 +688,7 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
               </select>
             </div>
 
+            {/* Title */}
             <div className="mb-3">
               <label className="text-xs font-bold text-[#4a3a2a] uppercase tracking-wider mb-1.5 block">
                 Review Title *
@@ -652,6 +701,7 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
               />
             </div>
 
+            {/* Body */}
             <div className="mb-5">
               <label className="text-xs font-bold text-[#4a3a2a] uppercase tracking-wider mb-1.5 block">
                 Your Review *
@@ -674,10 +724,10 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={!rating || !form.name || !form.title || !form.body}
+                disabled={!isValid || sending}
                 className="flex-1 py-3 rounded-xl bg-[#e85d26] text-white text-sm font-bold hover:bg-[#d44f1a] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                Submit Review
+                {sending ? "Sending…" : "Submit Review"}
               </button>
             </div>
           </div>

@@ -11,11 +11,9 @@ import Footer from "../components/Footer";
 import PageHero from "../components/PageHero";
 
 // ─── EmailJS config ────────────────────────────────────────────────────────────
-// Replace these three values with your own from https://dashboard.emailjs.com
-const EMAILJS_SERVICE_ID = "service_51w47ff";
-const EMAILJS_TEMPLATE_ID = "template_ftp280i";
-const EMAILJS_PUBLIC_KEY = "wioe86bqkXhAiTfEm";
-// ──────────────────────────────────────────────────────────────────────────────
+const EMAILJS_SERVICE_ID = (import.meta as any).env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = (import.meta as any).env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = (import.meta as any).env.VITE_EMAILJS_PUBLIC_KEY;
 
 const schema = z.object({
   name: z.string().min(2, "Please enter your name"),
