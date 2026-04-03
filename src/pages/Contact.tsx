@@ -44,6 +44,10 @@ export default function Contact() {
         message: data.message,
         reply_to: data.email,
       };
+      if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+        console.error("Missing EmailJS environment variables");
+        return;
+      }
 
       await emailjs.send(
         EMAILJS_SERVICE_ID,
