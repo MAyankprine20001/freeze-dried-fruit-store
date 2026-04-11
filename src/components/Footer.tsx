@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Leaf, Instagram, Facebook, Twitter, Youtube } from "lucide-react";
+import { Leaf, Instagram } from "lucide-react";
 
 const productLinks = [
   { label: "Powder & Chunks", path: "/fruit-powder-chunks" },
@@ -19,10 +19,11 @@ const legalLinks = [
 ];
 
 const socialLinks = [
-  { icon: Instagram, label: "Instagram", href: "#" },
-  { icon: Facebook, label: "Facebook", href: "#" },
-  { icon: Twitter, label: "Twitter / X", href: "#" },
-  { icon: Youtube, label: "YouTube", href: "#" },
+  {
+    icon: Instagram,
+    label: "Instagram",
+    href: "https://www.instagram.com/thedryfactoryofficial/?hl=en",
+  },
 ];
 
 export default function Footer() {
