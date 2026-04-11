@@ -1,11 +1,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Star, Zap, Heart, Package } from 'lucide-react';
+import { ArrowRight, Star, Zap, Heart, Package, ChevronLeft, ChevronRight } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import TrustBadges from '../components/TrustBadges';
 import CategoryCard from '../components/CategoryCard';
+import { AnimatePresence } from 'framer-motion';
+
+const heroSlides = [
+  {
+    image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=1600&h=900&fit=crop",
+    title: "Peak Wellness, Powered By Nature",
+    subtitle: "100% Raw Nutrition",
+    description: "Our unique freeze-drying process preserves 97% of vitamins and minerals. No added sugars, no preservatives—just the pure essence of peak-harvested fruit.",
+    color: "#f4a435"
+  },
+  {
+    image: "/hero-lifestyle.png",
+    title: "Clean Energy for Your Lifestyle",
+    subtitle: "Natural Superfoods",
+    description: "Fuel your body with nutrient-dense snacks and elixirs designed for the modern wellness-seeker. Pure, plant-based power in every bite.",
+    color: "#e85d26"
+  },
+  {
+    image: "/beverage-1.png",
+    title: "Detoxify and Rejuvenate",
+    subtitle: "Wellness Elixirs",
+    description: "Recharge with our new line of cold-pressed, fruit-infused elixirs. Crafted with antioxidants and raw nutrients to keep you vibrant and hydrated.",
+    color: "#27ae60"
+  }
+];
 
 const categories = [
   {
@@ -28,6 +53,34 @@ const categories = [
     image: 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&h=400&fit=crop',
     path: '/chocolate',
     tag: 'New',
+  },
+  {
+    title: 'Cold-Pressed Wellness Elixirs',
+    description: 'Nutrient-dense beverages made from 100% raw freeze-dried fruit. A powerful boost of vitamins and natural energy in every glass.',
+    image: '/beverage-1.png',
+    path: '/products',
+    tag: 'Detox',
+  },
+  {
+    title: 'Antioxidant Herbal Infusions',
+    description: 'Refreshing, clear tea blends infused with real fruit slices. Designed for hydration and cellular protection.',
+    image: '/beverage-2.png',
+    path: '/products',
+    tag: 'Healing',
+  },
+  {
+    title: 'Vibrant Raw Cacao Bark',
+    description: 'Thin, elegant dark chocolate bark topped with a vibrant explosion of freeze-dried superfruits and a hint of sea salt.',
+    image: '/premium-chocolate.png',
+    path: '/chocolate',
+    tag: 'Artisan',
+  },
+  {
+    title: 'Cacao-Glazed Whole Berries',
+    description: 'Bite-sized, glossy dark chocolate-covered whole strawberries. A crunch of intense fruit flavor in every piece.',
+    image: '/milk-chocolate-chunks.png',
+    path: '/chocolate',
+    tag: 'Premium',
   },
 ];
 
@@ -71,53 +124,83 @@ const testimonials = [
 ];
 
 export default function Home() {
+  const [heroIndex, setHeroIndex] = React.useState(0);
+  const [catIndex, setCatIndex] = React.useState(0);
+
+  // Auto-play hero
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextHero = () => setHeroIndex((prev) => (prev + 1) % heroSlides.length);
+  const prevHero = () => setHeroIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+
+  const nextCat = () => {
+    if (catIndex < categories.length - 3) setCatIndex(prev => prev + 1);
+  };
+  const prevCat = () => {
+    if (catIndex > 0) setCatIndex(prev => prev - 1);
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
 
       {/* Hero */}
-      <section className="relative pt-16 min-h-screen flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=1600&h=900&fit=crop"
-            alt="Colorful freeze-dried fruits arranged on a white surface"
-            width={1600}
-            height={900}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/80 via-[#1a1a1a]/50 to-transparent" />
-        </div>
+      <section className="relative pt-16 h-[90vh] lg:h-screen flex items-center overflow-hidden bg-[#1a1a1a]">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={heroIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0 z-0"
+          >
+            <img
+              src={heroSlides[heroIndex].image}
+              alt={heroSlides[heroIndex].title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/80 via-[#1a1a1a]/50 to-transparent" />
+          </motion.div>
+        </AnimatePresence>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-24">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-24 w-full">
           <div className="max-w-2xl">
-            <motion.span
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="inline-block px-4 py-1.5 bg-[#e85d26]/90 text-white text-xs font-semibold uppercase tracking-wider rounded-full mb-6"
-            >
-              100% Natural Freeze Dried Fruit
-            </motion.span>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={heroIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <span className="inline-block px-4 py-1.5 bg-[#e85d26]/90 text-white text-xs font-semibold uppercase tracking-wider rounded-full mb-6">
+                  {heroSlides[heroIndex].subtitle}
+                </span>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-serif text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6"
-            >
-              Nature's Best,{' '}
-              <span className="text-[#f4a435]">Locked In</span>{' '}
-              Forever
-            </motion.h1>
+                <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6">
+                  {heroSlides[heroIndex].title.split(', ').map((part, i) => (
+                    <React.Fragment key={i}>
+                      {i > 0 && ", "}
+                      {part.includes("Locked In") || part.includes("Flavor") ? (
+                        <span className="text-[#f4a435]">{part}</span>
+                      ) : (
+                        part
+                      )}
+                    </React.Fragment>
+                  ))}
+                </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-white/85 text-lg leading-relaxed mb-10"
-            >
-              Premium freeze-dried fruit snacks, powders, and chocolate — made from whole fruit harvested at peak ripeness. No preservatives. No compromise. Just pure, intense fruit flavor in every bite.
-            </motion.p>
+                <p className="text-white/85 text-lg leading-relaxed mb-10">
+                  {heroSlides[heroIndex].description}
+                </p>
+              </motion.div>
+            </AnimatePresence>
 
             <motion.div
               initial={{ opacity: 0, y: 24 }}
@@ -140,6 +223,33 @@ export default function Home() {
               </Link>
             </motion.div>
           </div>
+        </div>
+
+        {/* Hero Controls */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex items-center gap-6">
+          <button
+            onClick={prevHero}
+            className="w-12 h-12 rounded-full border border-white/20 bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <div className="flex gap-2">
+            {heroSlides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setHeroIndex(i)}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                  i === heroIndex ? "bg-[#f4a435] w-8" : "bg-white/30"
+                }`}
+              />
+            ))}
+          </div>
+          <button
+            onClick={nextHero}
+            className="w-12 h-12 rounded-full border border-white/20 bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
         </div>
       </section>
 
@@ -167,10 +277,38 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {categories.map((cat, i) => (
-              <CategoryCard key={cat.path} {...cat} index={i} />
-            ))}
+          <div className="relative group">
+            <div className="overflow-hidden">
+              <motion.div
+                animate={{ x: `-${catIndex * (100 / 3)}%` }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="flex gap-8"
+              >
+                {categories.map((cat, i) => (
+                  <div key={i} className="min-w-[calc(33.333%-22px)] flex-shrink-0">
+                    <CategoryCard {...cat} index={i} />
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+
+            {/* Slider Buttons */}
+            {catIndex > 0 && (
+              <button
+                onClick={prevCat}
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 w-12 h-12 rounded-full bg-white shadow-xl border border-[#f0e8e0] flex items-center justify-center text-[#1a1a1a] hover:text-[#e85d26] transition-all z-20"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+            )}
+            {catIndex < categories.length - 3 && (
+              <button
+                onClick={nextCat}
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 w-12 h-12 rounded-full bg-white shadow-xl border border-[#f0e8e0] flex items-center justify-center text-[#1a1a1a] hover:text-[#e85d26] transition-all z-20"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            )}
           </div>
         </div>
       </section>
