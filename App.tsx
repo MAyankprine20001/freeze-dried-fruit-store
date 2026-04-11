@@ -8,6 +8,7 @@ import "./styles.css";
 
 import Home from "./src/pages/Home";
 import NotFound from "./src/pages/NotFound";
+import ContactWidget from "./src/components/ContactWidget";
 
 const About = lazy(() => import("./src/pages/About"));
 const FruitPowderChunks = lazy(() => import("./src/pages/FruitPowderChunks"));
@@ -51,6 +52,7 @@ const App: React.FC = () => {
           closeOnClick
           pauseOnHover
         />
+        <ContactWidget />
       </Router>
     </Theme>
   );
