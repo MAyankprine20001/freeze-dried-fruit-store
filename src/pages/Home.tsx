@@ -106,7 +106,7 @@ const testimonials = [
   {
     name: 'Sarah M.',
     role: 'Nutritionist',
-    quote: 'I recommend FrostFruit to all my clients. The powder is incredible in smoothies and the ingredient list is exactly what it should be — just fruit.',
+    quote: 'I recommend Freeze Fruit to all my clients. The powder is incredible in smoothies and the ingredient list is exactly what it should be — just fruit.',
     rating: 5,
   },
   {
@@ -324,7 +324,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block px-4 py-1.5 bg-white text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-6">
-                Why FrostFruit
+                Why Freeze Fruit
               </span>
               <h2 className="font-serif text-4xl font-bold text-[#1a1a1a] mb-6 leading-tight">
                 The Science of Keeping Fruit{' '}
@@ -448,7 +448,7 @@ export default function Home() {
               <span className="text-[#f4a435]">Difference?</span>
             </h2>
             <p className="text-white/75 text-lg mb-10 max-w-xl mx-auto">
-              Explore our full range of freeze-dried fruit products and discover why thousands of health-conscious families choose FrostFruit.
+              Explore our full range of freeze-dried fruit products and discover why thousands of health-conscious families choose Freeze Fruit.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link

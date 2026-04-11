@@ -225,7 +225,7 @@ export default function Header() {
             <Link
               to="/"
               className="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26] rounded-lg"
-              aria-label="FrostFruit Home"
+              aria-label="Freeze Fruit Home"
             >
               <img
                 src="/logo2.jpeg"

@@ -104,8 +104,6 @@ export default function Footer() {
             <div className="grid grid-cols-2 gap-2">
               {[
                 "No Preservatives",
-                "Non-GMO",
-                "Gluten Free",
                 "100% Natural",
               ].map((badge) => (
                 <div
@@ -123,7 +121,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[#606060] text-xs">
-            © 2026 FrostFruit. All rights reserved.
+            © 2026 Freeze Fruit. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             {legalLinks.map((link) => (
