@@ -1,11 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Leaf, Wheat, Sprout } from 'lucide-react';
+import { ShieldCheck, Leaf } from 'lucide-react';
 
 const badges = [
   { icon: ShieldCheck, label: 'No Preservatives', desc: 'Pure fruit, nothing added' },
-  { icon: Sprout, label: 'Non-GMO', desc: 'Naturally grown ingredients' },
-  { icon: Wheat, label: 'Gluten Free', desc: 'Safe for all diets' },
   { icon: Leaf, label: '100% Natural', desc: 'From farm to freeze-dryer' },
 ];
 
@@ -13,7 +11,7 @@ export default function TrustBadges() {
   return (
     <section className="py-12 bg-[#fdf3ec] border-y border-[#f0d9c8]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 gap-6">
           {badges.map((badge, i) => (
             <motion.div
               key={badge.label}
