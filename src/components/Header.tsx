@@ -233,7 +233,7 @@ export default function Header() {
                 className="w-16 h-16 object-contain"
               />
               <span className="font-serif text-xl font-bold text-[#1a1a1a] tracking-tight">
-                The Dry<span className="text-[#e85d26]"> Factory</span>
+                The Dry<span className="text-[#1a1a1a]"> Factory</span>
               </span>
             </Link>
 

@@ -40,7 +40,7 @@ export default function Footer() {
                 <Leaf className="w-4 h-4 text-white" />
               </div>
               <span className="font-serif text-xl font-bold">
-                The Dry<span className="text-[#f4a435]">Factory</span>
+                The Dry<span className="text-white"> Factory</span>
               </span>
             </Link>
             <p className="text-[#a0a0a0] text-sm leading-relaxed mb-6">
