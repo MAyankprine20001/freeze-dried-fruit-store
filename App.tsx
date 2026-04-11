@@ -10,8 +10,7 @@ import Home from "./src/pages/Home";
 import NotFound from "./src/pages/NotFound";
 
 const About = lazy(() => import("./src/pages/About"));
-const FruitPowder = lazy(() => import("./src/pages/FruitPowder"));
-const FruitChunks = lazy(() => import("./src/pages/FruitChunks"));
+const FruitPowderChunks = lazy(() => import("./src/pages/FruitPowderChunks"));
 const Chocolate = lazy(() => import("./src/pages/Chocolate"));
 const FAQ = lazy(() => import("./src/pages/FAQ"));
 const Contact = lazy(() => import("./src/pages/Contact"));
@@ -34,8 +33,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/fruit-powder" element={<FruitPowder />} />
-            <Route path="/fruit-chunks" element={<FruitChunks />} />
+            <Route path="/fruit-powder-chunks" element={<FruitPowderChunks />} />
             <Route path="/chocolate" element={<Chocolate />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />

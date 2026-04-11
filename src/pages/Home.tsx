@@ -34,18 +34,11 @@ const heroSlides = [
 
 const categories = [
   {
-    title: 'Freeze Dried Fruit Powder',
-    description: 'Intensely flavored, ultra-fine fruit powder made from 100% real fruit. Perfect for smoothies, baking, and natural food coloring.',
+    title: 'Freeze Dried Fruit Powder & Chunks',
+    description: 'The pure essence of fruit, available in ultra-fine powders for blending or crunchy whole chunks for snacking.',
     image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=400&fit=crop',
-    path: '/fruit-powder',
+    path: '/fruit-powder-chunks',
     tag: 'Bestseller',
-  },
-  {
-    title: 'Freeze Dried Fruit Chunks',
-    description: 'Crunchy, vibrant fruit pieces that retain all the flavor and nutrition of fresh fruit — with a satisfying snap in every bite.',
-    image: 'https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=600&h=400&fit=crop',
-    path: '/fruit-chunks',
-    tag: 'Fan Favorite',
   },
   {
     title: 'Chocolate with Freeze Dried Fruit',
@@ -209,7 +202,7 @@ export default function Home() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <Link
-                to="/fruit-powder"
+                to="/fruit-powder-chunks"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e85d26] text-white font-semibold rounded-full hover:bg-[#d44f1a] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent shadow-lg"
               >
                 Shop Products
@@ -452,10 +445,10 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/fruit-powder"
+                to="/fruit-powder-chunks"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e85d26] text-white font-semibold rounded-full hover:bg-[#d44f1a] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4a435] shadow-lg"
               >
-                Shop Fruit Powder
+                Shop Powder & Chunks
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link

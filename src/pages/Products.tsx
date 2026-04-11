@@ -72,8 +72,7 @@ function SafeImg({
 
 const categories = [
   { id: "all", label: "All Products", emoji: "✨" },
-  { id: "powder", label: "Fruit Powder", emoji: "🌸" },
-  { id: "chunks", label: "Fruit Chunks", emoji: "🍓" },
+  { id: "powder-chunks", label: "Powder & Chunks", emoji: "🍓" },
   { id: "chocolate", label: "Chocolate", emoji: "🍫" },
   { id: "combo", label: "Combos", emoji: "📦" },
   { id: "gift", label: "Gift Sets", emoji: "🎁" },
@@ -83,7 +82,7 @@ const allProducts = [
   // ── POWDERS ──────────────────────────────────────────────────────────────
   {
     id: "p1",
-    category: "powder",
+    category: "powder-chunks",
     name: "Raspberry Powder",
     subtitle: "Freeze Dried · 100g",
     price: 399,
@@ -101,14 +100,14 @@ const allProducts = [
     emoji: "🍓",
     image:
       "https://images.unsplash.com/photo-1495584816685-4bdbf1b5057e?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-powder",
+    path: "/fruit-powder-chunks",
     highlights: ["97% Nutrients", "Natural Color", "25yr shelf life"],
     weight: "100g",
     stock: "In Stock",
   },
   {
     id: "p2",
-    category: "powder",
+    category: "powder-chunks",
     name: "Mango Powder",
     subtitle: "Freeze Dried · 100g",
     price: 379,
@@ -126,14 +125,14 @@ const allProducts = [
     emoji: "🥭",
     image:
       "https://images.unsplash.com/photo-1596591606975-97ee5cef3a1e?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-powder",
+    path: "/fruit-powder-chunks",
     highlights: ["Tropical Flavor", "Smoothie Ready", "Natural Dye"],
     weight: "100g",
     stock: "In Stock",
   },
   {
     id: "p3",
-    category: "powder",
+    category: "powder-chunks",
     name: "Strawberry Powder",
     subtitle: "Freeze Dried · 100g",
     price: 349,
@@ -151,14 +150,14 @@ const allProducts = [
     emoji: "🍓",
     image:
       "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-powder",
+    path: "/fruit-powder-chunks",
     highlights: ["Kids Favourite", "Baking Grade", "Vibrant Pink"],
     weight: "100g",
     stock: "In Stock",
   },
   {
     id: "p4",
-    category: "powder",
+    category: "powder-chunks",
     name: "Blueberry Powder",
     subtitle: "Freeze Dried · 100g",
     price: 429,
@@ -176,7 +175,7 @@ const allProducts = [
     emoji: "🫐",
     image:
       "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-powder",
+    path: "/fruit-powder-chunks",
     highlights: ["Antioxidant Rich", "Deep Color", "Superfood"],
     weight: "100g",
     stock: "Low Stock",
@@ -185,7 +184,7 @@ const allProducts = [
   // ── CHUNKS ───────────────────────────────────────────────────────────────
   {
     id: "c1",
-    category: "chunks",
+    category: "powder-chunks",
     name: "Mixed Fruit Chunks",
     subtitle: "Freeze Dried · 150g",
     price: 349,
@@ -203,14 +202,14 @@ const allProducts = [
     emoji: "🍇",
     image:
       "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-chunks",
+    path: "/fruit-powder-chunks",
     highlights: ["Zero Sugar Added", "Trail Mix Ready", "No Refrigeration"],
     weight: "150g",
     stock: "In Stock",
   },
   {
     id: "c2",
-    category: "chunks",
+    category: "powder-chunks",
     name: "Mango Chunks",
     subtitle: "Freeze Dried · 150g",
     price: 329,
@@ -228,14 +227,14 @@ const allProducts = [
     emoji: "🥭",
     image:
       "https://images.unsplash.com/photo-1519096845289-95806ee03a1a?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-chunks",
+    path: "/fruit-powder-chunks",
     highlights: ["Airy Crunch", "Snack Anywhere", "Intense Flavor"],
     weight: "150g",
     stock: "In Stock",
   },
   {
     id: "c3",
-    category: "chunks",
+    category: "powder-chunks",
     name: "Strawberry Chunks",
     subtitle: "Freeze Dried · 150g",
     price: 309,
@@ -253,14 +252,14 @@ const allProducts = [
     emoji: "🍓",
     image:
       "https://images.unsplash.com/photo-1543528176-61b239494933?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-chunks",
+    path: "/fruit-powder-chunks",
     highlights: ["School Lunch", "Yogurt Topping", "Rehydrates Well"],
     weight: "150g",
     stock: "In Stock",
   },
   {
     id: "c4",
-    category: "chunks",
+    category: "powder-chunks",
     name: "Pineapple Chunks",
     subtitle: "Freeze Dried · 150g",
     price: 359,
@@ -278,7 +277,7 @@ const allProducts = [
     emoji: "🍍",
     image:
       "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-chunks",
+    path: "/fruit-powder-chunks",
     highlights: ["Tangy & Sweet", "Hiking Snack", "Enzyme Rich"],
     weight: "150g",
     stock: "In Stock",
@@ -625,16 +624,10 @@ const categoryBanners: Record<
     color: "#e85d26",
     emoji: "✨",
   },
-  powder: {
-    title: "Freeze Dried Fruit Powders",
-    sub: "100% whole fruit, powdered to perfection. Up to 10× more intense than fresh fruit.",
+  "powder-chunks": {
+    title: "Fruit Powder & Chunks",
+    sub: "100% whole fruit in two essential forms. Concentrated powders for your recipes or crunchy chunks for on-the-go snacking.",
     color: "#e85d26",
-    emoji: "🌸",
-  },
-  chunks: {
-    title: "Freeze Dried Fruit Chunks",
-    sub: "The crunch of fresh fruit, anytime, anywhere. No refrigeration. No compromise.",
-    color: "#27ae60",
     emoji: "🍓",
   },
   chocolate: {
@@ -659,32 +652,18 @@ const categoryBanners: Record<
 
 const categoryCards = [
   {
-    id: "powder",
-    label: "Fruit Powder",
-    emoji: "🌸",
-    count: 4,
+    id: "powder-chunks",
+    label: "Powder & Chunks",
+    emoji: "🍓",
+    count: 8,
     color: "#e85d26",
     bg: "from-[#fff2ee] to-[#ffe8df]",
     border: "#f5cfc0",
     gradientFrom: "#e85d26",
     gradientTo: "#f4a435",
     image:
-      "https://images.unsplash.com/photo-1495584816685-4bdbf1b5057e?w=600&h=400&fit=crop&auto=format",
-    desc: "100% pure freeze-dried powder",
-  },
-  {
-    id: "chunks",
-    label: "Fruit Chunks",
-    emoji: "🍓",
-    count: 4,
-    color: "#27ae60",
-    bg: "from-[#f0fff6] to-[#e0f7ea]",
-    border: "#b0e0c0",
-    gradientFrom: "#27ae60",
-    gradientTo: "#2ecc71",
-    image:
-      "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=600&h=400&fit=crop&auto=format",
-    desc: "Crunchy, shelf-stable whole fruit",
+      "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=400&fit=crop&auto=format",
+    desc: "100% pure freeze-dried goodness",
   },
   {
     id: "chocolate",

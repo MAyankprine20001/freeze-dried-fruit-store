@@ -59,8 +59,8 @@ const IconProducts = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const IconFruitPowder = ({ className }: { className?: string }) => (
-  // Jar / powder container with sparkle
+const IconFruitPowderChunks = ({ className }: { className?: string }) => (
+  // Combined Jar and Fruit icon
   <svg
     className={className}
     viewBox="0 0 20 20"
@@ -70,39 +70,9 @@ const IconFruitPowder = ({ className }: { className?: string }) => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <rect x="5" y="7" width="10" height="10" rx="2" />
-    <path d="M7 7V5.5C7 4.7 7.7 4 8.5 4h3c.8 0 1.5.7 1.5 1.5V7" />
-    <path d="M8 11h4" />
-    <path d="M10 9v4" />
-    {/* sparkle dots suggesting powder */}
-    <circle cx="4" cy="4" r=".6" fill="currentColor" stroke="none" />
-    <circle cx="16" cy="3" r=".6" fill="currentColor" stroke="none" />
-    <circle cx="15" cy="5.5" r=".5" fill="currentColor" stroke="none" />
-    <circle cx="5" cy="6" r=".5" fill="currentColor" stroke="none" />
-  </svg>
-);
-
-const IconFruitChunks = ({ className }: { className?: string }) => (
-  // Strawberry silhouette
-  <svg
-    className={className}
-    viewBox="0 0 20 20"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M10 17C10 17 4 13.5 4 9c0-2.5 1.5-4 3-4 .8 0 1.6.4 2.2 1 .3.3.5.6.8.6s.5-.3.8-.6C11.4 5.4 12.2 5 13 5c1.5 0 3 1.5 3 4 0 4.5-6 8-6 8z" />
-    <path d="M8 5c0 0-.5-2 .5-3" />
-    <path d="M10 5c0 0 0-2 1-3" />
-    <path d="M12 5c0 0 .5-2-.5-3" />
-    {/* seed dots */}
-    <circle cx="9" cy="10" r=".5" fill="currentColor" stroke="none" />
-    <circle cx="11" cy="9" r=".5" fill="currentColor" stroke="none" />
-    <circle cx="10" cy="12" r=".5" fill="currentColor" stroke="none" />
-    <circle cx="8" cy="12" r=".5" fill="currentColor" stroke="none" />
-    <circle cx="12" cy="12" r=".5" fill="currentColor" stroke="none" />
+    <rect x="4" y="8" width="7" height="8" rx="1.5" />
+    <path d="M5.5 8V6.5C5.5 5.9 6 5.5 6.5 5.5h2c.5 0 1 .4 1 1V8" />
+    <path d="M14 15c0 0-3-2-3-4.5 0-1.5 1-2.5 2-2.5.5 0 1 .3 1.5.7l.5.3.5-.3c.5-.4 1-.7 1.5-.7 1 0 2 1 2 2.5 0 2.5-3 4.5-3 4.5z" />
   </svg>
 );
 
@@ -178,8 +148,7 @@ const navLinks = [
   { label: "Home", path: "/", Icon: IconHome },
   { label: "About", path: "/about", Icon: IconAbout },
   { label: "Products", path: "/products", Icon: IconProducts },
-  { label: "Fruit Powder", path: "/fruit-powder", Icon: IconFruitPowder },
-  { label: "Fruit Chunks", path: "/fruit-chunks", Icon: IconFruitChunks },
+  { label: "Powder & Chunks", path: "/fruit-powder-chunks", Icon: IconFruitPowderChunks },
   { label: "Chocolate", path: "/chocolate", Icon: IconChocolate },
   { label: "Reviews", path: "/reviews", Icon: IconReviews, badge: true },
   { label: "FAQ", path: "/faq", Icon: IconFAQ },

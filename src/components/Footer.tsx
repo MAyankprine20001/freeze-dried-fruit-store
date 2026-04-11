@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { Leaf, Instagram, Facebook, Twitter, Youtube } from "lucide-react";
 
 const productLinks = [
-  { label: "Fruit Powder", path: "/fruit-powder" },
-  { label: "Fruit Chunks", path: "/fruit-chunks" },
+  { label: "Powder & Chunks", path: "/fruit-powder-chunks" },
   { label: "Chocolate", path: "/chocolate" },
 ];
 
