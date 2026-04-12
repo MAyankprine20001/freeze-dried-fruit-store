@@ -171,7 +171,7 @@ const sections = [
       },
       {
         subtitle: "Contact Details",
-        text: "Email: privacy@frostfruit.com\nPhone: +91 92011 00981\nAddress: FrostFruit, 12 Cold Chain Avenue, Andheri East, Mumbai — 400 069, Maharashtra, India.",
+        text: "Email: privacy@frostfruit.com\nPhone: +91 75673 50328\nAddress: FrostFruit, 12 Cold Chain Avenue, Andheri East, Mumbai — 400 069, Maharashtra, India.",
       },
     ],
   },

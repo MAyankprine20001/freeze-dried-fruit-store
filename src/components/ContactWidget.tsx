@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, MessageCircle, X, Plus, Send } from "lucide-react";
 
-const PHONE_NUMBER = "918375077360";
-const FORMATTED_PHONE = "+91 83750 77360";
+const PHONE_NUMBER = "917567350328";
+const FORMATTED_PHONE = "+91 75673 50328";
 
 const QUICK_MESSAGES = [
-  { id: 1, text: "Hi! I want to order bulk freeze-dried fruit powder. 🍎", emoji: "🍎" },
-  { id: 2, text: "I have a question about shipping and delivery times. 📦", emoji: "📦" },
-  { id: 3, text: "Can you provide a quote for corporate gifting? 🎁", emoji: "🎁" },
-  { id: 4, text: "I need help choosing the right powder for baking. 👩‍🍳", emoji: "👩‍🍳" },
-  { id: 5, text: "I'm interested in wholesale partnership opportunities. 🤝", emoji: "🤝" },
+  { id: 1, text: "Order Smoothie Mix", emoji: "🥤" },
+  { id: 2, text: "Order Freeze Fusion Chocolates", emoji: "🍫" },
+  { id: 3, text: "Order Fruit Chunks", emoji: "🍓" },
+  { id: 4, text: "View Best Sellers", emoji: "🔥" },
+  { id: 5, text: "View Prices & Offers", emoji: "💸" },
+  { id: 6, text: "Wholesale / bulk order inquiry", emoji: "🤝" },
+  { id: 7, text: "Do you deliver to my location?", emoji: "📍" },
 ];
 
 export default function ContactWidget() {
