@@ -265,7 +265,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <span className="inline-block px-4 py-1.5 bg-white text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-6">
-                Why Freeze Fruit
+                Why Freeze Drying?
               </span>
               <h2 className="font-serif text-4xl font-bold text-[#1a1a1a] mb-6 leading-tight">
                 The Science of Keeping Fruit{' '}
