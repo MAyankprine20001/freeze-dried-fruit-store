@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Leaf, Instagram } from "lucide-react";
+import { Leaf, Instagram, Youtube, Linkedin } from "lucide-react";
 
 const productLinks = [
   { label: "Smoothie Premix", path: "/smoothie-premix" },
@@ -26,6 +26,16 @@ const socialLinks = [
     label: "Instagram",
     href: "https://www.instagram.com/thedryfactoryofficial/?hl=en",
   },
+  {
+    icon: Youtube,
+    label: "YouTube",
+    href: "https://youtube.com",
+  },
+  {
+    icon: Linkedin,
+    label: "LinkedIn",
+    href: "https://linkedin.com",
+  },
 ];
 
 export default function Footer() {
@@ -46,8 +56,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-[#a0a0a0] text-sm leading-relaxed mb-6">
-              Nature's best, locked in at peak freshness. Pure fruit. Zero
-              compromise.
+              Real Fruit. Real Taste. Naturally Crafted
             </p>
             <div className="flex items-center gap-3">
               {socialLinks.map(({ icon: Icon, label, href }) => (

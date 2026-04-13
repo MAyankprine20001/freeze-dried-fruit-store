@@ -167,7 +167,7 @@ export default function Home() {
                 </h1>
 
                 <p className="text-white/85 text-lg leading-relaxed mb-10">
-                  {heroSlides[heroIndex].description.split(/(heat)/i).map((part, i) => 
+                  {heroSlides[heroIndex].description.split(/(heat)/i).map((part, i) =>
                     part.toLowerCase() === 'heat' ? <span key={i} className="text-[#f4a435] font-bold">{part}</span> : part
                   )}
                 </p>
@@ -292,7 +292,7 @@ export default function Home() {
                     <div>
                       <h3 className="font-semibold text-[#1a1a1a] mb-1">{item.title}</h3>
                       <p className="text-[#6a5a4a] text-sm leading-relaxed">
-                        {item.desc.split(/(heat)/i).map((part, i) => 
+                        {item.desc.split(/(heat)/i).map((part, i) =>
                           part.toLowerCase() === 'heat' ? <span key={i} className="text-[#e85d26] font-bold">{part}</span> : part
                         )}
                       </p>
@@ -328,7 +328,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-24 bg-white">
+      {/* <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -369,7 +369,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Banner */}
       <section className="py-24 bg-[#1a1a1a] relative overflow-hidden">
@@ -402,7 +402,7 @@ export default function Home() {
                 to="/fruit-powder-chunks"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e85d26] text-white font-semibold rounded-full hover:bg-[#d44f1a] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4a435] shadow-lg"
               >
-                Shop Powder & Chunks
+                Shop Products
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
