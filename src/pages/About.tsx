@@ -8,16 +8,20 @@ import TrustBadges from '../components/TrustBadges';
 
 const differentiators = [
   {
-    title: 'Sourced at Peak Ripeness',
-    desc: 'We work directly with trusted farms to source fruit only when it\'s at its nutritional and flavor peak — never underripe, never overripe.',
+    title: 'Real Ingredients, No Shortcuts',
+    desc: 'We don’t believe in masking flavours with sugar or chemicals. What you see is what you get  real fruits, real ingredients, nothing unnecessary.',
   },
   {
-    title: 'Pharmaceutical-Grade Freeze Drying',
-    desc: 'Our freeze-drying equipment meets the same standards used in pharmaceutical preservation, ensuring consistent quality in every batch.',
+    title: 'Freeze-Drying with Purpose',
+    desc: 'We use freeze drying not just as a process, but as a solution to preserve taste, nutrition, and shelf life without adding preservatives.',
   },
   {
-    title: 'Transparent Ingredients',
-    desc: 'Every product contains exactly one ingredient: the fruit on the label. No fillers, no flow agents, no hidden additives — ever.',
+    title: 'Made for Everyday Life',
+    desc: 'Our products are designed to be convenient, quick, and easy to use  so choosing healthy doesn’t feel like extra effort.',
+  },
+  {
+    title: 'Balanced, Not Extreme',
+    desc: 'We’re not here to sell “perfect” diets. We’re here to offer better alternatives  products that are cleaner, smarter, and realistically sustainable.',
   },
 ];
 
@@ -75,7 +79,7 @@ export default function About() {
               </h2>
               <div className="space-y-4 text-[#6a5a4a] text-base leading-relaxed">
                 <p>
-                  At The Dry Factory, we believe that what you consume every day should not just taste good, but should genuinely be good for your body. 
+                  At The Dry Factory, we believe that what you consume every day should not just taste good, but should genuinely be good for your body.
                   When we looked closely at the way food is consumed today, one thing became very clear — most “convenient” options are loaded with excess sugar, artificial flavours, preservatives, and hidden additives. What is marketed as healthy often isn’t truly so. And that didn’t sit right with us.
                 </p>
                 <p>
@@ -154,7 +158,7 @@ export default function About() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {differentiators.map((item, i) => (
               <motion.div
                 key={item.title}
