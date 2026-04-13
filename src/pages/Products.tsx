@@ -72,10 +72,10 @@ function SafeImg({
 
 const categories = [
   { id: "all", label: "All Products", emoji: "✨" },
-  { id: "powder-chunks", label: "Powder & Chunks", emoji: "🍓" },
-  { id: "chocolate", label: "Chocolate", emoji: "🍫" },
+  { id: "smoothie-premix", label: "Smoothie Premix", emoji: "🥤" },
+  { id: "chocolate", label: "Chocolates", emoji: "🍫" },
   { id: "combo", label: "Combos", emoji: "📦" },
-  { id: "gift", label: "Gift Sets", emoji: "🎁" },
+  { id: "powder-chunks", label: "Fruit Chunks & Powders", emoji: "🍓" },
 ];
 
 const allProducts = [
@@ -619,55 +619,55 @@ const categoryBanners: Record<
   { title: string; sub: string; color: string; emoji: string }
 > = {
   all: {
-    title: "Shop All FrostFruit",
-    sub: "Three extraordinary product lines. One uncompromising promise — real fruit, zero additives, maximum flavor.",
+    title: "Shop All Products",
+    sub: "Four extraordinary product lines. One uncompromising promise — real fruit, zero additives, maximum flavor.",
     color: "#e85d26",
     emoji: "✨",
   },
+  "smoothie-premix": {
+    title: "Smoothie Premixes",
+    sub: "The ultimate nutrition shortcut. 100% raw freeze-dried fruit powders designed for instant, high-nutrient smoothies.",
+    color: "#f4a435",
+    emoji: "🥤",
+  },
   "powder-chunks": {
-    title: "Fruit Powder & Chunks",
+    title: "Fruit Chunks & Powders",
     sub: "100% whole fruit in two essential forms. Concentrated powders for your recipes or crunchy chunks for on-the-go snacking.",
-    color: "#e85d26",
+    color: "#27ae60",
     emoji: "🍓",
   },
   chocolate: {
-    title: "Chocolate with Freeze Dried Fruit",
+    title: "Chocolates",
     sub: "Premium single-origin chocolate elevated with tangy, crunchy freeze-dried fruit.",
     color: "#4a1a0a",
     emoji: "🍫",
   },
   combo: {
-    title: "Value Combo Packs",
-    sub: "More flavors, bigger savings. Curated bundles that give you the best of FrostFruit at unbeatable prices.",
+    title: "Combos & Bundles",
+    sub: "More flavors, bigger savings. Curated bundles that give you the best of our range at unbeatable prices.",
     color: "#0a7a4a",
     emoji: "📦",
-  },
-  gift: {
-    title: "Gift Sets & Hampers",
-    sub: "Beautifully boxed and ready to delight. The perfect gift for every occasion — from birthdays to corporate.",
-    color: "#9b1d6a",
-    emoji: "🎁",
   },
 };
 
 const categoryCards = [
   {
-    id: "powder-chunks",
-    label: "Powder & Chunks",
-    emoji: "🍓",
-    count: 8,
-    color: "#e85d26",
-    bg: "from-[#fff2ee] to-[#ffe8df]",
-    border: "#f5cfc0",
-    gradientFrom: "#e85d26",
-    gradientTo: "#f4a435",
+    id: "smoothie-premix",
+    label: "Smoothie Premix",
+    emoji: "🥤",
+    count: 3,
+    color: "#f4a435",
+    bg: "from-[#fff7ee] to-[#fff0e0]",
+    border: "#f5e2c0",
+    gradientFrom: "#f4a435",
+    gradientTo: "#e67e22",
     image:
-      "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=400&fit=crop&auto=format",
-    desc: "100% pure freeze-dried goodness",
+      "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&h=400&fit=crop&auto=format",
+    desc: "Instant high-nutrient morning fuel",
   },
   {
     id: "chocolate",
-    label: "Chocolate",
+    label: "Chocolates",
     emoji: "🍫",
     count: 4,
     color: "#4a1a0a",
@@ -681,7 +681,7 @@ const categoryCards = [
   },
   {
     id: "combo",
-    label: "Combo Packs",
+    label: "Combos",
     emoji: "📦",
     count: 4,
     color: "#0a7a4a",
@@ -690,22 +690,22 @@ const categoryCards = [
     gradientFrom: "#0a7a4a",
     gradientTo: "#27ae60",
     image:
-      "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=400&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1549007994-cb92cd87dd39?w=600&h=400&fit=crop&auto=format",
     desc: "Curated bundles, bigger savings",
   },
   {
-    id: "gift",
-    label: "Gift Sets",
-    emoji: "🎁",
-    count: 4,
-    color: "#9b1d6a",
-    bg: "from-[#fdf0f8] to-[#f8e0f0]",
-    border: "#e8b0d8",
-    gradientFrom: "#9b1d6a",
-    gradientTo: "#c0396a",
+    id: "powder-chunks",
+    label: "Fruit Chunks & Powders",
+    emoji: "🍓",
+    count: 8,
+    color: "#27ae60",
+    bg: "from-[#f0fff6] to-[#e0f7ea]",
+    border: "#b0e0c0",
+    gradientFrom: "#27ae60",
+    gradientTo: "#2ecc71",
     image:
-      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=400&fit=crop&auto=format",
-    desc: "Beautifully boxed, ready to gift",
+      "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=400&fit=crop&auto=format",
+    desc: "100% pure freeze-dried fruits",
   },
 ];
 

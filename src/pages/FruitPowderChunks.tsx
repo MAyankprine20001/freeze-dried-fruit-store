@@ -55,7 +55,7 @@ export default function FruitPowderChunks() {
       <Header />
 
       <PageHero
-        tag="Freeze Dried Fruit Powder & Chunks"
+        tag="Fruit Chunks & Powders"
         title="Pure Fruit,"
         highlight="Two Essential Forms"
         description="Whether you need the intense, dissolvable flavor of our ultra-fine powders or the satisfying, nutritious crunch of our whole chunks, we deliver the pure essence of fruit at its peak."

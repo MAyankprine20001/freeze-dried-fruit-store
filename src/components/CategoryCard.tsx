@@ -41,7 +41,6 @@ export default function CategoryCard({ title, description, image, path, tag, ind
           <h3 className="font-serif text-xl font-bold text-[#1a1a1a] mb-3 group-hover:text-[#e85d26] transition-colors duration-200">
             {title}
           </h3>
-          <p className="text-[#6a5a4a] text-sm leading-relaxed mb-4">{description}</p>
           <div className="flex items-center gap-2 text-[#e85d26] text-sm font-semibold">
             <span>Explore</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />

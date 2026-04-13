@@ -37,7 +37,7 @@ export default function Chocolate() {
       <Header />
 
       <PageHero
-        tag="Chocolate with Freeze Dried Fruit"
+        tag="Chocolates"
         title="Where Chocolate Meets"
         highlight="Pure Fruit"
         description="We take premium chocolate and elevate it with the bold, tangy crunch of freeze-dried fruit. The result is a sensory experience that's visually stunning, intensely flavorful, and made from ingredients you can actually pronounce."

@@ -126,6 +126,41 @@ const IconFAQ = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const IconSmoothie = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M14 3l-1.5 2" />
+    <path d="M6 5h8v2H6z" />
+    <path d="M6.5 7L5.5 17h9l-1-10" />
+    <path d="M10 7v4" />
+  </svg>
+);
+
+const IconCombos = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect x="4" y="8" width="12" height="8" rx="1" />
+    <path d="M3 5h14v3H3z" />
+    <path d="M10 5v11" />
+  </svg>
+);
+
+// ─── Nav config ───────────────────────────────────────────────────────────────
+
 const IconContact = ({ className }: { className?: string }) => (
   // Envelope with leaf detail
   <svg
@@ -142,18 +177,17 @@ const IconContact = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// ─── Nav config ───────────────────────────────────────────────────────────────
-
 const navLinks = [
   { label: "Home", path: "/", Icon: IconHome },
+  { label: "Smoothie Premix", path: "/smoothie-premix", Icon: IconSmoothie },
+  { label: "Chocolates", path: "/chocolate", Icon: IconChocolate },
+  { label: "Combos", path: "/combos", Icon: IconCombos },
+  { label: "Fruit Chunks & Powders", path: "/fruit-powder-chunks", Icon: IconFruitPowderChunks },
   { label: "About", path: "/about", Icon: IconAbout },
-  { label: "Products", path: "/products", Icon: IconProducts },
-  { label: "Powder & Chunks", path: "/fruit-powder-chunks", Icon: IconFruitPowderChunks },
-  { label: "Chocolate", path: "/chocolate", Icon: IconChocolate },
   { label: "Reviews", path: "/reviews", Icon: IconReviews, badge: true },
-  { label: "FAQ", path: "/faq", Icon: IconFAQ },
   { label: "Contact", path: "/contact", Icon: IconContact },
 ];
+
 
 // ─── Component ────────────────────────────────────────────────────────────────
 

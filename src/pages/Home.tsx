@@ -34,46 +34,32 @@ const heroSlides = [
 
 const categories = [
   {
-    title: 'Freeze Dried Fruit Powder & Chunks',
-    description: 'The pure essence of fruit, available in ultra-fine powders for blending or crunchy whole chunks for snacking.',
-    image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=400&fit=crop',
-    path: '/fruit-powder-chunks',
-    tag: 'Bestseller',
-  },
-  {
-    title: 'Chocolate with Freeze Dried Fruit',
-    description: 'Premium chocolate elevated by the bold, tangy crunch of freeze-dried fruit. A sensory experience unlike any other.',
-    image: 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&h=400&fit=crop',
-    path: '/chocolate',
-    tag: 'New',
-  },
-  {
-    title: 'Cold-Pressed Wellness Elixirs',
-    description: 'Nutrient-dense beverages made from 100% raw freeze-dried fruit. A powerful boost of vitamins and natural energy in every glass.',
-    image: '/beverage-1.png',
-    path: '/products',
-    tag: 'Detox',
-  },
-  {
-    title: 'Antioxidant Herbal Infusions',
-    description: 'Refreshing, clear tea blends infused with real fruit slices. Designed for hydration and cellular protection.',
+    title: 'Smoothie Premix',
+    description: 'The ultimate nutrition shortcut. 100% raw freeze-dried fruit powders designed for instant, high-nutrient smoothies.',
     image: '/beverage-2.png',
-    path: '/products',
-    tag: 'Healing',
+    path: '/smoothie-premix',
+    tag: 'Instant',
   },
   {
-    title: 'Vibrant Raw Cacao Bark',
-    description: 'Thin, elegant dark chocolate bark topped with a vibrant explosion of freeze-dried superfruits and a hint of sea salt.',
+    title: 'Chocolates',
+    description: 'Premium single-origin chocolate elevated by the bold, tangy crunch of freeze-dried fruit. A sensory experience unlike any other.',
     image: '/premium-chocolate.png',
     path: '/chocolate',
-    tag: 'Artisan',
+    tag: 'Premium',
   },
   {
-    title: 'Cacao-Glazed Whole Berries',
-    description: 'Bite-sized, glossy dark chocolate-covered whole strawberries. A crunch of intense fruit flavor in every piece.',
+    title: 'Combos',
+    description: 'Curated bundles of our finest products. Perfect for gifting, sampling, or stocking up your healthy pantry.',
+    image: '/SliderImage/Photo_one.jpg',
+    path: '/combos',
+    tag: 'Best Value',
+  },
+  {
+    title: 'Fruit Chunks & Powders',
+    description: 'The pure essence of fruit. Choose between crunchy whole chunks for snacking or ultra-fine powders for blending and baking.',
     image: '/milk-chocolate-chunks.png',
-    path: '/chocolate',
-    tag: 'Premium',
+    path: '/fruit-powder-chunks',
+    tag: 'Versatile',
   },
 ];
 
@@ -118,8 +104,6 @@ const testimonials = [
 
 export default function Home() {
   const [heroIndex, setHeroIndex] = React.useState(0);
-  const [catIndex, setCatIndex] = React.useState(0);
-
   // Auto-play hero
   React.useEffect(() => {
     const timer = setInterval(() => {
@@ -130,13 +114,6 @@ export default function Home() {
 
   const nextHero = () => setHeroIndex((prev) => (prev + 1) % heroSlides.length);
   const prevHero = () => setHeroIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-
-  const nextCat = () => {
-    if (catIndex < categories.length - 3) setCatIndex(prev => prev + 1);
-  };
-  const prevCat = () => {
-    if (catIndex > 0) setCatIndex(prev => prev - 1);
-  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -231,9 +208,8 @@ export default function Home() {
               <button
                 key={i}
                 onClick={() => setHeroIndex(i)}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  i === heroIndex ? "bg-[#f4a435] w-8" : "bg-white/30"
-                }`}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === heroIndex ? "bg-[#f4a435] w-8" : "bg-white/30"
+                  }`}
               />
             ))}
           </div>
@@ -250,7 +226,7 @@ export default function Home() {
       <TrustBadges />
 
       {/* Categories */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -263,45 +239,17 @@ export default function Home() {
               Our Products
             </span>
             <h2 className="font-serif text-4xl font-bold text-[#1a1a1a] mb-4">
-              Three Ways to Love Fruit
+              Four Ways to Love Fruit
             </h2>
             <p className="text-[#6a5a4a] text-lg max-w-2xl mx-auto">
-              Whether you're blending, baking, snacking, or gifting — we have the perfect freeze-dried fruit product for every moment.
+              Whether you're blending, baking, snacking, or gifting we have the perfect freeze-dried fruit product for every moment.
             </p>
           </motion.div>
 
-          <div className="relative group">
-            <div className="overflow-hidden">
-              <motion.div
-                animate={{ x: `-${catIndex * (100 / 3)}%` }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="flex gap-8"
-              >
-                {categories.map((cat, i) => (
-                  <div key={i} className="min-w-[calc(33.333%-22px)] flex-shrink-0">
-                    <CategoryCard {...cat} index={i} />
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Slider Buttons */}
-            {catIndex > 0 && (
-              <button
-                onClick={prevCat}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 w-12 h-12 rounded-full bg-white shadow-xl border border-[#f0e8e0] flex items-center justify-center text-[#1a1a1a] hover:text-[#e85d26] transition-all z-20"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-            )}
-            {catIndex < categories.length - 3 && (
-              <button
-                onClick={nextCat}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 w-12 h-12 rounded-full bg-white shadow-xl border border-[#f0e8e0] flex items-center justify-center text-[#1a1a1a] hover:text-[#e85d26] transition-all z-20"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {categories.map((cat, i) => (
+              <CategoryCard key={i} {...cat} index={i} />
+            ))}
           </div>
         </div>
       </section>
