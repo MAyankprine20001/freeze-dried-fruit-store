@@ -13,7 +13,7 @@ const heroSlides = [
     image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=1600&h=900&fit=crop",
     title: "Peak Wellness, Powered By Nature",
     subtitle: "100% Raw Nutrition",
-    description: "Our unique freeze-drying process preserves 97% of vitamins and minerals. No added sugars, no preservatives—just the pure essence of peak-harvested fruit.",
+    description: "Our unique freeze drying process preserves 97% of vitamins and minerals without heat. No added sugars, no preservatives—just the pure essence of peak-harvested fruit.",
     color: "#f4a435"
   },
   {
@@ -77,7 +77,7 @@ const whyUs = [
   {
     icon: Package,
     title: 'Long Shelf Life, Zero Waste',
-    desc: 'Enjoy the taste of summer strawberries in January. Our products last up to 25 years sealed — and stay fresh for 12 months once opened.',
+    desc: 'Enjoy the taste of summer strawberries in January. Our products last up to 25 years sealed  and stay fresh for 12 months once opened.',
   },
 ];
 
@@ -167,7 +167,9 @@ export default function Home() {
                 </h1>
 
                 <p className="text-white/85 text-lg leading-relaxed mb-10">
-                  {heroSlides[heroIndex].description}
+                  {heroSlides[heroIndex].description.split(/(heat)/i).map((part, i) => 
+                    part.toLowerCase() === 'heat' ? <span key={i} className="text-[#f4a435] font-bold">{part}</span> : part
+                  )}
                 </p>
               </motion.div>
             </AnimatePresence>
@@ -272,7 +274,7 @@ export default function Home() {
                 <span className="text-[#e85d26]">Perfect</span>
               </h2>
               <p className="text-[#6a5a4a] text-base leading-relaxed mb-10">
-                Freeze-drying is the gold standard of food preservation. By removing moisture at sub-zero temperatures, we lock in the color, flavor, and nutrition of fruit at its absolute peak — without a single additive.
+                Freeze drying is the gold standard of food preservation. By removing moisture at sub-zero temperatures, we lock in the color, flavor, and nutrition of fruit at its absolute peak  without a single additive.
               </p>
               <div className="space-y-8">
                 {whyUs.map((item, i) => (
@@ -289,7 +291,11 @@ export default function Home() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-[#1a1a1a] mb-1">{item.title}</h3>
-                      <p className="text-[#6a5a4a] text-sm leading-relaxed">{item.desc}</p>
+                      <p className="text-[#6a5a4a] text-sm leading-relaxed">
+                        {item.desc.split(/(heat)/i).map((part, i) => 
+                          part.toLowerCase() === 'heat' ? <span key={i} className="text-[#e85d26] font-bold">{part}</span> : part
+                        )}
+                      </p>
                     </div>
                   </motion.div>
                 ))}
