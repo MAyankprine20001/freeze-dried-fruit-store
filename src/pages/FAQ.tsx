@@ -13,15 +13,15 @@ const faqs = [
   },
   {
     q: "How should I store freeze-dried fruit?",
-    a: "Store your FrostFruit products in a cool, dry location away from direct sunlight and heat sources. A pantry or kitchen cupboard is ideal. Avoid storing near the stove or in humid environments. Once opened, press out as much air as possible before resealing. Refrigeration is not necessary and can actually introduce unwanted moisture.",
+    a: "Store your The Dry Factory products in a cool, dry location away from direct sunlight and heat sources. A pantry or kitchen cupboard is ideal. Avoid storing near the stove or in humid environments. Once opened, press out as much air as possible before resealing. Refrigeration is not necessary and can actually introduce unwanted moisture.",
   },
   {
     q: "What are the ingredients in your products?",
-    a: "Every FrostFruit product contains exactly one ingredient: the fruit named on the label. No added sugar, no preservatives, no artificial flavors, no flow agents, no fillers. Our fruit powder and chunks are made from 100% whole fruit that has been freeze-dried and (in the case of powder) milled. Our chocolate products contain the chocolate ingredients plus the named freeze-dried fruit — all clearly listed on the label.",
+    a: "Every The Dry Factory product contains exactly one ingredient: the fruit named on the label. No added sugar, no preservatives, no artificial flavors, no flow agents, no fillers. Our fruit powder and chunks are made from 100% whole fruit that has been freeze-dried and (in the case of powder) milled. Our chocolate products contain the chocolate ingredients plus the named freeze-dried fruit — all clearly listed on the label.",
   },
   {
     q: "Are your products certified Non-GMO and Gluten Free?",
-    a: "Yes. All FrostFruit products are Non-GMO and naturally gluten-free. Our fruit products are also free from the top 14 allergens. Our chocolate products are produced in a facility that handles tree nuts and dairy — please check individual product labels if you have specific allergen concerns. We are committed to full transparency on all certifications and production practices.",
+    a: "Yes. All The Dry Factory products are Non-GMO and naturally gluten-free. Our fruit products are also free from the top 14 allergens. Our chocolate products are produced in a facility that handles tree nuts and dairy — please check individual product labels if you have specific allergen concerns. We are committed to full transparency on all certifications and production practices.",
   },
   {
     q: "Do you ship internationally?",

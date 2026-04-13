@@ -37,7 +37,7 @@ export default function BulkOrders() {
       <PageHero
         tag="Wholesale & Bulk"
         title="Scale Your Business"
-        highlight="With FrostFruit"
+        highlight="With The Dry Factory"
         description="Whether you're a bakery, smoothie bar, or retailer, we provide premium freeze-dried products in bulk quantities with uncompromising quality and reliable supply."
         image="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1600&h=600&fit=crop"
       />

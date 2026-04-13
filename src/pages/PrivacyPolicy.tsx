@@ -87,7 +87,7 @@ const sections = [
       },
       {
         subtitle: "We Do Not Sell Your Data",
-        text: "FrostFruit does not sell, rent, or trade your personal information to any third party for their marketing purposes. Your data is yours.",
+        text: "The Dry Factory does not sell, rent, or trade your personal information to any third party for their marketing purposes. Your data is yours.",
       },
       {
         subtitle: "Legal Requirements",
@@ -155,7 +155,7 @@ const sections = [
       },
       {
         subtitle: "How to Exercise Your Rights",
-        text: "To exercise any of these rights, please contact us at privacy@frostfruit.com. We will respond within 30 days.",
+        text: "To exercise any of these rights, please contact us at privacy@The Dry Factory.com. We will respond within 30 days.",
       },
     ],
   },
@@ -171,7 +171,7 @@ const sections = [
       },
       {
         subtitle: "Contact Details",
-        text: "Email: privacy@frostfruit.com\nPhone: +91 75673 50328\nAddress: FrostFruit, 12 Cold Chain Avenue, Andheri East, Mumbai — 400 069, Maharashtra, India.",
+        text: "Email: privacy@The Dry Factory.com\nPhone: +91 75673 50328\nAddress: The Dry Factory, 12 Cold Chain Avenue, Andheri East, Mumbai — 400 069, Maharashtra, India.",
       },
     ],
   },
@@ -277,7 +277,7 @@ export default function PrivacyPolicy() {
               Privacy Policy
             </h1>
             <p className="text-[#6a5a4a] text-base leading-relaxed max-w-2xl mb-4">
-              At FrostFruit, your privacy is as important to us as the quality
+              At The Dry Factory, your privacy is as important to us as the quality
               of our products. This policy explains what data we collect, how we
               use it, and the rights you have over your information.
             </p>
@@ -374,7 +374,7 @@ export default function PrivacyPolicy() {
                 changes constitutes acceptance.
               </p>
               <p className="text-[#f4a435] text-xs font-semibold mt-3">
-                © 2026 FrostFruit. All rights reserved.
+                © 2026 The Dry Factory. All rights reserved.
               </p>
             </motion.div>
           </main>

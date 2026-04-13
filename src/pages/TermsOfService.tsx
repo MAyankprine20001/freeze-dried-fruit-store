@@ -41,7 +41,7 @@ const sections = [
     content: [
       {
         subtitle: "Agreement to Terms",
-        text: 'These Terms of Service ("Terms") govern your access to and use of the FrostFruit website (frostfruit.com) and purchase of our products. By browsing the website, placing an order, or creating an account, you confirm that you have read, understood, and agree to be bound by these Terms.',
+        text: 'These Terms of Service ("Terms") govern your access to and use of the The Dry Factory website (The Dry Factory.com) and purchase of our products. By browsing the website, placing an order, or creating an account, you confirm that you have read, understood, and agree to be bound by these Terms.',
       },
       {
         subtitle: "Eligibility",
@@ -49,7 +49,7 @@ const sections = [
       },
       {
         subtitle: "Changes to Terms",
-        text: "FrostFruit reserves the right to modify these Terms at any time. We will provide notice of significant changes via email or a banner on our website. Your continued use of our services after the effective date of changes constitutes your acceptance of the revised Terms.",
+        text: "The Dry Factory reserves the right to modify these Terms at any time. We will provide notice of significant changes via email or a banner on our website. Your continued use of our services after the effective date of changes constitutes your acceptance of the revised Terms.",
       },
     ],
   },
@@ -105,7 +105,7 @@ const sections = [
       },
       {
         subtitle: "How to Initiate a Return",
-        text: "To initiate a return, email us at returns@frostfruit.com with your order number, reason for return, and supporting photographs (if applicable). Our team will guide you through the process.",
+        text: "To initiate a return, email us at returns@The Dry Factory.com with your order number, reason for return, and supporting photographs (if applicable). Our team will guide you through the process.",
       },
     ],
   },
@@ -123,7 +123,7 @@ const sections = [
       },
       {
         subtitle: "User-Generated Content",
-        text: "If you submit reviews, comments, or other content to our website, you grant FrostFruit a non-exclusive, royalty-free licence to use, reproduce, and display such content. You are solely responsible for the accuracy and legality of content you submit.",
+        text: "If you submit reviews, comments, or other content to our website, you grant The Dry Factory a non-exclusive, royalty-free licence to use, reproduce, and display such content. You are solely responsible for the accuracy and legality of content you submit.",
       },
       {
         subtitle: "Account Termination",
@@ -145,7 +145,7 @@ const sections = [
       },
       {
         subtitle: "Limitation of Liability",
-        text: "To the maximum extent permitted by applicable law, FrostFruit shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our products or website. Our total liability for any claim arising out of or relating to these Terms shall not exceed the amount you paid for the order in question.",
+        text: "To the maximum extent permitted by applicable law, The Dry Factory shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our products or website. Our total liability for any claim arising out of or relating to these Terms shall not exceed the amount you paid for the order in question.",
       },
       {
         subtitle: "Allergen Disclaimer",
@@ -163,11 +163,11 @@ const sections = [
     color: "#e85d26",
     title: "Intellectual Property",
     highlight:
-      "All content on this website is the property of FrostFruit and protected by copyright law.",
+      "All content on this website is the property of The Dry Factory and protected by copyright law.",
     content: [
       {
         subtitle: "Ownership",
-        text: "All content on the FrostFruit website — including text, graphics, logos, images, product descriptions, and software — is the exclusive property of FrostFruit or its content suppliers and is protected by Indian and international copyright, trademark, and other intellectual property laws.",
+        text: "All content on the The Dry Factory website — including text, graphics, logos, images, product descriptions, and software — is the exclusive property of The Dry Factory or its content suppliers and is protected by Indian and international copyright, trademark, and other intellectual property laws.",
       },
       {
         subtitle: "Limited Licence",
@@ -175,7 +175,7 @@ const sections = [
       },
       {
         subtitle: "Trademarks",
-        text: '"FrostFruit" and our logo are trademarks of FrostFruit. You may not use our trademarks in connection with any product or service without our prior written consent.',
+        text: '"The Dry Factory" and our logo are trademarks of The Dry Factory. You may not use our trademarks in connection with any product or service without our prior written consent.',
       },
     ],
   },
@@ -193,7 +193,7 @@ const sections = [
       },
       {
         subtitle: "Dispute Resolution",
-        text: "In the event of a dispute, we encourage you to first contact us directly at legal@frostfruit.com so we can attempt to resolve the matter amicably. If resolution cannot be reached informally, the dispute shall be submitted to arbitration under the Arbitration and Conciliation Act, 1996.",
+        text: "In the event of a dispute, we encourage you to first contact us directly at legal@The Dry Factory.com so we can attempt to resolve the matter amicably. If resolution cannot be reached informally, the dispute shall be submitted to arbitration under the Arbitration and Conciliation Act, 1996.",
       },
       {
         subtitle: "Jurisdiction",
@@ -320,7 +320,7 @@ export default function TermsOfService() {
             </h1>
             <p className="text-[#6a5a4a] text-base leading-relaxed max-w-2xl mb-4">
               These terms explain the rules and conditions that apply when you
-              shop with FrostFruit or use our website. Please read them
+              shop with The Dry Factory or use our website. Please read them
               carefully before placing an order.
             </p>
             <p className="text-xs text-[#9a8a7a] font-medium">
@@ -451,7 +451,7 @@ export default function TermsOfService() {
                 Get in Touch
               </Link>
               <p className="text-[#9a8a7a] text-xs font-medium mt-4">
-                © 2026 FrostFruit. All rights reserved.
+                © 2026 The Dry Factory. All rights reserved.
               </p>
             </motion.div>
           </main>

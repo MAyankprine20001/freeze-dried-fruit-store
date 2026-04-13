@@ -28,9 +28,9 @@ export default function About() {
 
       <PageHero
         tag="Our Story"
-        title="Born from a Passion for"
-        highlight="Real Food"
-        description="FrostFruit started in a small kitchen with a simple obsession: why does fruit lose everything that makes it great the moment it's processed? We set out to change that."
+        title="Real Food,"
+        highlight="Thoughtfully Preserved"
+        description="At The Dry Factory, we believe that what you consume every day should not just taste good, but should genuinely be good for your body. Healthy should not be complicated."
         image="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1600&h=600&fit=crop"
         tint="from-[#1a1a1a]/85"
       />
@@ -56,8 +56,8 @@ export default function About() {
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 bg-[#e85d26] rounded-2xl p-6 shadow-xl text-white">
-                <p className="font-serif text-3xl font-bold">2018</p>
-                <p className="text-white/80 text-sm font-medium">Founded with purpose</p>
+                <p className="font-serif text-3xl font-bold">The Dry Factory</p>
+                <p className="text-white/80 text-sm font-medium">Simple. Honest. Trustworthy.</p>
               </div>
             </motion.div>
 
@@ -71,17 +71,27 @@ export default function About() {
                 Where It All Began
               </span>
               <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mb-6 leading-tight">
-                A Farmer's Daughter and a Freeze-Dryer
+                Our Story
               </h2>
               <div className="space-y-4 text-[#6a5a4a] text-base leading-relaxed">
                 <p>
-                  Our founder, Elena, grew up on a fruit farm in the Pacific Northwest. Every summer, she watched her family's harvest — months of careful growing — go to waste because the market couldn't absorb it all. Perfectly ripe strawberries, peaches, and blueberries, composted by the ton.
+                  At The Dry Factory, we believe that what you consume every day should not just taste good, but should genuinely be good for your body. 
+                  When we looked closely at the way food is consumed today, one thing became very clear — most “convenient” options are loaded with excess sugar, artificial flavours, preservatives, and hidden additives. What is marketed as healthy often isn’t truly so. And that didn’t sit right with us.
                 </p>
                 <p>
-                  After studying food science, Elena discovered freeze-drying: a process that removes moisture without heat, preserving the color, flavor, and nutrition of fruit at its absolute peak. She bought a small freeze-dryer, started experimenting in her garage, and FrostFruit was born.
+                  At the same time, we noticed a deeper problem with something as simple and natural as fruits. They don’t last long. They spoil quickly, are highly seasonal, and are difficult to store or transport without losing their quality. In a country like India, where we are blessed with such a wide variety of fruits and vegetables, it’s surprising that only a small portion actually reaches meaningful use, while a large percentage goes to waste. This leads to significant losses — not just for farmers, but for all of us.
                 </p>
                 <p>
-                  What started as a way to save her family's harvest became a mission to bring the most honest, nutritious fruit products to families everywhere — with zero compromise on quality or transparency.
+                  We wanted to change this. Our journey started with a simple thought — what if we could preserve fruits in their most natural form, without adding anything artificial, and make them available anytime, anywhere?
+                </p>
+                <p>
+                  That’s where freeze-drying came in. A process that removes moisture without heat, helping retain the real taste, nutrition, and texture of fruits. But for us, it wasn’t just about using a technology — it was about using it meaningfully. We explored ways to turn real ingredients into products that are clean, convenient, and enjoyable in everyday life.
+                </p>
+                <p>
+                  From our smoothies to our chocolate creations, everything we make is built around real ingredients, honest processes, and a clear intention — to offer better choices without compromising on taste.
+                </p>
+                <p>
+                  Our goal is simple — to make real fruit accessible in every season, without the worry of it going bad, and to take the authentic taste of our country beyond boundaries. We are not just building a brand. We are building a habit — a habit of choosing better, every day.
                 </p>
               </div>
             </motion.div>
@@ -102,18 +112,25 @@ export default function About() {
               Our Mission
             </span>
             <h2 className="font-serif text-4xl font-bold text-[#1a1a1a] mb-8 leading-tight">
-              Honest Food for a Healthier World
+              Honest Food for a Healthier Everyday
             </h2>
-            <div className="space-y-4 text-[#6a5a4a] text-lg leading-relaxed">
-              <p>
-                Our mission is simple: to make the most nutritious, most flavorful, and most honest fruit products on the planet. We believe that real food shouldn't need a chemistry degree to understand — if you can't pronounce it, it shouldn't be in your food.
-              </p>
-              <p>
-                We're committed to working with nature, not against it. That means sourcing sustainably, processing minimally, and packaging responsibly — so that every FrostFruit product is as good for the planet as it is for you.
-              </p>
-              <p>
-                Health shouldn't be complicated. We make it easy to eat more fruit, more often, in more ways — without ever sacrificing quality, taste, or transparency.
-              </p>
+            <div className="space-y-6 text-[#6a5a4a] text-lg leading-relaxed text-left max-w-3xl mx-auto">
+              <div className="flex gap-4">
+                <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#e85d26]" />
+                <p>Our mission is simple — to make real food easy to trust again.</p>
+              </div>
+              <div className="flex gap-4">
+                <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#e85d26]" />
+                <p>In a world full of shortcuts, we want to bring back honesty to what people consume daily. No hidden ingredients, no unnecessary additives — just clean, thoughtfully made products that actually do what they promise.</p>
+              </div>
+              <div className="flex gap-4">
+                <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#e85d26]" />
+                <p>We aim to make fruits more accessible beyond their seasons, reduce unnecessary waste, and create products that fit naturally into modern lifestyles without compromising health.</p>
+              </div>
+              <div className="flex gap-4">
+                <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#e85d26]" />
+                <p>Because for us, it’s not just about selling products — it’s about helping people build better, simpler food habits every day.</p>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -130,7 +147,7 @@ export default function About() {
             className="text-center mb-16"
           >
             <span className="inline-block px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-4">
-              The FrostFruit Difference
+              The Dry Factory Difference
             </span>
             <h2 className="font-serif text-4xl font-bold text-[#1a1a1a]">
               What Sets Us Apart

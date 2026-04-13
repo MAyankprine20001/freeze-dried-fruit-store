@@ -154,7 +154,7 @@ const allReviews = [
     rating: 5,
     date: "March 8, 2026",
     title: "As a nutritionist, I recommend this without hesitation",
-    body: "I've been researching freeze-dried fruit products for a while. The antioxidant retention in freeze-drying is genuinely superior to air-drying or dehydration. FrostFruit's blueberry powder tests exceptionally well — my patients who've added it to their diet report better energy levels. The fact it's just one ingredient is exactly what I look for.",
+    body: "I've been researching freeze-dried fruit products for a while. The antioxidant retention in freeze-drying is genuinely superior to air-drying or dehydration. The Dry Factory's blueberry powder tests exceptionally well — my patients who've added it to their diet report better energy levels. The fact it's just one ingredient is exactly what I look for.",
     helpful: 324,
     verified: true,
     hasPhoto: false,
@@ -165,7 +165,7 @@ const allReviews = [
   {
     id: "r6",
     category: "combo",
-    product: "The FrostFruit Sampler",
+    product: "The The Dry Factory Sampler",
     productEmoji: "🌟",
     name: "Kavitha Reddy",
     location: "Hyderabad",
@@ -579,7 +579,7 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
             </h3>
             <p className="text-[#6a5a4a] text-sm mb-6">
               Your feedback helps thousands of people discover the best of
-              FrostFruit.
+              The Dry Factory.
             </p>
             <button
               onClick={onClose}
@@ -594,7 +594,7 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
               Write a Review
             </h3>
             <p className="text-sm text-[#9a8a7a] mb-6">
-              Share your honest experience with the FrostFruit community
+              Share your honest experience with the The Dry Factory community
             </p>
 
             {/* Star picker */}
@@ -683,7 +683,7 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
                 <option>Milk + Strawberry Bar</option>
                 <option>White + Mango Bar</option>
                 <option>Dark + Blueberry Bar</option>
-                <option>FrostFruit Sampler</option>
+                <option>The Dry Factory Sampler</option>
                 <option>Celebration Gift Box</option>
               </select>
             </div>
@@ -778,7 +778,7 @@ export default function Reviews() {
             </h1>
             <p className="text-[#6a5a4a] text-base max-w-xl mx-auto mb-8">
               Over 1,200 verified reviews from customers across India who've
-              made FrostFruit part of their everyday life.
+              made The Dry Factory part of their everyday life.
             </p>
             <button
               onClick={() => setShowModal(true)}
@@ -879,7 +879,7 @@ export default function Reviews() {
             >
               <Quote className="w-8 h-8 text-[#f0d9c8] mb-3" />
               <p className="font-serif text-lg font-medium text-[#1a1a1a] italic leading-relaxed mb-4">
-                "I recommend FrostFruit to all my clients. The ingredient list
+                "I recommend The Dry Factory to all my clients. The ingredient list
                 is exactly what it should be — just fruit."
               </p>
               <div className="flex items-center gap-3">
@@ -1092,11 +1092,11 @@ export default function Reviews() {
                 ⭐ Share Your Experience
               </span>
               <h2 className="font-serif text-3xl lg:text-4xl font-bold text-white mb-3">
-                Tried FrostFruit?
+                Tried The Dry Factory?
               </h2>
               <p className="text-white/70 text-sm leading-relaxed mb-8 max-w-lg mx-auto">
                 Your review helps real people make better choices. Take 2
-                minutes and tell the FrostFruit community what you thought.
+                minutes and tell the The Dry Factory community what you thought.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 <button

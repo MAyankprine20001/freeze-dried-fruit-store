@@ -471,7 +471,7 @@ const allProducts = [
   {
     id: "co4",
     category: "combo",
-    name: "The FrostFruit Sampler",
+    name: "The The Dry Factory Sampler",
     subtitle: "All Categories · 6-piece",
     price: 1499,
     originalPrice: 2024,
@@ -993,7 +993,7 @@ function ComboBanner() {
               <span className="text-[#0a7a4a]">Bigger Savings</span>
             </h2>
             <p className="text-[#4a5a4a] text-sm leading-relaxed mb-6 max-w-lg">
-              Can't choose just one? Our combos bundle the best of FrostFruit —
+              Can't choose just one? Our combos bundle the best of The Dry Factory —
               handpicked for taste, nutrition, and value. Save up to 25% versus
               buying individually.
             </p>
@@ -1174,7 +1174,7 @@ export default function Products() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-bold uppercase tracking-widest rounded-full border border-[#f0d9c8] mb-5">
               <Leaf className="w-3.5 h-3.5" />
-              FrostFruit Shop
+              The Dry Factory Shop
             </span>
             <h1 className="font-serif text-4xl lg:text-5xl font-bold text-[#1a1a1a] mb-3">
               All Products
@@ -1528,7 +1528,7 @@ export default function Products() {
               </h2>
               <p className="text-white/70 text-sm leading-relaxed mb-8 max-w-lg mx-auto">
                 One pack. All three categories — powder, chunks & chocolate.
-                Discover your favourite FrostFruit product with free delivery.
+                Discover your favourite The Dry Factory product with free delivery.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 <Link

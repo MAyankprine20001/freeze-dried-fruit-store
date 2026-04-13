@@ -32,9 +32,8 @@ export default function PageHero({ tag, title, highlight, description, image, ti
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6 ${
-              image ? 'bg-white/20 text-white border border-white/30' : 'bg-[#fdf3ec] text-[#e85d26] border border-[#f0d9c8]'
-            }`}
+            className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6 ${image ? 'bg-white/20 text-white border border-white/30' : 'bg-[#fdf3ec] text-[#e85d26] border border-[#f0d9c8]'
+              }`}
           >
             {tag}
           </motion.span>
@@ -50,14 +49,6 @@ export default function PageHero({ tag, title, highlight, description, image, ti
             <span className={image ? 'text-[#f4a435]' : 'text-[#e85d26]'}>{highlight}</span>
           )}
         </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className={`text-lg leading-relaxed max-w-2xl ${image ? 'text-white/85' : 'text-[#6a5a4a]'}`}
-        >
-          {description}
-        </motion.p>
       </div>
     </section>
   );
