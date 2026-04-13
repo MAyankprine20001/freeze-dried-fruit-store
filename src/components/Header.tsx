@@ -126,6 +126,41 @@ const IconFAQ = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const IconBulk = ({ className }: { className?: string }) => (
+  // Boxes stacked — "Bulk / wholesale"
+  <svg
+    className={className}
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect x="3" y="10" width="6" height="6" rx="1" />
+    <rect x="11" y="10" width="6" height="6" rx="1" />
+    <rect x="7" y="4" width="6" height="6" rx="1" />
+  </svg>
+);
+
+const IconBlog = ({ className }: { className?: string }) => (
+  // Newspaper / article icon
+  <svg
+    className={className}
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M4 4h12v12H4z" />
+    <path d="M7 7h6" />
+    <path d="M7 10h6" />
+    <path d="M7 13h4" />
+  </svg>
+);
+
 const IconSmoothie = ({ className }: { className?: string }) => (
   <svg
     className={className}
@@ -178,14 +213,14 @@ const IconContact = ({ className }: { className?: string }) => (
 );
 
 const navLinks = [
-  { label: "Home", path: "/", Icon: IconHome },
-  { label: "Smoothie Premix", path: "/smoothie-premix", Icon: IconSmoothie },
-  { label: "Chocolates", path: "/chocolate", Icon: IconChocolate },
-  { label: "Combos", path: "/combos", Icon: IconCombos },
-  { label: "Fruit Chunks & Powders", path: "/fruit-powder-chunks", Icon: IconFruitPowderChunks },
-  { label: "About", path: "/about", Icon: IconAbout },
-  { label: "Reviews", path: "/reviews", Icon: IconReviews, badge: true },
-  { label: "Contact", path: "/contact", Icon: IconContact },
+  { label: "HOME", path: "/", Icon: IconHome },
+  { label: "ABOUT", path: "/about", Icon: IconAbout },
+  { label: "PRODUCTS", path: "/products", Icon: IconProducts },
+  { label: "BULK ORDERS", path: "/bulk-orders", Icon: IconBulk },
+  { label: "BLOG", path: "/blog", Icon: IconBlog },
+  { label: "REVIEWS", path: "/reviews", Icon: IconReviews },
+  { label: "FAQ", path: "/faq", Icon: IconFAQ },
+  { label: "CONTACT", path: "/contact", Icon: IconContact },
 ];
 
 

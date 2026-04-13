@@ -9,8 +9,9 @@ const productLinks = [
   { label: "Fruit Chunks & Powders", path: "/fruit-powder-chunks" },
 ];
 
-const companyLinks = [
-  { label: "About Us", path: "/about" },
+const supportLinks = [
+  { label: "Blog", path: "/blog" },
+  { label: "Reviews", path: "/reviews" },
   { label: "FAQ", path: "/faq" },
   { label: "Contact", path: "/contact" },
 ];
@@ -73,9 +74,11 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4">
-              Products
-            </h3>
+            <Link to="/products" className="inline-block group/title">
+              <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4 group-hover/title:text-[#f4a435] transition-colors duration-200">
+                Products
+              </h3>
+            </Link>
             <ul className="space-y-3">
               {productLinks.map((link) => (
                 <li key={link.path}>
@@ -92,10 +95,10 @@ export default function Footer() {
 
           <div>
             <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4">
-              Company
+              Support
             </h3>
             <ul className="space-y-3">
-              {companyLinks.map((link) => (
+              {supportLinks.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
