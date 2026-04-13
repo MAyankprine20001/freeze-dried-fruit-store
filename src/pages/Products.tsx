@@ -18,6 +18,7 @@ import {
   Package,
   Ribbon,
   Tag,
+  CheckCircle2,
 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -74,72 +75,24 @@ const categories = [
   { id: "all", label: "All Products", emoji: "✨" },
   { id: "smoothie-premix", label: "Smoothie Premix", emoji: "🥤" },
   { id: "chocolate", label: "Chocolates", emoji: "🍫" },
+  { id: "fruit-chunks", label: "Fruit Chunks", emoji: "🍓" },
+  { id: "fruit-powders", label: "Fruit Powders", emoji: "🌟" },
   { id: "combo", label: "Combos", emoji: "📦" },
-  { id: "powder-chunks", label: "Fruit Chunks & Powders", emoji: "🍓" },
+  { id: "gift", label: "Gifts", emoji: "🎁" },
 ];
 
 const allProducts = [
-  // ── POWDERS ──────────────────────────────────────────────────────────────
+  // ── FRUIT POWDERS ────────────────────────────────────────────────────────
   {
     id: "p1",
-    category: "powder-chunks",
-    name: "Raspberry Powder",
-    subtitle: "Freeze Dried · 100g",
-    price: 399,
-    originalPrice: 499,
-    rating: 4.9,
-    reviews: 214,
-    tag: "Best Seller",
-    tagColor: "#e85d26",
-    badge: "🏆",
-    accent: "#e85d26",
-    bg: "from-[#fff2ee] to-[#ffe8df]",
-    borderColor: "#f5cfc0",
-    gradientFrom: "#e85d26",
-    gradientTo: "#f4a435",
-    emoji: "🍓",
-    image:
-      "https://images.unsplash.com/photo-1495584816685-4bdbf1b5057e?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-powder-chunks",
-    highlights: ["97% Nutrients", "Natural Color", "25yr shelf life"],
-    weight: "100g",
-    stock: "In Stock",
-  },
-  {
-    id: "p2",
-    category: "powder-chunks",
-    name: "Mango Powder",
-    subtitle: "Freeze Dried · 100g",
-    price: 379,
-    originalPrice: 479,
-    rating: 4.8,
-    reviews: 189,
-    tag: "Popular",
-    tagColor: "#f4a435",
-    badge: "🥭",
-    accent: "#f4a435",
-    bg: "from-[#fffaee] to-[#fff0cc]",
-    borderColor: "#f5e0a0",
-    gradientFrom: "#f4a435",
-    gradientTo: "#f39c12",
-    emoji: "🥭",
-    image:
-      "https://images.unsplash.com/photo-1596591606975-97ee5cef3a1e?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-powder-chunks",
-    highlights: ["Tropical Flavor", "Smoothie Ready", "Natural Dye"],
-    weight: "100g",
-    stock: "In Stock",
-  },
-  {
-    id: "p3",
-    category: "powder-chunks",
+    category: "fruit-powders",
     name: "Strawberry Powder",
-    subtitle: "Freeze Dried · 100g",
+    subtitle: "FreezeFusion · 100g",
     price: 349,
     originalPrice: 449,
-    rating: 4.7,
+    rating: 4.8,
     reviews: 156,
-    tag: "New",
+    tag: "Vibrant",
     tagColor: "#e84444",
     badge: "🍓",
     accent: "#e84444",
@@ -148,74 +101,143 @@ const allProducts = [
     gradientFrom: "#e84444",
     gradientTo: "#c0392b",
     emoji: "🍓",
-    image:
-      "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-powder-chunks",
-    highlights: ["Kids Favourite", "Baking Grade", "Vibrant Pink"],
+    image: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=600&fit=crop",
+    path: "/fruit-powders",
+    highlights: ["Smoothie Ready", "Baking Grade", "100% Pure"],
+    weight: "100g",
+    stock: "In Stock",
+  },
+  {
+    id: "p2",
+    category: "fruit-powders",
+    name: "Mango Powder",
+    subtitle: "FreezeFusion · 100g",
+    price: 379,
+    originalPrice: 479,
+    rating: 4.9,
+    reviews: 189,
+    tag: "Tropical",
+    tagColor: "#f4a435",
+    badge: "🥭",
+    accent: "#f4a435",
+    bg: "from-[#fffaee] to-[#fff0cc]",
+    borderColor: "#f5e0a0",
+    gradientFrom: "#f4a435",
+    gradientTo: "#f39c12",
+    emoji: "🥭",
+    image: "https://images.unsplash.com/photo-1596591606975-97ee5cef3a1e?w=600&fit=crop",
+    path: "/fruit-powders",
+    highlights: ["King of Fruits", "Natural Color", "Perfect Base"],
+    weight: "100g",
+    stock: "In Stock",
+  },
+  {
+    id: "p3",
+    category: "fruit-powders",
+    name: "Banana Powder",
+    subtitle: "FreezeFusion · 100g",
+    price: 299,
+    originalPrice: 399,
+    rating: 4.7,
+    reviews: 124,
+    tag: "Energizing",
+    tagColor: "#f1c40f",
+    badge: "🍌",
+    accent: "#d4af37",
+    bg: "from-[#fffdf0] to-[#fff8d0]",
+    borderColor: "#f0e090",
+    gradientFrom: "#f1c40f",
+    gradientTo: "#f39c12",
+    emoji: "🍌",
+    image: "https://images.unsplash.com/photo-1571115177098-24ec42ed2bb4?w=600&fit=crop",
+    path: "/fruit-powders",
+    highlights: ["High Fiber", "Baby Food Safe", "Natural Sweetener"],
     weight: "100g",
     stock: "In Stock",
   },
   {
     id: "p4",
-    category: "powder-chunks",
-    name: "Blueberry Powder",
-    subtitle: "Freeze Dried · 100g",
-    price: 429,
-    originalPrice: 529,
+    category: "fruit-powders",
+    name: "Jamun Powder",
+    subtitle: "FreezeFusion · 100g",
+    price: 449,
+    originalPrice: 549,
     rating: 4.9,
-    reviews: 98,
-    tag: "Premium",
-    tagColor: "#6c5ce7",
+    reviews: 87,
+    tag: "Superfood",
+    tagColor: "#4b0082",
     badge: "🫐",
-    accent: "#6c5ce7",
-    bg: "from-[#f4f2ff] to-[#e8e4ff]",
-    borderColor: "#c8c0f0",
-    gradientFrom: "#6c5ce7",
-    gradientTo: "#4a3ab0",
-    emoji: "🫐",
-    image:
-      "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-powder-chunks",
-    highlights: ["Antioxidant Rich", "Deep Color", "Superfood"],
+    accent: "#4b0082",
+    bg: "from-[#f3f0ff] to-[#e6e0ff]",
+    borderColor: "#d0c0f5",
+    gradientFrom: "#4b0082",
+    gradientTo: "#6a5acd",
+    emoji: "🍇",
+    image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&fit=crop",
+    path: "/fruit-powders",
+    highlights: ["Antioxidant Rich", "Pure Indian Berry", "Health Boost"],
     weight: "100g",
-    stock: "Low Stock",
+    stock: "In Stock",
   },
 
-  // ── CHUNKS ───────────────────────────────────────────────────────────────
+  // ── FRUIT CHUNKS ──────────────────────────────────────────────────────────
   {
     id: "c1",
-    category: "powder-chunks",
-    name: "Mixed Fruit Chunks",
-    subtitle: "Freeze Dried · 150g",
-    price: 349,
-    originalPrice: 449,
+    category: "fruit-chunks",
+    name: "Strawberry Chunks",
+    subtitle: "FreezeFusion · 150g",
+    price: 329,
+    originalPrice: 429,
     rating: 4.8,
-    reviews: 178,
-    tag: "Best Seller",
-    tagColor: "#27ae60",
-    badge: "🏆",
-    accent: "#27ae60",
-    bg: "from-[#f0fff6] to-[#e0f7ea]",
-    borderColor: "#b0e0c0",
-    gradientFrom: "#27ae60",
-    gradientTo: "#2ecc71",
-    emoji: "🍇",
-    image:
-      "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-powder-chunks",
-    highlights: ["Zero Sugar Added", "Trail Mix Ready", "No Refrigeration"],
+    reviews: 214,
+    tag: "Crunchy",
+    tagColor: "#e84444",
+    badge: "🍓",
+    accent: "#e84444",
+    bg: "from-[#fff2f2] to-[#ffe0e0]",
+    borderColor: "#f5c0c0",
+    gradientFrom: "#e84444",
+    gradientTo: "#c0392b",
+    emoji: "🍓",
+    image: "https://images.unsplash.com/photo-1543528176-61b239494933?w=600&fit=crop",
+    path: "/fruit-chunks",
+    highlights: ["Bite-Sized", "Sweet & Tart", "Healthy Snack"],
     weight: "150g",
     stock: "In Stock",
   },
   {
     id: "c2",
-    category: "powder-chunks",
+    category: "fruit-chunks",
+    name: "Banana Chunks",
+    subtitle: "FreezeFusion · 150g",
+    price: 289,
+    originalPrice: 389,
+    rating: 4.7,
+    reviews: 145,
+    tag: "Energy",
+    tagColor: "#f1c40f",
+    badge: "🍌",
+    accent: "#d4af37",
+    bg: "from-[#fffdf0] to-[#fff8d0]",
+    borderColor: "#f0e090",
+    gradientFrom: "#f1c40f",
+    gradientTo: "#f39c12",
+    emoji: "🍌",
+    image: "https://images.unsplash.com/photo-1550586671-f71ee155799b?w=600&fit=crop",
+    path: "/fruit-chunks",
+    highlights: ["Potassium Rich", "Kid's Pick", "Perfect Crunch"],
+    weight: "150g",
+    stock: "In Stock",
+  },
+  {
+    id: "c3",
+    category: "fruit-chunks",
     name: "Mango Chunks",
-    subtitle: "Freeze Dried · 150g",
-    price: 329,
-    originalPrice: 429,
+    subtitle: "FreezeFusion · 150g",
+    price: 349,
+    originalPrice: 449,
     rating: 4.9,
-    reviews: 142,
+    reviews: 198,
     tag: "Tropical",
     tagColor: "#f4a435",
     badge: "🥭",
@@ -225,150 +247,192 @@ const allProducts = [
     gradientFrom: "#f4a435",
     gradientTo: "#e67e22",
     emoji: "🥭",
-    image:
-      "https://images.unsplash.com/photo-1519096845289-95806ee03a1a?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-powder-chunks",
-    highlights: ["Airy Crunch", "Snack Anywhere", "Intense Flavor"],
-    weight: "150g",
-    stock: "In Stock",
-  },
-  {
-    id: "c3",
-    category: "powder-chunks",
-    name: "Strawberry Chunks",
-    subtitle: "Freeze Dried · 150g",
-    price: 309,
-    originalPrice: 399,
-    rating: 4.7,
-    reviews: 121,
-    tag: "Kids Pick",
-    tagColor: "#e84444",
-    badge: "🍓",
-    accent: "#e84444",
-    bg: "from-[#fff2f2] to-[#ffe0e0]",
-    borderColor: "#f5c0c0",
-    gradientFrom: "#e84444",
-    gradientTo: "#c0392b",
-    emoji: "🍓",
-    image:
-      "https://images.unsplash.com/photo-1543528176-61b239494933?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-powder-chunks",
-    highlights: ["School Lunch", "Yogurt Topping", "Rehydrates Well"],
+    image: "https://images.unsplash.com/photo-1519096845289-95806ee03a1a?w=600&fit=crop",
+    path: "/fruit-chunks",
+    highlights: ["Alphonso Quality", "Sun-Drenched", "Intensely Sweet"],
     weight: "150g",
     stock: "In Stock",
   },
   {
     id: "c4",
-    category: "powder-chunks",
-    name: "Pineapple Chunks",
-    subtitle: "Freeze Dried · 150g",
-    price: 359,
-    originalPrice: 459,
+    category: "fruit-chunks",
+    name: "Blueberry Chunks",
+    subtitle: "FreezeFusion · 150g",
+    price: 399,
+    originalPrice: 499,
+    rating: 4.8,
+    reviews: 132,
+    tag: "Brain Food",
+    tagColor: "#6c5ce7",
+    badge: "🫐",
+    accent: "#6c5ce7",
+    bg: "from-[#f4f2ff] to-[#e8e4ff]",
+    borderColor: "#c8c0f0",
+    gradientFrom: "#6c5ce7",
+    gradientTo: "#4a3ab0",
+    emoji: "🫐",
+    image: "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?w=600&fit=crop",
+    path: "/fruit-chunks",
+    highlights: ["Antioxidants", "Wild Grown", "Tart Pop"],
+    weight: "150g",
+    stock: "In Stock",
+  },
+  {
+    id: "c5",
+    category: "fruit-chunks",
+    name: "Pomegranate Chunks",
+    subtitle: "FreezeFusion · 150g",
+    price: 379,
+    originalPrice: 479,
+    rating: 4.8,
+    reviews: 96,
+    tag: "Premium",
+    tagColor: "#c0392b",
+    badge: "🍎",
+    accent: "#c0392b",
+    bg: "from-[#fff2f2] to-[#ffe8e4]",
+    borderColor: "#f0c8c0",
+    gradientFrom: "#c0392b",
+    gradientTo: "#7b2d2d",
+    emoji: "🍎",
+    image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&fit=crop",
+    path: "/fruit-chunks",
+    highlights: ["Heart Health", "Ruby Seeds", "Juicy Crunch"],
+    weight: "150g",
+    stock: "In Stock",
+  },
+  {
+    id: "c6",
+    category: "fruit-chunks",
+    name: "Raspberry Chunks",
+    subtitle: "FreezeFusion · 150g",
+    price: 389,
+    originalPrice: 489,
+    rating: 4.9,
+    reviews: 112,
+    tag: "Berry Luxe",
+    tagColor: "#e84393",
+    badge: "🍓",
+    accent: "#e84393",
+    bg: "from-[#fff0f6] to-[#ffdeeb]",
+    borderColor: "#f5c0d8",
+    gradientFrom: "#e84393",
+    gradientTo: "#d63031",
+    emoji: "🍓",
+    image: "https://images.unsplash.com/photo-1495584816685-4bdbf1b5057e?w=600&fit=crop",
+    path: "/fruit-chunks",
+    highlights: ["Floral Note", "Velvet Feel", "Tart Zest"],
+    weight: "150g",
+    stock: "In Stock",
+  },
+  {
+    id: "c7",
+    category: "fruit-chunks",
+    name: "Mulberry Chunks",
+    subtitle: "FreezeFusion · 150g",
+    price: 349,
+    originalPrice: 449,
+    rating: 4.7,
+    reviews: 84,
+    tag: "Wild Pick",
+    tagColor: "#4b0082",
+    badge: "🫐",
+    accent: "#4b0082",
+    bg: "from-[#f3f0ff] to-[#e6e0ff]",
+    borderColor: "#d0c0f5",
+    gradientFrom: "#4b0082",
+    gradientTo: "#6a5acd",
+    emoji: "🍇",
+    image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&fit=crop",
+    path: "/fruit-chunks",
+    highlights: ["Iron Rich", "Earthy Sweet", "Rare Find"],
+    weight: "150g",
+    stock: "In Stock",
+  },
+  {
+    id: "c8",
+    category: "fruit-chunks",
+    name: "Cranberry Chunks",
+    subtitle: "FreezeFusion · 150g",
+    price: 329,
+    originalPrice: 429,
     rating: 4.6,
-    reviews: 87,
-    tag: "New",
-    tagColor: "#c8a800",
-    badge: "🍍",
-    accent: "#c8a800",
-    bg: "from-[#fffdf0] to-[#fff8d0]",
-    borderColor: "#f0e090",
-    gradientFrom: "#f4d03f",
-    gradientTo: "#c8a800",
-    emoji: "🍍",
-    image:
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600&h=600&fit=crop&auto=format",
-    path: "/fruit-powder-chunks",
-    highlights: ["Tangy & Sweet", "Hiking Snack", "Enzyme Rich"],
+    reviews: 78,
+    tag: "Tangy",
+    tagColor: "#c0392b",
+    badge: "🍒",
+    accent: "#c0392b",
+    bg: "from-[#fff5f5] to-[#ffe5e5]",
+    borderColor: "#f5d0d0",
+    gradientFrom: "#c0392b",
+    gradientTo: "#e74c3c",
+    emoji: "🍒",
+    image: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=600&fit=crop",
+    path: "/fruit-chunks",
+    highlights: ["Vitamin E Boost", "Bold Red", "Super Tangy"],
     weight: "150g",
     stock: "In Stock",
   },
 
-  // ── CHOCOLATE ─────────────────────────────────────────────────────────────
+  // ── CHOCOLATE (FREEZEFUSION) ──────────────────────────────────────────────
   {
     id: "ch1",
     category: "chocolate",
-    name: "Dark + Raspberry",
-    subtitle: "Single Origin · 80g Bar",
+    name: "Strawberry Cream Crunch",
+    subtitle: "FreezeFusion · 25g each",
     price: 449,
     originalPrice: 549,
     rating: 5.0,
-    reviews: 96,
-    tag: "Staff Pick",
+    reviews: 124,
+    tag: "Luxe Treat",
     tagColor: "#4a1a0a",
-    badge: "⭐",
+    badge: "🍓",
     accent: "#4a1a0a",
     bg: "from-[#fdf6f0] to-[#f5e8dc]",
     borderColor: "#e0c8b0",
     gradientFrom: "#4a1a0a",
     gradientTo: "#8b4513",
     emoji: "🍫",
-    image:
-      "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&h=600&fit=crop&auto=format",
+    image: "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&fit=crop",
     path: "/chocolate",
-    highlights: ["Single Origin", "No Artificial Flavor", "Gift Ready"],
-    weight: "80g",
+    highlights: ["Real Couverture", "Strawberry Burst", "Artisan Bar"],
+    weight: "25g x 3",
     stock: "In Stock",
   },
   {
     id: "ch2",
     category: "chocolate",
-    name: "Milk + Strawberry",
-    subtitle: "Single Origin · 80g Bar",
-    price: 429,
-    originalPrice: 529,
-    rating: 4.9,
-    reviews: 74,
-    tag: "Popular",
-    tagColor: "#c0392b",
-    badge: "🍓",
-    accent: "#c0392b",
-    bg: "from-[#fff2f2] to-[#ffe8e4]",
-    borderColor: "#f0c8c0",
-    gradientFrom: "#c0392b",
-    gradientTo: "#7b2d2d",
-    emoji: "🍫",
-    image:
-      "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=600&h=600&fit=crop&auto=format",
-    path: "/chocolate",
-    highlights: ["Creamy Milk Base", "Tart & Sweet", "Stunning Visual"],
-    weight: "80g",
-    stock: "In Stock",
-  },
-  {
-    id: "ch3",
-    category: "chocolate",
-    name: "White + Mango",
-    subtitle: "Single Origin · 80g Bar",
+    name: "Mango Silk White",
+    subtitle: "FreezeFusion · Couverture Base",
     price: 469,
     originalPrice: 569,
-    rating: 4.8,
-    reviews: 58,
-    tag: "Exotic",
+    rating: 4.9,
+    reviews: 92,
+    tag: "Silky",
     tagColor: "#e8950a",
     badge: "🥭",
     accent: "#e8950a",
     bg: "from-[#fffaee] to-[#fff0cc]",
     borderColor: "#f5e0a0",
-    gradientFrom: "#e8950a",
+    gradientFrom: "#f4a435",
     gradientTo: "#c47a05",
     emoji: "🍫",
-    image:
-      "https://images.unsplash.com/photo-1511381939415-e44015466834?w=600&h=600&fit=crop&auto=format",
+    image: "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=600&fit=crop",
     path: "/chocolate",
-    highlights: ["White Cacao", "Tropical Twist", "Hamper Perfect"],
-    weight: "80g",
-    stock: "Low Stock",
+    highlights: ["White Cocoa Butter", "Exotic Mango", "Smooth Finish"],
+    weight: "80g Bar",
+    stock: "In Stock",
   },
   {
-    id: "ch4",
+    id: "ch3",
     category: "chocolate",
-    name: "Dark + Blueberry",
-    subtitle: "Single Origin · 80g Bar",
-    price: 479,
-    originalPrice: 579,
-    rating: 4.9,
-    reviews: 41,
-    tag: "New",
+    name: "Blueberry Dual Swirl",
+    subtitle: "FreezeFusion · Dark & White Mix",
+    price: 489,
+    originalPrice: 589,
+    rating: 5.0,
+    reviews: 86,
+    tag: "Visual Bliss",
     tagColor: "#6c5ce7",
     badge: "🫐",
     accent: "#6c5ce7",
@@ -377,11 +441,34 @@ const allProducts = [
     gradientFrom: "#6c5ce7",
     gradientTo: "#4a3ab0",
     emoji: "🍫",
-    image:
-      "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=600&h=600&fit=crop&auto=format",
+    image: "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=600&fit=crop",
     path: "/chocolate",
-    highlights: ["Antioxidant Boost", "Bold Flavor", "Artisan Craft"],
-    weight: "80g",
+    highlights: ["Marbled Chocolate", "Wild Blueberry", "Rich Contrast"],
+    weight: "80g Bar",
+    stock: "In Stock",
+  },
+  {
+    id: "ch4",
+    category: "chocolate",
+    name: "Banana Cocoa Dark",
+    subtitle: "FreezeFusion · 70% Dark",
+    price: 429,
+    originalPrice: 529,
+    rating: 4.8,
+    reviews: 64,
+    tag: "Bold Energy",
+    tagColor: "#1a1a1a",
+    badge: "🍌",
+    accent: "#1a1a1a",
+    bg: "from-[#fafafa] to-[#f0f0f0]",
+    borderColor: "#e0e0e0",
+    gradientFrom: "#1a1a1a",
+    gradientTo: "#3d3d3d",
+    emoji: "🍫",
+    image: "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&fit=crop",
+    path: "/chocolate",
+    highlights: ["High Cacao", "Energizing Banana", "Guilt-Free"],
+    weight: "80g Bar",
     stock: "In Stock",
   },
 
@@ -604,6 +691,107 @@ const allProducts = [
     isGift: true,
     giftNote: "Comes in a drawstring pouch",
   },
+  // ── SMOOTHIE PREMIX ──────────────────────────────────────────────────────
+  {
+    id: "s1",
+    category: "smoothie-premix",
+    name: "Berry Blast",
+    subtitle: "Mixed berries bursting with flavours",
+    price: 399,
+    originalPrice: 499,
+    rating: 4.9,
+    reviews: 245,
+    tag: "Nutrient Rich",
+    tagColor: "#e84393",
+    badge: "🫐",
+    accent: "#e84393",
+    bg: "from-[#fff0f6] to-[#ffdeeb]",
+    borderColor: "#f5c0d8",
+    gradientFrom: "#e84393",
+    gradientTo: "#d63031",
+    emoji: "🫐",
+    image:
+      "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&h=600&fit=crop&auto=format",
+    path: "/smoothie-premix",
+    highlights: ["Antioxidant Rich", "200ml each", "Quick Prep"],
+    weight: "200ml per serving",
+    stock: "In Stock",
+  },
+  {
+    id: "s2",
+    category: "smoothie-premix",
+    name: "Strawberry Bliss",
+    subtitle: "Sweet and tangy strawberry delight",
+    price: 379,
+    originalPrice: 479,
+    rating: 4.8,
+    reviews: 182,
+    tag: "Kids Favorite",
+    tagColor: "#e84444",
+    badge: "🍓",
+    accent: "#e84444",
+    bg: "from-[#fff2f2] to-[#ffe0e0]",
+    borderColor: "#f5c0c0",
+    gradientFrom: "#e84444",
+    gradientTo: "#c0392b",
+    emoji: "🍓",
+    image:
+      "https://images.unsplash.com/photo-1510629954389-c1e0da47d414?w=600&h=600&fit=crop&auto=format",
+    path: "/smoothie-premix",
+    highlights: ["Vitamin C Plus", "Creamy Texture", "Natural Sweetness"],
+    weight: "200ml serving",
+    stock: "In Stock",
+  },
+  {
+    id: "s3",
+    category: "smoothie-premix",
+    name: "Royal Mango",
+    subtitle: "Tropical Mango indulgence",
+    price: 429,
+    originalPrice: 529,
+    rating: 4.9,
+    reviews: 156,
+    tag: "Premium",
+    tagColor: "#f4a435",
+    badge: "🥭",
+    accent: "#f4a435",
+    bg: "from-[#fffaee] to-[#fff0cc]",
+    borderColor: "#f5e0a0",
+    gradientFrom: "#f4a435",
+    gradientTo: "#e67e22",
+    emoji: "🥭",
+    image:
+      "https://images.unsplash.com/photo-1550586671-f71ee155799b?w=600&h=600&fit=crop&auto=format",
+    path: "/smoothie-premix",
+    highlights: ["Alphonso Goodness", "Sun-Ripened", "Smooth Texture"],
+    weight: "200ml serving",
+    stock: "In Stock",
+  },
+  {
+    id: "s4",
+    category: "smoothie-premix",
+    name: "Banana Power",
+    subtitle: "Creamy, energising banana boost",
+    price: 349,
+    originalPrice: 449,
+    rating: 4.7,
+    reviews: 124,
+    tag: "High Energy",
+    tagColor: "#f1c40f",
+    badge: "🍌",
+    accent: "#d4af37",
+    bg: "from-[#fffdf0] to-[#fff8d0]",
+    borderColor: "#f0e090",
+    gradientFrom: "#f1c40f",
+    gradientTo: "#f39c12",
+    emoji: "🍌",
+    image:
+      "https://images.unsplash.com/photo-1571115177098-24ec42ed2bb4?w=600&h=600&fit=crop&auto=format",
+    path: "/smoothie-premix",
+    highlights: ["Potassium Rich", "Post-Workout", "Satisfyingly Sweet"],
+    weight: "200ml serving",
+    stock: "In Stock",
+  },
 ];
 
 const sortOptions = [
@@ -625,28 +813,41 @@ const categoryBanners: Record<
     emoji: "✨",
   },
   "smoothie-premix": {
-    title: "Smoothie Premixes",
-    sub: "The ultimate nutrition shortcut. 100% raw freeze-dried fruit powders designed for instant, high-nutrient smoothies.",
-    color: "#f4a435",
+    title: "Smoothie Premix – SipReal",
+    sub: "Real Taste. Real nutrition. Just SipReal · NO ADDED SUGAR, NO PRESERVATIVE · Ready in 10 seconds",
+    color: "#e85d26",
     emoji: "🥤",
   },
-  "powder-chunks": {
-    title: "Fruit Chunks & Powders",
-    sub: "100% whole fruit in two essential forms. Concentrated powders for your recipes or crunchy chunks for on-the-go snacking.",
+
+  chocolate: {
+    title: "Chocolates – FreezeFusion",
+    sub: "Crafted with real fruits and rich couverture chocolate · PERFECT FOR: PREMIUM GIFTING, HEALTHY SNACKING",
+    color: "#4a1a0a",
+    emoji: "🍫",
+  },
+  "fruit-chunks": {
+    title: "Fruit Chunks – FreezeFusion",
+    sub: "Intensely flavored crunchy chunks. 100% whole fruit, zero additives. Perfect for healthy snacking on the go.",
     color: "#27ae60",
     emoji: "🍓",
   },
-  chocolate: {
-    title: "Chocolates",
-    sub: "Premium single-origin chocolate elevated with tangy, crunchy freeze-dried fruit.",
-    color: "#4a1a0a",
-    emoji: "🍫",
+  "fruit-powders": {
+    title: "Fruit Powders – FreezeFusion",
+    sub: "Concentrated fruit essence in fine powder form. Perfect for smoothies, baking, and natural nutrient boosts.",
+    color: "#9b1d6a",
+    emoji: "🌟",
   },
   combo: {
     title: "Combos & Bundles",
     sub: "More flavors, bigger savings. Curated bundles that give you the best of our range at unbeatable prices.",
     color: "#0a7a4a",
     emoji: "📦",
+  },
+  gift: {
+    title: "Gifts – Coming Soon",
+    sub: "Curated gift sets and premium hampers for your special occasions. Opening soon!",
+    color: "#9b1d6a",
+    emoji: "🎁",
   },
 };
 
@@ -694,8 +895,8 @@ const categoryCards = [
     desc: "Curated bundles, bigger savings",
   },
   {
-    id: "powder-chunks",
-    label: "Fruit Chunks & Powders",
+    id: "fruit-chunks",
+    label: "Fruit Chunks",
     emoji: "🍓",
     count: 8,
     color: "#27ae60",
@@ -703,9 +904,35 @@ const categoryCards = [
     border: "#b0e0c0",
     gradientFrom: "#27ae60",
     gradientTo: "#2ecc71",
-    image:
-      "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=400&fit=crop&auto=format",
-    desc: "100% pure freeze-dried fruits",
+    image: "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=600&fit=crop",
+    desc: "100% crunchy fruit chunks",
+  },
+  {
+    id: "fruit-powders",
+    label: "Fruit Powders",
+    emoji: "🌟",
+    count: 4,
+    color: "#9b1d6a",
+    bg: "from-[#fdf0f8] to-[#f8e0f0]",
+    border: "#e8b0d8",
+    gradientFrom: "#9b1d6a",
+    gradientTo: "#c0396a",
+    image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&fit=crop",
+    desc: "Pure concentrated fruit essence",
+  },
+  {
+    id: "gift",
+    label: "Gifts",
+    emoji: "🎁",
+    count: 0,
+    comingSoon: true,
+    color: "#9b1d6a",
+    bg: "from-[#fdf0f8] to-[#f8e0f0]",
+    border: "#e8b0d8",
+    gradientFrom: "#9b1d6a",
+    gradientTo: "#c0396a",
+    image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&fit=crop",
+    desc: "Premium gift hampers & sets",
   },
 ];
 
@@ -1140,6 +1367,108 @@ function GiftBanner() {
   );
 }
 
+// ── Highlight Category Title ──
+function HighlightTitle({ title }: { title: string }) {
+  const parts = title.split(" – ");
+  if (parts.length < 2) return <>{title}</>;
+
+  return (
+    <>
+      {parts[0]} –{" "}
+      <span className="relative inline-block">
+        <span className="relative z-10 px-2">{parts[1]}</span>
+        <span 
+          className="absolute inset-0 z-0 bg-[#e8f3ff] rounded-md -rotate-1 skew-x-2" 
+          style={{ mixBlendMode: 'multiply' }}
+        />
+      </span>
+    </>
+  );
+}
+
+// ── Smoothie Category Info (Simplified) ──────────────────────────────────────
+
+function SmoothieInfoSection() {
+  return (
+    <section className="px-6 lg:px-8 py-16 bg-[#faf8f5] border-t border-[#ede5dc]">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-10">
+          <h2 className="font-serif text-2xl font-bold text-[#1a1a1a]">Smoothie Guide</h2>
+          <p className="text-sm text-[#9a8a7a] mt-1">Everything you need to know about SipReal Premixes</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {/* Benefits */}
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <Leaf className="w-5 h-5 text-[#e85d26]" />
+              <h3 className="font-bold text-[#1a1a1a] uppercase tracking-wider text-xs">Benefits</h3>
+            </div>
+            <ul className="space-y-2">
+              {[
+                "Quick & effortless prep",
+                "Healthy & nutrient-dense",
+                "No cutting fruits required",
+                "Zero food waste",
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-2 text-xs text-[#6a5a4a]">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#27ae60]" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* How to Use */}
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <Zap className="w-5 h-5 text-[#f4a435]" />
+              <h3 className="font-bold text-[#1a1a1a] uppercase tracking-wider text-xs">How to Prepared</h3>
+            </div>
+            <div className="space-y-3">
+              <p className="text-[11px] font-bold text-[#e85d26] uppercase tracking-widest bg-[#e85d26]10 px-2 py-1 inline-block rounded">Ready in 10s</p>
+              <div className="flex items-start gap-3">
+                <div className="w-5 h-5 rounded-full bg-[#1a1a1a] text-white text-[10px] flex items-center justify-center font-bold flex-shrink-0 mt-0.5">1</div>
+                <p className="text-xs text-[#6a5a4a]">Add water or milk to the premix</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-5 h-5 rounded-full bg-[#1a1a1a] text-white text-[10px] flex items-center justify-center font-bold flex-shrink-0 mt-0.5">2</div>
+                <p className="text-xs text-[#6a5a4a]">Just shake or stir & enjoy!</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Nutrition */}
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <Shield className="w-5 h-5 text-[#6c5ce7]" />
+              <h3 className="font-bold text-[#1a1a1a] uppercase tracking-wider text-xs">Nutrition</h3>
+            </div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+              <div className="border-b border-[#ede5dc] pb-1">
+                <p className="text-[9px] uppercase tracking-widest text-[#9a8a7a] font-bold">Added Sugar</p>
+                <p className="text-xs font-bold text-[#1a1a1a]">0g</p>
+              </div>
+              <div className="border-b border-[#ede5dc] pb-1">
+                <p className="text-[9px] uppercase tracking-widest text-[#9a8a7a] font-bold">Vitamins</p>
+                <p className="text-xs font-bold text-[#1a1a1a]">97% Retained</p>
+              </div>
+              <div className="border-b border-[#ede5dc] pb-1">
+                <p className="text-[9px] uppercase tracking-widest text-[#9a8a7a] font-bold">Preservatives</p>
+                <p className="text-xs font-bold text-[#1a1a1a]">None</p>
+              </div>
+              <div className="border-b border-[#ede5dc] pb-1">
+                <p className="text-[9px] uppercase tracking-widest text-[#9a8a7a] font-bold">Nature</p>
+                <p className="text-xs font-bold text-[#1a1a1a]">100% Real</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function Products() {
@@ -1243,10 +1572,10 @@ export default function Products() {
                       </p>
                     </div>
                     <div
-                      className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
+                      className="px-3 py-1 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0"
                       style={{ backgroundColor: cat.color }}
                     >
-                      {cat.count}
+                      {cat.comingSoon ? "COMING SOON" : cat.count}
                     </div>
                   </div>
                 </div>
@@ -1255,7 +1584,7 @@ export default function Products() {
           </div>
 
           {/* Combo + Gift cards row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {categoryCards.slice(3).map((cat, i) => (
               <motion.button
                 key={cat.id}
@@ -1319,10 +1648,10 @@ export default function Products() {
                       </p>
                     </div>
                     <div
-                      className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
+                      className="px-3 py-1 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0"
                       style={{ backgroundColor: cat.color }}
                     >
-                      {cat.count}
+                      {cat.comingSoon ? "COMING SOON" : cat.count}
                     </div>
                   </div>
                 </div>
@@ -1354,7 +1683,9 @@ export default function Products() {
                       : "bg-[#f0e8de] text-[#9a8a7a]"
                   }`}
                 >
-                  {cat.id === "all"
+                  {cat.comingSoon
+                    ? "TBA"
+                    : cat.id === "all"
                     ? allProducts.length
                     : allProducts.filter((p) => p.category === cat.id).length}
                 </span>
@@ -1405,74 +1736,101 @@ export default function Products() {
         </div>
       </div>
 
-      {/* ── Dynamic Banner ── */}
-      <section className="px-6 lg:px-8 pt-8 pb-2">
-        <div className="max-w-7xl mx-auto">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCategory}
-              initial={{ opacity: 0, x: -16 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 16 }}
-              transition={{ duration: 0.3 }}
-              className="flex items-center justify-between flex-wrap gap-4 mb-6"
+      {/* ── Coming Soon Messenger ── */}
+      {categoryCards.find(c => c.id === activeCategory)?.comingSoon && (
+        <section className="px-6 lg:px-8 py-20 text-center">
+          <div className="max-w-md mx-auto">
+            <div className="text-6xl mb-6">🚀</div>
+            <h3 className="font-serif text-3xl font-bold text-[#1a1a1a] mb-4">Opening Soon!</h3>
+            <p className="text-[#6a5a4a] leading-relaxed mb-8">
+              We're currently perfecting our premium gift sets. These will be available for purchase very soon. Stay tuned!
+            </p>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-[#1a1a1a] text-white font-bold rounded-full transition-all hover:scale-105"
             >
-              <div>
-                <h2 className="font-serif text-2xl font-bold text-[#1a1a1a]">
-                  {banner.emoji} {banner.title}
-                </h2>
-                <p className="text-sm text-[#6a5a4a] mt-1">{banner.sub}</p>
-              </div>
-              <div className="flex items-center gap-6">
-                {[
-                  { label: "Products", value: String(filtered.length) },
-                  { label: "Avg Rating", value: "4.8★" },
-                  { label: "Customers", value: "2k+" },
-                ].map((s) => (
-                  <div key={s.label} className="text-center">
-                    <div className="text-xl font-bold text-[#1a1a1a] font-serif">
-                      {s.value}
-                    </div>
-                    <div className="text-[11px] text-[#9a8a7a]">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </section>
-
-      {/* ── Combo Section Banner (shown for all or combo) ── */}
-      {(activeCategory === "all" || activeCategory === "combo") && (
-        <ComboBanner />
-      )}
-
-      {/* ── Gift Section Banner (shown for all or gift) ── */}
-      {(activeCategory === "all" || activeCategory === "gift") && (
-        <GiftBanner />
+              Get Notified <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </section>
       )}
 
       {/* ── Product Grid ── */}
-      <section className="pb-16 px-6 lg:px-8 pt-8">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-xs text-[#9a8a7a] font-medium mb-5">
-            Showing{" "}
-            <span className="text-[#1a1a1a] font-bold">{filtered.length}</span>{" "}
-            products · Sorted by{" "}
-            <span className="font-semibold text-[#4a3a2a]">{sortBy}</span>
-          </p>
-          <motion.div
-            layout
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"
-          >
-            <AnimatePresence mode="popLayout">
-              {filtered.map((product, i) => (
-                <ProductCard key={product.id} product={product} index={i} />
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      </section>
+      {!categoryCards.find(c => c.id === activeCategory)?.comingSoon && (
+        <>
+          {/* ── Dynamic Banner ── */}
+          <section className="px-6 lg:px-8 pt-8 pb-2">
+            <div className="max-w-7xl mx-auto">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeCategory}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 16 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex items-center justify-between flex-wrap gap-4 mb-6"
+                >
+                  <div>
+                    <h2 className="font-serif text-2xl font-bold text-[#1a1a1a]">
+                      {banner.emoji} <HighlightTitle title={banner.title} />
+                    </h2>
+                    <p className="text-sm text-[#6a5a4a] mt-1">{banner.sub}</p>
+                  </div>
+                  <div className="flex items-center gap-6">
+                    {[
+                      { label: "Products", value: String(filtered.length) },
+                      { label: "Avg Rating", value: "4.8★" },
+                      { label: "Customers", value: "2k+" },
+                    ].map((s) => (
+                      <div key={s.label} className="text-center">
+                        <div className="text-xl font-bold text-[#1a1a1a] font-serif">
+                          {s.value}
+                        </div>
+                        <div className="text-[11px] text-[#9a8a7a]">{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </section>
+
+          {/* ── Combo Section Banner (shown for all or combo) ── */}
+          {(activeCategory === "all" || activeCategory === "combo") && (
+            <ComboBanner />
+          )}
+
+          {/* ── Gift Section Banner (shown for all or gift) ── */}
+          {(activeCategory === "all" || activeCategory === "gift") && (
+            <GiftBanner />
+          )}
+
+          {/* ── Product Grid ── */}
+          <section className="pb-16 px-6 lg:px-8 pt-8">
+            <div className="max-w-7xl mx-auto">
+              <p className="text-xs text-[#9a8a7a] font-medium mb-5">
+                Showing{" "}
+                <span className="text-[#1a1a1a] font-bold">{filtered.length}</span>{" "}
+                products · Sorted by{" "}
+                <span className="font-semibold text-[#4a3a2a]">{sortBy}</span>
+              </p>
+              <motion.div
+                layout
+                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"
+              >
+                <AnimatePresence mode="popLayout">
+                  {filtered.map((product, i) => (
+                    <ProductCard key={product.id} product={product} index={i} />
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+            </div>
+          </section>
+        </>
+      )}
+
+      {/* ── Smoothie Guide (Simplified) ── */}
+      {activeCategory === "smoothie-premix" && <SmoothieInfoSection />}
 
       {/* ── Trust Marquee ── */}
       <section className="py-4 bg-[#1a1a1a] overflow-hidden">
