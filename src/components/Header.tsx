@@ -182,11 +182,10 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-[#e8d5c4]/40"
-            : "bg-white/70 backdrop-blur-md"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-[#e8d5c4]/40"
+          : "bg-white/70 backdrop-blur-md"
+          }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
@@ -197,9 +196,9 @@ export default function Header() {
               aria-label="Freeze Fruit Home"
             >
               <img
-                src="/logo2.jpeg"
+                src="/logo.png"
                 alt=""
-                className="w-16 h-16 object-contain"
+                className="w-24 h-24 object-contain"
               />
               <span className="font-serif text-xl font-bold text-[#1a1a1a] tracking-tight">
                 The Dry<span className="text-[#1a1a1a]"> Factory</span>
@@ -217,21 +216,19 @@ export default function Header() {
                   <Link
                     key={path}
                     to={path}
-                    className={`relative inline-flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-[11px] font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26] group ${
-                      isActive
-                        ? "text-[#e85d26] bg-[#fdf3ec]"
-                        : "text-[#5a5a5a] hover:text-[#e85d26] hover:bg-[#fdf3ec]"
-                    }`}
+                    className={`relative inline-flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-[11px] font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26] group ${isActive
+                      ? "text-[#e85d26] bg-[#fdf3ec]"
+                      : "text-[#5a5a5a] hover:text-[#e85d26] hover:bg-[#fdf3ec]"
+                      }`}
                   >
                     {badge && (
                       <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#f4a435] rounded-full shadow-sm" />
                     )}
                     <Icon
-                      className={`w-[18px] h-[18px] transition-colors duration-200 ${
-                        isActive
-                          ? "text-[#e85d26]"
-                          : "text-[#9a8a7a] group-hover:text-[#e85d26]"
-                      }`}
+                      className={`w-[18px] h-[18px] transition-colors duration-200 ${isActive
+                        ? "text-[#e85d26]"
+                        : "text-[#9a8a7a] group-hover:text-[#e85d26]"
+                        }`}
                     />
                     <span className="leading-none">{label}</span>
                     {isActive && (
@@ -306,16 +303,14 @@ export default function Header() {
                     <Link
                       key={path}
                       to={path}
-                      className={`relative flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26] ${
-                        isActive
-                          ? "bg-[#fdf3ec] text-[#e85d26] font-semibold"
-                          : "text-[#4a4a4a] hover:bg-[#fdf3ec] hover:text-[#e85d26]"
-                      }`}
+                      className={`relative flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26] ${isActive
+                        ? "bg-[#fdf3ec] text-[#e85d26] font-semibold"
+                        : "text-[#4a4a4a] hover:bg-[#fdf3ec] hover:text-[#e85d26]"
+                        }`}
                     >
                       <span
-                        className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-200 ${
-                          isActive ? "bg-[#e85d26]" : "bg-[#f5ede5]"
-                        }`}
+                        className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-200 ${isActive ? "bg-[#e85d26]" : "bg-[#f5ede5]"
+                          }`}
                       >
                         <Icon
                           className={`w-5 h-5 ${isActive ? "text-white" : "text-[#e85d26]"}`}
