@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Leaf, Instagram, Youtube, Linkedin } from "lucide-react";
+import { Instagram, Youtube, Linkedin } from "lucide-react";
 
 const productLinks = [
   { label: "Smoothie Premix", path: "/smoothie-premix" },
@@ -49,9 +49,11 @@ export default function Footer() {
               to="/"
               className="flex items-center gap-2 mb-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4a435] rounded-lg"
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-[#e85d26] to-[#f4a435] rounded-lg flex items-center justify-center">
-                <Leaf className="w-4 h-4 text-white" />
-              </div>
+              <img
+                src="/logo.png"
+                alt=""
+                className="w-12 h-12 object-contain"
+              />
               <span className="font-serif text-xl font-bold">
                 The Dry<span className="text-white"> Factory</span>
               </span>
