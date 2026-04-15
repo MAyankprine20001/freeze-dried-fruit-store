@@ -6,6 +6,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles.css";
 
+import { AuthProvider } from "./src/context/AuthContext";
+import { CartProvider } from "./src/context/CartContext";
+import ProtectedRoute from "./src/components/ProtectedRoute";
+
 import Home from "./src/pages/Home";
 import NotFound from "./src/pages/NotFound";
 import ContactWidget from "./src/components/ContactWidget";
@@ -24,6 +28,20 @@ const Blog = lazy(() => import("./src/pages/Blog"));
 const PrivacyPolicy = lazy(() => import("./src/pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./src/pages/TermsOfService"));
 
+// Auth Pages
+const Login = lazy(() => import("./src/pages/auth/Login"));
+const Signup = lazy(() => import("./src/pages/auth/Signup"));
+const ForgotPassword = lazy(() => import("./src/pages/auth/ForgotPassword"));
+const ResetPassword = lazy(() => import("./src/pages/auth/ResetPassword"));
+
+// Store Pages
+const Cart = lazy(() => import("./src/pages/Cart"));
+
+// Admin Pages
+const AdminLayout = lazy(() => import("./src/components/admin/AdminLayout"));
+const AdminDashboard = lazy(() => import("./src/pages/admin/Dashboard"));
+const AdminProducts = lazy(() => import("./src/pages/admin/AdminProducts"));
+
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-white">
     <div className="w-8 h-8 border-2 border-[#e85d26] border-t-transparent rounded-full animate-spin" />
@@ -33,35 +51,66 @@ const PageLoader = () => (
 const App: React.FC = () => {
   return (
     <Theme appearance="inherit" radius="large" scaling="100%">
-      <Router>
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/fruit-powder-chunks" element={<FruitPowderChunks />} />
-            <Route path="/chocolate" element={<Chocolate />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/bulk-orders" element={<BulkOrders />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/smoothie-premix" element={<SmoothiePremix />} />
-            <Route path="/combos" element={<Combos />} />
-            <Route path="/reviews" element={<Reviews />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/terms" element={<TermsOfService />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-        <ToastContainer
-          position="top-right"
-          autoClose={4000}
-          newestOnTop
-          closeOnClick
-          pauseOnHover
-        />
-        <ContactWidget />
-      </Router>
+      <AuthProvider>
+        <CartProvider>
+          <Router>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/fruit-powder-chunks" element={<FruitPowderChunks />} />
+                <Route path="/chocolate" element={<Chocolate />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/bulk-orders" element={<BulkOrders />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/smoothie-premix" element={<SmoothiePremix />} />
+                <Route path="/combos" element={<Combos />} />
+                <Route path="/reviews" element={<Reviews />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<TermsOfService />} />
+
+                {/* Authentication */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+
+                {/* Store */}
+                <Route path="/cart" element={<Cart />} />
+
+                {/* Admin Routes (Protected) */}
+                <Route 
+                  path="/admin" 
+                  element={
+                    <ProtectedRoute adminOnly>
+                      <AdminLayout />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="products" element={<AdminProducts />} />
+                  <Route path="orders" element={<div>Orders List (Coming Soon)</div>} />
+                  <Route path="customers" element={<div>Customers List (Coming Soon)</div>} />
+                  <Route path="settings" element={<div>Admin Settings (Coming Soon)</div>} />
+                </Route>
+
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+            <ToastContainer
+              position="top-right"
+              autoClose={4000}
+              newestOnTop
+              closeOnClick
+              pauseOnHover
+            />
+            <ContactWidget />
+          </Router>
+        </CartProvider>
+      </AuthProvider>
     </Theme>
   );
 };

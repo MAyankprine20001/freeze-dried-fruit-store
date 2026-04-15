@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, ShoppingCart, User as UserIcon, LogOut, LayoutDashboard } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 
 // ─── Thematic inline SVG icons ────────────────────────────────────────────────
 // Each is a 20×20 viewBox SVG drawn in a clean line/outline style
@@ -229,7 +231,11 @@ const navLinks = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout, isAdmin } = useAuth();
+  const { totalItems } = useCart();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -308,8 +314,96 @@ export default function Header() {
               })}
             </nav>
 
-            {/* ── CTA ── */}
-            <div className="hidden lg:flex items-center">
+            {/* ── CTA & Actions ── */}
+            <div className="hidden lg:flex items-center gap-4">
+              <Link
+                to="/cart"
+                className="relative p-2.5 bg-[#fdf3ec] text-[#e85d26] rounded-full hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26]"
+                aria-label="View Cart"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-[#1a1a1a] text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
+
+              <div className="relative">
+                <button
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="p-2.5 bg-[#fdf3ec] text-[#e85d26] rounded-full hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26]"
+                  aria-label="Account Menu"
+                >
+                  <UserIcon className="w-5 h-5" />
+                </button>
+
+                <AnimatePresence>
+                  {userMenuOpen && (
+                    <>
+                      <div 
+                        className="fixed inset-0 z-0" 
+                        onClick={() => setUserMenuOpen(false)} 
+                      />
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-[#f0ede8] py-2 z-10"
+                      >
+                        {user ? (
+                          <>
+                            <div className="px-4 py-3 border-b border-[#f0ede8] mb-1">
+                              <p className="text-xs text-[#9a8a7a] font-medium uppercase tracking-wider">Signed in as</p>
+                              <p className="text-sm font-bold text-[#1a1a1a] truncate">{user.name}</p>
+                            </div>
+                            {isAdmin && (
+                              <Link
+                                to="/admin"
+                                className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#4a4a4a] hover:bg-[#fdf3ec] hover:text-[#e85d26] transition-colors"
+                              >
+                                <LayoutDashboard className="w-4 h-4" />
+                                Admin Dashboard
+                              </Link>
+                            )}
+                            <button
+                              onClick={() => {
+                                logout();
+                                setUserMenuOpen(false);
+                                navigate("/");
+                              }}
+                              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors"
+                            >
+                              <LogOut className="w-4 h-4" />
+                              Sign Out
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <Link
+                              to="/login"
+                              onClick={() => setUserMenuOpen(false)}
+                              className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#4a4a4a] hover:bg-[#fdf3ec] hover:text-[#e85d26] transition-colors"
+                            >
+                              Log In
+                            </Link>
+                            <Link
+                              to="/signup"
+                              onClick={() => setUserMenuOpen(false)}
+                              className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#4a4a4a] hover:bg-[#fdf3ec] hover:text-[#e85d26] transition-colors"
+                            >
+                              Create Account
+                            </Link>
+                          </>
+                        )}
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <div className="w-[1px] h-8 bg-[#e8d5c4]/40 mx-2" />
+              
               <Link
                 to="/contact"
                 className="px-5 py-2.5 bg-[#e85d26] text-white text-sm font-semibold rounded-full hover:bg-[#d44f1a] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26] focus-visible:ring-offset-2 shadow-sm"

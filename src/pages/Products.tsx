@@ -22,6 +22,8 @@ import {
 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useCart } from "../context/CartContext";
+import { toast } from "react-toastify";
 
 // ─── Image component with guaranteed fallback ────────────────────────────────
 interface SafeImgProps {
@@ -1005,9 +1007,26 @@ function ProductCard({
   index: number;
 }) {
   const [wished, setWished] = useState(false);
+  const { addToCart } = useCart();
+  
   const discount = Math.round(
     ((product.originalPrice - product.price) / product.originalPrice) * 100,
   );
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      category: product.category,
+      weight: product.weight
+    });
+    toast.success(`${product.name} added to cart!`, {
+      icon: "🛒",
+      progressStyle: { background: product.accent }
+    });
+  };
 
   return (
     <motion.div
@@ -1186,8 +1205,8 @@ function ProductCard({
               {product.weight} · Free ship ₹499+
             </p>
           </div>
-          <Link
-            to={product.path}
+          <button
+            onClick={handleAddToCart}
             className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white transition-all duration-200 hover:scale-105 hover:shadow-md active:scale-95"
             style={{
               backgroundColor: product.accent,
@@ -1196,7 +1215,7 @@ function ProductCard({
           >
             <ShoppingBag className="w-3.5 h-3.5" />
             {product.isGift ? "Gift Now" : "Buy Now"}
-          </Link>
+          </button>
         </div>
       </div>
     </motion.div>
