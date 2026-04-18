@@ -3,32 +3,32 @@ import { motion } from "framer-motion";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Mail, Lock, ArrowRight, Eye, EyeOff, AlertCircle, CheckCircle2 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const successMessage = location.state?.message;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
-    try {
-      await login({ email, password });
+  const loginMutation = useMutation({
+    mutationFn: (data: any) => login(data),
+    onSuccess: () => {
       navigate("/");
-    } catch (err: any) {
-      setError(err.message || "Invalid email or password");
-    } finally {
-      setLoading(false);
-    }
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    loginMutation.mutate({ email, password });
   };
+
+  const loading = loginMutation.isPending;
+  const error = (loginMutation.error as any)?.message || "";
 
   return (
     <div className="min-h-screen bg-[#faf9f6] flex items-center justify-center p-6">

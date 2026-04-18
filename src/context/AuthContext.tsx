@@ -7,7 +7,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (credentials: { email: string; password: string }) => Promise<void>;
-  signup: (userData: { fullName: string; email: string; password: string }) => Promise<void>;
+  signup: (userData: { fullName: string; email: string; password: string }) => Promise<{ success: boolean; message: string }>;
   logout: () => Promise<void>;
   isAdmin: boolean;
 }
@@ -18,19 +18,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // On app load — try to fetch current user using cookie-based refresh
+  // On app load — try to restore session via httpOnly refresh token cookie
   useEffect(() => {
     const initAuth = async () => {
       try {
-        // Try refreshing first to get a fresh access token (cookie is sent automatically)
+        // Cookie is sent automatically (withCredentials: true)
         const { token } = await authApi.refreshToken();
-        setAccessToken(token);
+        setAccessToken(token); // store in memory only
 
-        // Now fetch user with fresh token
+        // Fetch user with fresh access token
         const userData = await authApi.getMe();
         setUser(userData);
       } catch {
-        // No valid session — user not logged in
+        // No valid session — not logged in
         setAccessToken(null);
         setUser(null);
       } finally {
@@ -42,9 +42,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (credentials: { email: string; password: string }) => {
-    const { token, user: userData } = await authApi.login(credentials);
-    setAccessToken(token); // store in memory
-    setUser(userData);
+    const { success, message, data } = await authApi.login(credentials);
+
+    if (!success) throw new Error(message);
+
+    setAccessToken(data.token); // ✅ memory only — never localStorage
+    setUser(data.user);
   };
 
   const signup = async (userData: {
@@ -52,14 +55,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     email: string;
     password: string;
   }) => {
-    await authApi.register(userData);
+    const { success, message } = await authApi.register(userData);
+
+    if (!success) throw new Error(message);
+
+    // Don't auto-login — user needs to verify email first
+    return { success, message };
   };
 
   const logout = async () => {
     try {
-      await authApi.logout(); // clears httpOnly cookie on server
+      await authApi.logout(); // clears httpOnly refreshToken cookie on server
     } finally {
-      setAccessToken(null);
+      setAccessToken(null); // clear memory token
       setUser(null);
     }
   };

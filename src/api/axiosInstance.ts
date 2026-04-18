@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api/v1";
 
 // ─── Access token stored in memory only (not localStorage) ───────────────────
 let accessToken: string | null = null;
@@ -54,6 +54,19 @@ axiosInstance.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
+        // ✅ CRITICAL: Don't retry refresh-token requests — breaks infinite loop
+        if (originalRequest.url?.includes("/auth/refresh-token")) {
+            return Promise.reject(error);
+        }
+
+        // ✅ CRITICAL: Don't retry login/register — no point refreshing on auth routes
+        if (
+            originalRequest.url?.includes("/auth/login") ||
+            originalRequest.url?.includes("/auth/register")
+        ) {
+            return Promise.reject(error);
+        }
+
         // If 401 and not already retrying
         if (error.response?.status === 401 && !originalRequest._retry) {
             if (isRefreshing) {
@@ -88,8 +101,10 @@ axiosInstance.interceptors.response.use(
             } catch (refreshError) {
                 processQueue(refreshError, null);
                 setAccessToken(null);
-                // Redirect to login
-                window.location.href = "/login";
+                // Only redirect if user was actually logged in
+                if (accessToken) {
+                    window.location.href = "/login";
+                }
                 return Promise.reject(refreshError);
             } finally {
                 isRefreshing = false;

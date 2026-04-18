@@ -3,35 +3,35 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { User, Mail, Lock, ArrowRight, Eye, EyeOff, AlertCircle, CheckCircle2 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  
+
   const { signup } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const signupMutation = useMutation({
+    mutationFn: (data: any) => signup(data),
+    onSuccess: (response: any) => {
+      navigate("/login", { state: { message: response.message } });
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-    try {
-      await signup({ fullName: name, email, password });
-      navigate("/login", { state: { message: "Account created successfully! Please log in." } });
-    } catch (err: any) {
-      setError(err.message || "Failed to create account");
-    } finally {
-      setLoading(false);
-    }
+    signupMutation.mutate({ fullName: name, email, password });
   };
+
+  const loading = signupMutation.isPending;
+  const error = (signupMutation.error as any)?.message || "";
 
   return (
     <div className="min-h-screen bg-[#faf9f6] flex items-center justify-center p-6">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         className="max-w-md w-full"
@@ -47,7 +47,7 @@ export default function Signup() {
         <div className="bg-white p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#f0ede8]">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 className="bg-red-50 text-red-600 p-4 rounded-xl flex items-center gap-3 text-sm"
@@ -61,7 +61,7 @@ export default function Signup() {
               <label className="text-sm font-semibold text-[#4a4a4a] ml-1">Full Name</label>
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9a8a7a]" />
-                <input 
+                <input
                   type="text"
                   required
                   value={name}
@@ -76,7 +76,7 @@ export default function Signup() {
               <label className="text-sm font-semibold text-[#4a4a4a] ml-1">Email Address</label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9a8a7a]" />
-                <input 
+                <input
                   type="email"
                   required
                   value={email}
@@ -91,7 +91,7 @@ export default function Signup() {
               <label className="text-sm font-semibold text-[#4a4a4a] ml-1">Password</label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#9a8a7a]" />
-                <input 
+                <input
                   type={showPassword ? "text" : "password"}
                   required
                   value={password}

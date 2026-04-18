@@ -33,6 +33,7 @@ const Login = lazy(() => import("./src/pages/auth/Login"));
 const Signup = lazy(() => import("./src/pages/auth/Signup"));
 const ForgotPassword = lazy(() => import("./src/pages/auth/ForgotPassword"));
 const ResetPassword = lazy(() => import("./src/pages/auth/ResetPassword"));
+const VerifyEmail = lazy(() => import("./src/pages/auth/VerifyEmail"));
 
 // Store Pages
 const Cart = lazy(() => import("./src/pages/Cart"));
@@ -77,6 +78,7 @@ const App: React.FC = () => {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/verify-email" element={<VerifyEmail />} />
 
                 {/* Store */}
                 <Route path="/cart" element={<Cart />} />
