@@ -52,4 +52,14 @@ export const authApi = {
         const res = await axiosInstance.get<ApiSuccess<null>>(`/auth/verify-email?token=${token}`);
         return res.data;
     },
+
+    forgotPassword: async (email: string) => {
+        const res = await axiosInstance.post<ApiSuccess<null>>("/auth/forgot-password", { email });
+        return res.data;
+    },
+
+    resetPassword: async (data: any) => {
+        const res = await axiosInstance.post<ApiSuccess<null>>("/auth/reset-password", data);
+        return res.data;
+    },
 };

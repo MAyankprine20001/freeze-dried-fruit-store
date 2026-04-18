@@ -2,27 +2,27 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Mail, ArrowLeft, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
-import { api } from "../../services/api";
+import { authApi } from "../../api/auth.api";
+import { useMutation } from "@tanstack/react-query";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
-  const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
-    try {
-      await api.post("/auth/forgot-password", { email });
+  const forgotMutation = useMutation({
+    mutationFn: (email: string) => authApi.forgotPassword(email),
+    onSuccess: () => {
       setSent(true);
-    } catch (err: any) {
-      setError(err.message || "Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    forgotMutation.mutate(email);
   };
+
+  const loading = forgotMutation.isPending;
+  const error = (forgotMutation.error as any)?.message || "";
 
   return (
     <div className="min-h-screen bg-[#faf9f6] flex items-center justify-center p-6">

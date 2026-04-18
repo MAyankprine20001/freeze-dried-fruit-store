@@ -2,41 +2,44 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Lock, ArrowRight, Eye, EyeOff, AlertCircle, CheckCircle2 } from "lucide-react";
-import { api } from "../../services/api";
+import { authApi } from "../../api/auth.api";
+import { useMutation } from "@tanstack/react-query";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [validationError, setValidationError] = useState("");
   
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      return setError("Passwords do not match");
-    }
-    if (password.length < 8) {
-      return setError("Password must be at least 8 characters");
-    }
-
-    setError("");
-    setLoading(true);
-    try {
-      await api.post("/auth/reset-password", { token, password });
+  const resetMutation = useMutation({
+    mutationFn: (data: any) => authApi.resetPassword(data),
+    onSuccess: () => {
       setSuccess(true);
       setTimeout(() => navigate("/login"), 3000);
-    } catch (err: any) {
-      setError(err.message || "Failed to reset password. Link may be expired.");
-    } finally {
-      setLoading(false);
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setValidationError("");
+
+    if (password !== confirmPassword) {
+      return setValidationError("Passwords do not match");
     }
+    if (password.length < 8) {
+      return setValidationError("Password must be at least 8 characters");
+    }
+
+    resetMutation.mutate({ token, password });
   };
+
+  const loading = resetMutation.isPending;
+  const error = validationError || (resetMutation.error as any)?.message || "";
 
   if (!token) {
     return (
