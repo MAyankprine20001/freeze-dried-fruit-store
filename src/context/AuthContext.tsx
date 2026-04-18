@@ -1,19 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { api } from "../services/api";
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: "admin" | "customer";
-}
+import { authApi } from "../api/auth.api";
+import type { User } from "../api/auth.api";
+import { setAccessToken } from "../api/axiosInstance";
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (credentials: any) => Promise<void>;
-  signup: (userData: any) => Promise<void>;
-  logout: () => void;
+  login: (credentials: { email: string; password: string }) => Promise<void>;
+  signup: (userData: { fullName: string; email: string; password: string }) => Promise<void>;
+  logout: () => Promise<void>;
   isAdmin: boolean;
 }
 
@@ -23,43 +18,50 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // On app load — try to fetch current user using cookie-based refresh
   useEffect(() => {
     const initAuth = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const userData = await api.get<User>("/auth/me");
-          setUser(userData);
-        } catch (error) {
-          localStorage.removeItem("token");
-        }
+      try {
+        // Try refreshing first to get a fresh access token (cookie is sent automatically)
+        const { token } = await authApi.refreshToken();
+        setAccessToken(token);
+
+        // Now fetch user with fresh token
+        const userData = await authApi.getMe();
+        setUser(userData);
+      } catch {
+        // No valid session — user not logged in
+        setAccessToken(null);
+        setUser(null);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
+
     initAuth();
   }, []);
 
-  const login = async (credentials: any) => {
-    const { token, user: userData } = await api.post<{ token: string; user: User }>(
-      "/auth/login",
-      credentials
-    );
-    localStorage.setItem("token", token);
+  const login = async (credentials: { email: string; password: string }) => {
+    const { token, user: userData } = await authApi.login(credentials);
+    setAccessToken(token); // store in memory
     setUser(userData);
   };
 
-  const signup = async (userData: any) => {
-    const { token, user: newUserData } = await api.post<{ token: string; user: User }>(
-      "/auth/register",
-      userData
-    );
-    localStorage.setItem("token", token);
-    setUser(newUserData);
+  const signup = async (userData: {
+    fullName: string;
+    email: string;
+    password: string;
+  }) => {
+    await authApi.register(userData);
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
+  const logout = async () => {
+    try {
+      await authApi.logout(); // clears httpOnly cookie on server
+    } finally {
+      setAccessToken(null);
+      setUser(null);
+    }
   };
 
   const isAdmin = user?.role === "admin";
@@ -73,8 +75,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
   return context;
 };

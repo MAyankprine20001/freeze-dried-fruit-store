@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import { Mail, Lock, ArrowRight, Eye, EyeOff, AlertCircle } from "lucide-react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Mail, Lock, ArrowRight, Eye, EyeOff, AlertCircle, CheckCircle2 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Login() {
@@ -13,6 +13,8 @@ export default function Login() {
   
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const successMessage = location.state?.message;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,6 +47,17 @@ export default function Login() {
 
         <div className="bg-white p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#f0ede8]">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {successMessage && !error && (
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="bg-green-50 text-green-600 p-4 rounded-xl flex items-center gap-3 text-sm mb-4"
+              >
+                <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
+                {successMessage}
+              </motion.div>
+            )}
+
             {error && (
               <motion.div 
                 initial={{ opacity: 0, height: 0 }}

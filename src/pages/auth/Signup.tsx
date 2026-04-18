@@ -20,8 +20,8 @@ export default function Signup() {
     setError("");
     setLoading(true);
     try {
-      await signup({ name, email, password });
-      navigate("/");
+      await signup({ fullName: name, email, password });
+      navigate("/login", { state: { message: "Account created successfully! Please log in." } });
     } catch (err: any) {
       setError(err.message || "Failed to create account");
     } finally {
