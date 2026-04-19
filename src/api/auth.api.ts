@@ -44,7 +44,7 @@ export const authApi = {
     },
 
     refreshToken: async () => {
-        const res = await axiosInstance.post<ApiSuccess<{ token: string }>>("/auth/refresh-token");
+        const res = await axiosInstance.post<ApiSuccess<{ token: string }>>("/auth/refresh-token", {});
         return res.data.data; // { token }
     },
 
