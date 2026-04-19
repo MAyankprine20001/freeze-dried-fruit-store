@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, ShoppingCart, User as UserIcon, LogOut, LayoutDashboard } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
@@ -220,9 +220,7 @@ const navLinks = [
   { label: "PRODUCTS", path: "/products", Icon: IconProducts },
   { label: "BULK ORDERS", path: "/bulk-orders", Icon: IconBulk },
   { label: "BLOG", path: "/blog", Icon: IconBlog },
-  { label: "REVIEWS", path: "/reviews", Icon: IconReviews },
   { label: "FAQ", path: "/faq", Icon: IconFAQ },
-  { label: "CONTACT", path: "/contact", Icon: IconContact },
 ];
 
 
@@ -231,7 +229,6 @@ const navLinks = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout, isAdmin } = useAuth();
@@ -258,8 +255,8 @@ export default function Header() {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-[#e8d5c4]/40"
-          : "bg-white/70 backdrop-blur-md"
+          ? "bg-black/95 backdrop-blur-md shadow-sm border-b border-[#D4AF37]/20"
+          : "bg-black/70 backdrop-blur-md"
           }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -267,16 +264,16 @@ export default function Header() {
             {/* ── Logo ── */}
             <Link
               to="/"
-              className="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26] rounded-lg"
+              className="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] rounded-lg"
               aria-label="Freeze Fruit Home"
             >
               <img
-                src="/logo.png"
+                src="https://res.cloudinary.com/doi7id29n/image/upload/q_auto/f_auto/v1776528652/logo_2_on76wp.png"
                 alt=""
                 className="w-24 h-24 object-contain"
               />
-              <span className="font-serif text-xl font-bold text-[#1a1a1a] tracking-tight">
-                The Dry<span className="text-[#1a1a1a]"> Factory</span>
+              <span className="font-serif text-xl font-bold text-white tracking-tight">
+                The Dry<span className="text-[#D4AF37]"> Factory</span>
               </span>
             </Link>
 
@@ -291,9 +288,9 @@ export default function Header() {
                   <Link
                     key={path}
                     to={path}
-                    className={`relative inline-flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-[11px] font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26] group ${isActive
-                      ? "text-[#e85d26] bg-[#fdf3ec]"
-                      : "text-[#5a5a5a] hover:text-[#e85d26] hover:bg-[#fdf3ec]"
+                    className={`relative inline-flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl text-[11px] font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] group ${isActive
+                      ? "text-[#D4AF37] bg-white/5"
+                      : "text-white/70 hover:text-[#D4AF37] hover:bg-white/5"
                       }`}
                   >
                     {badge && (
@@ -301,13 +298,13 @@ export default function Header() {
                     )}
                     <Icon
                       className={`w-[18px] h-[18px] transition-colors duration-200 ${isActive
-                        ? "text-[#e85d26]"
-                        : "text-[#9a8a7a] group-hover:text-[#e85d26]"
+                         ? "text-[#D4AF37]"
+                        : "text-white/40 group-hover:text-[#D4AF37]"
                         }`}
                     />
                     <span className="leading-none">{label}</span>
                     {isActive && (
-                      <span className="absolute bottom-1 left-3 right-3 h-0.5 bg-[#e85d26] rounded-full" />
+                      <span className="absolute bottom-1 left-3 right-3 h-0.5 bg-[#D4AF37] rounded-full" />
                     )}
                   </Link>
                 );
@@ -318,7 +315,7 @@ export default function Header() {
             <div className="hidden lg:flex items-center gap-4">
               <Link
                 to="/cart"
-                className="relative p-2.5 bg-[#fdf3ec] text-[#e85d26] rounded-full hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26]"
+                className="relative p-2.5 bg-white/5 text-[#D4AF37] rounded-full hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
                 aria-label="View Cart"
               >
                 <ShoppingCart className="w-5 h-5" />
@@ -329,92 +326,47 @@ export default function Header() {
                 )}
               </Link>
 
-              <div className="relative">
-                <button
-                  onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="p-2.5 bg-[#fdf3ec] text-[#e85d26] rounded-full hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26]"
-                  aria-label="Account Menu"
-                >
-                  <UserIcon className="w-5 h-5" />
-                </button>
 
-                <AnimatePresence>
-                  {userMenuOpen && (
-                    <>
-                      <div 
-                        className="fixed inset-0 z-0" 
-                        onClick={() => setUserMenuOpen(false)} 
-                      />
-                      <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-[#f0ede8] py-2 z-10"
-                      >
-                        {user ? (
-                          <>
-                            <div className="px-4 py-3 border-b border-[#f0ede8] mb-1">
-                              <p className="text-xs text-[#9a8a7a] font-medium uppercase tracking-wider">Signed in as</p>
-                              <p className="text-sm font-bold text-[#1a1a1a] truncate">{user.name}</p>
-                            </div>
-                            {isAdmin && (
-                              <Link
-                                to="/admin"
-                                className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#4a4a4a] hover:bg-[#fdf3ec] hover:text-[#e85d26] transition-colors"
-                              >
-                                <LayoutDashboard className="w-4 h-4" />
-                                Admin Dashboard
-                              </Link>
-                            )}
-                            <button
-                              onClick={() => {
-                                logout();
-                                setUserMenuOpen(false);
-                                navigate("/");
-                              }}
-                              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors"
-                            >
-                              <LogOut className="w-4 h-4" />
-                              Sign Out
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <Link
-                              to="/login"
-                              onClick={() => setUserMenuOpen(false)}
-                              className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#4a4a4a] hover:bg-[#fdf3ec] hover:text-[#e85d26] transition-colors"
-                            >
-                              Log In
-                            </Link>
-                            <Link
-                              to="/signup"
-                              onClick={() => setUserMenuOpen(false)}
-                              className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#4a4a4a] hover:bg-[#fdf3ec] hover:text-[#e85d26] transition-colors"
-                            >
-                              Create Account
-                            </Link>
-                          </>
-                        )}
-                      </motion.div>
-                    </>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <div className="w-[1px] h-8 bg-[#e8d5c4]/40 mx-2" />
               
-              <Link
-                to="/contact"
-                className="px-5 py-2.5 bg-[#e85d26] text-white text-sm font-semibold rounded-full hover:bg-[#d44f1a] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26] focus-visible:ring-offset-2 shadow-sm"
-              >
-                Get in Touch
-              </Link>
+              {user ? (
+                <div className="flex items-center gap-3">
+                  <span className="text-white/50 text-xs font-medium">Hi, {user.name.split(' ')[0]}</span>
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      className="px-4 py-2 border border-[#D4AF37]/30 text-[#D4AF37] text-[11px] font-bold uppercase tracking-wider rounded-full hover:bg-[#D4AF37]/10 transition-all duration-200"
+                    >
+                      Admin
+                    </Link>
+                  )}
+                  <button
+                    onClick={logout}
+                    className="px-5 py-2.5 border border-white/10 text-white text-sm font-semibold rounded-full hover:bg-white/5 transition-all duration-200"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-3">
+                  <Link
+                    to="/login"
+                    className="px-5 py-2.5 text-white/70 text-sm font-semibold hover:text-[#D4AF37] transition-all duration-200"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="px-5 py-2.5 bg-[#D4AF37] text-black text-sm font-semibold rounded-full hover:bg-[#BF953F] hover:scale-105 transition-all duration-200 shadow-sm"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* ── Mobile Hamburger ── */}
             <button
-              className="lg:hidden p-2 rounded-lg text-[#4a4a4a] hover:text-[#e85d26] hover:bg-[#fdf3ec] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26]"
+              className="lg:hidden p-2 rounded-lg text-white/70 hover:text-[#D4AF37] hover:bg-white/5 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
@@ -451,7 +403,7 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-16 right-0 bottom-0 w-72 z-50 shadow-2xl lg:hidden flex flex-col bg-white"
+              className="fixed top-16 right-0 bottom-0 w-72 z-50 shadow-2xl lg:hidden flex flex-col bg-black border-l border-white/10"
               role="dialog"
               aria-modal="true"
               aria-label="Mobile navigation"
@@ -466,17 +418,17 @@ export default function Header() {
                     <Link
                       key={path}
                       to={path}
-                      className={`relative flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26] ${isActive
-                        ? "bg-[#fdf3ec] text-[#e85d26] font-semibold"
-                        : "text-[#4a4a4a] hover:bg-[#fdf3ec] hover:text-[#e85d26]"
+                      className={`relative flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] ${isActive
+                        ? "bg-white/5 text-[#D4AF37] font-semibold"
+                        : "text-white/70 hover:bg-white/5 hover:text-[#D4AF37]"
                         }`}
                     >
                       <span
-                        className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-200 ${isActive ? "bg-[#e85d26]" : "bg-[#f5ede5]"
+                        className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-200 ${isActive ? "bg-[#D4AF37]" : "bg-white/10"
                           }`}
                       >
                         <Icon
-                          className={`w-5 h-5 ${isActive ? "text-white" : "text-[#e85d26]"}`}
+                          className={`w-5 h-5 ${isActive ? "text-black" : "text-[#D4AF37]"}`}
                         />
                       </span>
                       <span>{label}</span>
@@ -488,14 +440,30 @@ export default function Header() {
                 })}
               </nav>
 
-              <div className="p-5 border-t border-[#f0e8e0]">
-                <Link
-                  to="/contact"
-                  className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-[#e85d26] text-white text-sm font-semibold rounded-full hover:bg-[#d44f1a] transition-all duration-200"
-                >
-                  <IconContact className="w-4 h-4" />
-                  Get in Touch
-                </Link>
+              <div className="p-5 border-t border-white/10 space-y-3">
+                {user ? (
+                  <button
+                    onClick={logout}
+                    className="flex items-center justify-center gap-2 w-full px-5 py-3 border border-white/10 text-white text-sm font-semibold rounded-full hover:bg-white/5 transition-all duration-200"
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <>
+                    <Link
+                      to="/login"
+                      className="flex items-center justify-center gap-2 w-full px-5 py-3 border border-white/10 text-white text-sm font-semibold rounded-full hover:bg-white/5 transition-all duration-200"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      to="/signup"
+                      className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-[#D4AF37] text-black text-sm font-semibold rounded-full hover:bg-[#BF953F] transition-all duration-200"
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                )}
               </div>
             </motion.div>
           </>

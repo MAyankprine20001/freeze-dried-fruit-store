@@ -116,11 +116,11 @@ export default function Home() {
   const prevHero = () => setHeroIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black">
       <Header />
 
       {/* Hero */}
-      <section className="relative pt-16 h-[90vh] lg:h-screen flex items-center overflow-hidden bg-[#1a1a1a]">
+      <section className="relative pt-16 h-[90vh] lg:h-screen flex items-center overflow-hidden bg-black">
         <AnimatePresence mode="wait">
           <motion.div
             key={heroIndex}
@@ -135,7 +135,7 @@ export default function Home() {
               alt={heroSlides[heroIndex].title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/80 via-[#1a1a1a]/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
           </motion.div>
         </AnimatePresence>
 
@@ -149,7 +149,7 @@ export default function Home() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
               >
-                <span className="inline-block px-4 py-1.5 bg-[#e85d26]/90 text-white text-xs font-semibold uppercase tracking-wider rounded-full mb-6">
+                <span className="inline-block px-4 py-1.5 bg-[#D4AF37]/90 text-black text-xs font-semibold uppercase tracking-wider rounded-full mb-6">
                   {heroSlides[heroIndex].subtitle}
                 </span>
 
@@ -158,7 +158,7 @@ export default function Home() {
                     <React.Fragment key={i}>
                       {i > 0 && ", "}
                       {part.includes("Locked In") || part.includes("Flavor") ? (
-                        <span className="text-[#f4a435]">{part}</span>
+                        <span className="text-[#D4AF37]">{part}</span>
                       ) : (
                         part
                       )}
@@ -168,7 +168,7 @@ export default function Home() {
 
                 <p className="text-white/85 text-lg leading-relaxed mb-10">
                   {heroSlides[heroIndex].description.split(/(heat)/i).map((part, i) =>
-                    part.toLowerCase() === 'heat' ? <span key={i} className="text-[#f4a435] font-bold">{part}</span> : part
+                    part.toLowerCase() === 'heat' ? <span key={i} className="text-[#D4AF37] font-bold">{part}</span> : part
                   )}
                 </p>
               </motion.div>
@@ -182,7 +182,7 @@ export default function Home() {
             >
               <Link
                 to="/fruit-powder-chunks"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e85d26] text-white font-semibold rounded-full hover:bg-[#d44f1a] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent shadow-lg"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D4AF37] text-black font-semibold rounded-full hover:bg-[#BF953F] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent shadow-lg"
               >
                 Shop Products
                 <ArrowRight className="w-4 h-4" />
@@ -210,7 +210,7 @@ export default function Home() {
               <button
                 key={i}
                 onClick={() => setHeroIndex(i)}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === heroIndex ? "bg-[#f4a435] w-8" : "bg-white/30"
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === heroIndex ? "bg-[#D4AF37] w-8" : "bg-white/30"
                   }`}
               />
             ))}
@@ -228,7 +228,7 @@ export default function Home() {
       <TrustBadges />
 
       {/* Categories */}
-      <section className="py-24 bg-white overflow-hidden">
+      <section className="py-24 bg-black overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -237,13 +237,13 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <span className="inline-block px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-4">
+            <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-4">
               Our Products
             </span>
-            <h2 className="font-serif text-4xl font-bold text-[#1a1a1a] mb-4">
+            <h2 className="font-serif text-4xl font-bold text-white mb-4">
               Four Ways to Love Fruit
             </h2>
-            <p className="text-[#6a5a4a] text-lg max-w-2xl mx-auto">
+            <p className="text-white/70 text-lg max-w-2xl mx-auto">
               Whether you're blending, baking, snacking, or gifting we have the perfect freeze-dried fruit product for every moment.
             </p>
           </motion.div>
@@ -257,7 +257,7 @@ export default function Home() {
       </section>
 
       {/* Why Us */}
-      <section className="py-24 bg-[#fdf3ec]">
+      <section className="py-24 bg-white/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -266,14 +266,14 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span className="inline-block px-4 py-1.5 bg-white text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-6">
+              <span className="inline-block px-4 py-1.5 bg-black text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
                 Why Freeze Drying?
               </span>
-              <h2 className="font-serif text-4xl font-bold text-[#1a1a1a] mb-6 leading-tight">
+              <h2 className="font-serif text-4xl font-bold text-white mb-6 leading-tight">
                 The Science of Keeping Fruit{' '}
-                <span className="text-[#e85d26]">Perfect</span>
+                <span className="text-[#D4AF37]">Perfect</span>
               </h2>
-              <p className="text-[#6a5a4a] text-base leading-relaxed mb-10">
+              <p className="text-white/70 text-base leading-relaxed mb-10">
                 Freeze drying is the gold standard of food preservation. By removing moisture at sub-zero temperatures, we lock in the color, flavor, and nutrition of fruit at its absolute peak  without a single additive.
               </p>
               <div className="space-y-8">
@@ -286,14 +286,14 @@ export default function Home() {
                     transition={{ duration: 0.4, delay: i * 0.1 }}
                     className="flex gap-4"
                   >
-                    <div className="w-10 h-10 bg-[#e85d26] rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
-                      <item.icon className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 bg-[#D4AF37] rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <item.icon className="w-5 h-5 text-black" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-[#1a1a1a] mb-1">{item.title}</h3>
-                      <p className="text-[#6a5a4a] text-sm leading-relaxed">
+                      <h3 className="font-semibold text-white mb-1">{item.title}</h3>
+                      <p className="text-white/70 text-sm leading-relaxed">
                         {item.desc.split(/(heat)/i).map((part, i) =>
-                          part.toLowerCase() === 'heat' ? <span key={i} className="text-[#e85d26] font-bold">{part}</span> : part
+                          part.toLowerCase() === 'heat' ? <span key={i} className="text-[#D4AF37] font-bold">{part}</span> : part
                         )}
                       </p>
                     </div>
@@ -318,9 +318,9 @@ export default function Home() {
                   className="w-full h-[500px] object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-6 shadow-xl border border-[#f0e8e0]">
-                <p className="font-serif text-3xl font-bold text-[#e85d26]">97%</p>
-                <p className="text-[#6a5a4a] text-sm font-medium">Nutrients Preserved</p>
+              <div className="absolute -bottom-6 -left-6 bg-black rounded-2xl p-6 shadow-xl border border-white/10">
+                <p className="font-serif text-3xl font-bold text-[#D4AF37]">97%</p>
+                <p className="text-white/70 text-sm font-medium">Nutrients Preserved</p>
               </div>
             </motion.div>
           </div>
@@ -372,7 +372,7 @@ export default function Home() {
       </section> */}
 
       {/* CTA Banner */}
-      <section className="py-24 bg-[#1a1a1a] relative overflow-hidden">
+      <section className="py-24 bg-black relative overflow-hidden border-t border-white/10">
         <div className="absolute inset-0 opacity-10">
           <img
             src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=1600&h=400&fit=crop"
@@ -392,7 +392,7 @@ export default function Home() {
           >
             <h2 className="font-serif text-4xl lg:text-5xl font-bold text-white mb-6">
               Ready to Taste the{' '}
-              <span className="text-[#f4a435]">Difference?</span>
+              <span className="text-[#D4AF37]">Difference?</span>
             </h2>
             <p className="text-white/75 text-lg mb-10 max-w-xl mx-auto">
               Explore our full range of freeze-dried fruit products and discover why thousands of health-conscious families choose Freeze Fruit.
@@ -400,7 +400,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/fruit-powder-chunks"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e85d26] text-white font-semibold rounded-full hover:bg-[#d44f1a] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4a435] shadow-lg"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D4AF37] text-black font-semibold rounded-full hover:bg-[#BF953F] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] shadow-lg"
               >
                 Shop Products
                 <ArrowRight className="w-4 h-4" />

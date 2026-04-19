@@ -44,8 +44,8 @@ const AdminDashboard = lazy(() => import("./src/pages/admin/Dashboard"));
 const AdminProducts = lazy(() => import("./src/pages/admin/AdminProducts"));
 
 const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-white">
-    <div className="w-8 h-8 border-2 border-[#e85d26] border-t-transparent rounded-full animate-spin" />
+  <div className="min-h-screen flex items-center justify-center bg-black">
+    <div className="w-8 h-8 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin" />
   </div>
 );
 

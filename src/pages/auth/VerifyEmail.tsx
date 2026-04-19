@@ -26,15 +26,15 @@ const VerifyEmail: React.FC = () => {
 
 
     return (
-        <div className="min-h-screen bg-[#fffdfa] flex items-center justify-center px-4 py-12">
+        <div className="min-h-screen bg-black flex items-center justify-center px-4 py-12">
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="max-w-md w-full bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-orange-50 p-8 md:p-12 text-center relative overflow-hidden"
+                className="max-w-md w-full bg-black rounded-3xl shadow-2xl border border-white/10 p-8 md:p-12 text-center relative overflow-hidden"
             >
                 {/* Decorative background element */}
-                <div className="absolute -top-24 -right-24 w-48 h-48 bg-orange-50 rounded-full blur-3xl opacity-60" />
-                <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-orange-100 rounded-full blur-3xl opacity-40" />
+                <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#D4AF37]/5 rounded-full blur-3xl opacity-60" />
+                <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-[#D4AF37]/10 rounded-full blur-3xl opacity-40" />
 
                 <div className="relative z-10">
                     <AnimatePresence mode="wait">
@@ -46,11 +46,11 @@ const VerifyEmail: React.FC = () => {
                                 exit={{ opacity: 0, scale: 0.8 }}
                                 className="flex flex-col items-center"
                             >
-                                <div className="w-20 h-20 bg-orange-50 rounded-2xl flex items-center justify-center mb-8">
-                                    <Loader2 className="w-10 h-10 text-[#e85d26] animate-spin" />
+                                <div className="w-20 h-20 bg-white/5 rounded-2xl flex items-center justify-center mb-8">
+                                    <Loader2 className="w-10 h-10 text-[#D4AF37] animate-spin" />
                                 </div>
-                                <h1 className="text-2xl font-bold text-gray-900 mb-3">Verifying Email</h1>
-                                <p className="text-gray-500">{message}</p>
+                                <h1 className="text-2xl font-bold text-white mb-3">Verifying Email</h1>
+                                <p className="text-white/50">{message}</p>
                             </motion.div>
                         )}
 
@@ -62,15 +62,15 @@ const VerifyEmail: React.FC = () => {
                                 exit={{ opacity: 0, scale: 0.8 }}
                                 className="flex flex-col items-center"
                             >
-                                <div className="w-20 h-20 bg-green-50 rounded-2xl flex items-center justify-center mb-8">
+                                <div className="w-20 h-20 bg-green-500/10 rounded-2xl flex items-center justify-center mb-8">
                                     <CheckCircle className="w-10 h-10 text-green-500" />
                                 </div>
-                                <h1 className="text-2xl font-bold text-gray-900 mb-3">Verified!</h1>
-                                <p className="text-gray-500 mb-8">{message}</p>
+                                <h1 className="text-2xl font-bold text-white mb-3">Verified!</h1>
+                                <p className="text-white/50 mb-8">{message}</p>
                                 
                                 <Link 
                                     to="/login"
-                                    className="w-full bg-[#e85d26] text-white py-4 px-6 rounded-2xl font-semibold shadow-lg shadow-orange-200 hover:bg-[#d44d1b] transition-all flex items-center justify-center gap-2 group"
+                                    className="w-full bg-[#D4AF37] text-black py-4 px-6 rounded-2xl font-semibold shadow-lg hover:bg-[#BF953F] transition-all flex items-center justify-center gap-2 group"
                                 >
                                     Proceed to Login
                                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -86,22 +86,22 @@ const VerifyEmail: React.FC = () => {
                                 exit={{ opacity: 0, scale: 0.8 }}
                                 className="flex flex-col items-center"
                             >
-                                <div className="w-20 h-20 bg-red-50 rounded-2xl flex items-center justify-center mb-8">
+                                <div className="w-20 h-20 bg-red-500/10 rounded-2xl flex items-center justify-center mb-8">
                                     <XCircle className="w-10 h-10 text-red-500" />
                                 </div>
-                                <h1 className="text-2xl font-bold text-gray-900 mb-3">Verification Failed</h1>
-                                <p className="text-gray-500 mb-8">{message}</p>
+                                <h1 className="text-2xl font-bold text-white mb-3">Verification Failed</h1>
+                                <p className="text-white/50 mb-8">{message}</p>
                                 
                                 <div className="flex flex-col w-full gap-3">
                                     <button 
                                         onClick={() => window.location.reload()}
-                                        className="w-full bg-gray-900 text-white py-4 px-6 rounded-2xl font-semibold hover:bg-black transition-all"
+                                        className="w-full bg-white text-black py-4 px-6 rounded-2xl font-semibold hover:bg-white/90 transition-all"
                                     >
                                         Try Again
                                     </button>
                                     <Link 
                                         to="/signup"
-                                        className="text-[#e85d26] font-semibold hover:underline"
+                                        className="text-[#D4AF37] font-semibold hover:underline"
                                     >
                                         Back to Signup
                                     </Link>

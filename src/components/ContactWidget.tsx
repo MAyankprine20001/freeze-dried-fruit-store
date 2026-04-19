@@ -47,7 +47,7 @@ export default function ContactWidget() {
               onClick={() => setShowWhatsAppModal(true)}
               className="flex items-center gap-2 group"
             >
-              <span className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-semibold text-[#1a1a1a] shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="bg-black/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-semibold text-white shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
                 WhatsApp Chat
               </span>
               <div className="w-12 h-12 bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-[#25D366]/40 transition-shadow">
@@ -62,10 +62,10 @@ export default function ContactWidget() {
               onClick={() => window.open(`tel:${PHONE_NUMBER}`)}
               className="flex items-center gap-2 group"
             >
-              <span className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-semibold text-[#1a1a1a] shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="bg-black/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-semibold text-white shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
                 Voice Call
               </span>
-              <div className="w-12 h-12 bg-[#f4a435] rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-[#f4a435]/40 transition-shadow">
+              <div className="w-12 h-12 bg-[#D4AF37] rounded-full flex items-center justify-center text-black shadow-lg hover:shadow-[#D4AF37]/40 transition-shadow">
                 <Phone size={24} fill="currentColor" />
               </div>
             </motion.button>
@@ -79,14 +79,14 @@ export default function ContactWidget() {
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
         className={`w-14 h-14 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-300 ${
-          isOpen ? "bg-[#1a1a1a]" : "bg-[#e85d26]"
+          isOpen ? "bg-black" : "bg-[#D4AF37]"
         }`}
       >
         <motion.div
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
-          <Plus size={32} />
+          <Plus size={32} className={isOpen ? "text-white" : "text-black"} />
         </motion.div>
       </motion.button>
 
@@ -98,13 +98,13 @@ export default function ContactWidget() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="w-full max-w-md bg-[#1a1a1a] border border-[#f4a435]/20 rounded-3xl overflow-hidden shadow-2xl"
+              className="w-full max-w-md bg-black border border-[#D4AF37]/20 rounded-3xl overflow-hidden shadow-2xl"
             >
               {/* Modal Header */}
-              <div className="bg-gradient-to-r from-[#e85d26] to-[#f4a435] p-6 flex justify-between items-center">
+              <div className="bg-gradient-to-r from-[#D4AF37] to-[#BF953F] p-6 flex justify-between items-center">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-lg">
-                    <MessageCircle className="text-[#e85d26]" size={28} />
+                  <div className="w-12 h-12 bg-black rounded-2xl flex items-center justify-center shadow-lg">
+                    <MessageCircle className="text-[#D4AF37]" size={28} />
                   </div>
                   <div>
                     <h3 className="text-white font-serif text-xl font-bold leading-tight">WhatsApp Chat</h3>
@@ -122,7 +122,7 @@ export default function ContactWidget() {
               {/* Modal Body */}
               <div className="p-6 space-y-6">
                 <div>
-                  <h4 className="text-[#f4a435] text-xs font-semibold uppercase tracking-wider mb-4">Quick Messages</h4>
+                  <h4 className="text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-4">Quick Messages</h4>
                   <div className="space-y-2 max-h-[220px] overflow-y-auto pr-2 custom-scrollbar">
                     {QUICK_MESSAGES.map((msg) => (
                       <button
@@ -133,7 +133,7 @@ export default function ContactWidget() {
                         }}
                         className={`w-full text-left p-3.5 rounded-2xl text-sm transition-all duration-200 border ${
                           selectedMessage === msg.text
-                            ? "bg-[#f4a435]/10 border-[#f4a435] text-white"
+                            ? "bg-[#D4AF37]/10 border-[#D4AF37] text-white"
                             : "bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:border-white/10"
                         }`}
                       >
@@ -147,7 +147,7 @@ export default function ContactWidget() {
                 </div>
 
                 <div>
-                  <h4 className="text-[#f4a435] text-xs font-semibold uppercase tracking-wider mb-2">Custom Message</h4>
+                  <h4 className="text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-2">Custom Message</h4>
                   <textarea
                     value={customMessage}
                     onChange={(e) => {
@@ -155,13 +155,13 @@ export default function ContactWidget() {
                       setSelectedMessage("");
                     }}
                     placeholder="Type your question here..."
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#f4a435]/40 focus:border-[#f4a435] transition-all resize-none min-h-[100px] placeholder:text-gray-600"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 focus:border-[#D4AF37] transition-all resize-none min-h-[100px] placeholder:text-gray-600"
                   />
                 </div>
 
                 <button
                   onClick={handleWhatsAppSend}
-                  className="w-full py-4 bg-gradient-to-r from-[#e85d26] to-[#f4a435] text-white font-bold rounded-2xl shadow-lg hover:shadow-[#e85d26]/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 group"
+                  className="w-full py-4 bg-gradient-to-r from-[#D4AF37] to-[#BF953F] text-black font-bold rounded-2xl shadow-lg hover:shadow-[#D4AF37]/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 group"
                 >
                   <Send size={18} className="group-hover:translate-x-1 transition-transform" />
                   Send via WhatsApp
@@ -187,11 +187,11 @@ export default function ContactWidget() {
           background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(244, 164, 53, 0.2);
+          background: rgba(212, 175, 55, 0.2);
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(244, 164, 53, 0.4);
+          background: rgba(212, 175, 55, 0.4);
         }
       `}} />
     </div>

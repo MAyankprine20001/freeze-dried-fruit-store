@@ -811,44 +811,44 @@ const categoryBanners: Record<
   all: {
     title: "Shop All Products",
     sub: "Four extraordinary product lines. One uncompromising promise — real fruit, zero additives, maximum flavor.",
-    color: "#e85d26",
+    color: "#D4AF37",
     emoji: "✨",
   },
   "smoothie-premix": {
     title: "Smoothie Premix – SipReal",
     sub: "Real Taste. Real nutrition. Just SipReal · NO ADDED SUGAR, NO PRESERVATIVE · Ready in 10 seconds",
-    color: "#e85d26",
+    color: "#D4AF37",
     emoji: "🥤",
   },
 
   chocolate: {
     title: "Chocolates – FreezeFusion",
     sub: "Crafted with real fruits and rich couverture chocolate · PERFECT FOR: PREMIUM GIFTING, HEALTHY SNACKING",
-    color: "#4a1a0a",
+    color: "#D4AF37",
     emoji: "🍫",
   },
   "fruit-chunks": {
     title: "Fruit Chunks – FreezeFusion",
     sub: "Intensely flavored crunchy chunks. 100% whole fruit, zero additives. Perfect for healthy snacking on the go.",
-    color: "#27ae60",
+    color: "#D4AF37",
     emoji: "🍓",
   },
   "fruit-powders": {
     title: "Fruit Powders – FreezeFusion",
     sub: "Concentrated fruit essence in fine powder form. Perfect for smoothies, baking, and natural nutrient boosts.",
-    color: "#9b1d6a",
+    color: "#D4AF37",
     emoji: "🌟",
   },
   combo: {
     title: "Combos & Bundles",
     sub: "More flavors, bigger savings. Curated bundles that give you the best of our range at unbeatable prices.",
-    color: "#0a7a4a",
+    color: "#D4AF37",
     emoji: "📦",
   },
   gift: {
     title: "Gifts – Coming Soon",
     sub: "Curated gift sets and premium hampers for your special occasions. Opening soon!",
-    color: "#9b1d6a",
+    color: "#D4AF37",
     emoji: "🎁",
   },
 };
@@ -859,11 +859,11 @@ const categoryCards = [
     label: "Smoothie Premix",
     emoji: "🥤",
     count: 3,
-    color: "#f4a435",
-    bg: "from-[#fff7ee] to-[#fff0e0]",
-    border: "#f5e2c0",
-    gradientFrom: "#f4a435",
-    gradientTo: "#e67e22",
+    color: "#D4AF37",
+    bg: "from-[#1a1a1a] to-[#000000]",
+    border: "rgba(255,255,255,0.1)",
+    gradientFrom: "#D4AF37",
+    gradientTo: "#BF953F",
     image:
       "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&h=400&fit=crop&auto=format",
     desc: "Instant high-nutrient morning fuel",
@@ -873,11 +873,11 @@ const categoryCards = [
     label: "Chocolates",
     emoji: "🍫",
     count: 4,
-    color: "#4a1a0a",
-    bg: "from-[#fdf6f0] to-[#f5e8dc]",
-    border: "#e0c8b0",
-    gradientFrom: "#4a1a0a",
-    gradientTo: "#8b4513",
+    color: "#D4AF37",
+    bg: "from-[#1a1a1a] to-[#000000]",
+    border: "rgba(255,255,255,0.1)",
+    gradientFrom: "#D4AF37",
+    gradientTo: "#BF953F",
     image:
       "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600&h=400&fit=crop&auto=format",
     desc: "Single-origin chocolate bars",
@@ -887,11 +887,11 @@ const categoryCards = [
     label: "Combos",
     emoji: "📦",
     count: 4,
-    color: "#0a7a4a",
-    bg: "from-[#edfff6] to-[#d4f5e5]",
-    border: "#9de0c0",
-    gradientFrom: "#0a7a4a",
-    gradientTo: "#27ae60",
+    color: "#D4AF37",
+    bg: "from-[#1a1a1a] to-[#000000]",
+    border: "rgba(255,255,255,0.1)",
+    gradientFrom: "#D4AF37",
+    gradientTo: "#BF953F",
     image:
       "https://images.unsplash.com/photo-1549007994-cb92cd87dd39?w=600&h=400&fit=crop&auto=format",
     desc: "Curated bundles, bigger savings",
@@ -901,11 +901,11 @@ const categoryCards = [
     label: "Fruit Chunks",
     emoji: "🍓",
     count: 8,
-    color: "#27ae60",
-    bg: "from-[#f0fff6] to-[#e0f7ea]",
-    border: "#b0e0c0",
-    gradientFrom: "#27ae60",
-    gradientTo: "#2ecc71",
+    color: "#D4AF37",
+    bg: "from-[#1a1a1a] to-[#000000]",
+    border: "rgba(255,255,255,0.1)",
+    gradientFrom: "#D4AF37",
+    gradientTo: "#BF953F",
     image: "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=600&fit=crop",
     desc: "100% crunchy fruit chunks",
   },
@@ -914,11 +914,11 @@ const categoryCards = [
     label: "Fruit Powders",
     emoji: "🌟",
     count: 4,
-    color: "#9b1d6a",
-    bg: "from-[#fdf0f8] to-[#f8e0f0]",
-    border: "#e8b0d8",
-    gradientFrom: "#9b1d6a",
-    gradientTo: "#c0396a",
+    color: "#D4AF37",
+    bg: "from-[#1a1a1a] to-[#000000]",
+    border: "rgba(255,255,255,0.1)",
+    gradientFrom: "#D4AF37",
+    gradientTo: "#BF953F",
     image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&fit=crop",
     desc: "Pure concentrated fruit essence",
   },
@@ -928,11 +928,11 @@ const categoryCards = [
     emoji: "🎁",
     count: 0,
     comingSoon: true,
-    color: "#9b1d6a",
-    bg: "from-[#fdf0f8] to-[#f8e0f0]",
-    border: "#e8b0d8",
-    gradientFrom: "#9b1d6a",
-    gradientTo: "#c0396a",
+    color: "#D4AF37",
+    bg: "from-[#1a1a1a] to-[#000000]",
+    border: "rgba(255,255,255,0.1)",
+    gradientFrom: "#D4AF37",
+    gradientTo: "#BF953F",
     image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&fit=crop",
     desc: "Premium gift hampers & sets",
   },
@@ -977,7 +977,7 @@ function ComboStrip({ items }: { items: string[] }) {
       {items.map((item) => (
         <span
           key={item}
-          className="px-2 py-0.5 text-[9px] font-bold rounded-full bg-[#f0faf5] text-[#0a7a4a] border border-[#0a7a4a30]"
+          className="px-2 py-0.5 text-[9px] font-bold rounded-full bg-white/5 text-[#D4AF37] border border-[#D4AF37]/30"
         >
           ✓ {item}
         </span>
@@ -990,9 +990,9 @@ function ComboStrip({ items }: { items: string[] }) {
 
 function GiftNote({ note }: { note: string }) {
   return (
-    <div className="flex items-center gap-1.5 mb-3 px-2.5 py-1.5 rounded-xl bg-[#fdf0f8] border border-[#e8b0d830]">
+    <div className="flex items-center gap-1.5 mb-3 px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10">
       <span className="text-[10px]">🎀</span>
-      <span className="text-[10px] font-semibold text-[#9b1d6a]">{note}</span>
+      <span className="text-[10px] font-semibold text-[#D4AF37]">{note}</span>
     </div>
   );
 }
@@ -1039,10 +1039,10 @@ function ProductCard({
         delay: index * 0.055,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="group relative bg-white rounded-2xl overflow-hidden border hover:shadow-xl transition-shadow duration-300"
+      className="group relative bg-[#1a1a1a] rounded-2xl overflow-hidden border hover:shadow-xl transition-shadow duration-300"
       style={{
-        borderColor: product.borderColor,
-        boxShadow: "0 2px 16px rgba(0,0,0,0.05)",
+        borderColor: "rgba(255,255,255,0.1)",
+        boxShadow: "0 2px 16px rgba(0,0,0,0.2)",
       }}
     >
       {/* Gift ribbon decoration */}
@@ -1079,12 +1079,12 @@ function ProductCard({
         {/* Wishlist */}
         <button
           onClick={() => setWished(!wished)}
-          className="absolute top-3 right-3 z-10 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform duration-200"
+          className="absolute top-3 right-3 z-10 w-6 h-6 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform duration-200"
         >
           <Heart
             className="w-3 h-3 transition-colors duration-200"
-            fill={wished ? "#e85d26" : "none"}
-            stroke={wished ? "#e85d26" : "#aaa"}
+            fill={wished ? "#D4AF37" : "none"}
+            stroke={wished ? "#D4AF37" : "rgba(255,255,255,0.5)"}
           />
         </button>
 
@@ -1101,18 +1101,18 @@ function ProductCard({
         {/* Low Stock pill */}
         {product.stock === "Low Stock" && (
           <div className="absolute bottom-3 left-3 z-10">
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-white/90 backdrop-blur-sm text-[#e85d26] text-[10px] font-bold rounded-full border border-[#f0d9c8]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#e85d26] animate-pulse inline-block" />
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-black/60 backdrop-blur-sm text-[#D4AF37] text-[10px] font-bold rounded-full border border-white/10">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse inline-block" />
               Low Stock
             </span>
           </div>
         )}
 
         {/* Quick view on hover */}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center z-20">
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center z-20">
           <Link
             to={product.path}
-            className="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 inline-flex items-center gap-1.5 px-4 py-2 bg-white text-[#1a1a1a] text-xs font-bold rounded-full shadow-lg"
+            className="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 inline-flex items-center gap-1.5 px-4 py-2 bg-[#D4AF37] text-black text-xs font-bold rounded-full shadow-lg"
           >
             <Eye className="w-3.5 h-3.5" /> Quick View
           </Link>
@@ -1122,10 +1122,10 @@ function ProductCard({
       {/* ── Content ── */}
       <div className="p-4">
         <div className="mb-2">
-          <h3 className="font-serif text-base font-bold text-[#1a1a1a] leading-tight">
+          <h3 className="font-serif text-base font-bold text-white leading-tight">
             {product.name}
           </h3>
-          <p className="text-xs text-[#9a8a7a] mt-0.5">{product.subtitle}</p>
+          <p className="text-xs text-white/40 mt-0.5">{product.subtitle}</p>
         </div>
 
         {/* Stars */}
@@ -1140,105 +1140,76 @@ function ProductCard({
               />
             ))}
           </div>
-          <span className="text-xs font-semibold text-[#4a3a2a]">
-            {product.rating}
+          <span className="text-xs font-semibold text-white/40 ml-1">
+            {product.rating} ({product.reviews})
           </span>
-          <span className="text-xs text-[#9a8a7a]">({product.reviews})</span>
         </div>
 
-        {/* Combo items strip */}
-        {product.comboItems && <ComboStrip items={product.comboItems} />}
-
-        {/* Gift note */}
-        {product.giftNote && <GiftNote note={product.giftNote} />}
-
-        {/* Highlight chips — only if no combo items or gift note */}
-        {!product.comboItems && !product.giftNote && (
-          <div className="flex flex-wrap gap-1 mb-4">
-            {product.highlights.map((h) => (
-              <span
-                key={h}
-                className="px-2 py-0.5 text-[10px] font-semibold rounded-full border"
-                style={{
-                  color: product.accent,
-                  backgroundColor: `${product.accent}12`,
-                  borderColor: `${product.accent}30`,
-                }}
-              >
-                {h}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Highlight chips for combos/gifts (smaller, below combo strip) */}
-        {(product.comboItems || product.giftNote) && (
-          <div className="flex flex-wrap gap-1 mb-4">
-            {product.highlights.map((h) => (
-              <span
-                key={h}
-                className="px-2 py-0.5 text-[10px] font-semibold rounded-full border"
-                style={{
-                  color: product.accent,
-                  backgroundColor: `${product.accent}12`,
-                  borderColor: `${product.accent}30`,
-                }}
-              >
-                {h}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Price + CTA */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-4">
           <div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-lg font-bold text-[#1a1a1a]">
+              <span className="text-lg font-bold text-white">
                 ₹{product.price}
               </span>
-              <span className="text-xs text-[#bbb] line-through">
+              <span className="text-xs text-white/20 line-through">
                 ₹{product.originalPrice}
               </span>
             </div>
-            <p className="text-[10px] text-[#9a8a7a]">
+            <p className="text-[10px] text-white/40">
               {product.weight} · Free ship ₹499+
             </p>
           </div>
           <button
             onClick={handleAddToCart}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white transition-all duration-200 hover:scale-105 hover:shadow-md active:scale-95"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-black bg-[#D4AF37] transition-all duration-200 hover:scale-105 hover:bg-[#BF953F] active:scale-95"
             style={{
-              backgroundColor: product.accent,
-              boxShadow: `0 4px 12px ${product.accent}40`,
+              boxShadow: `0 4px 12px rgba(212, 175, 55, 0.2)`,
             }}
           >
             <ShoppingBag className="w-3.5 h-3.5" />
             {product.isGift ? "Gift Now" : "Buy Now"}
           </button>
         </div>
+
+        {/* Highlights */}
+        <div className="flex flex-wrap gap-1.5 mb-4 mt-3">
+          {product.highlights.map((h) => (
+            <span
+              key={h}
+              className="px-2 py-0.5 bg-white/5 text-white/40 text-[9px] font-bold rounded-full border border-white/10 uppercase tracking-widest"
+            >
+              {h}
+            </span>
+          ))}
+        </div>
+
+        {(product.comboItems || product.giftNote) && (
+          <div className="mt-3 pt-3 border-t border-white/5 space-y-2">
+            {product.comboItems && <ComboStrip items={product.comboItems} />}
+            {product.giftNote && <GiftNote note={product.giftNote} />}
+          </div>
+        )}
       </div>
     </motion.div>
   );
 }
 
-// ─── Combo Section Banner ─────────────────────────────────────────────────────
-
 function ComboBanner() {
   return (
-    <section className="px-6 lg:px-8 py-10 bg-gradient-to-br from-[#edfff6] to-[#d4f5e5]">
+    <section className="px-6 lg:px-8 py-10 bg-black">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 rounded-3xl bg-white border border-[#9de0c0] p-8 lg:p-12 shadow-lg">
-          <div className="flex-1">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#edfff6] text-[#0a7a4a] text-xs font-bold uppercase tracking-widest rounded-full border border-[#9de0c0] mb-4">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 rounded-3xl bg-[#1a1a1a] border border-white/10 p-8 lg:p-12 shadow-lg overflow-hidden relative">
+           <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="flex-1 relative z-10">
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 text-[#D4AF37] text-xs font-bold uppercase tracking-widest rounded-full border border-white/10 mb-4">
               <Package className="w-3.5 h-3.5" />
               Combo Packs
             </span>
-            <h2 className="font-serif text-3xl lg:text-4xl font-bold text-[#1a1a1a] mb-3">
+            <h2 className="font-serif text-3xl lg:text-4xl font-bold text-white mb-3">
               More Flavors,{" "}
-              <span className="text-[#0a7a4a]">Bigger Savings</span>
+              <span className="text-[#D4AF37]">Bigger Savings</span>
             </h2>
-            <p className="text-[#4a5a4a] text-sm leading-relaxed mb-6 max-w-lg">
+            <p className="text-white/60 text-sm leading-relaxed mb-6 max-w-lg">
               Can't choose just one? Our combos bundle the best of The Dry Factory —
               handpicked for taste, nutrition, and value. Save up to 25% versus
               buying individually.
@@ -1252,7 +1223,7 @@ function ComboBanner() {
               ].map((b) => (
                 <span
                   key={b.label}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#edfff6] text-[#0a7a4a] text-xs font-bold rounded-full border border-[#9de0c0]"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white/70 text-xs font-bold rounded-full border border-white/10"
                 >
                   {b.icon} {b.label}
                 </span>
@@ -1268,13 +1239,13 @@ function ComboBanner() {
             ].map((item) => (
               <div
                 key={item.label}
-                className="bg-[#edfff6] rounded-2xl p-4 text-center border border-[#9de0c0]"
+                className="bg-black/40 backdrop-blur-sm rounded-2xl p-4 text-center border border-white/10"
               >
                 <div className="text-2xl mb-1">{item.emoji}</div>
-                <div className="text-[10px] font-bold text-[#1a1a1a] leading-tight">
+                <div className="text-[10px] font-bold text-white leading-tight">
                   {item.label}
                 </div>
-                <div className="text-[10px] font-bold text-[#0a7a4a] mt-1">
+                <div className="text-[10px] font-bold text-[#D4AF37] mt-1">
                   Save {item.save}
                 </div>
               </div>
@@ -1290,24 +1261,23 @@ function ComboBanner() {
 
 function GiftBanner() {
   return (
-    <section className="px-6 lg:px-8 py-10 bg-gradient-to-br from-[#fdf0f8] to-[#f5e0f0]">
+    <section className="px-6 lg:px-8 py-10 bg-black">
       <div className="max-w-7xl mx-auto">
         <div
-          className="rounded-3xl p-8 lg:p-12 relative overflow-hidden"
+          className="rounded-3xl p-8 lg:p-12 relative overflow-hidden border border-white/10"
           style={{
             background:
-              "linear-gradient(135deg, #2d0a1a 0%, #5a1035 50%, #9b1d6a 100%)",
-            boxShadow: "0 20px 60px rgba(155,29,106,0.3)",
+              "linear-gradient(135deg, #000000 0%, #1a1a1a 100%)",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
           }}
         >
-          {/* Decorative circles */}
           <div
-            className="absolute top-0 right-0 w-72 h-72 rounded-full opacity-20 blur-3xl pointer-events-none"
-            style={{ background: "radial-gradient(#f4a435, transparent)" }}
+            className="absolute top-0 right-0 w-72 h-72 rounded-full opacity-10 blur-3xl pointer-events-none"
+            style={{ background: "radial-gradient(#D4AF37, transparent)" }}
           />
           <div
-            className="absolute bottom-0 left-0 w-56 h-56 rounded-full opacity-15 blur-3xl pointer-events-none"
-            style={{ background: "radial-gradient(#e85d26, transparent)" }}
+            className="absolute bottom-0 left-0 w-56 h-56 rounded-full opacity-5 blur-3xl pointer-events-none"
+            style={{ background: "radial-gradient(#BF953F, transparent)" }}
           />
 
           <div className="relative z-10 flex flex-col lg:flex-row items-center gap-10">
@@ -1319,7 +1289,7 @@ function GiftBanner() {
               <h2 className="font-serif text-3xl lg:text-4xl font-bold text-white mb-3">
                 Gift Someone
                 <br />
-                <span style={{ color: "#f4a435" }}>Unforgettable.</span>
+                <span className="text-[#D4AF37]">Unforgettable.</span>
               </h2>
               <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-md">
                 Every gift box is hand-packed, ribbon-wrapped, and paired with a
@@ -1343,9 +1313,9 @@ function GiftBanner() {
               </div>
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white transition-all duration-300 hover:scale-105"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-black transition-all duration-300 hover:scale-105"
                 style={{
-                  background: "linear-gradient(90deg, #e85d26, #f4a435)",
+                  background: "linear-gradient(90deg, #D4AF37, #BF953F)",
                 }}
               >
                 Order a Custom Gift Box <ArrowRight className="w-4 h-4" />
@@ -1397,8 +1367,7 @@ function HighlightTitle({ title }: { title: string }) {
       <span className="relative inline-block">
         <span className="relative z-10 px-2">{parts[1]}</span>
         <span 
-          className="absolute inset-0 z-0 bg-[#e8f3ff] rounded-md -rotate-1 skew-x-2" 
-          style={{ mixBlendMode: 'multiply' }}
+          className="absolute inset-0 z-0 bg-[#D4AF37]/10 rounded-md -rotate-1 skew-x-2 border border-[#D4AF37]/20" 
         />
       </span>
     </>
@@ -1409,76 +1378,35 @@ function HighlightTitle({ title }: { title: string }) {
 
 function SmoothieInfoSection() {
   return (
-    <section className="px-6 lg:px-8 py-16 bg-[#faf8f5] border-t border-[#ede5dc]">
+    <section className="px-6 lg:px-8 py-16 bg-black border-t border-white/10">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-10">
-          <h2 className="font-serif text-2xl font-bold text-[#1a1a1a]">Smoothie Guide</h2>
-          <p className="text-sm text-[#9a8a7a] mt-1">Everything you need to know about SipReal Premixes</p>
+          <h2 className="font-serif text-2xl font-bold text-white">Smoothie Guide</h2>
+          <p className="text-sm text-white/40 mt-1">Everything you need to know about SipReal Premixes</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Benefits */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <Leaf className="w-5 h-5 text-[#e85d26]" />
-              <h3 className="font-bold text-[#1a1a1a] uppercase tracking-wider text-xs">Benefits</h3>
-            </div>
-            <ul className="space-y-2">
-              {[
-                "Quick & effortless prep",
-                "Healthy & nutrient-dense",
-                "No cutting fruits required",
-                "Zero food waste",
-              ].map((item, i) => (
-                <li key={i} className="flex items-center gap-2 text-xs text-[#6a5a4a]">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#27ae60]" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* How to Use */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <Zap className="w-5 h-5 text-[#f4a435]" />
-              <h3 className="font-bold text-[#1a1a1a] uppercase tracking-wider text-xs">How to Prepared</h3>
-            </div>
-            <div className="space-y-3">
-              <p className="text-[11px] font-bold text-[#e85d26] uppercase tracking-widest bg-[#e85d26]10 px-2 py-1 inline-block rounded">Ready in 10s</p>
-              <div className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full bg-[#1a1a1a] text-white text-[10px] flex items-center justify-center font-bold flex-shrink-0 mt-0.5">1</div>
-                <p className="text-xs text-[#6a5a4a]">Add water or milk to the premix</p>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full bg-[#1a1a1a] text-white text-[10px] flex items-center justify-center font-bold flex-shrink-0 mt-0.5">2</div>
-                <p className="text-xs text-[#6a5a4a]">Just shake or stir & enjoy!</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Nutrition */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <Shield className="w-5 h-5 text-[#6c5ce7]" />
-              <h3 className="font-bold text-[#1a1a1a] uppercase tracking-wider text-xs">Nutrition</h3>
+              <Shield className="w-5 h-5 text-[#D4AF37]" />
+              <h3 className="font-bold text-white uppercase tracking-wider text-xs">Nutrition</h3>
             </div>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-              <div className="border-b border-[#ede5dc] pb-1">
-                <p className="text-[9px] uppercase tracking-widest text-[#9a8a7a] font-bold">Added Sugar</p>
-                <p className="text-xs font-bold text-[#1a1a1a]">0g</p>
+              <div className="border-b border-white/10 pb-1">
+                <p className="text-[9px] uppercase tracking-widest text-white/40 font-bold">Added Sugar</p>
+                <p className="text-xs font-bold text-white">0g</p>
               </div>
-              <div className="border-b border-[#ede5dc] pb-1">
-                <p className="text-[9px] uppercase tracking-widest text-[#9a8a7a] font-bold">Vitamins</p>
-                <p className="text-xs font-bold text-[#1a1a1a]">97% Retained</p>
+              <div className="border-b border-white/10 pb-1">
+                <p className="text-[9px] uppercase tracking-widest text-white/40 font-bold">Vitamins</p>
+                <p className="text-xs font-bold text-white">97% Retained</p>
               </div>
-              <div className="border-b border-[#ede5dc] pb-1">
-                <p className="text-[9px] uppercase tracking-widest text-[#9a8a7a] font-bold">Preservatives</p>
-                <p className="text-xs font-bold text-[#1a1a1a]">None</p>
+              <div className="border-b border-white/10 pb-1">
+                <p className="text-[9px] uppercase tracking-widest text-white/40 font-bold">Preservatives</p>
+                <p className="text-xs font-bold text-white">None</p>
               </div>
-              <div className="border-b border-[#ede5dc] pb-1">
-                <p className="text-[9px] uppercase tracking-widest text-[#9a8a7a] font-bold">Nature</p>
-                <p className="text-xs font-bold text-[#1a1a1a]">100% Real</p>
+              <div className="border-b border-white/10 pb-1">
+                <p className="text-[9px] uppercase tracking-widest text-white/40 font-bold">Nature</p>
+                <p className="text-xs font-bold text-white">100% Real</p>
               </div>
             </div>
           </div>
@@ -1508,11 +1436,11 @@ export default function Products() {
     });
 
   return (
-    <div className="min-h-screen bg-[#faf8f5]">
+    <div className="min-h-screen bg-black">
       <Header />
 
       {/* ── Page Header ── */}
-      <section className="pt-28 pb-10 px-6 lg:px-8 bg-white border-b border-[#ede5dc]">
+      <section className="pt-28 pb-10 px-6 lg:px-8 bg-black border-b border-white/10">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1520,14 +1448,14 @@ export default function Products() {
             transition={{ duration: 0.55 }}
             className="text-center mb-10"
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-bold uppercase tracking-widest rounded-full border border-[#f0d9c8] mb-5">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-bold uppercase tracking-widest rounded-full border border-white/10 mb-5">
               <Leaf className="w-3.5 h-3.5" />
               The Dry Factory Shop
             </span>
-            <h1 className="font-serif text-4xl lg:text-5xl font-bold text-[#1a1a1a] mb-3">
+            <h1 className="font-serif text-4xl lg:text-5xl font-bold text-white mb-3">
               All Products
             </h1>
-            <p className="text-[#6a5a4a] text-base max-w-xl mx-auto">
+            <p className="text-white/70 text-base max-w-xl mx-auto">
               Real fruit. Zero additives. Maximum flavor. — Browse our full
               collection below.
             </p>
@@ -1580,13 +1508,13 @@ export default function Products() {
                     </div>
                   )}
                 </div>
-                <div className="p-4 bg-white">
+                <div className="p-4 bg-[#1a1a1a]">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-serif text-lg font-bold text-[#1a1a1a]">
+                      <h3 className="font-serif text-lg font-bold text-white">
                         {cat.label}
                       </h3>
-                      <p className="text-xs text-[#9a8a7a] mt-0.5">
+                      <p className="text-xs text-white/40 mt-0.5">
                         {cat.desc}
                       </p>
                     </div>
@@ -1656,13 +1584,13 @@ export default function Products() {
                     </div>
                   )}
                 </div>
-                <div className="p-4 bg-white">
+                <div className="p-4 bg-[#1a1a1a]">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-serif text-lg font-bold text-[#1a1a1a]">
+                      <h3 className="font-serif text-lg font-bold text-white">
                         {cat.label}
                       </h3>
-                      <p className="text-xs text-[#9a8a7a] mt-0.5">
+                      <p className="text-xs text-white/40 mt-0.5">
                         {cat.desc}
                       </p>
                     </div>
@@ -1681,7 +1609,7 @@ export default function Products() {
       </section>
 
       {/* ── Sticky Filter + Sort Bar ── */}
-      <div className="sticky top-16 lg:top-20 z-30 bg-[#faf8f5]/95 backdrop-blur-md border-b border-[#ede5dc] px-6 lg:px-8 py-3">
+      <div className="sticky top-16 lg:top-20 z-30 bg-black/95 backdrop-blur-md border-b border-white/10 px-6 lg:px-8 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-2 flex-wrap">
             {categories.map((cat) => (
@@ -1690,16 +1618,16 @@ export default function Products() {
                 onClick={() => setActiveCategory(cat.id)}
                 className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 border ${
                   activeCategory === cat.id
-                    ? "bg-[#1a1a1a] text-white border-[#1a1a1a] shadow-md"
-                    : "bg-white text-[#4a3a2a] border-[#e0d8d0] hover:border-[#1a1a1a]"
+                    ? "bg-[#D4AF37] text-black border-[#D4AF37] shadow-md"
+                    : "bg-white/5 text-white/70 border-white/10 hover:border-[#D4AF37]"
                 }`}
               >
                 {cat.emoji} {cat.label}
                 <span
-                  className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                   className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
                     activeCategory === cat.id
-                      ? "bg-white/20 text-white"
-                      : "bg-[#f0e8de] text-[#9a8a7a]"
+                      ? "bg-black/20 text-black/70"
+                      : "bg-white/10 text-white/40"
                   }`}
                 >
                   {cat.comingSoon
@@ -1730,7 +1658,7 @@ export default function Products() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 4, scale: 0.97 }}
                   transition={{ duration: 0.18 }}
-                  className="absolute right-0 top-full mt-2 w-52 bg-white rounded-2xl shadow-xl border border-[#e8ddd5] overflow-hidden z-50"
+                  className="absolute right-0 top-full mt-2 w-52 bg-black rounded-2xl shadow-xl border border-white/10 overflow-hidden z-50"
                 >
                   {sortOptions.map((opt) => (
                     <button
@@ -1741,8 +1669,8 @@ export default function Products() {
                       }}
                       className={`w-full text-left px-4 py-3 text-xs font-semibold transition-colors duration-150 ${
                         sortBy === opt
-                          ? "bg-[#fdf3ec] text-[#e85d26]"
-                          : "text-[#4a3a2a] hover:bg-[#faf8f5]"
+                          ? "bg-white/10 text-[#D4AF37]"
+                          : "text-white/70 hover:bg-white/5"
                       }`}
                     >
                       {opt}

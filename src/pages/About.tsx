@@ -27,7 +27,7 @@ const differentiators = [
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black">
       <Header />
 
       <PageHero
@@ -36,11 +36,11 @@ export default function About() {
         highlight="Thoughtfully Preserved"
         description="At The Dry Factory, we believe that what you consume every day should not just taste good, but should genuinely be good for your body. Healthy should not be complicated."
         image="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1600&h=600&fit=crop"
-        tint="from-[#1a1a1a]/85"
+        tint="from-black/85"
       />
 
       {/* Origin Story */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -59,9 +59,9 @@ export default function About() {
                   className="w-full h-[480px] object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 bg-[#e85d26] rounded-2xl p-6 shadow-xl text-white">
+              <div className="absolute -bottom-6 -right-6 bg-[#D4AF37] rounded-2xl p-6 shadow-xl text-black">
                 <p className="font-serif text-3xl font-bold">The Dry Factory</p>
-                <p className="text-white/80 text-sm font-medium">Simple. Honest. Trustworthy.</p>
+                <p className="text-black/80 text-sm font-medium">Simple. Honest. Trustworthy.</p>
               </div>
             </motion.div>
 
@@ -71,13 +71,13 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span className="inline-block px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-6">
+              <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
                 Where It All Began
               </span>
-              <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mb-6 leading-tight">
+              <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
                 Our Story
               </h2>
-              <div className="space-y-4 text-[#6a5a4a] text-base leading-relaxed">
+              <div className="space-y-4 text-white/70 text-base leading-relaxed">
                 <p>
                   At The Dry Factory, we believe that what you consume every day should not just taste good, but should genuinely be good for your body.
                   When we looked closely at the way food is consumed today, one thing became very clear — most “convenient” options are loaded with excess sugar, artificial flavours, preservatives, and hidden additives. What is marketed as healthy often isn’t truly so. And that didn’t sit right with us.
@@ -104,7 +104,7 @@ export default function About() {
       </section>
 
       {/* Mission */}
-      <section className="py-24 bg-[#fdf3ec]">
+      <section className="py-24 bg-white/5">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -112,27 +112,27 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 bg-white text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-6">
+            <span className="inline-block px-4 py-1.5 bg-black text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
               Our Mission
             </span>
-            <h2 className="font-serif text-4xl font-bold text-[#1a1a1a] mb-8 leading-tight">
+            <h2 className="font-serif text-4xl font-bold text-white mb-8 leading-tight">
               Honest Food for a Healthier Everyday
             </h2>
-            <div className="space-y-6 text-[#6a5a4a] text-lg leading-relaxed text-left max-w-3xl mx-auto">
+            <div className="space-y-6 text-white/70 text-lg leading-relaxed text-left max-w-3xl mx-auto">
               <div className="flex gap-4">
-                <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#e85d26]" />
+                <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
                 <p>Our mission is simple — to make real food easy to trust again.</p>
               </div>
               <div className="flex gap-4">
-                <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#e85d26]" />
+                <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
                 <p>In a world full of shortcuts, we want to bring back honesty to what people consume daily. No hidden ingredients, no unnecessary additives — just clean, thoughtfully made products that actually do what they promise.</p>
               </div>
               <div className="flex gap-4">
-                <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#e85d26]" />
+                <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
                 <p>We aim to make fruits more accessible beyond their seasons, reduce unnecessary waste, and create products that fit naturally into modern lifestyles without compromising health.</p>
               </div>
               <div className="flex gap-4">
-                <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#e85d26]" />
+                <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
                 <p>Because for us, it’s not just about selling products — it’s about helping people build better, simpler food habits every day.</p>
               </div>
             </div>
@@ -141,7 +141,7 @@ export default function About() {
       </section>
 
       {/* What Makes Us Different */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -150,10 +150,10 @@ export default function About() {
             transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <span className="inline-block px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-4">
+            <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-4">
               The Dry Factory Difference
             </span>
-            <h2 className="font-serif text-4xl font-bold text-[#1a1a1a]">
+            <h2 className="font-serif text-4xl font-bold text-white">
               What Sets Us Apart
             </h2>
           </motion.div>
@@ -166,13 +166,13 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-[#fdf3ec] rounded-2xl p-8 border border-[#f0d9c8] hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                 className="bg-white/5 rounded-2xl p-8 border border-white/10 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               >
-                <div className="w-10 h-10 bg-[#e85d26] rounded-xl flex items-center justify-center mb-6 shadow-sm">
-                  <CheckCircle2 className="w-5 h-5 text-white" />
+                <div className="w-10 h-10 bg-[#D4AF37] rounded-xl flex items-center justify-center mb-6 shadow-sm">
+                  <CheckCircle2 className="w-5 h-5 text-black" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#1a1a1a] mb-3">{item.title}</h3>
-                <p className="text-[#6a5a4a] text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="font-serif text-xl font-bold text-white mb-3">{item.title}</h3>
+                <p className="text-white/60 text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>

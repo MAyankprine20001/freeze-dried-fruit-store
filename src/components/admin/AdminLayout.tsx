@@ -32,7 +32,7 @@ export default function AdminLayout() {
       <aside className="w-64 bg-white border-r border-[#eef0f2] flex flex-col sticky top-0 h-screen z-20">
         <div className="p-6 border-b border-[#eef0f2]">
           <Link to="/" className="flex items-center gap-3 group">
-            <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain" />
+            <img src="https://res.cloudinary.com/doi7id29n/image/upload/q_auto/f_auto/v1776528652/logo_2_on76wp.png" alt="Logo" className="w-10 h-10 object-contain" />
             <span className="font-serif font-bold text-[#1a1a1a] tracking-tight">Dry Factory</span>
           </Link>
         </div>

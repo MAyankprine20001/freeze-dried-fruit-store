@@ -22,7 +22,7 @@ export default function CategoryCard({ title, description, image, path, tag, ind
     >
       <Link
         to={path}
-        className="group block bg-white rounded-2xl overflow-hidden border border-[#f0e8e0] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e85d26]"
+        className="group block bg-black rounded-2xl overflow-hidden border border-white/10 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
       >
         <div className="relative overflow-hidden h-56">
           <img
@@ -33,15 +33,15 @@ export default function CategoryCard({ title, description, image, path, tag, ind
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-          <span className="absolute top-4 left-4 px-3 py-1 bg-[#e85d26] text-white text-xs font-semibold rounded-full">
+          <span className="absolute top-4 left-4 px-3 py-1 bg-[#D4AF37] text-black text-xs font-semibold rounded-full">
             {tag}
           </span>
         </div>
         <div className="p-8">
-          <h3 className="font-serif text-xl font-bold text-[#1a1a1a] mb-3 group-hover:text-[#e85d26] transition-colors duration-200">
+          <h3 className="font-serif text-xl font-bold text-white mb-3 group-hover:text-[#D4AF37] transition-colors duration-200">
             {title}
           </h3>
-          <div className="flex items-center gap-2 text-[#e85d26] text-sm font-semibold">
+          <div className="flex items-center gap-2 text-[#D4AF37] text-sm font-semibold">
             <span>Explore</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
           </div>

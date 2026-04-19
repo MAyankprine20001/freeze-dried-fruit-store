@@ -10,9 +10,9 @@ interface PageHeroProps {
   tint?: string;
 }
 
-export default function PageHero({ tag, title, highlight, description, image, tint = 'from-[#e85d26]/80' }: PageHeroProps) {
+export default function PageHero({ tag, title, highlight, description, image, tint = 'from-black/80' }: PageHeroProps) {
   return (
-    <section className="relative pt-16 overflow-hidden">
+    <section className="relative pt-16 overflow-hidden bg-black">
       {image && (
         <div className="absolute inset-0 z-0">
           <img
@@ -21,19 +21,18 @@ export default function PageHero({ tag, title, highlight, description, image, ti
             aria-hidden="true"
             width={1600}
             height={600}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-60"
           />
-          <div className={`absolute inset-0 bg-gradient-to-r ${tint} to-[#1a1a1a]/70`} />
+          <div className={`absolute inset-0 bg-gradient-to-r ${tint} via-black/40 to-transparent`} />
         </div>
       )}
-      <div className={`relative z-10 max-w-4xl mx-auto px-6 lg:px-8 py-24 ${image ? 'text-white' : 'text-[#1a1a1a]'}`}>
+      <div className={`relative z-10 max-w-4xl mx-auto px-6 lg:px-8 py-24 text-white`}>
         {tag && (
           <motion.span
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6 ${image ? 'bg-white/20 text-white border border-white/30' : 'bg-[#fdf3ec] text-[#e85d26] border border-[#f0d9c8]'
-              }`}
+            className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6 bg-white/10 text-[#D4AF37] border border-white/20 backdrop-blur-sm"
           >
             {tag}
           </motion.span>
@@ -46,14 +45,14 @@ export default function PageHero({ tag, title, highlight, description, image, ti
         >
           {title}{' '}
           {highlight && (
-            <span className={image ? 'text-[#f4a435]' : 'text-[#e85d26]'}>{highlight}</span>
+            <span className="text-[#D4AF37]">{highlight}</span>
           )}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className={`text-lg leading-relaxed max-w-2xl ${image ? 'text-white/85' : 'text-[#6a5a4a]'}`}
+          className="text-lg leading-relaxed max-w-2xl text-white/80"
         >
           {description}
         </motion.p>

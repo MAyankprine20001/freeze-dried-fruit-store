@@ -41,21 +41,21 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1a1a1a] text-white">
+    <footer className="bg-black text-white border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div className="lg:col-span-1">
             <Link
               to="/"
-              className="flex items-center gap-2 mb-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4a435] rounded-lg"
+              className="flex items-center gap-2 mb-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] rounded-lg"
             >
               <img
-                src="/logo.png"
+                src="https://res.cloudinary.com/doi7id29n/image/upload/q_auto/f_auto/v1776528652/logo_2_on76wp.png"
                 alt=""
                 className="w-12 h-12 object-contain"
               />
               <span className="font-serif text-xl font-bold">
-                The Dry<span className="text-white"> Factory</span>
+                The Dry<span className="text-[#D4AF37]"> Factory</span>
               </span>
             </Link>
             <p className="text-[#a0a0a0] text-sm leading-relaxed mb-6">
@@ -67,7 +67,7 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-[#a0a0a0] hover:bg-[#e85d26] hover:text-white transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4a435]"
+                  className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-[#a0a0a0] hover:bg-[#D4AF37] hover:text-black transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -77,7 +77,7 @@ export default function Footer() {
 
           <div>
             <Link to="/products" className="inline-block group/title">
-              <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4 group-hover/title:text-[#f4a435] transition-colors duration-200">
+              <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4 group-hover/title:text-[#D4AF37] transition-colors duration-200">
                 Products
               </h3>
             </Link>
@@ -86,7 +86,7 @@ export default function Footer() {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-[#a0a0a0] text-sm hover:text-[#f4a435] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4a435] rounded"
+                    className="text-[#a0a0a0] text-sm hover:text-[#D4AF37] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] rounded"
                   >
                     {link.label}
                   </Link>
@@ -104,7 +104,7 @@ export default function Footer() {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-[#a0a0a0] text-sm hover:text-[#f4a435] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4a435] rounded"
+                    className="text-[#a0a0a0] text-sm hover:text-[#D4AF37] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] rounded"
                   >
                     {link.label}
                   </Link>
@@ -144,7 +144,7 @@ export default function Footer() {
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-[#606060] text-xs hover:text-[#a0a0a0] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4a435] rounded"
+                className="text-[#606060] text-xs hover:text-[#D4AF37] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] rounded"
               >
                 {link.label}
               </Link>

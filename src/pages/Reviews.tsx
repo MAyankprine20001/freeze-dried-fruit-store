@@ -322,7 +322,7 @@ function StarRow({
         <Star
           key={s}
           className={sz}
-          fill={s <= rating ? "#f4a435" : "#e0d5c8"}
+          fill={s <= rating ? "#D4AF37" : "rgba(255,255,255,0.1)"}
           stroke="none"
         />
       ))}
@@ -341,11 +341,11 @@ function RatingBar({
 }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="text-xs font-semibold text-[#4a3a2a] w-4 text-right">
+      <span className="text-xs font-semibold text-white/70 w-4 text-right">
         {stars}
       </span>
-      <Star className="w-3 h-3 flex-shrink-0" fill="#f4a435" stroke="none" />
-      <div className="flex-1 h-2 bg-[#f0e8de] rounded-full overflow-hidden">
+      <Star className="w-3 h-3 flex-shrink-0" fill="#D4AF37" stroke="none" />
+      <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: `${pct}%` }}
@@ -355,10 +355,10 @@ function RatingBar({
             delay: (5 - stars) * 0.08,
             ease: "easeOut",
           }}
-          className="h-full rounded-full bg-gradient-to-r from-[#f4a435] to-[#e85d26]"
+          className="h-full rounded-full bg-gradient-to-r from-[#D4AF37] to-[#BF953F]"
         />
       </div>
-      <span className="text-xs text-[#9a8a7a] w-8">{count}</span>
+      <span className="text-xs text-white/40 w-8">{count}</span>
     </div>
   );
 }
@@ -402,12 +402,12 @@ function ReviewCard({
         delay: index * 0.06,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className={`bg-white rounded-2xl border border-[#ede5dc] hover:shadow-lg transition-shadow duration-300 overflow-hidden ${
-        featured ? "ring-2 ring-[#f4a435]/40" : ""
+      className={`bg-white/5 rounded-2xl border border-white/10 hover:shadow-lg transition-shadow duration-300 overflow-hidden ${
+        featured ? "ring-2 ring-[#D4AF37]/40" : ""
       }`}
     >
       {featured && (
-        <div className="h-1 bg-gradient-to-r from-[#e85d26] to-[#f4a435]" />
+        <div className="h-1 bg-gradient-to-r from-[#D4AF37] to-[#BF953F]" />
       )}
       <div className="p-6">
         {/* Header */}
@@ -421,14 +421,14 @@ function ReviewCard({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-[#1a1a1a]">
+                <span className="text-sm font-bold text-white">
                   {review.name}
                 </span>
                 {review.verified && (
                   <CheckCircle className="w-3.5 h-3.5 text-[#27ae60]" />
                 )}
               </div>
-              <span className="text-xs text-[#9a8a7a]">
+              <span className="text-xs text-white/40">
                 {review.location} · {review.date}
               </span>
             </div>
@@ -446,13 +446,13 @@ function ReviewCard({
 
         {/* Quote mark accent */}
         <div className="relative mb-3">
-          <Quote className="w-5 h-5 text-[#f0d9c8] absolute -top-1 -left-1" />
-          <h4 className="font-serif text-base font-bold text-[#1a1a1a] pl-5 leading-snug">
+          <Quote className="w-5 h-5 text-white/10 absolute -top-1 -left-1" />
+          <h4 className="font-serif text-base font-bold text-white pl-5 leading-snug">
             {review.title}
           </h4>
         </div>
 
-        <p className="text-sm text-[#5a4a3a] leading-relaxed mb-4">
+        <p className="text-sm text-white/70 leading-relaxed mb-4">
           {review.body}
         </p>
 
@@ -472,7 +472,7 @@ function ReviewCard({
           {review.tags.map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-1 text-[10px] font-semibold rounded-full bg-[#fdf3ec] text-[#e85d26] border border-[#f0d9c8]"
+              className="px-2.5 py-1 text-[10px] font-semibold rounded-full bg-white/5 text-[#D4AF37] border border-white/10"
             >
               {tag}
             </span>
@@ -480,8 +480,8 @@ function ReviewCard({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-3 border-t border-[#f5efe8]">
-          <span className="text-xs text-[#9a8a7a]">Was this helpful?</span>
+        <div className="flex items-center justify-between pt-3 border-t border-white/10">
+          <span className="text-xs text-white/40">Was this helpful?</span>
           <button
             onClick={() => {
               if (!voted) {
@@ -491,8 +491,8 @@ function ReviewCard({
             }}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 border ${
               voted
-                ? "bg-[#e85d26] text-white border-[#e85d26]"
-                : "bg-white text-[#4a3a2a] border-[#e0d8d0] hover:border-[#e85d26] hover:text-[#e85d26]"
+                ? "bg-[#D4AF37] text-black border-[#D4AF37]"
+                : "bg-white/5 text-white border-white/10 hover:border-[#D4AF37] hover:text-[#D4AF37]"
             }`}
           >
             <ThumbsUp className="w-3 h-3" />
@@ -503,8 +503,6 @@ function ReviewCard({
     </motion.div>
   );
 }
-
-// ─── Write Review Modal ───────────────────────────────────────────────────────
 
 // ─── Write Review Modal ───────────────────────────────────────────────────────
 
@@ -566,40 +564,40 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.92, y: 16 }}
         transition={{ type: "spring", damping: 24, stiffness: 260 }}
-        className="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden max-h-[90vh] overflow-y-auto"
+        className="bg-black border border-white/10 rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="h-1.5 bg-gradient-to-r from-[#e85d26] to-[#f4a435]" />
+        <div className="h-1.5 bg-gradient-to-r from-[#D4AF37] to-[#BF953F]" />
 
         {submitted ? (
           <div className="p-10 text-center">
             <div className="text-5xl mb-4">🎉</div>
-            <h3 className="font-serif text-2xl font-bold text-[#1a1a1a] mb-2">
+            <h3 className="font-serif text-2xl font-bold text-white mb-2">
               Thank you for your review!
             </h3>
-            <p className="text-[#6a5a4a] text-sm mb-6">
+            <p className="text-white/60 text-sm mb-6">
               Your feedback helps thousands of people discover the best of
               The Dry Factory.
             </p>
             <button
               onClick={onClose}
-              className="px-6 py-3 bg-[#e85d26] text-white font-bold rounded-full text-sm hover:bg-[#d44f1a] transition-colors"
+              className="px-6 py-3 bg-[#D4AF37] text-black font-bold rounded-full text-sm hover:bg-[#BF953F] transition-colors"
             >
               Close
             </button>
           </div>
         ) : (
           <div className="p-8">
-            <h3 className="font-serif text-2xl font-bold text-[#1a1a1a] mb-1">
+            <h3 className="font-serif text-2xl font-bold text-white mb-1">
               Write a Review
             </h3>
-            <p className="text-sm text-[#9a8a7a] mb-6">
+            <p className="text-sm text-white/40 mb-6">
               Share your honest experience with the The Dry Factory community
             </p>
 
             {/* Star picker */}
             <div className="mb-5">
-              <label className="text-xs font-bold text-[#4a3a2a] uppercase tracking-wider mb-2 block">
+              <label className="text-xs font-bold text-white uppercase tracking-wider mb-2 block">
                 Your Rating *
               </label>
               <div className="flex gap-2">
@@ -613,7 +611,7 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
                   >
                     <Star
                       className="w-8 h-8"
-                      fill={s <= (hovered || rating) ? "#f4a435" : "#e0d5c8"}
+                      fill={s <= (hovered || rating) ? "#D4AF37" : "rgba(255,255,255,0.1)"}
                       stroke="none"
                     />
                   </button>
@@ -628,7 +626,7 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
                 { key: "location", label: "City", placeholder: "Mumbai" },
               ].map((f) => (
                 <div key={f.key}>
-                  <label className="text-xs font-bold text-[#4a3a2a] uppercase tracking-wider mb-1.5 block">
+                  <label className="text-xs font-bold text-white uppercase tracking-wider mb-1.5 block">
                     {f.label}
                   </label>
                   <input
@@ -637,7 +635,7 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
                       setForm({ ...form, [f.key]: e.target.value })
                     }
                     placeholder={f.placeholder}
-                    className="w-full px-3 py-2.5 text-sm border border-[#e0d8d0] rounded-xl focus:outline-none focus:border-[#e85d26] transition-colors bg-[#faf8f5]"
+                    className="w-full px-3 py-2.5 text-sm border border-white/10 rounded-xl focus:outline-none focus:border-[#D4AF37] transition-colors bg-white/5 text-white"
                   />
                 </div>
               ))}
@@ -645,7 +643,7 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
 
             {/* Email — full width */}
             <div className="mb-3">
-              <label className="text-xs font-bold text-[#4a3a2a] uppercase tracking-wider mb-1.5 block">
+              <label className="text-xs font-bold text-white uppercase tracking-wider mb-1.5 block">
                 Email Address *
               </label>
               <input
@@ -653,22 +651,22 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 placeholder="you@example.com"
-                className="w-full px-3 py-2.5 text-sm border border-[#e0d8d0] rounded-xl focus:outline-none focus:border-[#e85d26] transition-colors bg-[#faf8f5]"
+                className="w-full px-3 py-2.5 text-sm border border-white/10 rounded-xl focus:outline-none focus:border-[#D4AF37] transition-colors bg-white/5 text-white"
               />
-              <p className="text-[10px] text-[#b0a090] mt-1">
+              <p className="text-[10px] text-white/40 mt-1">
                 Your email won't be published. We may follow up if needed.
               </p>
             </div>
 
             {/* Product */}
             <div className="mb-3">
-              <label className="text-xs font-bold text-[#4a3a2a] uppercase tracking-wider mb-1.5 block">
+              <label className="text-xs font-bold text-white uppercase tracking-wider mb-1.5 block">
                 Product
               </label>
               <select
                 value={form.product}
                 onChange={(e) => setForm({ ...form, product: e.target.value })}
-                className="w-full px-3 py-2.5 text-sm border border-[#e0d8d0] rounded-xl focus:outline-none focus:border-[#e85d26] transition-colors bg-[#faf8f5] appearance-none"
+                className="w-full px-3 py-2.5 text-sm border border-white/10 rounded-xl focus:outline-none focus:border-[#D4AF37] transition-colors bg-white/5 text-white appearance-none"
               >
                 <option value="">Select a product…</option>
                 <option>Raspberry Powder</option>
@@ -690,20 +688,20 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
 
             {/* Title */}
             <div className="mb-3">
-              <label className="text-xs font-bold text-[#4a3a2a] uppercase tracking-wider mb-1.5 block">
+              <label className="text-xs font-bold text-white uppercase tracking-wider mb-1.5 block">
                 Review Title *
               </label>
               <input
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
                 placeholder="Summarise your experience…"
-                className="w-full px-3 py-2.5 text-sm border border-[#e0d8d0] rounded-xl focus:outline-none focus:border-[#e85d26] transition-colors bg-[#faf8f5]"
+                className="w-full px-3 py-2.5 text-sm border border-white/10 rounded-xl focus:outline-none focus:border-[#D4AF37] transition-colors bg-white/5 text-white"
               />
             </div>
 
             {/* Body */}
             <div className="mb-5">
-              <label className="text-xs font-bold text-[#4a3a2a] uppercase tracking-wider mb-1.5 block">
+              <label className="text-xs font-bold text-white uppercase tracking-wider mb-1.5 block">
                 Your Review *
               </label>
               <textarea
@@ -711,21 +709,21 @@ function WriteReviewModal({ onClose }: { onClose: () => void }) {
                 onChange={(e) => setForm({ ...form, body: e.target.value })}
                 placeholder="Tell us what you loved (or didn't)…"
                 rows={4}
-                className="w-full px-3 py-2.5 text-sm border border-[#e0d8d0] rounded-xl focus:outline-none focus:border-[#e85d26] transition-colors bg-[#faf8f5] resize-none"
+                className="w-full px-3 py-2.5 text-sm border border-white/10 rounded-xl focus:outline-none focus:border-[#D4AF37] transition-colors bg-white/5 text-white resize-none"
               />
             </div>
 
             <div className="flex gap-3">
               <button
                 onClick={onClose}
-                className="flex-1 py-3 rounded-xl border border-[#e0d8d0] text-sm font-semibold text-[#4a3a2a] hover:bg-[#faf8f5] transition-colors"
+                className="flex-1 py-3 rounded-xl border border-white/10 text-sm font-semibold text-white hover:bg-white/5 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSubmit}
                 disabled={!isValid || sending}
-                className="flex-1 py-3 rounded-xl bg-[#e85d26] text-white text-sm font-bold hover:bg-[#d44f1a] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex-1 py-3 rounded-xl bg-[#D4AF37] text-black text-sm font-bold hover:bg-[#BF953F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {sending ? "Sending…" : "Submit Review"}
               </button>
@@ -757,11 +755,11 @@ export default function Reviews() {
     });
 
   return (
-    <div className="min-h-screen bg-[#faf8f5]">
+    <div className="min-h-screen bg-black">
       <Header />
 
       {/* ── Hero ── */}
-      <section className="pt-28 pb-12 px-6 lg:px-8 bg-white border-b border-[#ede5dc]">
+      <section className="pt-28 pb-12 px-6 lg:px-8 bg-black border-b border-white/10">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -769,22 +767,22 @@ export default function Reviews() {
             transition={{ duration: 0.55 }}
             className="text-center mb-12"
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-bold uppercase tracking-widest rounded-full border border-[#f0d9c8] mb-5">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-bold uppercase tracking-widest rounded-full border border-white/10 mb-5">
               <MessageSquare className="w-3.5 h-3.5" />
               Customer Reviews
             </span>
-            <h1 className="font-serif text-4xl lg:text-5xl font-bold text-[#1a1a1a] mb-3">
+            <h1 className="font-serif text-4xl lg:text-5xl font-bold text-white mb-3">
               Real People. Real Results.
             </h1>
-            <p className="text-[#6a5a4a] text-base max-w-xl mx-auto mb-8">
+            <p className="text-white/70 text-base max-w-xl mx-auto mb-8">
               Over 1,200 verified reviews from customers across India who've
               made The Dry Factory part of their everyday life.
             </p>
             <button
               onClick={() => setShowModal(true)}
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-[#e85d26] to-[#f4a435] text-white font-bold rounded-full text-sm hover:scale-105 hover:shadow-xl transition-all duration-300"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-[#D4AF37] to-[#BF953F] text-black font-bold rounded-full text-sm hover:scale-105 hover:shadow-xl transition-all duration-300"
             >
-              <Star className="w-4 h-4" fill="white" stroke="none" />
+              <Star className="w-4 h-4" fill="black" stroke="none" />
               Write a Review
             </button>
           </motion.div>
@@ -822,7 +820,7 @@ export default function Reviews() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.08 }}
-                className="bg-white rounded-2xl border border-[#ede5dc] p-5 text-center shadow-sm"
+                className="bg-white/5 rounded-2xl border border-white/10 p-5 text-center shadow-sm"
               >
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-3"
@@ -835,10 +833,10 @@ export default function Reviews() {
                     stroke={stat.icon === Star ? "none" : stat.color}
                   />
                 </div>
-                <div className="font-serif text-2xl font-bold text-[#1a1a1a]">
+                <div className="font-serif text-2xl font-bold text-white">
                   {stat.value}
                 </div>
-                <div className="text-xs text-[#9a8a7a] mt-0.5">
+                <div className="text-xs text-white/40 mt-0.5">
                   {stat.label}
                 </div>
               </motion.div>
@@ -855,11 +853,11 @@ export default function Reviews() {
               className="flex items-center gap-8"
             >
               <div className="text-center">
-                <div className="font-serif text-8xl font-bold text-[#1a1a1a] leading-none">
+                <div className="font-serif text-8xl font-bold text-white leading-none">
                   {overallStats.average}
                 </div>
                 <StarRow rating={5} size="lg" />
-                <p className="text-xs text-[#9a8a7a] mt-2">
+                <p className="text-xs text-white/40 mt-2">
                   {overallStats.total.toLocaleString()} reviews
                 </p>
               </div>
@@ -875,10 +873,10 @@ export default function Reviews() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-gradient-to-br from-[#fff2ee] to-[#ffe8df] rounded-2xl p-6 border border-[#f5cfc0] relative"
+              className="bg-gradient-to-br from-[#2c2c2a] to-[#1a1a1a] rounded-2xl p-6 border border-white/10 relative"
             >
-              <Quote className="w-8 h-8 text-[#f0d9c8] mb-3" />
-              <p className="font-serif text-lg font-medium text-[#1a1a1a] italic leading-relaxed mb-4">
+              <Quote className="w-8 h-8 text-[#D4AF37]/40 mb-3" />
+              <p className="font-serif text-lg font-medium text-white italic leading-relaxed mb-4">
                 "I recommend The Dry Factory to all my clients. The ingredient list
                 is exactly what it should be — just fruit."
               </p>
@@ -887,10 +885,10 @@ export default function Reviews() {
                   SI
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-[#1a1a1a]">
+                  <div className="text-sm font-bold text-white">
                     Dr. Sneha Iyer
                   </div>
-                  <div className="text-xs text-[#9a8a7a]">
+                  <div className="text-xs text-white/40">
                     Nutritionist · Pune
                   </div>
                 </div>
@@ -902,7 +900,7 @@ export default function Reviews() {
       </section>
 
       {/* ── Filter Bar ── */}
-      <div className="sticky top-16 lg:top-20 z-30 bg-[#faf8f5]/95 backdrop-blur-md border-b border-[#ede5dc] px-6 lg:px-8 py-3">
+      <div className="sticky top-16 lg:top-20 z-30 bg-black/95 backdrop-blur-md border-b border-white/10 px-6 lg:px-8 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-2 flex-wrap">
             {filterCategories.map((cat) => (
@@ -911,16 +909,16 @@ export default function Reviews() {
                 onClick={() => setActiveCategory(cat.id)}
                 className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 border ${
                   activeCategory === cat.id
-                    ? "bg-[#1a1a1a] text-white border-[#1a1a1a] shadow-md"
-                    : "bg-white text-[#4a3a2a] border-[#e0d8d0] hover:border-[#1a1a1a]"
+                    ? "bg-[#D4AF37] text-black border-[#D4AF37] shadow-md"
+                    : "bg-white/5 text-white/70 border-white/10 hover:border-[#D4AF37]"
                 }`}
               >
                 {cat.emoji} {cat.label}
                 <span
                   className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
                     activeCategory === cat.id
-                      ? "bg-white/20 text-white"
-                      : "bg-[#f0e8de] text-[#9a8a7a]"
+                      ? "bg-black/20 text-black/70"
+                      : "bg-white/10 text-white/40"
                   }`}
                 >
                   {cat.id === "all"
@@ -934,7 +932,7 @@ export default function Reviews() {
           <div className="relative">
             <button
               onClick={() => setShowSort(!showSort)}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-[#e0d8d0] text-xs font-semibold text-[#4a3a2a] hover:border-[#1a1a1a] transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10 text-xs font-semibold text-white/70 hover:border-[#D4AF37] transition-colors"
             >
               <Filter className="w-3.5 h-3.5" />
               {sortBy}
@@ -948,7 +946,7 @@ export default function Reviews() {
                   initial={{ opacity: 0, y: 8, scale: 0.97 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 4, scale: 0.97 }}
-                  className="absolute right-0 top-full mt-2 w-48 bg-white rounded-2xl shadow-xl border border-[#e8ddd5] overflow-hidden z-50"
+                  className="absolute right-0 top-full mt-2 w-48 bg-black rounded-2xl shadow-xl border border-white/10 overflow-hidden z-50"
                 >
                   {sortOptions.map((opt) => (
                     <button
@@ -959,8 +957,8 @@ export default function Reviews() {
                       }}
                       className={`w-full text-left px-4 py-3 text-xs font-semibold transition-colors ${
                         sortBy === opt
-                          ? "bg-[#fdf3ec] text-[#e85d26]"
-                          : "text-[#4a3a2a] hover:bg-[#faf8f5]"
+                          ? "bg-white/10 text-[#D4AF37]"
+                          : "text-white/70 hover:bg-white/5"
                       }`}
                     >
                       {opt}
@@ -983,8 +981,8 @@ export default function Reviews() {
                 onClick={() => setActiveTag(activeTag === tag ? null : tag)}
                 className={`px-3.5 py-1.5 text-xs font-semibold rounded-full border transition-all duration-200 ${
                   activeTag === tag
-                    ? "bg-[#e85d26] text-white border-[#e85d26]"
-                    : "bg-white text-[#4a3a2a] border-[#e0d8d0] hover:border-[#e85d26] hover:text-[#e85d26]"
+                    ? "bg-[#D4AF37] text-black border-[#D4AF37]"
+                    : "bg-white/5 text-white/70 border-white/10 hover:border-[#D4AF37] hover:text-[#D4AF37]"
                 }`}
               >
                 {tag}
@@ -999,11 +997,11 @@ export default function Reviews() {
         <section className="px-6 lg:px-8 pt-8 pb-4">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center gap-2 mb-5">
-              <Award className="w-4 h-4 text-[#f4a435]" />
-              <h2 className="font-serif text-lg font-bold text-[#1a1a1a]">
+              <Award className="w-4 h-4 text-[#D4AF37]" />
+              <h2 className="font-serif text-lg font-bold text-white">
                 Featured Reviews
               </h2>
-              <span className="text-xs text-[#9a8a7a] ml-1">
+              <span className="text-xs text-white/40 ml-1">
                 — Highest rated & most helpful
               </span>
             </div>
@@ -1020,9 +1018,9 @@ export default function Reviews() {
       <section className="px-6 lg:px-8 pt-6 pb-16">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-5">
-            <p className="text-xs text-[#9a8a7a] font-medium">
+            <p className="text-xs text-white/40 font-medium">
               Showing{" "}
-              <span className="text-[#1a1a1a] font-bold">
+              <span className="text-white font-bold">
                 {filtered.length}
               </span>{" "}
               reviews
@@ -1030,7 +1028,7 @@ export default function Reviews() {
                 <>
                   {" "}
                   tagged{" "}
-                  <span className="text-[#e85d26] font-bold">
+                  <span className="text-[#D4AF37] font-bold">
                     "{activeTag}"
                   </span>
                 </>
@@ -1039,7 +1037,7 @@ export default function Reviews() {
             {activeTag && (
               <button
                 onClick={() => setActiveTag(null)}
-                className="text-xs text-[#9a8a7a] hover:text-[#e85d26] transition-colors"
+                className="text-xs text-white/40 hover:text-[#D4AF37] transition-colors"
               >
                 Clear filter ×
               </button>
@@ -1047,9 +1045,9 @@ export default function Reviews() {
           </div>
 
           {filtered.length === 0 ? (
-            <div className="text-center py-20 text-[#9a8a7a]">
+            <div className="text-center py-20 text-white/30">
               <div className="text-4xl mb-3">🔍</div>
-              <p className="font-semibold text-[#4a3a2a]">
+              <p className="font-semibold text-white/70">
                 No reviews match this filter
               </p>
               <p className="text-sm mt-1">Try a different category or tag</p>
@@ -1070,40 +1068,40 @@ export default function Reviews() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="py-16 px-6 lg:px-8 bg-[#fff7f2]">
+      <section className="py-16 px-6 lg:px-8 bg-black">
         <div className="max-w-4xl mx-auto text-center">
           <div
             className="rounded-3xl p-10 lg:p-14 relative overflow-hidden"
             style={{
-              background: "linear-gradient(135deg, #1a1a1a 0%, #2c1a0e 100%)",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
+              background: "linear-gradient(135deg, #1a1a1a 0%, #000000 100%)",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
             }}
           >
             <div
               className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-20 blur-3xl pointer-events-none"
-              style={{ background: "radial-gradient(#e85d26, transparent)" }}
+              style={{ background: "radial-gradient(#D4AF37, transparent)" }}
             />
             <div
               className="absolute bottom-0 left-0 w-48 h-48 rounded-full opacity-15 blur-3xl pointer-events-none"
-              style={{ background: "radial-gradient(#f4a435, transparent)" }}
+              style={{ background: "radial-gradient(#BF953F, transparent)" }}
             />
             <div className="relative z-10">
-              <span className="inline-block px-4 py-1.5 bg-white/10 text-[#f4a435] text-xs font-bold uppercase tracking-widest rounded-full border border-white/20 mb-5">
+              <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-bold uppercase tracking-widest rounded-full border border-white/10 mb-5">
                 ⭐ Share Your Experience
               </span>
               <h2 className="font-serif text-3xl lg:text-4xl font-bold text-white mb-3">
                 Tried The Dry Factory?
               </h2>
-              <p className="text-white/70 text-sm leading-relaxed mb-8 max-w-lg mx-auto">
+              <p className="text-white/60 text-sm leading-relaxed mb-8 max-w-lg mx-auto">
                 Your review helps real people make better choices. Take 2
                 minutes and tell the The Dry Factory community what you thought.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 <button
                   onClick={() => setShowModal(true)}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-[#e85d26] to-[#f4a435] text-white font-bold rounded-full text-sm hover:scale-105 hover:shadow-xl transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-[#D4AF37] to-[#BF953F] text-black font-bold rounded-full text-sm hover:scale-105 hover:shadow-xl transition-all duration-300"
                 >
-                  <Star className="w-4 h-4" fill="white" stroke="none" />
+                  <Star className="w-4 h-4" fill="black" stroke="none" />
                   Write a Review
                 </button>
                 <Link

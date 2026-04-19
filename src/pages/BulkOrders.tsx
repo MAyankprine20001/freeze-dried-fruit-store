@@ -31,7 +31,7 @@ const benefits = [
 
 export default function BulkOrders() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black">
       <Header />
 
       <PageHero
@@ -42,7 +42,7 @@ export default function BulkOrders() {
         image="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1600&h=600&fit=crop"
       />
 
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-black">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, i) => (
@@ -52,13 +52,13 @@ export default function BulkOrders() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="p-8 bg-[#fdf3ec] rounded-2xl border border-[#f0d9c8] hover:shadow-lg transition-all duration-300"
+                className="p-8 bg-white/5 rounded-2xl border border-white/10 hover:shadow-lg transition-all duration-300"
               >
-                <div className="w-12 h-12 bg-[#e85d26] rounded-xl flex items-center justify-center mb-6">
-                  <benefit.icon className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 bg-[#D4AF37] rounded-xl flex items-center justify-center mb-6">
+                  <benefit.icon className="w-6 h-6 text-black" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#1a1a1a] mb-3">{benefit.title}</h3>
-                <p className="text-[#6a5a4a] text-sm leading-relaxed">{benefit.description}</p>
+                <h3 className="font-serif text-xl font-bold text-white mb-3">{benefit.title}</h3>
+                <p className="text-white/60 text-sm leading-relaxed">{benefit.description}</p>
               </motion.div>
             ))}
           </div>
@@ -79,14 +79,14 @@ export default function BulkOrders() {
               </p>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e85d26] text-white font-semibold rounded-full hover:bg-[#d44f1a] hover:scale-105 transition-all duration-200"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D4AF37] text-black font-semibold rounded-full hover:bg-[#BF953F] hover:scale-105 transition-all duration-200"
               >
                 Inquire Now
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#e85d26]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#f4a435]/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#D4AF37]/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
           </motion.div>
         </div>
       </section>
