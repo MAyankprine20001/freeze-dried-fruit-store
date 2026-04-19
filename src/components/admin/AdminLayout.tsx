@@ -9,8 +9,10 @@ import {
   LogOut, 
   ArrowLeft,
   Search,
-  Bell
+  Bell,
+  DollarSign
 } from "lucide-react";
+
 import { useAuth } from "../../context/AuthContext";
 
 export default function AdminLayout() {
@@ -19,12 +21,14 @@ export default function AdminLayout() {
   const { user, logout } = useAuth();
 
   const menuItems = [
-    { label: "Dashboard", path: "/admin", icon: LayoutDashboard },
+    { label: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
     { label: "Products", path: "/admin/products", icon: Package },
     { label: "Orders", path: "/admin/orders", icon: ShoppingBag },
+    { label: "Transactions", path: "/admin/transactions", icon: DollarSign },
     { label: "Customers", path: "/admin/customers", icon: Users },
     { label: "Settings", path: "/admin/settings", icon: Settings },
   ];
+
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] flex">

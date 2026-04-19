@@ -48,7 +48,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     setAccessToken(data.token); // ✅ memory only — never localStorage
     setUser(data.user);
+    return data.user;
   };
+
 
   const signup = async (userData: {
     fullName: string;

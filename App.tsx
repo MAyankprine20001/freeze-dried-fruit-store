@@ -83,7 +83,6 @@ const App: React.FC = () => {
                 {/* Store */}
                 <Route path="/cart" element={<Cart />} />
 
-                {/* Admin Routes (Protected) */}
                 <Route 
                   path="/admin" 
                   element={
@@ -93,11 +92,14 @@ const App: React.FC = () => {
                   }
                 >
                   <Route index element={<AdminDashboard />} />
+                  <Route path="dashboard" element={<AdminDashboard />} />
                   <Route path="products" element={<AdminProducts />} />
                   <Route path="orders" element={<div>Orders List (Coming Soon)</div>} />
+                  <Route path="transactions" element={<div>Transactions List (Coming Soon)</div>} />
                   <Route path="customers" element={<div>Customers List (Coming Soon)</div>} />
                   <Route path="settings" element={<div>Admin Settings (Coming Soon)</div>} />
                 </Route>
+
 
                 <Route path="*" element={<NotFound />} />
               </Routes>

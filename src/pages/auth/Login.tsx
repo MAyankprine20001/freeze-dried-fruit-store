@@ -17,10 +17,16 @@ export default function Login() {
 
   const loginMutation = useMutation({
     mutationFn: (data: any) => login(data),
-    onSuccess: () => {
-      navigate("/");
+    onSuccess: (user: any) => {
+      if (user?.role === "admin") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+      }
     },
   });
+
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

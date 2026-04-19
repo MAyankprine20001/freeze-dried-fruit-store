@@ -20,6 +20,11 @@ import {
   AreaChart,
   Area
 } from "recharts";
+import { useAuth } from "../../context/AuthContext";
+import { productApi } from "../../api/product.api";
+import { toast } from "react-toastify";
+
+
 
 const data = [
   { name: "Mon", sales: 4000, orders: 24 },
@@ -67,12 +72,87 @@ const stats = [
 ];
 
 export default function Dashboard() {
+  const { user } = useAuth();
+  
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-[#1a1a1a]">Good Morning, Mayank</h1>
-        <p className="text-[#6c757d]">Here's what's happening with your store today.</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-[#1a1a1a]">Good Morning, {user?.name?.split(" ")[0] || "Admin"}</h1>
+          <p className="text-[#6c757d]">Here's what's happening with your store today.</p>
+        </div>
+        <button 
+          onClick={async () => {
+            const initialData = [
+              {
+                category: "Fruit Powders",
+                name: "Strawberry Powder",
+                subtitle: "FreezeFusion · 100g",
+                price: 349,
+                originalPrice: 449,
+                rating: 4.8,
+                reviews: 156,
+                tag: "Vibrant",
+                tagColor: "#e84444",
+                badge: "🍓",
+                accent: "#e84444",
+                bg: "from-[#fff2f2] to-[#ffe0e0]",
+                borderColor: "#f5c0c0",
+                gradientFrom: "#e84444",
+                gradientTo: "#c0392b",
+                emoji: "🍓",
+                image: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=600&fit=crop",
+                path: "/fruit-powders",
+                highlights: ["Smoothie Ready", "Baking Grade", "100% Pure"],
+                weight: "100g",
+                stock: "In Stock",
+              },
+              {
+                category: "Fruit Powders",
+                name: "Mango Powder",
+                subtitle: "FreezeFusion · 100g",
+                price: 379,
+                originalPrice: 479,
+                rating: 4.9,
+                reviews: 189,
+                tag: "Tropical",
+                tagColor: "#f4a435",
+                badge: "🥭",
+                accent: "#f4a435",
+                bg: "from-[#fffaee] to-[#fff0cc]",
+                borderColor: "#f5e0a0",
+                gradientFrom: "#f4a435",
+                gradientTo: "#f39c12",
+                emoji: "🥭",
+                image: "https://images.unsplash.com/photo-1596591606975-97ee5cef3a1e?w=600&fit=crop",
+                path: "/fruit-powders",
+                highlights: ["King of Fruits", "Natural Color", "Perfect Base"],
+                weight: "100g",
+                stock: "In Stock",
+              },
+              {
+                category: "Fruit Chunks",
+                name: "Strawberry Chunks",
+                subtitle: "FreezeFusion · 150g",
+                price: 329,
+                originalPrice: 429,
+                image: "https://images.unsplash.com/photo-1543528176-61b239494933?w=600&fit=crop",
+                stock: "In Stock"
+              }
+            ];
+            try {
+              await productApi.seed(initialData);
+              toast.success("Database seeded successfully!");
+            } catch (err) {
+              toast.error("Seeding failed");
+            }
+          }}
+          className="px-6 py-3 bg-[#1a1a1a] text-white rounded-xl text-sm font-bold shadow-lg shadow-[#1a1a1a]/10 hover:bg-[#2a2a2a] transition-all"
+        >
+          Seed Initial Data
+        </button>
       </div>
+
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
