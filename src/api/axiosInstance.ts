@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api/v1";
+// This line already handles it perfectly ✅
+const BASE_URL = import.meta.env.VITE_API_URL || "https://thedryfactory.vercel.app/api/v1";
 
 // ─── Access token stored in memory only (not localStorage) ───────────────────
 let accessToken: string | null = null;
