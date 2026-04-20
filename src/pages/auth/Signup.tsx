@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { User, Mail, Lock, ArrowRight, Eye, EyeOff, AlertCircle, CheckCircle2 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useMutation } from "@tanstack/react-query";
@@ -13,11 +13,17 @@ export default function Signup() {
 
   const { signup } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const signupMutation = useMutation({
     mutationFn: (data: any) => signup(data),
     onSuccess: (response: any) => {
-      navigate("/login", { state: { message: response.message } });
+      navigate("/login", { 
+        state: { 
+          message: response.message,
+          from: location.state?.from 
+        } 
+      });
     },
   });
 
@@ -136,7 +142,7 @@ export default function Signup() {
           <div className="mt-8 pt-8 border-t border-white/10 text-center">
             <p className="text-white/50 text-sm font-medium">
               Already have an account?{" "}
-              <Link to="/login" className="text-[#D4AF37] font-bold hover:text-[#BF953F] transition-colors ml-1">
+              <Link to="/login" state={{ from: location.state?.from }} className="text-[#D4AF37] font-bold hover:text-[#BF953F] transition-colors ml-1">
                 Sign in
               </Link>
             </p>

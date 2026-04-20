@@ -18,10 +18,11 @@ export default function Login() {
   const loginMutation = useMutation({
     mutationFn: (data: any) => login(data),
     onSuccess: (user: any) => {
+      const from = location.state?.from?.pathname || "/";
       if (user?.role === "admin") {
-        navigate("/admin/dashboard");
+        navigate(from === "/" ? "/admin/dashboard" : from);
       } else {
-        navigate("/");
+        navigate(from);
       }
     },
   });
@@ -136,7 +137,7 @@ export default function Login() {
           <div className="mt-8 pt-8 border-t border-white/10 text-center">
             <p className="text-white/50 text-sm font-medium">
               Don't have an account?{" "}
-              <Link to="/signup" className="text-[#D4AF37] font-bold hover:text-[#BF953F] transition-colors ml-1">
+              <Link to="/signup" state={{ from: location.state?.from }} className="text-[#D4AF37] font-bold hover:text-[#BF953F] transition-colors ml-1">
                 Sign up free
               </Link>
             </p>

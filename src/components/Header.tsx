@@ -330,7 +330,9 @@ export default function Header() {
               
               {user ? (
                 <div className="flex items-center gap-3">
-                  <span className="text-white/50 text-xs font-medium">Hi, {user.name.split(' ')[0]}</span>
+                  <Link to="/profile" className="text-white/80 hover:text-[#D4AF37] text-sm font-medium transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-white/5">
+                    Hi, {user.name.split(' ')[0]}
+                  </Link>
                   {isAdmin && (
                     <Link
                       to="/admin"
@@ -341,7 +343,7 @@ export default function Header() {
                   )}
                   <button
                     onClick={logout}
-                    className="px-5 py-2.5 border border-white/10 text-white text-sm font-semibold rounded-full hover:bg-white/5 transition-all duration-200"
+                    className="px-4 py-2 border border-white/10 text-white text-[11px] font-bold uppercase tracking-wider rounded-full hover:bg-white/5 transition-all duration-200"
                   >
                     Logout
                   </button>
@@ -442,12 +444,21 @@ export default function Header() {
 
               <div className="p-5 border-t border-white/10 space-y-3">
                 {user ? (
-                  <button
-                    onClick={logout}
-                    className="flex items-center justify-center gap-2 w-full px-5 py-3 border border-white/10 text-white text-sm font-semibold rounded-full hover:bg-white/5 transition-all duration-200"
-                  >
-                    Logout
-                  </button>
+                  <>
+                    <Link
+                      to="/profile"
+                      onClick={() => setMenuOpen(false)}
+                      className="flex items-center justify-center gap-2 w-full px-5 py-3 border border-white/10 text-white text-sm font-semibold rounded-full hover:bg-white/5 transition-all duration-200"
+                    >
+                      Profile & Orders
+                    </Link>
+                    <button
+                      onClick={logout}
+                      className="flex items-center justify-center gap-2 w-full px-5 py-3 border border-red-500/20 text-red-400 text-sm font-semibold rounded-full hover:bg-red-500/10 transition-all duration-200"
+                    >
+                      Logout
+                    </button>
+                  </>
                 ) : (
                   <>
                     <Link

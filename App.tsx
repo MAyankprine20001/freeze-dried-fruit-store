@@ -38,11 +38,15 @@ const VerifyEmail = lazy(() => import("./src/pages/auth/VerifyEmail"));
 
 // Store Pages
 const Cart = lazy(() => import("./src/pages/Cart"));
+const Checkout = lazy(() => import("./src/pages/Checkout"));          // ← NEW
+const OrderSuccess = lazy(() => import("./src/pages/OrderSuccess"));  // ← NEW
+const Profile = lazy(() => import("./src/pages/Profile"));            // ← NEW
 
 // Admin Pages
 const AdminLayout = lazy(() => import("./src/components/admin/AdminLayout"));
 const AdminDashboard = lazy(() => import("./src/pages/admin/Dashboard"));
 const AdminProducts = lazy(() => import("./src/pages/admin/AdminProducts"));
+const AdminOrders = lazy(() => import("./src/pages/admin/AdminOrders"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-black">
@@ -84,9 +88,26 @@ const App: React.FC = () => {
 
                 {/* Store */}
                 <Route path="/cart" element={<Cart />} />
-
                 <Route 
-                  path="/admin" 
+                  path="/checkout" 
+                  element={
+                    <ProtectedRoute>
+                      <Checkout />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route path="/order-success" element={<OrderSuccess />} />
+                <Route 
+                  path="/profile" 
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  } 
+                />
+
+                <Route
+                  path="/admin"
                   element={
                     <ProtectedRoute adminOnly>
                       <AdminLayout />
@@ -96,7 +117,7 @@ const App: React.FC = () => {
                   <Route index element={<AdminDashboard />} />
                   <Route path="dashboard" element={<AdminDashboard />} />
                   <Route path="products" element={<AdminProducts />} />
-                  <Route path="orders" element={<div>Orders List (Coming Soon)</div>} />
+                  <Route path="orders" element={<AdminOrders />} />
                   <Route path="transactions" element={<div>Transactions List (Coming Soon)</div>} />
                   <Route path="customers" element={<div>Customers List (Coming Soon)</div>} />
                   <Route path="settings" element={<div>Admin Settings (Coming Soon)</div>} />
