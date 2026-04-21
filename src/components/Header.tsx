@@ -366,22 +366,37 @@ export default function Header() {
               )}
             </div>
 
-            {/* ── Mobile Hamburger ── */}
-            <button
-              className="lg:hidden p-2 rounded-lg text-white/70 hover:text-[#D4AF37] hover:bg-white/5 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-menu"
-              aria-label={
-                menuOpen ? "Close navigation menu" : "Open navigation menu"
-              }
-            >
-              {menuOpen ? (
-                <X className="w-5 h-5" />
-              ) : (
-                <Menu className="w-5 h-5" />
-              )}
-            </button>
+            {/* ── Mobile Actions (Cart + Hamburger) ── */}
+            <div className="lg:hidden flex items-center gap-2">
+              {/* Mobile Cart Icon */}
+              <Link
+                to="/cart"
+                className="relative p-2 rounded-lg text-[#D4AF37] hover:bg-white/5 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+                aria-label="View Cart"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-[#D4AF37] text-black text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                    {totalItems > 9 ? '9+' : totalItems}
+                  </span>
+                )}
+              </Link>
+
+              {/* Hamburger */}
+              <button
+                className="p-2 rounded-lg text-white/70 hover:text-[#D4AF37] hover:bg-white/5 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-expanded={menuOpen}
+                aria-controls="mobile-menu"
+                aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+              >
+                {menuOpen ? (
+                  <X className="w-5 h-5" />
+                ) : (
+                  <Menu className="w-5 h-5" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </header>
