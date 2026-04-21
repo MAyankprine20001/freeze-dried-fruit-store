@@ -260,31 +260,36 @@ export default function Products() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
-      <main className="pt-24 pb-20 px-6 lg:px-8 max-w-7xl mx-auto">
+      <main className="pt-20 pb-24 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Page heading */}
-        <div className="mb-12 text-center">
-          <h1 className="text-4xl font-bold mb-4">
+        <div className="mb-8 text-center">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-2 sm:mb-4">
             {categoryBanners[activeCategory].title}
           </h1>
-          <p className="text-white/60 max-w-2xl mx-auto">
+          <p className="text-white/60 max-w-2xl mx-auto text-sm sm:text-base">
             {categoryBanners[activeCategory].sub}
           </p>
         </div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`px-6 py-2.5 rounded-full text-xs font-bold transition-all ${activeCategory === cat.id
-                  ? "bg-[#D4AF37] text-black"
-                  : "bg-white/5 text-white/60 hover:bg-white/10"
+        {/* Category Filter - horizontal scroll on mobile */}
+        <div className="mb-8 sm:mb-12">
+          <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 sm:flex-wrap sm:justify-center scrollbar-hide"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`flex-shrink-0 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs font-bold transition-all ${
+                  activeCategory === cat.id
+                    ? "bg-[#D4AF37] text-black"
+                    : "bg-white/5 text-white/60 hover:bg-white/10"
                 }`}
-            >
-              {cat.emoji} {cat.label}
-            </button>
-          ))}
+              >
+                {cat.emoji} {cat.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Loading */}
@@ -296,7 +301,7 @@ export default function Products() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <AnimatePresence mode="popLayout">
               {filtered.map((product, i) => (
                 <ProductCard key={product._id} product={product} index={i} />
