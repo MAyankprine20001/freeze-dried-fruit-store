@@ -203,7 +203,7 @@ export default function Checkout() {
         currency,
         name: "The Dry Factory",
         description: `Order of ${items.length} item${items.length > 1 ? "s" : ""}`,
-        image: "https://res.cloudinary.com/doi7id29n/image/upload/b_black,q_auto,f_png/v1776528652/logo_2_on76wp.png",
+        image: "https://res.cloudinary.com/doi7id29n/image/upload/b_black,e_trim:0,r_max,q_auto,f_png/v1776528652/logo_2_on76wp.png",
         order_id: orderId,
 
         handler: async (response: {
@@ -244,7 +244,7 @@ export default function Checkout() {
           contact: formData.phone,
         },
 
-        theme: { color: "#D4AF37" },
+        theme: { color: "#000000" },
 
         modal: {
           ondismiss: () => {
