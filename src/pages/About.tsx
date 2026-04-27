@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
 import Header from '../components/Header';
@@ -119,22 +119,12 @@ export default function About() {
        Honest Food for a Healthier Everyday
       </h2>
       <div className="space-y-6 text-white/70 text-lg leading-relaxed text-left max-w-3xl mx-auto">
-       <div className="flex gap-4">
-        <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
-        <p>Our mission is simple to make real food easy to trust again.</p>
-       </div>
-       <div className="flex gap-4">
-        <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
-        <p>In a world full of shortcuts, we want to bring back honesty to what people consume daily. No hidden ingredients, no unnecessary additives just clean, thoughtfully made products that actually do what they promise.</p>
-       </div>
-       <div className="flex gap-4">
-        <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
-        <p>We aim to make fruits more accessible beyond their seasons, reduce unnecessary waste, and create products that fit naturally into modern lifestyles without compromising health.</p>
-       </div>
-       <div className="flex gap-4">
-        <div className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
-        <p>Because for us, it’s not just about selling products it’s about helping people build better, simpler food habits every day.</p>
-       </div>
+       <p>
+        Our mission is simple — to make real food easy to trust again. In a world full of shortcuts, we want to bring back honesty to what people consume daily. No hidden ingredients, no unnecessary additives — just clean, thoughtfully made products that actually do what they promise.
+       </p>
+       <p>
+        We aim to make fruits more accessible beyond their seasons, reduce unnecessary waste, and create products that fit naturally into modern lifestyles without compromising health. Because for us, it's not just about selling products — it's about helping people build better, simpler food habits every day.
+       </p>
       </div>
      </motion.div>
     </div>
