@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -155,7 +155,7 @@ const sections = [
    },
    {
     subtitle: "How to Exercise Your Rights",
-    text: "To exercise any of these rights, please contact us at privacy@The Dry Factory.com. We will respond within 30 days.",
+    text: "To exercise any of these rights, please contact us at support@thedryfactory.com. We will respond within 30 days.",
    },
   ],
  },
@@ -171,7 +171,7 @@ const sections = [
    },
    {
     subtitle: "Contact Details",
-    text: "Email: privacy@The Dry Factory.com\nPhone: +91 75673 50328\nAddress: The Dry Factory, 12 Cold Chain Avenue, Andheri East, Mumbai 400 069, Maharashtra, India.",
+    text: "Email: support@thedryfactory.com\nPhone: +91 75673 50328\nAddress: The Dry Factory, 12 Cold Chain Avenue, Andheri East, Mumbai 400 069, Maharashtra, India.",
    },
   ],
  },
