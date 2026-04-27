@@ -115,6 +115,9 @@ function ProductCard({ product, index }: { product: any; index: number }) {
           <h3 className="text-white font-semibold text-[15px] leading-snug line-clamp-2 group-hover:text-[#D4AF37] transition-colors duration-200">
             {product.name}
           </h3>
+          {product.subtitle && (
+            <p className="text-white/50 text-[11px] italic mt-0.5 line-clamp-1">{product.subtitle}</p>
+          )}
           {product.weight && (
             <p className="text-white/35 text-[11px] mt-0.5">{product.weight}</p>
           )}
