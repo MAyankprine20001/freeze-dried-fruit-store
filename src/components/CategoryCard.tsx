@@ -19,12 +19,13 @@ export default function CategoryCard({ title, description, image, path, tag, ind
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="h-full"
     >
       <Link
         to={path}
-        className="group block bg-black rounded-2xl overflow-hidden border border-white/10 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+        className="group flex flex-col h-full bg-black rounded-2xl overflow-hidden border border-white/10 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
       >
-        <div className="relative overflow-hidden h-56">
+        <div className="relative overflow-hidden h-56 flex-shrink-0">
           <img
             src={image}
             alt={title}
@@ -37,11 +38,11 @@ export default function CategoryCard({ title, description, image, path, tag, ind
             {tag}
           </span>
         </div>
-        <div className="p-8">
+        <div className="p-8 flex flex-col flex-1">
           <h3 className="font-serif text-xl font-bold text-white mb-3 group-hover:text-[#D4AF37] transition-colors duration-200">
             {title}
           </h3>
-          <div className="flex items-center gap-2 text-[#D4AF37] text-sm font-semibold">
+          <div className="mt-auto flex items-center gap-2 text-[#D4AF37] text-sm font-semibold">
             <span>Explore</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
           </div>
