@@ -181,17 +181,11 @@ export default function Home() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <Link
-                to="/fruit-powder-chunks"
+                to="/products"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D4AF37] text-black font-semibold rounded-full hover:bg-[#BF953F] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent shadow-lg"
               >
                 Shop Products
                 <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/about"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/15 text-white font-semibold rounded-full border border-white/30 hover:bg-white/25 hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white backdrop-blur-sm"
-              >
-                Our Story
               </Link>
             </motion.div>
           </div>
@@ -399,18 +393,18 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/fruit-powder-chunks"
+                to="/products"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D4AF37] text-black font-semibold rounded-full hover:bg-[#BF953F] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] shadow-lg"
               >
                 Shop Products
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link
+              {/* <Link
                 to="/contact"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-full border border-white/30 hover:bg-white/10 hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 Bulk Orders
-              </Link>
+              </Link> */}
             </div>
           </motion.div>
         </div>
