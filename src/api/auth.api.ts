@@ -1,4 +1,4 @@
-﻿import axiosInstance from "./axiosInstance";
+import axiosInstance from "./axiosInstance";
 
 export interface User {
   id: string;
@@ -71,3 +71,42 @@ export const authApi = {
     return res.data;
   },
 };
+
+// ─── Admin: Customers ──────────────────────────────────────────────────────────
+
+export interface Customer {
+  _id: string;
+  fullName: string;
+  email: string;
+  isEmailVerified: boolean;
+  createdAt: string;
+  orderCount: number;
+  totalSpent: number;
+  address?: {
+    addressLine1?: string;
+    addressLine2?: string;
+    city?: string;
+    state?: string;
+    pincode?: string;
+    phone?: string;
+  };
+}
+
+export interface GetCustomersResponse {
+  success: boolean;
+  total: number;
+  page: number;
+  pages: number;
+  data: Customer[];
+}
+
+export const getAllCustomers = async (
+  page: number = 1,
+  limit: number = 20,
+  search: string = ""
+): Promise<GetCustomersResponse> => {
+  const res = await axiosInstance.get<GetCustomersResponse>(
+    `/auth/admin/customers?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`
+  );
+  return res.data;
+};

@@ -47,6 +47,7 @@ const AdminLayout = lazy(() => import("./src/components/admin/AdminLayout"));
 const AdminDashboard = lazy(() => import("./src/pages/admin/Dashboard"));
 const AdminProducts = lazy(() => import("./src/pages/admin/AdminProducts"));
 const AdminOrders = lazy(() => import("./src/pages/admin/AdminOrders"));
+const AdminCustomers = lazy(() => import("./src/pages/admin/AdminCustomers"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-black">
@@ -119,7 +120,7 @@ const App: React.FC = () => {
                   <Route path="products" element={<AdminProducts />} />
                   <Route path="orders" element={<AdminOrders />} />
                   <Route path="transactions" element={<div>Transactions List (Coming Soon)</div>} />
-                  <Route path="customers" element={<div>Customers List (Coming Soon)</div>} />
+                  <Route path="customers" element={<AdminCustomers />} />
                   <Route path="settings" element={<div>Admin Settings (Coming Soon)</div>} />
                 </Route>
 

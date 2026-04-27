@@ -1,4 +1,4 @@
-﻿import axiosInstance from "./axiosInstance";
+import axiosInstance from "./axiosInstance";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ALL types are defined here no imports from CartContext or anywhere else.
@@ -94,7 +94,7 @@ export interface Order {
   status: string;
   createdAt: string;
   updatedAt: string;
-  user?: string;
+  user?: string | { _id: string; email: string; fullName: string } | null;
 }
 
 export interface GetOrdersResponse {

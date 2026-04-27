@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
  Package, Search, Filter, Clock, CheckCircle, XCircle, 
@@ -326,7 +326,11 @@ export default function AdminOrders() {
                    <div className="space-y-3 pt-4 border-t border-[#eef0f2]">
                     <div className="flex items-center gap-3 text-sm text-[#495057]">
                      <Mail className="w-4 h-4 text-[#adb5bd]" />
-                     <span>No email provided</span>
+                     <span>
+                       {order.user && typeof order.user === "object" && order.user.email
+                         ? order.user.email
+                         : "No email provided"}
+                     </span>
                     </div>
                     <div className="flex items-center gap-3 text-sm text-[#495057]">
                      <Phone className="w-4 h-4 text-[#adb5bd]" />
