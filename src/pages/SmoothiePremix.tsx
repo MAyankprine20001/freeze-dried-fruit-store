@@ -1,9 +1,10 @@
-﻿import React from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Blend, Zap, Heart, Sparkles, Smile, RefreshCw } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
+import CategoryProductSection from '../components/CategoryProductSection';
 
 const useCases = [
  {
@@ -133,6 +134,12 @@ export default function SmoothiePremix() {
      </div>
     </div>
    </section>
+
+   <CategoryProductSection
+    categoryKey="smoothie-premix"
+    title="Shop Smoothie Premix"
+    subtitle="Ready in 10 seconds. Just add liquid and enjoy peak nutrition."
+   />
 
    <Footer />
   </div>

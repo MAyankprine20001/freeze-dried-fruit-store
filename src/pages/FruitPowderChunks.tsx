@@ -1,9 +1,10 @@
-﻿import React from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Blend, Cake, Baby, Backpack, Coffee, Apple } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
+import CategoryProductSection from '../components/CategoryProductSection';
 
 const powderUseCases = [
  {
@@ -225,6 +226,18 @@ export default function FruitPowderChunks() {
      </div>
     </div>
    </section>
+
+   <CategoryProductSection
+    categoryKey="fruit-powders"
+    title="Shop Fruit Powders"
+    subtitle="Ultra-fine, concentrated fruit powder — natural flavor and color in one ingredient."
+   />
+
+   <CategoryProductSection
+    categoryKey="fruit-chunks"
+    title="Shop Fruit Chunks"
+    subtitle="Crunchy, intensely flavored whole fruit pieces — snack straight or top any dish."
+   />
 
    <Footer />
   </div>

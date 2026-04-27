@@ -1,9 +1,10 @@
-﻿import React from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Package, Gift, ShoppingBag, Star, Zap } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
+import CategoryProductSection from '../components/CategoryProductSection';
 
 const useCases = [
  {
@@ -133,6 +134,12 @@ export default function Combos() {
      </div>
     </div>
    </section>
+
+   <CategoryProductSection
+    categoryKey="combos"
+    title="Shop Combos & Bundles"
+    subtitle="More variety, bigger savings — curated packs you'll love."
+   />
 
    <Footer />
   </div>
