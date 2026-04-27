@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
 import {
@@ -203,7 +203,7 @@ export default function Checkout() {
         currency,
         name: "The Dry Factory",
         description: `Order of ${items.length} item${items.length > 1 ? "s" : ""}`,
-        image: "/logo.png",
+        image: "https://res.cloudinary.com/doi7id29n/image/upload/b_black,q_auto,f_png/v1776528652/logo_2_on76wp.png",
         order_id: orderId,
 
         handler: async (response: {
