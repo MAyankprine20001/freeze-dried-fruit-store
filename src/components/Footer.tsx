@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Instagram, Youtube, Linkedin } from "lucide-react";
 
@@ -121,6 +121,8 @@ export default function Footer() {
        {[
         "No Preservatives",
         "100% Natural",
+        "Clean Indulgence",
+        "No Added Sugar",
        ].map((badge) => (
         <div
          key={badge}
