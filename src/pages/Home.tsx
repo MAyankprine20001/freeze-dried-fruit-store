@@ -103,6 +103,7 @@ const testimonials = [
 ];
 
 export default function Home() {
+  console.log("hello")
  const [heroIndex, setHeroIndex] = React.useState(0);
  // Auto-play hero
  React.useEffect(() => {
