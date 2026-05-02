@@ -29,7 +29,7 @@ export default function AdminProducts() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -63,7 +63,7 @@ export default function AdminProducts() {
     fetchProducts();
   }, []);
 
-  const handleOpenDrawer = (product: any = null) => {
+  const handleOpenModal = (product: any = null) => {
     if (product) {
       setEditingProduct(product);
       setFormData({
@@ -81,7 +81,12 @@ export default function AdminProducts() {
       setEditingProduct(null);
       setFormData({ name: "", sku: "", category: "Fruit Powders", price: 0, stockCount: 0, stock: "In Stock", status: "Active", image: "", featured: false });
     }
-    setIsDrawerOpen(true);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingProduct(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -95,7 +100,7 @@ export default function AdminProducts() {
         await productApi.create(formData);
         toast.success("Product created successfully");
       }
-      setIsDrawerOpen(false);
+      handleCloseModal();
       fetchProducts();
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to save product");
@@ -150,7 +155,7 @@ export default function AdminProducts() {
           <p className="text-sm text-gray-500">Manage your product catalog and inventory.</p>
         </div>
         <button
-          onClick={() => handleOpenDrawer()}
+          onClick={() => handleOpenModal()}
           className="flex items-center gap-2 bg-[#111827] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#1f2937] transition-all shadow-sm"
         >
           <Plus className="w-4 h-4" />
@@ -283,7 +288,7 @@ export default function AdminProducts() {
                           <button className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all" title="Preview">
                             <Eye className="w-3.5 h-3.5" />
                           </button>
-                          <button onClick={() => handleOpenDrawer(product)} className="p-1 hover:text-blue-500 hover:bg-blue-50 rounded transition-all" title="Edit">
+                          <button onClick={() => handleOpenModal(product)} className="p-1 hover:text-blue-500 hover:bg-blue-50 rounded transition-all" title="Edit">
                             <Edit2 className="w-3.5 h-3.5" />
                           </button>
                           <button onClick={() => handleDelete(product._id)} className="p-1 hover:text-red-500 hover:bg-red-50 rounded transition-all" title="Delete">
@@ -341,92 +346,105 @@ export default function AdminProducts() {
         ))}
       </div>
 
-      {/* Add/Edit Drawer */}
+      {/* ── Centered Modal ── */}
       <AnimatePresence>
-        {isDrawerOpen && (
+        {isModalOpen && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsDrawerOpen(false)} className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" />
+            {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0, x: "100%" }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 h-full w-full max-w-sm bg-white shadow-2xl z-50 flex flex-col"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={handleCloseModal}
+              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+            />
+            {/* Modal Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              transition={{ type: "spring", damping: 28, stiffness: 260 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
             >
-              <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
-                <h2 className="text-base font-bold text-gray-800">{editingProduct ? "Edit Product" : "Add Product"}</h2>
-                <button onClick={() => setIsDrawerOpen(false)} className="p-1.5 hover:bg-white rounded-lg transition-colors">
-                  <X className="w-4 h-4 text-gray-500" />
-                </button>
-              </div>
-
-              <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-4 space-y-4">
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-gray-700">Product Name</label>
-                  <input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 focus:border-[#D4A017] outline-none" placeholder="e.g. Strawberry Powder" />
+              <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl flex flex-col pointer-events-auto max-h-[90vh]">
+                {/* Header */}
+                <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50 rounded-t-2xl flex-shrink-0">
+                  <h2 className="text-base font-bold text-gray-800">{editingProduct ? "Edit Product" : "Add Product"}</h2>
+                  <button onClick={handleCloseModal} className="p-1.5 hover:bg-white rounded-lg transition-colors">
+                    <X className="w-4 h-4 text-gray-500" />
+                  </button>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                {/* Scrollable Body */}
+                <form id="product-form" onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-gray-700">Category</label>
-                    <select value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none">
-                      <option>Fruit Powders</option>
-                      <option>Fruit Chunks</option>
-                      <option>Smoothie Premix</option>
-                      <option>Chocolates</option>
-                      <option>Combos</option>
-                      <option>Gifts</option>
-                    </select>
+                    <label className="text-xs font-bold text-gray-700">Product Name *</label>
+                    <input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 focus:border-[#D4A017] outline-none" placeholder="e.g. Strawberry Powder" />
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold text-gray-700">Status</label>
-                    <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none">
-                      <option>Active</option>
-                      <option>Inactive</option>
-                    </select>
-                  </div>
-                </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold text-gray-700">Price (₹)</label>
-                    <input type="number" required value={formData.price} onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none" />
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-gray-700">Category</label>
+                      <select value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none">
+                        <option>Fruit Powders</option>
+                        <option>Fruit Chunks</option>
+                        <option>Smoothie Premix</option>
+                        <option>Chocolates</option>
+                        <option>Combos</option>
+                        <option>Gifts</option>
+                      </select>
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-gray-700">Status</label>
+                      <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none">
+                        <option>Active</option>
+                        <option>Inactive</option>
+                      </select>
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold text-gray-700">Stock</label>
-                    <input type="number" required value={formData.stockCount} onChange={(e) => setFormData({ ...formData, stockCount: Number(e.target.value) })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none" />
-                  </div>
-                </div>
 
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-gray-700">Product Image</label>
-                  <div className="flex items-center justify-center bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl p-4">
-                    <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept="image/*" />
-                    {formData.image ? (
-                      <div className="relative w-20 h-20 rounded-lg overflow-hidden">
-                        <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
-                        <button type="button" onClick={() => setFormData({ ...formData, image: "" })} className="absolute top-1 right-1 bg-white/80 p-0.5 rounded-full">
-                          <X className="w-3 h-3 text-red-500" />
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-gray-700">Price (₹) *</label>
+                      <input type="number" required value={formData.price} onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none" />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-gray-700">Stock Count *</label>
+                      <input type="number" required value={formData.stockCount} onChange={(e) => setFormData({ ...formData, stockCount: Number(e.target.value) })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none" />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-700">Product Image</label>
+                    <div className="flex items-center justify-center bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl p-4">
+                      <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept="image/*" />
+                      {formData.image ? (
+                        <div className="relative w-20 h-20 rounded-lg overflow-hidden">
+                          <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                          <button type="button" onClick={() => setFormData({ ...formData, image: "" })} className="absolute top-1 right-1 bg-white/80 p-0.5 rounded-full">
+                            <X className="w-3 h-3 text-red-500" />
+                          </button>
+                        </div>
+                      ) : (
+                        <button type="button" onClick={() => fileInputRef.current?.click()} className="flex flex-col items-center gap-1.5 text-gray-400 hover:text-gray-700">
+                          <Upload className="w-5 h-5" />
+                          <span className="text-xs font-bold">Upload Image</span>
+                          <span className="text-[10px]">PNG, JPG, JPEG up to 5MB</span>
                         </button>
-                      </div>
-                    ) : (
-                      <button type="button" onClick={() => fileInputRef.current?.click()} className="flex flex-col items-center gap-1.5 text-gray-400 hover:text-gray-700">
-                        <Upload className="w-5 h-5" />
-                        <span className="text-xs font-bold">Upload Image</span>
-                        <span className="text-[10px]">PNG, JPG, JPEG up to 5MB</span>
-                      </button>
-                    )}
+                      )}
+                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
 
-              <div className="p-4 border-t border-gray-100 flex gap-2 bg-white">
-                <button type="button" onClick={() => setIsDrawerOpen(false)} className="flex-1 py-2.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-bold hover:bg-gray-200 transition-all">
-                  Cancel
-                </button>
-                <button type="submit" onClick={handleSubmit} disabled={submitting || isUploading} className="flex-1 py-2.5 bg-[#111827] text-white rounded-lg text-sm font-bold hover:bg-[#1f2937] transition-all disabled:opacity-50 flex items-center justify-center gap-2">
-                  {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save Product"}
-                </button>
+                {/* Footer */}
+                <div className="px-6 py-4 border-t border-gray-100 flex gap-3 bg-white rounded-b-2xl flex-shrink-0">
+                  <button type="button" onClick={handleCloseModal} className="flex-1 py-2.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-bold hover:bg-gray-200 transition-all">
+                    Cancel
+                  </button>
+                  <button type="submit" form="product-form" disabled={submitting || isUploading} className="flex-1 py-2.5 bg-[#111827] text-white rounded-lg text-sm font-bold hover:bg-[#1f2937] transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+                    {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : (editingProduct ? "Update Product" : "Save Product")}
+                  </button>
+                </div>
               </div>
             </motion.div>
           </>
