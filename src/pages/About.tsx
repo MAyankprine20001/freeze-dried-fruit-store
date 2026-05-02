@@ -117,19 +117,36 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 bg-black text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
+            <span className="inline-block px-4 py-1.5 bg-black text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-8">
               Our Mission
             </span>
-            <h2 className="font-serif text-4xl font-bold text-white mb-8 leading-tight">
-              Honest Food for a Healthier Everyday
-            </h2>
-            <div className="space-y-6 text-white/70 text-lg leading-relaxed text-left max-w-3xl mx-auto">
-              <p>
-                Our mission is simple to make real food easy to trust again. In a world full of shortcuts, we want to bring back honesty to what people consume daily. No hidden ingredients, no unnecessary additives just clean, thoughtfully made products that actually do what they promise.
-              </p>
-              <p>
-                We aim to make fruits more accessible beyond their seasons, reduce unnecessary waste, and create products that fit naturally into modern lifestyles without compromising health. Because for us, it's not just about selling products  it's about helping people build better, simpler food habits every day.
-              </p>
+            
+            <div className="space-y-12">
+              <div>
+                <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
+                  More Than Just a Food Brand
+                </h2>
+                <div className="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto space-y-1">
+                  <p>We’re not here to sell “healthy products.”</p>
+                  <p>We’re here to make better eating effortless.</p>
+                  <p>Because when real food becomes convenient,</p>
+                  <p>better choices become natural.</p>
+                </div>
+              </div>
+
+              <div>
+                <div className="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto">
+                  <p>
+                    To make real, clean food accessible anytime - without compromising taste, nutrition, or trust.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-6">
+                <p className="text-[#D4AF37] text-xl font-serif font-medium italic">
+                  “Trusted by people who care about what they eat - and what they avoid.”
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
