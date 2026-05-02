@@ -21,6 +21,7 @@ import Footer from "../components/Footer";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import { productApi } from "../api/product.api";
+import { getProductPrimaryImage } from "../utils/productImage";
 
 // ─── Image with fallback ──────────────────────────────────────────────────────
 function SafeImg({ src, alt, emoji, className = "" }: { src: string; alt: string; emoji?: string; className?: string }) {
@@ -143,7 +144,7 @@ function ProductCard({ product, index }: { product: any; index: number }) {
         </button>
 
         <SafeImg
-          src={product.image}
+          src={getProductPrimaryImage(product)}
           alt={product.name}
           emoji={product.emoji}
           className="group-hover:scale-108 transition-transform duration-700"
@@ -175,8 +176,8 @@ function ProductCard({ product, index }: { product: any; index: number }) {
 
         {/* Trust Badges — dynamic from backend */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-0.5">
-          {(product.trustBadges?.length > 0 ? product.trustBadges : DEFAULT_CARD_BADGES).map((badge: string) => (
-            <div key={badge} className="flex items-center gap-1.5">
+          {(product.trustBadges?.length > 0 ? product.trustBadges : DEFAULT_CARD_BADGES).map((badge: string, bi: number) => (
+            <div key={`${badge}-${bi}`} className="flex items-center gap-1.5">
               <span className="text-[#D4AF37]">{BADGE_ICONS[badge] ?? <Award className="w-3 h-3" />}</span>
               <span className="text-[10px] text-white/45 font-medium">{badge}</span>
             </div>

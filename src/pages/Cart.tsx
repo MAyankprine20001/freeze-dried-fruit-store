@@ -9,6 +9,7 @@ import { useCart } from "../context/CartContext";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { productApi } from "../api/product.api";
+import { getProductPrimaryImage } from "../utils/productImage";
 import { toast } from "react-toastify";
 
 const FREE_SHIPPING_THRESHOLD = 499;
@@ -189,7 +190,7 @@ export default function Cart() {
                     {upsellProducts.map((p) => (
                       <div key={p._id} className="bg-[#1e1e1e] rounded-xl p-3 border border-white/[0.06] flex flex-col gap-2">
                         <div className="aspect-square rounded-lg overflow-hidden bg-[#2a2a2a]">
-                          <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                          <img src={getProductPrimaryImage(p)} alt={p.name} className="w-full h-full object-cover" />
                         </div>
                         <p className="text-[10px] font-bold text-white line-clamp-2 leading-tight">{p.name}</p>
                         {p.subtitle && <p className="text-[10px] text-white/40 line-clamp-1">{p.subtitle}</p>}

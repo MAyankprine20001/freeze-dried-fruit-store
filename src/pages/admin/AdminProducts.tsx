@@ -21,6 +21,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { productApi } from "../../api/product.api";
 import { toast } from "react-toastify";
+import { getProductPrimaryImage } from "../../utils/productImage";
 
 const NumberBadge = ({ n, color }: { n: number; color: string }) => (
   <span className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 ${color}`}>{n}</span>
@@ -37,6 +38,24 @@ const TRUST_BADGE_OPTIONS = [
   "100% Natural",
 ];
 
+/** Predefined badges in catalog order, then comma-separated customs (deduped, skipping predefined duplicates). */
+function mergeTrustBadgesForSubmit(predefinedSelected: string[], customCsv: string): string[] {
+  const predefinedOrdered = TRUST_BADGE_OPTIONS.filter((b) => predefinedSelected.includes(b));
+  const customParsed = customCsv
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const seen = new Set(predefinedOrdered);
+  const customOrdered: string[] = [];
+  for (const c of customParsed) {
+    if (!seen.has(c)) {
+      seen.add(c);
+      customOrdered.push(c);
+    }
+  }
+  return [...predefinedOrdered, ...customOrdered];
+}
+
 const emptyForm = {
   name: "",
   sku: "",
@@ -49,11 +68,11 @@ const emptyForm = {
   stockCount: 0,
   stock: "In Stock" as string,
   status: "Active" as string,
-  image: "",
+  images: [] as string[],
   featured: false,
   urgencyLine: "",
   highlights: "",
-  trustBadges: [] as string[],
+  trustBadgesPredefined: [] as string[],
   relatedProducts: [] as string[],
 };
 
@@ -66,6 +85,10 @@ export default function AdminProducts() {
   const [submitting, setSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const relatedPickerRef = useRef<HTMLDivElement>(null);
+  const [customTrustBadgeInput, setCustomTrustBadgeInput] = useState("");
+  const [relatedSearch, setRelatedSearch] = useState("");
+  const [relatedDropdownOpen, setRelatedDropdownOpen] = useState(false);
 
   const [formData, setFormData] = useState({ ...emptyForm });
 
@@ -85,8 +108,17 @@ export default function AdminProducts() {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    const close = (ev: MouseEvent) => {
+      if (!relatedPickerRef.current?.contains(ev.target as Node)) setRelatedDropdownOpen(false);
+    };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
+  }, []);
+
   const handleOpenModal = (product: any = null) => {
     if (product) {
+      const badges = Array.isArray(product.trustBadges) ? product.trustBadges : [];
       setEditingProduct(product);
       setFormData({
         name: product.name || "",
@@ -100,39 +132,68 @@ export default function AdminProducts() {
         stockCount: product.stockCount || 0,
         stock: product.stock || "In Stock",
         status: product.status || "Active",
-        image: product.image || "",
+        images: Array.isArray(product.images) && product.images.length > 0
+          ? product.images
+          : product.image
+            ? [product.image]
+            : [],
         featured: product.featured || false,
         urgencyLine: product.urgencyLine || "",
         highlights: Array.isArray(product.highlights) ? product.highlights.join(", ") : "",
-        trustBadges: Array.isArray(product.trustBadges) ? product.trustBadges : [],
+        trustBadgesPredefined: TRUST_BADGE_OPTIONS.filter((b) => badges.includes(b)),
         relatedProducts: Array.isArray(product.relatedProducts)
           ? product.relatedProducts.map((r: any) => (typeof r === "object" ? r._id : r))
           : [],
       });
+      setCustomTrustBadgeInput(
+        badges.filter((b: string) => !TRUST_BADGE_OPTIONS.includes(b)).join(", ")
+      );
     } else {
       setEditingProduct(null);
       setFormData({ ...emptyForm });
+      setCustomTrustBadgeInput("");
     }
+    setRelatedSearch("");
+    setRelatedDropdownOpen(false);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingProduct(null);
+    setCustomTrustBadgeInput("");
+    setRelatedSearch("");
+    setRelatedDropdownOpen(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     try {
+      const primaryImage = formData.images[0] || "";
+      const trustBadges = mergeTrustBadgesForSubmit(formData.trustBadgesPredefined, customTrustBadgeInput);
+      const highlights = formData.highlights
+        ? formData.highlights.split(",").map((h) => h.trim()).filter(Boolean)
+        : [];
       const payload = {
-        ...formData,
-        highlights: formData.highlights
-          ? formData.highlights.split(",").map((h) => h.trim()).filter(Boolean)
-          : [],
+        name: formData.name,
+        sku: formData.sku,
+        category: formData.category,
+        subtitle: formData.subtitle,
+        description: formData.description,
+        price: formData.price,
         originalPrice: formData.originalPrice || undefined,
-        trustBadges: formData.trustBadges,
+        weight: formData.weight,
+        stockCount: formData.stockCount,
+        stock: formData.stock,
+        status: formData.status,
+        featured: formData.featured,
+        urgencyLine: formData.urgencyLine,
+        highlights,
+        trustBadges,
         relatedProducts: formData.relatedProducts,
+        images: formData.images,
+        image: primaryImage,
       };
       if (editingProduct) {
         await productApi.update(editingProduct._id, payload);
@@ -151,17 +212,18 @@ export default function AdminProducts() {
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files?.length) return;
     try {
       setIsUploading(true);
-      const res = await productApi.uploadImage(file);
-      setFormData((prev) => ({ ...prev, image: res.data.url }));
-      toast.success("Image uploaded successfully");
+      const res = await productApi.uploadImages(Array.from(files));
+      setFormData((prev) => ({ ...prev, images: [...prev.images, ...res.data.urls] }));
+      toast.success(res.data.urls.length > 1 ? `${res.data.urls.length} images uploaded` : "Image uploaded successfully");
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to upload image");
     } finally {
       setIsUploading(false);
+      e.target.value = "";
     }
   };
 
@@ -182,6 +244,18 @@ export default function AdminProducts() {
       p.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (p.sku && p.sku.toLowerCase().includes(searchTerm.toLowerCase()))
   );
+
+  const filteredRelatedCandidates = products.filter((p) => {
+    if (editingProduct && p._id === editingProduct._id) return false;
+    if (formData.relatedProducts.includes(p._id)) return false;
+    const q = relatedSearch.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      p.name.toLowerCase().includes(q) ||
+      String(p.category || "").toLowerCase().includes(q) ||
+      String(p.sku || "").toLowerCase().includes(q)
+    );
+  });
 
   const inStock = products.filter((p) => p.stock === "In Stock").length;
   const lowStock = products.filter((p) => p.stock === "Low Stock").length;
@@ -264,7 +338,7 @@ export default function AdminProducts() {
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-50 flex-shrink-0 border border-gray-100">
-                            <img src={product.image} alt="" className="w-full h-full object-cover" />
+                            <img src={getProductPrimaryImage(product)} alt="" className="w-full h-full object-cover" />
                           </div>
                           <div>
                             <p className="text-sm font-bold text-gray-800">{product.name}</p>
@@ -515,7 +589,7 @@ export default function AdminProducts() {
                     <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">🏷 Trust Badges</p>
                     <div className="grid grid-cols-2 gap-2">
                       {TRUST_BADGE_OPTIONS.map((badge) => {
-                        const checked = formData.trustBadges.includes(badge);
+                        const checked = formData.trustBadgesPredefined.includes(badge);
                         return (
                           <label key={badge} className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer text-xs font-semibold transition-all ${checked ? "bg-[#D4A017]/10 border-[#D4A017] text-[#D4A017]" : "border-gray-200 text-gray-600 hover:border-gray-300"}`}>
                             <input
@@ -525,9 +599,9 @@ export default function AdminProducts() {
                               onChange={() =>
                                 setFormData({
                                   ...formData,
-                                  trustBadges: checked
-                                    ? formData.trustBadges.filter((b) => b !== badge)
-                                    : [...formData.trustBadges, badge],
+                                  trustBadgesPredefined: checked
+                                    ? formData.trustBadgesPredefined.filter((b) => b !== badge)
+                                    : [...formData.trustBadgesPredefined, badge],
                                 })
                               }
                             />
@@ -539,79 +613,182 @@ export default function AdminProducts() {
                         );
                       })}
                     </div>
+                    <div className="mt-3 space-y-1">
+                      <label className={labelCls}>Additional badges (comma-separated)</label>
+                      <input
+                        type="text"
+                        value={customTrustBadgeInput}
+                        onChange={(e) => setCustomTrustBadgeInput(e.target.value)}
+                        className={inputCls}
+                        placeholder="e.g. Organic, Made in India"
+                      />
+                      <p className="text-[10px] text-gray-400">
+                        Saved together with the options above; predefined badges are stored first in catalog order, then these labels (duplicates removed).
+                      </p>
+                    </div>
                   </div>
 
                   {/* Section: Related Products */}
                   <div>
-                    <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">🔗 Related Products ("You may also like")</p>
-                    <p className="text-[10px] text-gray-400 mb-3">Select products to show in the "You may also like" section on this product's detail page.</p>
-                    <div className="max-h-40 overflow-y-auto space-y-1.5 border border-gray-200 rounded-lg p-2">
-                      {products
-                        .filter((p) => !editingProduct || p._id !== editingProduct._id)
-                        .map((p) => {
-                          const selected = formData.relatedProducts.includes(p._id);
+                    <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">🔗 Related Products (&quot;You may also like&quot;)</p>
+                    <p className="text-[10px] text-gray-400 mb-3">
+                      Search and pick products for this detail page&apos;s &quot;You may also like&quot; section.
+                    </p>
+
+                    {formData.relatedProducts.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mb-2">
+                        {formData.relatedProducts.map((id) => {
+                          const p = products.find((x) => x._id === id);
+                          if (!p) return null;
                           return (
-                            <label key={p._id} className={`flex items-center gap-2.5 px-2 py-1.5 rounded-lg cursor-pointer text-xs transition-all ${selected ? "bg-[#D4A017]/10" : "hover:bg-gray-50"}`}>
-                              <input
-                                type="checkbox"
-                                className="hidden"
-                                checked={selected}
-                                onChange={() =>
+                            <span
+                              key={id}
+                              className="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-md bg-gray-100 text-gray-800 text-[11px] font-semibold border border-gray-200 max-w-full"
+                            >
+                              <span className="truncate max-w-[140px]">{p.name}</span>
+                              <button
+                                type="button"
+                                className="p-0.5 rounded hover:bg-gray-200 text-gray-500 shrink-0"
+                                onClick={() =>
                                   setFormData({
                                     ...formData,
-                                    relatedProducts: selected
-                                      ? formData.relatedProducts.filter((id) => id !== p._id)
-                                      : [...formData.relatedProducts, p._id],
+                                    relatedProducts: formData.relatedProducts.filter((x) => x !== id),
                                   })
                                 }
-                              />
-                              <span className={`w-3.5 h-3.5 rounded border-2 flex-shrink-0 flex items-center justify-center ${selected ? "bg-[#D4A017] border-[#D4A017]" : "border-gray-300"}`}>
-                                {selected && <span className="text-white text-[8px] font-black">✓</span>}
-                              </span>
-                              <div className="w-7 h-7 rounded overflow-hidden bg-gray-100 flex-shrink-0">
-                                <img src={p.image} alt="" className="w-full h-full object-cover" />
-                              </div>
-                              <span className={`font-semibold ${selected ? "text-[#D4A017]" : "text-gray-700"}`}>{p.name}</span>
-                              <span className="text-gray-400 ml-auto">{p.category}</span>
-                            </label>
+                                aria-label={`Remove ${p.name}`}
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                            </span>
                           );
                         })}
+                      </div>
+                    )}
+
+                    <div ref={relatedPickerRef} className="relative">
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                        <input
+                          type="text"
+                          className={`${inputCls} pl-9`}
+                          placeholder="Search products by name, category, or SKU…"
+                          value={relatedSearch}
+                          onChange={(e) => {
+                            setRelatedSearch(e.target.value);
+                            setRelatedDropdownOpen(true);
+                          }}
+                          onFocus={() => setRelatedDropdownOpen(true)}
+                          autoComplete="off"
+                        />
+                      </div>
+                      {relatedDropdownOpen && (
+                        <ul className="absolute z-[60] mt-1 w-full max-h-44 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg py-1">
+                          {filteredRelatedCandidates.length === 0 ? (
+                            <li className="px-3 py-2 text-[11px] text-gray-400 text-center">No matching products</li>
+                          ) : (
+                            filteredRelatedCandidates.slice(0, 80).map((p) => (
+                              <li key={p._id}>
+                                <button
+                                  type="button"
+                                  className="w-full flex items-center gap-2.5 px-3 py-2 text-left text-xs hover:bg-gray-50 transition-colors"
+                                  onClick={() => {
+                                    setFormData({
+                                      ...formData,
+                                      relatedProducts: [...formData.relatedProducts, p._id],
+                                    });
+                                    setRelatedSearch("");
+                                    setRelatedDropdownOpen(false);
+                                  }}
+                                >
+                                  <div className="w-8 h-8 rounded overflow-hidden bg-gray-100 flex-shrink-0 border border-gray-100">
+                                    <img src={getProductPrimaryImage(p)} alt="" className="w-full h-full object-cover" />
+                                  </div>
+                                  <span className="font-semibold text-gray-800 flex-1 min-w-0 truncate">{p.name}</span>
+                                  <span className="text-gray-400 shrink-0 text-[10px]">{p.category}</span>
+                                </button>
+                              </li>
+                            ))
+                          )}
+                        </ul>
+                      )}
                     </div>
-                    {formData.relatedProducts.length > 0 && (
-                      <p className="text-[10px] text-[#D4A017] mt-1 font-semibold">{formData.relatedProducts.length} product(s) selected</p>
+
+                    {formData.relatedProducts.length === 0 && (
+                      <p className="text-[10px] text-gray-400 mt-2">No related products selected.</p>
                     )}
                   </div>
 
-                  {/* Section: Image */}
+                  {/* Section: Images */}
                   <div>
-                    <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">🖼 Product Image</p>
-                    <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept="image/*" />
+                    <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">🖼 Product Images</p>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileUpload}
+                      className="hidden"
+                      accept="image/*"
+                      multiple
+                    />
                     {isUploading ? (
                       <div className="flex items-center justify-center gap-2 text-gray-400 py-6 border-2 border-dashed border-gray-200 rounded-xl">
                         <Loader2 className="w-5 h-5 animate-spin" />
                         <span className="text-xs font-bold">Uploading...</span>
                       </div>
-                    ) : formData.image ? (
-                      <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-xl border border-gray-200">
-                        <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                          <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <button type="button" onClick={() => fileInputRef.current?.click()} className="flex items-center gap-1.5 px-3 py-1.5 bg-[#111827] text-white rounded-lg text-xs font-bold hover:bg-[#1f2937] transition-colors">
-                            <Upload className="w-3.5 h-3.5" /> Change Image
-                          </button>
-                          <button type="button" onClick={() => setFormData({ ...formData, image: "" })} className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-500 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors border border-red-200">
-                            <X className="w-3.5 h-3.5" /> Remove
-                          </button>
-                        </div>
-                      </div>
                     ) : (
-                      <div className="flex items-center justify-center bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl p-6">
-                        <button type="button" onClick={() => fileInputRef.current?.click()} className="flex flex-col items-center gap-1.5 text-gray-400 hover:text-gray-700">
-                          <Upload className="w-5 h-5" />
-                          <span className="text-xs font-bold">Upload Image</span>
-                          <span className="text-[10px]">PNG, JPG, JPEG up to 5MB</span>
-                        </button>
+                      <div className="space-y-3">
+                        {formData.images.length > 0 && (
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                            {formData.images.map((url, index) => (
+                              <div
+                                key={`${url}-${index}`}
+                                className="relative group rounded-xl overflow-hidden border border-gray-200 bg-gray-50 aspect-square"
+                              >
+                                {index === 0 && (
+                                  <span className="absolute top-1.5 left-1.5 z-10 px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-[#111827] text-white">
+                                    Cover
+                                  </span>
+                                )}
+                                <img src={url} alt="" className="w-full h-full object-cover" />
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      setFormData({
+                                        ...formData,
+                                        images: formData.images.filter((_, i) => i !== index),
+                                      })
+                                    }
+                                    className="px-2 py-1 rounded-lg bg-red-500 text-white text-[10px] font-bold"
+                                  >
+                                    Remove
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        <div className="flex flex-col sm:flex-row gap-2">
+                          <button
+                            type="button"
+                            onClick={() => fileInputRef.current?.click()}
+                            className="flex items-center justify-center gap-1.5 px-3 py-2 bg-[#111827] text-white rounded-lg text-xs font-bold hover:bg-[#1f2937] transition-colors"
+                          >
+                            <Upload className="w-3.5 h-3.5" />
+                            {formData.images.length ? "Add more images" : "Upload images"}
+                          </button>
+                          {formData.images.length > 0 && (
+                            <button
+                              type="button"
+                              onClick={() => setFormData({ ...formData, images: [] })}
+                              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-red-50 text-red-500 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors border border-red-200"
+                            >
+                              <X className="w-3.5 h-3.5" /> Remove all
+                            </button>
+                          )}
+                        </div>
+                        <p className="text-[10px] text-gray-400">
+                          First image is used as the cover on listings. You can select multiple files at once.
+                        </p>
                       </div>
                     )}
                   </div>

@@ -1,5 +1,14 @@
 ﻿import axiosInstance from "./axiosInstance";
 
+async function postUploadImage(file: File) {
+  const formData = new FormData();
+  formData.append("image", file);
+  const response = await axiosInstance.post("/upload/image", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return response.data;
+}
+
 export const productApi = {
  getAll: async () => {
   const response = await axiosInstance.get("/products");
@@ -25,14 +34,14 @@ export const productApi = {
   const response = await axiosInstance.post("/products/seed", data);
   return response.data;
  },
- uploadImage: async (file: File) => {
-  const formData = new FormData();
-  formData.append("image", file);
-  const response = await axiosInstance.post("/upload/image", formData, {
-   headers: {
-    "Content-Type": "multipart/form-data",
-   },
-  });
-  return response.data;
+ uploadImage: (file: File) => postUploadImage(file),
+ /** Sequential uploads preserving order; mirrors uploadImage response shape per file. */
+ uploadImages: async (files: File[]) => {
+  const urls: string[] = [];
+  for (const file of files) {
+   const res = await postUploadImage(file);
+   urls.push(res.data.url);
+  }
+  return { data: { urls } };
  },
 };

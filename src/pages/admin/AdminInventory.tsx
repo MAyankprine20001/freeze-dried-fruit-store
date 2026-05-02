@@ -7,6 +7,7 @@ import {
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from "recharts";
 import { productApi } from "../../api/product.api";
 import { toast } from "react-toastify";
+import { getProductPrimaryImage } from "../../utils/productImage";
 
 const categoryData = [
   { name: "Chocolates", value: 345200, color: "#4c1d95", pct: "39%" },
@@ -186,13 +187,15 @@ export default function AdminInventory() {
                   </td>
                 </tr>
               ) : (
-                filteredProducts.map((product) => (
+                filteredProducts.map((product) => {
+                  const thumb = getProductPrimaryImage(product);
+                  return (
                   <tr key={product._id} className="hover:bg-gray-50 transition-colors group">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2.5">
                         <div className="w-9 h-9 rounded-lg overflow-hidden bg-gray-50 flex-shrink-0 border border-gray-100">
-                          {product.image ? (
-                            <img src={product.image} alt="" className="w-full h-full object-cover" />
+                          {thumb ? (
+                            <img src={thumb} alt="" className="w-full h-full object-cover" />
                           ) : (
                             <Package className="w-full h-full p-2 text-gray-300" />
                           )}
@@ -232,7 +235,8 @@ export default function AdminInventory() {
                       </div>
                     </td>
                   </tr>
-                ))
+                );
+                })
               )}
             </tbody>
           </table>

@@ -5,6 +5,7 @@ import { ShoppingBag, CheckCircle2, Heart, Package } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { productApi } from '../api/product.api';
 import { toast } from 'react-toastify';
+import { getProductPrimaryImage } from '../utils/productImage';
 
 // ── Safe image with emoji fallback ──────────────────────────────────────────
 function SafeImg({
@@ -96,7 +97,7 @@ function ProductCard({ product, index }: { product: any; index: number }) {
           <Heart className="w-3.5 h-3.5" />
         </button>
         <SafeImg
-          src={product.image}
+          src={getProductPrimaryImage(product)}
           alt={product.name}
           emoji={product.emoji}
           gradientFrom={product.gradientFrom || '#1a1a1a'}

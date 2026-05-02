@@ -23,6 +23,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 import { Link } from "react-router-dom";
+import { getProductPrimaryImage } from "../../utils/productImage";
 
 const chartData = [
   { name: "Apr 28", sales: 40000 },
@@ -199,7 +200,7 @@ export default function Dashboard() {
               <div key={i} className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-pink-50 overflow-hidden flex-shrink-0 border border-gray-100">
-                    <img src={product.image} alt="" className="w-full h-full object-cover" />
+                    <img src={getProductPrimaryImage(product)} alt="" className="w-full h-full object-cover" />
                   </div>
                   <div className="min-w-0">
                     <p className="text-xs font-bold text-gray-800 truncate max-w-[130px]">{product.name}</p>

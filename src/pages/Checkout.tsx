@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { productApi } from "../api/product.api";
+import { getProductPrimaryImage } from "../utils/productImage";
 import { createRazorpayOrder, verifyRazorpayPayment, loadRazorpayScript } from "../api/payment";
 
 const FREE_SHIPPING_THRESHOLD = 499;
@@ -371,7 +372,7 @@ export default function Checkout() {
                 {upsellProducts.map((p) => (
                   <div key={p._id} className="flex items-center gap-3 bg-[#1e1e1e] rounded-xl p-3 border border-white/[0.06]">
                     <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#2a2a2a] flex-shrink-0">
-                      <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                      <img src={getProductPrimaryImage(p)} alt={p.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-xs font-bold text-white line-clamp-1">{p.name}</p>

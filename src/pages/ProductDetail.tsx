@@ -12,6 +12,7 @@ import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
 import { productApi } from "../api/product.api";
 import { reviewApi } from "../api/review.api";
+import { getProductPrimaryImage } from "../utils/productImage";
 
 // Map badge label → icon
 const BADGE_ICON_MAP: Record<string, React.ReactNode> = {
@@ -123,8 +124,13 @@ export default function ProductDetail() {
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
-  // Build thumbnail list — use the single image repeated for now
-  const thumbs: string[] = [product.image, product.image, product.image, product.image].filter(Boolean).slice(0, 4);
+  const galleryImages: string[] =
+    Array.isArray(product.images) && product.images.length > 0
+      ? product.images.filter(Boolean)
+      : product.image
+        ? [product.image]
+        : [];
+  const mainImg = galleryImages[activeImg] ?? getProductPrimaryImage(product);
 
   const trustPoints = [
     { icon: "🍃", label: "No Added Sugar" },
@@ -154,19 +160,21 @@ export default function ProductDetail() {
             {/* ── LEFT: Image Gallery ── */}
             <div className="flex gap-3 sticky top-28">
               {/* Vertical Thumbnails */}
-              <div className="flex flex-col gap-2.5 w-16 flex-shrink-0">
-                {thumbs.map((thumb, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveImg(i)}
-                    className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${
-                      activeImg === i ? "border-[#D4AF37]" : "border-white/10 hover:border-white/30"
-                    }`}
-                  >
-                    <img src={thumb} alt="" className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
+              {galleryImages.length > 1 && (
+                <div className="flex flex-col gap-2.5 w-16 flex-shrink-0">
+                  {galleryImages.map((thumb, i) => (
+                    <button
+                      key={`${thumb}-${i}`}
+                      onClick={() => setActiveImg(i)}
+                      className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${
+                        activeImg === i ? "border-[#D4AF37]" : "border-white/10 hover:border-white/30"
+                      }`}
+                    >
+                      <img src={thumb} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
               {/* Main Image */}
               <motion.div
                 key={activeImg}
@@ -181,7 +189,7 @@ export default function ProductDetail() {
                   <div className="absolute top-4 right-4 z-10 px-3 py-1.5 bg-[#D4AF37] text-black text-[10px] font-black rounded-sm tracking-widest uppercase">★ BESTSELLER</div>
                 )}
                 <img
-                  src={product.image}
+                  src={mainImg}
                   alt={product.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
@@ -211,8 +219,8 @@ export default function ProductDetail() {
 
               {/* Trust Points — from backend trustBadges */}
               <div className="flex flex-wrap gap-2.5 mb-5">
-                {(product.trustBadges?.length > 0 ? product.trustBadges : DEFAULT_BADGES).map((badge: string) => (
-                  <div key={badge} className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04]">
+                {(product.trustBadges?.length > 0 ? product.trustBadges : DEFAULT_BADGES).map((badge: string, badgeIdx: number) => (
+                  <div key={`${badge}-${badgeIdx}`} className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04]">
                     <span className="text-[#D4AF37]">{BADGE_ICON_MAP[badge] ?? <Award className="w-3.5 h-3.5" />}</span>
                     <span className="text-xs font-bold text-white/75">{badge}</span>
                   </div>
@@ -334,7 +342,7 @@ export default function ProductDetail() {
                 {relatedProducts.map((p: any) => (
                   <div key={p._id} className="group bg-[#161616] rounded-2xl overflow-hidden border border-white/[0.07] hover:border-[#D4AF37]/35 transition-all cursor-pointer" onClick={() => navigate(`/product/${p._id}`)}>
                     <div className="aspect-[4/3] bg-[#222] overflow-hidden">
-                      <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                      <img src={getProductPrimaryImage(p)} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     </div>
                     <div className="p-4">
                       <p className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider mb-1">{p.category}</p>
@@ -456,7 +464,7 @@ export default function ProductDetail() {
                 {similarProducts.map((p) => (
                   <div key={p._id} className="group bg-[#161616] rounded-2xl overflow-hidden border border-white/[0.07] hover:border-[#D4AF37]/35 transition-all cursor-pointer" onClick={() => navigate(`/product/${p._id}`)}>
                     <div className="aspect-[4/3] bg-[#222] overflow-hidden">
-                      <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                      <img src={getProductPrimaryImage(p)} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     </div>
                     <div className="p-4">
                       <p className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider mb-1">{p.category}</p>

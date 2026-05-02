@@ -1,4 +1,5 @@
 ﻿import React, { createContext, useContext, useState, useEffect } from "react";
+import { getProductPrimaryImage } from "../utils/productImage";
 
 export interface CartItem {
  id: string;
@@ -45,6 +46,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
  const addToCart = (product: any) => {
   const productId = product.id || product._id;
+  const image = getProductPrimaryImage(product);
   setItems((prevItems) => {
    const existingItem = prevItems.find((item) => item.id === productId);
    if (existingItem) {
@@ -52,7 +54,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
      item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
     );
    }
-   return [...prevItems, { ...product, id: productId, quantity: 1 }];
+   return [...prevItems, { ...product, id: productId, quantity: 1, image }];
   });
  };
 
