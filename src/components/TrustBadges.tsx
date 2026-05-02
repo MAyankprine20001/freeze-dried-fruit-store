@@ -1,19 +1,21 @@
-﻿import React from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Leaf, Ban, Sparkles } from 'lucide-react';
+import { ShieldCheck, Leaf, Ban, Sparkles, Lock, Truck } from 'lucide-react';
 
 const badges = [
  { icon: ShieldCheck, label: 'No Preservatives', desc: 'Pure fruit, nothing added' },
  { icon: Ban, label: 'No Added Sugar', desc: 'Naturally sweet' },
  { icon: Sparkles, label: 'Clean Indulgence', desc: 'Guilt-free snacking' },
  { icon: Leaf, label: '100% Natural', desc: 'From farm to freeze-dryer' },
+ { icon: Lock, label: 'Secure Checkout', desc: '100% secure payments' },
+ { icon: Truck, label: 'Pan India Delivery', desc: 'Fast & reliable' },
 ];
 
 export default function TrustBadges() {
  return (
   <section className="py-12 bg-black border-y border-white/10">
    <div className="max-w-7xl mx-auto px-6 lg:px-8">
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
      {badges.map((badge, i) => (
       <motion.div
        key={badge.label}

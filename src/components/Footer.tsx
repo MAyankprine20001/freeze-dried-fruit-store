@@ -123,6 +123,8 @@ export default function Footer() {
         "100% Natural",
         "Clean Indulgence",
         "No Added Sugar",
+        "Secure Checkout",
+        "Pan India Delivery",
        ].map((badge) => (
         <div
          key={badge}

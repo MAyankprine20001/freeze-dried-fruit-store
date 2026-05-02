@@ -48,6 +48,11 @@ const AdminDashboard = lazy(() => import("./src/pages/admin/Dashboard"));
 const AdminProducts = lazy(() => import("./src/pages/admin/AdminProducts"));
 const AdminOrders = lazy(() => import("./src/pages/admin/AdminOrders"));
 const AdminCustomers = lazy(() => import("./src/pages/admin/AdminCustomers"));
+const AdminTransactions = lazy(() => import("./src/pages/admin/AdminTransactions"));
+const AdminAnalytics = lazy(() => import("./src/pages/admin/AdminAnalytics"));
+const AdminInventory = lazy(() => import("./src/pages/admin/AdminInventory"));
+const AdminCoupons = lazy(() => import("./src/pages/admin/AdminCoupons"));
+const AdminSettings = lazy(() => import("./src/pages/admin/AdminSettings"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-black">
@@ -119,9 +124,12 @@ const App: React.FC = () => {
                   <Route path="dashboard" element={<AdminDashboard />} />
                   <Route path="products" element={<AdminProducts />} />
                   <Route path="orders" element={<AdminOrders />} />
-                  <Route path="transactions" element={<div>Transactions List (Coming Soon)</div>} />
+                  <Route path="transactions" element={<AdminTransactions />} />
                   <Route path="customers" element={<AdminCustomers />} />
-                  <Route path="settings" element={<div>Admin Settings (Coming Soon)</div>} />
+                  <Route path="analytics" element={<AdminAnalytics />} />
+                  <Route path="inventory" element={<AdminInventory />} />
+                  <Route path="coupons" element={<AdminCoupons />} />
+                  <Route path="settings" element={<AdminSettings />} />
                 </Route>
 
 
