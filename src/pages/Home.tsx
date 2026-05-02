@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Star, Zap, Heart, Package, ChevronLeft, ChevronRight, Leaf, FlaskConical, Timer, Dumbbell, Briefcase, Laptop, Baby, Sparkles, Snowflake, CheckCircle2, Droplets } from 'lucide-react';
@@ -172,6 +172,7 @@ const heroSlides = [
 const categories = [
   {
     title: 'Smoothie Premix',
+    subheading: 'Ready in 10 sec',
     description: 'The ultimate nutrition shortcut. 100% raw freeze-dried fruit powders designed for instant, high-nutrient smoothies.',
     image: '/beverage-2.png',
     path: '/smoothie-premix',
@@ -179,6 +180,7 @@ const categories = [
   },
   {
     title: 'Chocolates',
+    subheading: 'Real fruit + premium indulgence',
     description: 'Premium single-origin chocolate elevated by the bold, tangy crunch of freeze-dried fruit. A sensory experience unlike any other.',
     image: '/premium-chocolate.png',
     path: '/chocolate',
@@ -186,6 +188,7 @@ const categories = [
   },
   {
     title: 'Combos',
+    subheading: 'Best value packs for everyday snacking.',
     description: 'Curated bundles of our finest products. Perfect for gifting, sampling, or stocking up your healthy pantry.',
     image: '/SliderImage/Photo_one.jpg',
     path: '/combos',
@@ -193,6 +196,7 @@ const categories = [
   },
   {
     title: 'Fruit Chunks & Powders',
+    subheading: 'Snack smarter',
     description: 'The pure essence of fruit. Choose between crunchy whole chunks for snacking or ultra-fine powders for blending and baking.',
     image: '/milk-chocolate-chunks.png',
     path: '/fruit-powder-chunks',

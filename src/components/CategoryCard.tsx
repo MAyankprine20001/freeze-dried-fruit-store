@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
@@ -10,9 +10,10 @@ interface CategoryCardProps {
  path: string;
  tag: string;
  index: number;
+ subheading?: string;
 }
 
-export default function CategoryCard({ title, description, image, path, tag, index }: CategoryCardProps) {
+export default function CategoryCard({ title, description, image, path, tag, index, subheading }: CategoryCardProps) {
  return (
   <motion.div
    initial={{ opacity: 0, y: 24 }}
@@ -42,6 +43,11 @@ export default function CategoryCard({ title, description, image, path, tag, ind
      <h3 className="font-serif text-xl font-bold text-white mb-3 group-hover:text-[#D4AF37] transition-colors duration-200">
       {title}
      </h3>
+     {subheading && (
+       <p className="text-white/70 text-sm mb-4 leading-relaxed font-medium">
+        {subheading}
+       </p>
+     )}
      <div className="mt-auto flex items-center gap-2 text-[#D4AF37] text-sm font-semibold">
       <span>Explore</span>
       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
@@ -51,3 +57,4 @@ export default function CategoryCard({ title, description, image, path, tag, ind
   </motion.div>
  );
 }
+
