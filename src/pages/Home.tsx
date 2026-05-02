@@ -1,7 +1,7 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Star, Zap, Heart, Package, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Star, Zap, Heart, Package, ChevronLeft, ChevronRight, Leaf, FlaskConical, Timer, Dumbbell, Briefcase, Laptop, Baby, Sparkles, Snowflake, CheckCircle2 } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import TrustBadges from '../components/TrustBadges';
@@ -10,25 +10,162 @@ import { AnimatePresence } from 'framer-motion';
 
 const heroSlides = [
  {
-  image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=1600&h=900&fit=crop",
-  title: "Peak Wellness, Powered By Nature",
-  subtitle: "100% Raw Nutrition",
-  description: "Our unique freeze drying process preserves 97% of vitamins and minerals without heat. No added sugars, no preservativesjust the pure essence of peak-harvested fruit.",
-  color: "#f4a435"
+  image: "/SliderImage/Slideone.png",
+  subtitle: (
+   <div className="flex flex-col items-start gap-1">
+    <span className="font-serif italic text-5xl text-[#9A7B3E] mb-1 drop-shadow-sm">SipReal</span>
+    <span className="text-black text-sm font-black tracking-widest uppercase">FREEZE-DRIED SMOOTHIE MIX</span>
+   </div>
+  ),
+  title: (
+   <>
+    <span className="text-black block mb-2 drop-shadow-sm">Real Fruit.</span>
+    <span className="text-[#9A7B3E] drop-shadow-sm">Instant Energy.</span>
+   </>
+  ),
+  description: (
+   <span className="text-black text-xl font-bold block mb-2">
+    Shake it. Sip it. Feel the <span className="text-[#9A7B3E] font-black">difference</span> in seconds.
+   </span>
+  ),
+  badges: (
+   <div className="grid grid-cols-4 gap-3 mt-6 mb-4 border border-white/60 p-3 rounded-xl bg-white/60 backdrop-blur-md max-w-[380px] shadow-lg">
+    <div className="flex flex-col items-center text-center gap-1.5">
+     <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><Leaf className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
+     <span className="text-[10px] text-black font-extrabold leading-tight">No Added<br/>Sugar</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-1.5">
+     <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center relative bg-white/40">
+      <FlaskConical className="w-4 h-4 text-black" strokeWidth={2.5} />
+      <div className="absolute inset-0 border-t-2 border-black rotate-45 transform origin-center w-[120%] -left-[10%]"></div>
+     </div>
+     <span className="text-[10px] text-black font-extrabold leading-tight">No<br/>Preservatives</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-1.5">
+     <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><CheckCircle2 className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
+     <span className="text-[10px] text-black font-extrabold leading-tight">100%<br/>Real Fruit</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-1.5">
+     <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><Timer className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
+     <span className="text-[10px] text-black font-extrabold leading-tight">Ready in<br/>10 Seconds</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-1.5">
+     <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><Dumbbell className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
+     <span className="text-[10px] text-black font-extrabold leading-tight">Best for<br/>Gym</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-1.5">
+     <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><Briefcase className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
+     <span className="text-[10px] text-black font-extrabold leading-tight">Perfect for<br/>Travel</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-1.5">
+     <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><Laptop className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
+     <span className="text-[10px] text-black font-extrabold leading-tight">Great for<br/>Office</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-1.5">
+     <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><Baby className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
+     <span className="text-[10px] text-black font-extrabold leading-tight">Loved by<br/>Kids</span>
+    </div>
+   </div>
+  ),
+  overlay: "bg-gradient-to-r from-white/80 via-white/40 to-transparent",
+  buttonText: "TRY SIPREAL NOW",
+  buttonClass: "bg-[#C49E5D] text-white hover:bg-[#A58242]"
  },
  {
-  image: "/hero-lifestyle.png",
-  title: "Clean Energy for Your Lifestyle",
-  subtitle: "Natural Superfoods",
-  description: "Fuel your body with nutrient-dense snacks and elixirs designed for the modern wellness-seeker. Pure, plant-based power in every bite.",
-  color: "#e85d26"
+  image: "/SliderImage/Slidetwo.png",
+  subtitle: (
+   <div className="flex flex-col items-start gap-1">
+    <span className="font-serif italic text-4xl text-[#D4AF37] mb-1">FreezeFusion</span>
+    <span className="text-gray-300 text-sm font-bold tracking-widest uppercase">GOURMET CHOCOLATES</span>
+   </div>
+  ),
+  title: (
+   <>
+    <span className="text-white block mb-2">Real Fruit.</span>
+    <span className="text-white">Real Chocolate. <span className="text-[#D4AF37]">Real Bliss.</span></span>
+   </>
+  ),
+  description: (
+   <span className="text-gray-300 text-xl font-medium block max-w-[500px]">
+    Freeze-dried fruits meet premium chocolate for a crunch that melts your heart.
+   </span>
+  ),
+  badges: (
+   <div className="flex gap-6 mt-8 mb-4 max-w-2xl">
+    <div className="flex flex-col items-center text-center gap-2">
+     <div className="w-12 h-12 rounded-full border border-[#D4AF37] flex items-center justify-center"><CheckCircle2 className="w-6 h-6 text-[#D4AF37]" /></div>
+     <span className="text-xs text-gray-300 font-semibold leading-tight">Real Fruit<br/>Inside</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-2">
+     <div className="w-12 h-12 rounded-full border border-[#D4AF37] flex items-center justify-center"><Sparkles className="w-6 h-6 text-[#D4AF37]" /></div>
+     <span className="text-xs text-gray-300 font-semibold leading-tight">Irresistible<br/>Crunch</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-2">
+     <div className="w-12 h-12 rounded-full border border-[#D4AF37] flex items-center justify-center"><Package className="w-6 h-6 text-[#D4AF37]" /></div>
+     <span className="text-xs text-gray-300 font-semibold leading-tight">Premium<br/>Chocolate</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-2">
+     <div className="w-12 h-12 rounded-full border border-[#D4AF37] flex items-center justify-center relative">
+      <Leaf className="w-6 h-6 text-[#D4AF37]" />
+      <div className="absolute inset-0 border-t-2 border-[#D4AF37] rotate-45 transform origin-center w-[120%] -left-[10%]"></div>
+     </div>
+     <span className="text-xs text-gray-300 font-semibold leading-tight">No Artificial<br/>Flavours</span>
+    </div>
+   </div>
+  ),
+  overlay: "bg-gradient-to-r from-black/80 via-black/40 to-transparent",
+  buttonText: "EXPLORE FLAVOURS",
+  buttonClass: "bg-[#D4AF37] text-black hover:bg-[#BF953F]"
  },
  {
-  image: "/beverage-1.png",
-  title: "Detoxify and Rejuvenate",
-  subtitle: "Wellness Elixirs",
-  description: "Recharge with our new line of cold-pressed, fruit-infused elixirs. Crafted with antioxidants and raw nutrients to keep you vibrant and hydrated.",
-  color: "#27ae60"
+  image: "/SliderImage/Slidethree.png",
+  subtitle: (
+   <div className="flex items-center gap-2 mb-2">
+    <span className="text-[#41622D] text-sm font-bold tracking-widest uppercase">FRUIT CHUNKS</span>
+    <Leaf className="w-5 h-5 text-[#41622D]" />
+   </div>
+  ),
+  title: (
+   <>
+    <span className="text-[#213b14] block mb-2">Real Fruit.</span>
+    <span className="text-[#A83232]">Real Crunch.</span>
+   </>
+  ),
+  description: (
+   <span className="text-gray-800 text-xl font-medium block max-w-[500px]">
+    Freeze-dried to lock in nutrition, flavour & crunch.<br/>
+    Pure fruit, <span className="text-[#41622D] font-bold">nothing else.</span>
+   </span>
+  ),
+  badges: (
+   <div className="flex gap-6 mt-8 mb-4 max-w-2xl">
+    <div className="flex flex-col items-center text-center gap-2">
+     <div className="w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center"><Snowflake className="w-6 h-6 text-gray-800" /></div>
+     <span className="text-xs text-gray-800 font-semibold leading-tight">Freeze-Dried<br/>Goodness</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-2">
+     <div className="w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center"><CheckCircle2 className="w-6 h-6 text-gray-800" /></div>
+     <span className="text-xs text-gray-800 font-semibold leading-tight">100%<br/>Real Fruit</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-2">
+     <div className="w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center relative">
+      <Leaf className="w-6 h-6 text-gray-800" />
+      <div className="absolute inset-0 border-t-2 border-gray-700 rotate-45 transform origin-center w-[120%] -left-[10%]"></div>
+     </div>
+     <span className="text-xs text-gray-800 font-semibold leading-tight">No Added Sugar<br/>or Preservatives</span>
+    </div>
+    <div className="flex flex-col items-center text-center gap-2">
+     <div className="w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center relative">
+      <FlaskConical className="w-6 h-6 text-gray-800" />
+      <div className="absolute inset-0 border-t-2 border-gray-700 rotate-45 transform origin-center w-[120%] -left-[10%]"></div>
+     </div>
+     <span className="text-xs text-gray-800 font-semibold leading-tight">Clean. Natural.<br/>Wholesome.</span>
+    </div>
+   </div>
+  ),
+  overlay: "bg-gradient-to-r from-white/60 via-white/20 to-transparent",
+  buttonText: "EXPLORE FLAVOURS",
+  buttonClass: "bg-[#657841] text-white hover:bg-[#41622D]"
  }
 ];
 
@@ -133,10 +270,10 @@ export default function Home() {
      >
       <img
        src={heroSlides[heroIndex].image}
-       alt={heroSlides[heroIndex].title}
+       alt="Hero Slide"
        className="w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+      <div className={`absolute inset-0 ${heroSlides[heroIndex].overlay}`} />
      </motion.div>
     </AnimatePresence>
 
@@ -150,28 +287,19 @@ export default function Home() {
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.5 }}
        >
-        <span className="inline-block px-4 py-1.5 bg-[#D4AF37]/90 text-black text-xs font-semibold uppercase tracking-wider rounded-full mb-6">
+        <div className="mb-4">
          {heroSlides[heroIndex].subtitle}
-        </span>
+        </div>
 
-        <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6">
-         {heroSlides[heroIndex].title.split(', ').map((part, i) => (
-          <React.Fragment key={i}>
-           {i > 0 && ", "}
-           {part.includes("Locked In") || part.includes("Flavor") ? (
-            <span className="text-[#D4AF37]">{part}</span>
-           ) : (
-            part
-           )}
-          </React.Fragment>
-         ))}
+        <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4">
+         {heroSlides[heroIndex].title}
         </h1>
 
-        <p className="text-white/85 text-lg leading-relaxed mb-10">
-         {heroSlides[heroIndex].description.split(/(heat)/i).map((part, i) =>
-          part.toLowerCase() === 'heat' ? <span key={i} className="text-[#D4AF37] font-bold">{part}</span> : part
-         )}
+        <p className="mb-2">
+         {heroSlides[heroIndex].description}
         </p>
+
+        {heroSlides[heroIndex].badges}
        </motion.div>
       </AnimatePresence>
 
@@ -183,9 +311,9 @@ export default function Home() {
       >
        <Link
         to="/products"
-        className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D4AF37] text-black font-semibold rounded-full hover:bg-[#BF953F] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent shadow-lg"
+        className={`inline-flex items-center justify-center gap-2 px-8 py-4 ${heroSlides[heroIndex].buttonClass} font-semibold rounded-full transition-all duration-200 focus:outline-none shadow-lg`}
        >
-        Shop Products
+        {heroSlides[heroIndex].buttonText}
         <ArrowRight className="w-4 h-4" />
        </Link>
       </motion.div>
