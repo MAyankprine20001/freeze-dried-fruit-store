@@ -20,7 +20,7 @@ import {
   Copy,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { productApi } from "../../api/product.api";
 import { toast } from "react-toastify";
 import { getProductPrimaryImage } from "../../utils/productImage";
@@ -81,7 +81,7 @@ const emptyForm = {
 };
 
 export default function AdminProducts() {
-  const navigate = useNavigate();
+  const [previewProduct, setPreviewProduct] = useState<any | null>(null);
   const [fullCatalog, setFullCatalog] = useState<any[]>([]);
   const [catalogItems, setCatalogItems] = useState<any[]>([]);
   const [pageCursors, setPageCursors] = useState<(string | null)[]>([null]);
@@ -445,9 +445,12 @@ export default function AdminProducts() {
                         <div className="flex items-center justify-end gap-1 text-gray-400">
                           <button
                             type="button"
-                            onClick={() => navigate(`/product/${product._id}`)}
+                            onClick={() => {
+                              setMenuOpenId(null);
+                              setPreviewProduct(product);
+                            }}
                             className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all"
-                            title="View on store"
+                            title="Preview"
                           >
                             <Eye className="w-3.5 h-3.5" />
                           </button>
@@ -543,6 +546,148 @@ export default function AdminProducts() {
           </div>
         ))}
       </div>
+
+      {/* ── Preview modal (eye icon) ── */}
+      <AnimatePresence>
+        {previewProduct && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setPreviewProduct(null)}
+              className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 12 }}
+              transition={{ type: "spring", damping: 28, stiffness: 260 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+            >
+              <div
+                className="w-full max-w-lg bg-white rounded-2xl shadow-2xl pointer-events-auto max-h-[90vh] flex flex-col overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50 flex-shrink-0">
+                  <div>
+                    <h2 className="text-base font-bold text-gray-800">Product preview</h2>
+                    <p className="text-xs text-gray-500 mt-0.5">Read-only snapshot</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewProduct(null)}
+                    className="p-1.5 hover:bg-white rounded-lg transition-colors"
+                  >
+                    <X className="w-4 h-4 text-gray-500" />
+                  </button>
+                </div>
+                <div className="overflow-y-auto flex-1 p-5 space-y-4">
+                  <div className="aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 border border-gray-100">
+                    <img
+                      src={getProductPrimaryImage(previewProduct)}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  {(Array.isArray(previewProduct.images) ? previewProduct.images : []).filter(Boolean).length > 1 && (
+                    <div className="flex gap-2 overflow-x-auto pb-1">
+                      {(previewProduct.images as string[]).filter(Boolean).slice(0, 8).map((url: string, i: number) => (
+                        <img key={i} src={url} alt="" className="w-14 h-14 rounded-lg object-cover border border-gray-100 shrink-0" />
+                      ))}
+                    </div>
+                  )}
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900">{previewProduct.name}</h3>
+                    {previewProduct.subtitle && (
+                      <p className="text-sm text-gray-600 mt-1">{previewProduct.subtitle}</p>
+                    )}
+                    <p className="text-xs font-semibold text-gray-400 mt-2">
+                      SKU: {previewProduct.sku || previewProduct._id?.slice(-6)?.toUpperCase()}
+                      {" · "}
+                      {previewProduct.category}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-3 text-sm">
+                    <span className="font-bold text-gray-900">₹{previewProduct.price}</span>
+                    {previewProduct.originalPrice > 0 && (
+                      <span className="text-gray-400 line-through">₹{previewProduct.originalPrice}</span>
+                    )}
+                    {previewProduct.weight && (
+                      <span className="text-gray-600">{previewProduct.weight}</span>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <span
+                      className={`text-xs font-bold px-2 py-1 rounded ${
+                        previewProduct.stock === "In Stock"
+                          ? "bg-green-50 text-green-700"
+                          : previewProduct.stock === "Low Stock"
+                            ? "bg-orange-50 text-orange-700"
+                            : "bg-red-50 text-red-700"
+                      }`}
+                    >
+                      {previewProduct.stockCount ?? 0} · {previewProduct.stock || "—"}
+                    </span>
+                    <span
+                      className={`text-xs font-bold px-2 py-1 rounded ${
+                        previewProduct.status === "Active" ? "bg-green-50 text-green-700" : "bg-gray-100 text-gray-600"
+                      }`}
+                    >
+                      {previewProduct.status || "Active"}
+                    </span>
+                    {previewProduct.featured && (
+                      <span className="text-xs font-bold px-2 py-1 rounded bg-[#D4A017]/15 text-[#9a7010]">Featured</span>
+                    )}
+                  </div>
+                  {previewProduct.description && (
+                    <div>
+                      <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">Description</p>
+                      <p className="text-sm text-gray-700 whitespace-pre-wrap">{previewProduct.description}</p>
+                    </div>
+                  )}
+                  {Array.isArray(previewProduct.highlights) && previewProduct.highlights.length > 0 && (
+                    <div>
+                      <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">Highlights</p>
+                      <ul className="text-sm text-gray-700 list-disc list-inside space-y-0.5">
+                        {previewProduct.highlights.map((h: string, i: number) => (
+                          <li key={i}>{h}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {Array.isArray(previewProduct.trustBadges) && previewProduct.trustBadges.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5">
+                      {previewProduct.trustBadges.map((b: string, i: number) => (
+                        <span key={i} className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">
+                          {b}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div className="px-5 py-4 border-t border-gray-100 flex gap-2 bg-gray-50 flex-shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setPreviewProduct(null)}
+                    className="flex-1 py-2.5 rounded-xl text-sm font-bold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                  >
+                    Close
+                  </button>
+                  <Link
+                    to={`/product/${previewProduct._id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-2.5 rounded-xl text-sm font-bold bg-[#111827] text-white text-center hover:bg-[#1f2937]"
+                  >
+                    Open on store
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* ── Centered Modal ── */}
       <AnimatePresence>

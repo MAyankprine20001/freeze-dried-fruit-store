@@ -67,7 +67,7 @@ const heroSlides = [
         </div>
       </div>
     ),
-    overlay: "bg-gradient-to-r from-white/80 via-white/40 to-transparent",
+    overlay: "",
     buttonText: "TRY SIPREAL NOW",
     buttonClass: "bg-[#C49E5D] text-white hover:bg-[#A58242]"
   },
@@ -277,7 +277,9 @@ export default function Home() {
               alt="Hero Slide"
               className="w-full h-full object-cover"
             />
-            <div className={`absolute inset-0 ${heroSlides[heroIndex].overlay}`} />
+            {heroSlides[heroIndex].overlay ? (
+              <div className={`absolute inset-0 ${heroSlides[heroIndex].overlay}`} />
+            ) : null}
           </motion.div>
         </AnimatePresence>
 
