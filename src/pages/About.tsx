@@ -9,19 +9,19 @@ import TrustBadges from '../components/TrustBadges';
 const differentiators = [
   {
     title: 'Real Ingredients, No Shortcuts',
-    desc: 'We don’t believe in masking flavours with sugar or chemicals. What you see is what you get real fruits, real ingredients, nothing unnecessary.',
+    desc: 'What you see is what you get. No hidden additives, no artificial flavours.',
   },
   {
     title: 'Freeze-Drying with Purpose',
-    desc: 'We use freeze drying not just as a process, but as a solution to preserve taste, nutrition, and shelf life without adding preservatives.',
+    desc: 'Not just a process — a way to preserve real nutrition and real taste.',
   },
   {
-    title: 'Made for Everyday Life',
-    desc: 'Our products are designed to be convenient, quick, and easy to use so choosing healthy doesn’t feel like extra effort.',
+    title: 'Built for Real Life',
+    desc: 'Whether you’re at work, travelling, or at home - healthy should be easy.',
   },
   {
     title: 'Balanced, Not Extreme',
-    desc: 'We’re not here to sell “perfect” diets. We’re here to offer better alternatives products that are cleaner, smarter, and realistically sustainable.',
+    desc: 'We don’t believe in perfection. Just better, cleaner everyday choices.',
   },
 ];
 
@@ -52,7 +52,7 @@ export default function About() {
             >
               <div className="rounded-2xl overflow-hidden shadow-xl">
                 <img
-                  src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=700&h=600&fit=crop"
+                  src="/AboutLeft_Side.png"
                   alt="Fresh fruit being harvested on a farm"
                   width={700}
                   height={600}
@@ -77,26 +77,31 @@ export default function About() {
               <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
                 Our Story
               </h2>
-              <div className="space-y-4 text-white/70 text-base leading-relaxed">
-                <p>
-                  At The Dry Factory, we believe that what you consume every day should not just taste good, but should genuinely be good for your body.
-                  When we looked closely at the way food is consumed today, one thing became very clear most “convenient” options are loaded with excess sugar, artificial flavours, preservatives, and hidden additives. What is marketed as healthy often isn’t truly so. And that didn’t sit right with us.
-                </p>
-                <p>
-                  At the same time, we noticed a deeper problem with something as simple and natural as fruits. They don’t last long. They spoil quickly, are highly seasonal, and are difficult to store or transport without losing their quality. In a country like India, where we are blessed with such a wide variety of fruits and vegetables, it’s surprising that only a small portion actually reaches meaningful use, while a large percentage goes to waste. This leads to significant losses not just for farmers, but for all of us.
-                </p>
-                <p>
-                  We wanted to change this. Our journey started with a simple thought what if we could preserve fruits in their most natural form, without adding anything artificial, and make them available anytime, anywhere?
-                </p>
-                <p>
-                  That’s where freeze-drying came in. A process that removes moisture without heat, helping retain the real taste, nutrition, and texture of fruits. But for us, it wasn’t just about using a technology it was about using it meaningfully. We explored ways to turn real ingredients into products that are clean, convenient, and enjoyable in everyday life.
-                </p>
-                <p>
-                  From our smoothies to our chocolate creations, everything we make is built around real ingredients, honest processes, and a clear intention to offer better choices without compromising on taste.
-                </p>
-                <p>
-                  Our goal is simple to make real fruit accessible in every season, without the worry of it going bad, and to take the authentic taste of our country beyond boundaries. We are not just building a brand. We are building a habit a habit of choosing better, every day.
-                </p>
+              <div className="space-y-6 text-white/70 text-base leading-relaxed">
+                <div>
+                  <h3 className="font-serif text-xl font-semibold text-[#D4AF37] mb-2">Why We Started</h3>
+                  <p>
+                    We noticed something strange. The more “convenient” food became, the less real it felt. Hidden sugars, artificial flavors, and long ingredient lists became the norm.
+                  </p>
+                  <p className="mt-2">
+                    At the same time, perfectly good fruits were going to waste - just because they didn’t last long enough. That didn’t sit right with us.
+                  </p>
+                  <p className="mt-2">
+                    So we asked a simple question: What if real food could stay real… longer? That question led to The Dry Factory.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-serif text-xl font-semibold text-[#D4AF37] mb-2">The Problem We’re Solving</h3>
+                  <p>
+                    Fresh fruits are seasonal, fragile, and hard to store. Most processed alternatives? Loaded with things your body doesn’t need. We chose a different path.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-serif text-xl font-semibold text-[#D4AF37] mb-2">Our Solution</h3>
+                  <p>
+                    Using freeze-drying, we remove moisture without heat - preserving the taste, nutrition, and texture of real fruit. No shortcuts. No additives. No compromises. Just real food, made smarter.
+                  </p>
+                </div>
               </div>
             </motion.div>
           </div>
