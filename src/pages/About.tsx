@@ -34,8 +34,8 @@ export default function About() {
         tag="Our Story"
         title="Real Food,"
         highlight="Thoughtfully Preserved"
-        description="At The Dry Factory, we believe that what you consume every day should not just taste good, but should genuinely be good for your body. Healthy should not be complicated."
-        image="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1600&h=600&fit=crop"
+        description="We’re on a mission to bring you food that’s as real as it should be - clean, honest, and made to fit your everyday life."
+        image="/About_main.png"
         tint="from-black/85"
       />
 
