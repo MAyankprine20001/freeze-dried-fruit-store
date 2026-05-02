@@ -51,9 +51,8 @@ const heroSlides = [
           <span className={`${heroBadgeLabel} text-black`}>No added sugar</span>
         </div>
         <div className="flex flex-col items-center gap-1.5 text-center">
-          <div className={`${heroBadgeIconWrap} relative border-black bg-white/40`}>
+          <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
             <FlaskConical className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
-            <div className="absolute inset-0 w-[120%] -left-[10%] origin-center rotate-45 border-t-2 border-black" />
           </div>
           <span className={`${heroBadgeLabel} text-black`}>No preservatives</span>
         </div>
@@ -140,9 +139,8 @@ const heroSlides = [
           <span className={`${heroBadgeLabel} text-neutral-200`}>Premium chocolate</span>
         </div>
         <div className="flex flex-col items-center gap-2 text-center">
-          <div className={`${heroBadgeIconWrap} relative border border-[#D4AF37] bg-black/20`}>
+          <div className={`${heroBadgeIconWrap} border border-[#D4AF37] bg-black/20`}>
             <Leaf className="h-5 w-5 text-[#D4AF37] sm:h-6 sm:w-6" />
-            <div className="absolute inset-0 w-[120%] -left-[10%] origin-center rotate-45 border-t-2 border-[#D4AF37]" />
           </div>
           <span className={`${heroBadgeLabel} text-neutral-200`}>No artificial flavours</span>
         </div>
@@ -190,16 +188,14 @@ const heroSlides = [
           <span className={`${heroBadgeLabel} text-neutral-900`}>100% real fruit</span>
         </div>
         <div className="flex flex-col items-center gap-2 text-center">
-          <div className={`${heroBadgeIconWrap} relative border-neutral-700 bg-white/40`}>
+          <div className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}>
             <Leaf className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
-            <div className="absolute inset-0 w-[120%] -left-[10%] origin-center rotate-45 border-t-2 border-neutral-700" />
           </div>
           <span className={`${heroBadgeLabel} text-neutral-900`}>No added sugar or preservatives</span>
         </div>
         <div className="flex flex-col items-center gap-2 text-center">
-          <div className={`${heroBadgeIconWrap} relative border-neutral-700 bg-white/40`}>
+          <div className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}>
             <FlaskConical className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
-            <div className="absolute inset-0 w-[120%] -left-[10%] origin-center rotate-45 border-t-2 border-neutral-700" />
           </div>
           <span className={`${heroBadgeLabel} text-neutral-900`}>Clean, natural, wholesome</span>
         </div>
