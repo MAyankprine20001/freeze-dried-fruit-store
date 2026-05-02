@@ -450,38 +450,6 @@ export default function ProductDetail() {
               </div>
             </div>
           </div>
-
-          {/* You May Also Like */}
-          {similarProducts.length > 0 && (
-            <div className="border-t border-white/10 pt-12">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold">You may also like</h2>
-                <Link to="/products" className="text-sm font-bold text-white/50 hover:text-white flex items-center gap-1 transition-colors">
-                  View all <span className="text-lg leading-none">→</span>
-                </Link>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {similarProducts.map((p) => (
-                  <div key={p._id} className="group bg-[#161616] rounded-2xl overflow-hidden border border-white/[0.07] hover:border-[#D4AF37]/35 transition-all cursor-pointer" onClick={() => navigate(`/product/${p._id}`)}>
-                    <div className="aspect-[4/3] bg-[#222] overflow-hidden">
-                      <img src={getProductPrimaryImage(p)} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                    </div>
-                    <div className="p-4">
-                      <p className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider mb-1">{p.category}</p>
-                      <h3 className="font-bold text-white text-sm leading-snug group-hover:text-[#D4AF37] transition-colors">{p.name}</h3>
-                      {p.subtitle && <p className="text-white/45 text-xs mt-1 line-clamp-2">{p.subtitle}</p>}
-                      <div className="mt-3 pt-3 border-t border-white/[0.06]">
-                        <span className="font-bold text-white text-base block mb-2">₹{p.price}</span>
-                        <button onClick={(e) => { e.stopPropagation(); addToCart(p); toast.success(`${p.name} added!`); }} className="w-full py-2 bg-transparent border border-[#D4AF37]/50 text-[#D4AF37] rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-[#D4AF37] hover:text-black transition-all">
-                          <ShoppingBag className="w-3.5 h-3.5" /> Add to Cart
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </main>
       <Footer />
