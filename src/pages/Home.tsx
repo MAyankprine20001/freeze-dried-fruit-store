@@ -420,10 +420,12 @@ export default function Home() {
           <div className="flex flex-col items-center relative lg:col-span-4 pt-12 lg:-ml-8">
             {/* Logo */}
             <div className="w-36 h-36 rounded-full border border-[#D4AF37]/80 flex flex-col items-center justify-center mb-0 relative z-10 bg-black">
-              <Leaf className="w-6 h-6 text-[#D4AF37] mb-1" strokeWidth={1.5} />
-              <h3 className="font-serif text-[42px] font-bold text-[#D4AF37] leading-none tracking-wider mb-2">TDF</h3>
-              <svg viewBox="0 0 100 100" className="w-[120px] h-[120px] absolute inset-0 m-auto" style={{ transform: 'scale(1.05)' }}>
-                <path id="curve" d="M 10 50 A 40 40 0 0 0 90 50" fill="transparent" />
+              <div className="flex flex-col items-center relative z-10 -mt-5">
+                <Leaf className="w-6 h-6 text-[#D4AF37] mb-1" strokeWidth={1.5} />
+                <h3 className="font-serif text-[42px] font-bold text-[#D4AF37] leading-none tracking-wider">TDF</h3>
+              </div>
+              <svg viewBox="0 0 100 100" className="w-[136px] h-[136px] absolute inset-0 m-auto pointer-events-none">
+                <path id="curve" d="M 12 55 A 38 38 0 0 0 88 55" fill="transparent" />
                 <text width="100" className="text-[8.5px] fill-[#D4AF37] tracking-[0.25em] font-bold uppercase">
                   <textPath href="#curve" startOffset="50%" textAnchor="middle">The Dry Factory</textPath>
                 </text>
@@ -442,9 +444,9 @@ export default function Home() {
                 <div className="absolute left-1/2 -translate-x-1/2 top-0 w-11 h-11 rounded-full border border-[#D4AF37]/80 bg-black flex items-center justify-center z-10">
                   <Snowflake className="w-5 h-5 text-[#D4AF37]" strokeWidth={1.5} />
                 </div>
-                <div className="absolute left-[calc(50%+36px)] top-0 w-[200px]">
-                  <h4 className="text-[#D4AF37] font-bold tracking-[0.15em] uppercase text-xs mb-1">Freeze</h4>
-                  <p className="text-white/70 text-[11px] leading-[1.6]">
+                <div className="absolute left-[calc(50%+36px)] top-0 w-[250px]">
+                  <h4 className="text-[#D4AF37] font-bold tracking-[0.15em] uppercase text-base mb-1.5">Freeze</h4>
+                  <p className="text-white/70 text-sm leading-[1.6]">
                     Fruits are frozen at sub-zero temperatures to lock in nutrition and freshness.
                   </p>
                 </div>
@@ -456,9 +458,9 @@ export default function Home() {
                 <div className="absolute left-1/2 -translate-x-1/2 top-0 w-11 h-11 rounded-full border border-[#D4AF37]/80 bg-black flex items-center justify-center z-10">
                   <Droplets className="w-5 h-5 text-[#D4AF37]" strokeWidth={1.5} />
                 </div>
-                <div className="absolute left-[calc(50%+36px)] top-0 w-[200px]">
-                  <h4 className="text-[#D4AF37] font-bold tracking-[0.15em] uppercase text-xs mb-1">Dry</h4>
-                  <p className="text-white/70 text-[11px] leading-[1.6]">
+                <div className="absolute left-[calc(50%+36px)] top-0 w-[250px]">
+                  <h4 className="text-[#D4AF37] font-bold tracking-[0.15em] uppercase text-base mb-1.5">Dry</h4>
+                  <p className="text-white/70 text-sm leading-[1.6]">
                     Moisture is removed through sublimation, leaving the fruit intact, not cooked.
                   </p>
                 </div>
@@ -470,9 +472,9 @@ export default function Home() {
                 <div className="absolute left-1/2 -translate-x-1/2 top-0 w-11 h-11 rounded-full border border-[#D4AF37]/80 bg-black flex items-center justify-center z-10">
                   <Leaf className="w-5 h-5 text-[#D4AF37]" strokeWidth={1.5} />
                 </div>
-                <div className="absolute left-[calc(50%+36px)] top-0 w-[200px]">
-                  <h4 className="text-[#D4AF37] font-bold tracking-[0.15em] uppercase text-xs mb-1">Preserve</h4>
-                  <p className="text-white/70 text-[11px] leading-[1.6]">
+                <div className="absolute left-[calc(50%+36px)] top-0 w-[250px]">
+                  <h4 className="text-[#D4AF37] font-bold tracking-[0.15em] uppercase text-base mb-1.5">Preserve</h4>
+                  <p className="text-white/70 text-sm leading-[1.6]">
                     The result is real fruit, with real nutrition, real flavor, and a long shelf life.
                   </p>
                 </div>
