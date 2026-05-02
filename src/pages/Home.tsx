@@ -537,11 +537,9 @@ export default function Home() {
       <section className="py-24 bg-black relative overflow-hidden border-t border-white/10">
         <div className="absolute inset-0 opacity-10">
           <img
-            src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=1600&h=400&fit=crop"
+            src="/ready_difference.png"
             alt=""
             aria-hidden="true"
-            width={1600}
-            height={400}
             className="w-full h-full object-cover"
           />
         </div>
