@@ -8,62 +8,90 @@ import TrustBadges from '../components/TrustBadges';
 import CategoryCard from '../components/CategoryCard';
 import { AnimatePresence } from 'framer-motion';
 
+/** Shared hero typography & spacing — keeps slides visually aligned across breakpoints */
+const heroBrand =
+  'font-serif italic text-3xl sm:text-[2.35rem] lg:text-5xl leading-none tracking-tight drop-shadow-sm';
+const heroTagline =
+  'font-sans text-[11px] sm:text-xs font-bold uppercase tracking-[0.22em] leading-snug';
+const heroHeadline =
+  'font-serif font-bold text-[clamp(2rem,5vw+1rem,4.25rem)] leading-[1.08] tracking-tight [&_span]:block [&>span+span]:mt-1 sm:[&>span+span]:mt-2';
+const heroDescription = 'font-sans text-base sm:text-lg font-medium leading-relaxed max-w-xl lg:max-w-[32rem]';
+const heroBadgeGrid = 'grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mt-6 sm:mt-8 mb-4 w-full max-w-full sm:max-w-2xl';
+const heroBadgeIconWrap =
+  'flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 sm:h-12 sm:w-12';
+const heroBadgeLabel =
+  'font-sans text-[10px] sm:text-xs font-semibold leading-tight text-center [text-wrap:balance]';
+
 const heroSlides = [
   {
     image: "/SliderImage/Slideone.png",
     subtitle: (
-      <div className="flex flex-col items-start gap-1">
-        <span className="font-serif italic text-5xl text-[#9A7B3E] mb-1 drop-shadow-sm">SipReal</span>
-        <span className="text-black text-sm font-black tracking-widest uppercase">FREEZE-DRIED SMOOTHIE MIX</span>
+      <div className="flex flex-col items-start gap-1 sm:gap-1.5">
+        <span className={`${heroBrand} text-[#9A7B3E]`}>SipReal</span>
+        <span className={`${heroTagline} text-black`}>Freeze-dried smoothie mix</span>
       </div>
     ),
     title: (
       <>
-        <span className="text-black block mb-2 drop-shadow-sm">Real Fruit.</span>
+        <span className="text-black drop-shadow-sm">Real Fruit.</span>
         <span className="text-[#9A7B3E] drop-shadow-sm">Instant Energy.</span>
       </>
     ),
     description: (
-      <span className="text-black text-xl font-bold block mb-2">
-        Shake it. Sip it. Feel the <span className="text-[#9A7B3E] font-black">difference</span> in seconds.
+      <span className={`${heroDescription} text-black`}>
+        Shake it. Sip it. Feel the <span className="font-semibold text-[#9A7B3E]">difference</span> in seconds.
       </span>
     ),
     badges: (
-      <div className="grid grid-cols-4 gap-3 mt-6 mb-4 border border-white/60 p-3 rounded-xl bg-white/60 backdrop-blur-md max-w-[380px] shadow-lg">
-        <div className="flex flex-col items-center text-center gap-1.5">
-          <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><Leaf className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
-          <span className="text-[10px] text-black font-extrabold leading-tight">No Added<br />Sugar</span>
-        </div>
-        <div className="flex flex-col items-center text-center gap-1.5">
-          <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center relative bg-white/40">
-            <FlaskConical className="w-4 h-4 text-black" strokeWidth={2.5} />
-            <div className="absolute inset-0 border-t-2 border-black rotate-45 transform origin-center w-[120%] -left-[10%]"></div>
+      <div className={`${heroBadgeGrid} rounded-xl border border-white/60 bg-white/60 p-3 shadow-lg backdrop-blur-md sm:max-w-[26rem]`}>
+        <div className="flex flex-col items-center gap-1.5 text-center">
+          <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
+            <Leaf className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
           </div>
-          <span className="text-[10px] text-black font-extrabold leading-tight">No<br />Preservatives</span>
+          <span className={`${heroBadgeLabel} text-black`}>No added sugar</span>
         </div>
-        <div className="flex flex-col items-center text-center gap-1.5">
-          <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><CheckCircle2 className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
-          <span className="text-[10px] text-black font-extrabold leading-tight">100%<br />Real Fruit</span>
+        <div className="flex flex-col items-center gap-1.5 text-center">
+          <div className={`${heroBadgeIconWrap} relative border-black bg-white/40`}>
+            <FlaskConical className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+            <div className="absolute inset-0 w-[120%] -left-[10%] origin-center rotate-45 border-t-2 border-black" />
+          </div>
+          <span className={`${heroBadgeLabel} text-black`}>No preservatives</span>
         </div>
-        <div className="flex flex-col items-center text-center gap-1.5">
-          <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><Timer className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
-          <span className="text-[10px] text-black font-extrabold leading-tight">Ready in<br />10 Seconds</span>
+        <div className="flex flex-col items-center gap-1.5 text-center">
+          <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
+            <CheckCircle2 className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+          </div>
+          <span className={`${heroBadgeLabel} text-black`}>100% real fruit</span>
         </div>
-        <div className="flex flex-col items-center text-center gap-1.5">
-          <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><Dumbbell className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
-          <span className="text-[10px] text-black font-extrabold leading-tight">Best for<br />Gym</span>
+        <div className="flex flex-col items-center gap-1.5 text-center">
+          <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
+            <Timer className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+          </div>
+          <span className={`${heroBadgeLabel} text-black`}>Ready in 10 seconds</span>
         </div>
-        <div className="flex flex-col items-center text-center gap-1.5">
-          <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><Briefcase className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
-          <span className="text-[10px] text-black font-extrabold leading-tight">Perfect for<br />Travel</span>
+        <div className="flex flex-col items-center gap-1.5 text-center">
+          <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
+            <Dumbbell className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+          </div>
+          <span className={`${heroBadgeLabel} text-black`}>Best for gym</span>
         </div>
-        <div className="flex flex-col items-center text-center gap-1.5">
-          <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><Laptop className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
-          <span className="text-[10px] text-black font-extrabold leading-tight">Great for<br />Office</span>
+        <div className="flex flex-col items-center gap-1.5 text-center">
+          <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
+            <Briefcase className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+          </div>
+          <span className={`${heroBadgeLabel} text-black`}>Perfect for travel</span>
         </div>
-        <div className="flex flex-col items-center text-center gap-1.5">
-          <div className="w-9 h-9 rounded-full border-2 border-black flex items-center justify-center bg-white/40"><Baby className="w-4 h-4 text-black" strokeWidth={2.5} /></div>
-          <span className="text-[10px] text-black font-extrabold leading-tight">Loved by<br />Kids</span>
+        <div className="flex flex-col items-center gap-1.5 text-center">
+          <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
+            <Laptop className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+          </div>
+          <span className={`${heroBadgeLabel} text-black`}>Great for office</span>
+        </div>
+        <div className="flex flex-col items-center gap-1.5 text-center">
+          <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
+            <Baby className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+          </div>
+          <span className={`${heroBadgeLabel} text-black`}>Loved by kids</span>
         </div>
       </div>
     ),
@@ -74,42 +102,49 @@ const heroSlides = [
   {
     image: "/SliderImage/Slidetwo.png",
     subtitle: (
-      <div className="flex flex-col items-start gap-1">
-        <span className="font-serif italic text-4xl text-[#D4AF37] mb-1">FreezeFusion</span>
-        <span className="text-gray-300 text-sm font-bold tracking-widest uppercase">GOURMET CHOCOLATES</span>
+      <div className="flex flex-col items-start gap-1 sm:gap-1.5">
+        <span className={`${heroBrand} text-[#D4AF37]`}>FreezeFusion</span>
+        <span className={`${heroTagline} text-neutral-200`}>Gourmet chocolates</span>
       </div>
     ),
     title: (
       <>
-        <span className="text-white block mb-2">Real Fruit.</span>
-        <span className="text-white">Real Chocolate. <span className="text-[#D4AF37]">Real Bliss.</span></span>
+        <span className="text-white">Real Fruit.</span>
+        <span className="text-white">Real Chocolate.</span>
+        <span className="text-[#D4AF37]">Real Bliss.</span>
       </>
     ),
     description: (
-      <span className="text-gray-300 text-xl font-medium block max-w-[500px]">
+      <span className={`${heroDescription} text-neutral-200`}>
         Freeze-dried fruits meet premium chocolate for a crunch that melts your heart.
       </span>
     ),
     badges: (
-      <div className="flex gap-6 mt-8 mb-4 max-w-2xl">
-        <div className="flex flex-col items-center text-center gap-2">
-          <div className="w-12 h-12 rounded-full border border-[#D4AF37] flex items-center justify-center"><CheckCircle2 className="w-6 h-6 text-[#D4AF37]" /></div>
-          <span className="text-xs text-gray-300 font-semibold leading-tight">Real Fruit<br />Inside</span>
-        </div>
-        <div className="flex flex-col items-center text-center gap-2">
-          <div className="w-12 h-12 rounded-full border border-[#D4AF37] flex items-center justify-center"><Sparkles className="w-6 h-6 text-[#D4AF37]" /></div>
-          <span className="text-xs text-gray-300 font-semibold leading-tight">Irresistible<br />Crunch</span>
-        </div>
-        <div className="flex flex-col items-center text-center gap-2">
-          <div className="w-12 h-12 rounded-full border border-[#D4AF37] flex items-center justify-center"><Package className="w-6 h-6 text-[#D4AF37]" /></div>
-          <span className="text-xs text-gray-300 font-semibold leading-tight">Premium<br />Chocolate</span>
-        </div>
-        <div className="flex flex-col items-center text-center gap-2">
-          <div className="w-12 h-12 rounded-full border border-[#D4AF37] flex items-center justify-center relative">
-            <Leaf className="w-6 h-6 text-[#D4AF37]" />
-            <div className="absolute inset-0 border-t-2 border-[#D4AF37] rotate-45 transform origin-center w-[120%] -left-[10%]"></div>
+      <div className={heroBadgeGrid}>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <div className={`${heroBadgeIconWrap} border border-[#D4AF37] bg-black/20`}>
+            <CheckCircle2 className="h-5 w-5 text-[#D4AF37] sm:h-6 sm:w-6" />
           </div>
-          <span className="text-xs text-gray-300 font-semibold leading-tight">No Artificial<br />Flavours</span>
+          <span className={`${heroBadgeLabel} text-neutral-200`}>Real fruit inside</span>
+        </div>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <div className={`${heroBadgeIconWrap} border border-[#D4AF37] bg-black/20`}>
+            <Sparkles className="h-5 w-5 text-[#D4AF37] sm:h-6 sm:w-6" />
+          </div>
+          <span className={`${heroBadgeLabel} text-neutral-200`}>Irresistible crunch</span>
+        </div>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <div className={`${heroBadgeIconWrap} border border-[#D4AF37] bg-black/20`}>
+            <Package className="h-5 w-5 text-[#D4AF37] sm:h-6 sm:w-6" />
+          </div>
+          <span className={`${heroBadgeLabel} text-neutral-200`}>Premium chocolate</span>
+        </div>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <div className={`${heroBadgeIconWrap} relative border border-[#D4AF37] bg-black/20`}>
+            <Leaf className="h-5 w-5 text-[#D4AF37] sm:h-6 sm:w-6" />
+            <div className="absolute inset-0 w-[120%] -left-[10%] origin-center rotate-45 border-t-2 border-[#D4AF37]" />
+          </div>
+          <span className={`${heroBadgeLabel} text-neutral-200`}>No artificial flavours</span>
         </div>
       </div>
     ),
@@ -120,46 +155,53 @@ const heroSlides = [
   {
     image: "/SliderImage/Slidethree.png",
     subtitle: (
-      <div className="flex items-center gap-2 mb-2">
-        <span className="text-[#41622D] text-sm font-bold tracking-widest uppercase">FRUIT CHUNKS</span>
-        <Leaf className="w-5 h-5 text-[#41622D]" />
+      <div className="flex flex-col items-start gap-1 sm:gap-1.5">
+        <span className="flex flex-wrap items-center gap-2">
+          <span className={`${heroBrand} text-[#41622D]`}>Fruit Chunks</span>
+          <Leaf className="h-5 w-5 shrink-0 text-[#41622D] sm:h-6 sm:w-6" aria-hidden />
+        </span>
+        <span className={`${heroTagline} text-[#41622D]`}>Pure freeze-dried fruit</span>
       </div>
     ),
     title: (
       <>
-        <span className="text-[#213b14] block mb-2">Real Fruit.</span>
-        <span className="text-[#A83232]">Real Crunch.</span>
+        <span className="text-[#213b14] drop-shadow-sm">Real Fruit.</span>
+        <span className="text-[#A83232] drop-shadow-sm">Real Crunch.</span>
       </>
     ),
     description: (
-      <span className="text-gray-800 text-xl font-medium block max-w-[500px]">
-        Freeze-dried to lock in nutrition, flavour & crunch.<br />
-        Pure fruit, <span className="text-[#41622D] font-bold">nothing else.</span>
+      <span className={`${heroDescription} text-neutral-900`}>
+        Freeze-dried to lock in nutrition, flavour & crunch. Pure fruit,{' '}
+        <span className="font-semibold text-[#41622D]">nothing else.</span>
       </span>
     ),
     badges: (
-      <div className="flex gap-6 mt-8 mb-4 max-w-2xl">
-        <div className="flex flex-col items-center text-center gap-2">
-          <div className="w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center"><Snowflake className="w-6 h-6 text-gray-800" /></div>
-          <span className="text-xs text-gray-800 font-semibold leading-tight">Freeze-Dried<br />Goodness</span>
-        </div>
-        <div className="flex flex-col items-center text-center gap-2">
-          <div className="w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center"><CheckCircle2 className="w-6 h-6 text-gray-800" /></div>
-          <span className="text-xs text-gray-800 font-semibold leading-tight">100%<br />Real Fruit</span>
-        </div>
-        <div className="flex flex-col items-center text-center gap-2">
-          <div className="w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center relative">
-            <Leaf className="w-6 h-6 text-gray-800" />
-            <div className="absolute inset-0 border-t-2 border-gray-700 rotate-45 transform origin-center w-[120%] -left-[10%]"></div>
+      <div className={heroBadgeGrid}>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <div className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}>
+            <Snowflake className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
           </div>
-          <span className="text-xs text-gray-800 font-semibold leading-tight">No Added Sugar<br />or Preservatives</span>
+          <span className={`${heroBadgeLabel} text-neutral-900`}>Freeze-dried goodness</span>
         </div>
-        <div className="flex flex-col items-center text-center gap-2">
-          <div className="w-12 h-12 rounded-full border border-gray-700 flex items-center justify-center relative">
-            <FlaskConical className="w-6 h-6 text-gray-800" />
-            <div className="absolute inset-0 border-t-2 border-gray-700 rotate-45 transform origin-center w-[120%] -left-[10%]"></div>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <div className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}>
+            <CheckCircle2 className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
           </div>
-          <span className="text-xs text-gray-800 font-semibold leading-tight">Clean. Natural.<br />Wholesome.</span>
+          <span className={`${heroBadgeLabel} text-neutral-900`}>100% real fruit</span>
+        </div>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <div className={`${heroBadgeIconWrap} relative border-neutral-700 bg-white/40`}>
+            <Leaf className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
+            <div className="absolute inset-0 w-[120%] -left-[10%] origin-center rotate-45 border-t-2 border-neutral-700" />
+          </div>
+          <span className={`${heroBadgeLabel} text-neutral-900`}>No added sugar or preservatives</span>
+        </div>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <div className={`${heroBadgeIconWrap} relative border-neutral-700 bg-white/40`}>
+            <FlaskConical className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
+            <div className="absolute inset-0 w-[120%] -left-[10%] origin-center rotate-45 border-t-2 border-neutral-700" />
+          </div>
+          <span className={`${heroBadgeLabel} text-neutral-900`}>Clean, natural, wholesome</span>
         </div>
       </div>
     ),
@@ -244,7 +286,6 @@ const testimonials = [
 ];
 
 export default function Home() {
-  console.log("hello")
   const [heroIndex, setHeroIndex] = React.useState(0);
   // Auto-play hero
   React.useEffect(() => {
@@ -261,8 +302,8 @@ export default function Home() {
     <div className="min-h-screen bg-black">
       <Header />
 
-      {/* Hero */}
-      <section className="relative pt-16 h-[90vh] lg:h-screen flex items-center overflow-hidden bg-black">
+      {/* Hero — consistent vertical rhythm; padding clears fixed nav + carousel controls */}
+      <section className="relative flex min-h-[85vh] flex-col justify-center overflow-hidden bg-black pt-16 sm:min-h-[90vh] lg:min-h-screen">
         <AnimatePresence mode="wait">
           <motion.div
             key={heroIndex}
@@ -275,7 +316,7 @@ export default function Home() {
             <img
               src={heroSlides[heroIndex].image}
               alt="Hero Slide"
-              className="w-full h-full object-cover"
+              className="h-full w-full object-cover object-center"
             />
             {heroSlides[heroIndex].overlay ? (
               <div className={`absolute inset-0 ${heroSlides[heroIndex].overlay}`} />
@@ -283,8 +324,8 @@ export default function Home() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-24 w-full">
-          <div className="max-w-2xl">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-[clamp(7rem,18vw,11rem)] pt-[clamp(1.75rem,4vw,3.5rem)] sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:mx-0">
             <AnimatePresence mode="wait">
               <motion.div
                 key={heroIndex}
@@ -292,42 +333,38 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
+                className="flex flex-col gap-4 sm:gap-5"
               >
-                <div className="mb-4">
-                  {heroSlides[heroIndex].subtitle}
-                </div>
+                <div className="shrink-0">{heroSlides[heroIndex].subtitle}</div>
 
-                <h1 className="font-serif text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4">
-                  {heroSlides[heroIndex].title}
-                </h1>
+                <h1 className={`${heroHeadline} mb-0 sm:mb-1`}>{heroSlides[heroIndex].title}</h1>
 
-                <p className="mb-2">
-                  {heroSlides[heroIndex].description}
-                </p>
+                <div className="max-w-prose">{heroSlides[heroIndex].description}</div>
 
                 {heroSlides[heroIndex].badges}
               </motion.div>
             </AnimatePresence>
 
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              key={`cta-${heroIndex}`}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-4"
+              transition={{ duration: 0.45, delay: 0.08 }}
+              className="mt-6 flex flex-col gap-4 sm:mt-8 sm:flex-row"
             >
               <Link
                 to="/products"
-                className={`inline-flex items-center justify-center gap-2 px-8 py-4 ${heroSlides[heroIndex].buttonClass} font-semibold rounded-full transition-all duration-200 focus:outline-none shadow-lg`}
+                className={`inline-flex min-h-[3rem] items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold uppercase tracking-wide shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:px-8 sm:py-4 sm:text-base ${heroSlides[heroIndex].buttonClass}`}
               >
                 {heroSlides[heroIndex].buttonText}
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
               </Link>
             </motion.div>
           </div>
         </div>
 
         {/* Hero Controls */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex items-center gap-6">
+        <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-4 sm:bottom-8 sm:gap-6 lg:bottom-10">
           <button
             onClick={prevHero}
             className="w-12 h-12 rounded-full border border-white/20 bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
