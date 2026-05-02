@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Users, Search, Mail, Phone, ShoppingBag,
   Check, Filter, Calendar, Download, Eye, MoreVertical, X,
-  TrendingUp, IndianRupee, CheckCircle
+  IndianRupee, CheckCircle,
 } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { getAllCustomers, type Customer } from "../../api/auth.api";
 import { toast } from "react-toastify";
 
@@ -12,36 +13,56 @@ const NumberBadge = ({ n, color }: { n: number; color: string }) => (
   <span className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 ${color}`}>{n}</span>
 );
 
+const PAGE_LIMIT = 20;
+
 export default function AdminCustomers() {
+  const location = useLocation();
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [pageCursors, setPageCursors] = useState<(string | null)[]>([null]);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [hasNextPage, setHasNextPage] = useState(false);
   const [totalCustomers, setTotalCustomers] = useState(0);
+  const [summary, setSummary] = useState<{
+    totalOrdersAllTime: number;
+    totalRevenueAllTime: number;
+    verifiedCustomers: number;
+  } | null>(null);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearch(searchQuery);
-      setPage(1);
-    }, 400);
+    const s = (location.state as { search?: string } | null)?.search;
+    if (s) setSearchQuery(s);
+  }, [location.state]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(searchQuery.trim()), 400);
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
   useEffect(() => {
-    fetchCustomers(page, debouncedSearch);
-  }, [page, debouncedSearch]);
+    setPageCursors([null]);
+  }, [debouncedSearch]);
 
-  const fetchCustomers = async (pageNumber: number, search: string) => {
+  const loadCustomers = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await getAllCustomers(pageNumber, 20, search);
+      const cursor = pageCursors[pageCursors.length - 1];
+      const response = await getAllCustomers({
+        limit: PAGE_LIMIT,
+        cursor: cursor || undefined,
+        search: debouncedSearch,
+      });
       if (response.success) {
         setCustomers(response.data);
-        setTotalPages(response.pages || 1);
-        setTotalCustomers(response.total || 0);
+        setNextCursor(response.nextCursor);
+        setHasNextPage(response.hasNextPage);
+        setTotalCustomers(response.total);
+        if (response.summary) setSummary(response.summary);
       } else {
         toast.error("Failed to load customers");
       }
@@ -50,9 +71,11 @@ export default function AdminCustomers() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [pageCursors, debouncedSearch]);
 
-  const verifiedCount = useMemo(() => customers.filter((c) => c.isEmailVerified).length, [customers]);
+  useEffect(() => {
+    loadCustomers();
+  }, [loadCustomers]);
 
   const getInitials = (name: string) =>
     name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
@@ -62,21 +85,75 @@ export default function AdminCustomers() {
     return colors[name.charCodeAt(0) % colors.length];
   };
 
+  const formatLastOrder = (c: Customer) => {
+    if (!c.lastOrderAt) return c.orderCount > 0 ? "—" : "-";
+    return new Date(c.lastOrderAt).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
+
+  const copyText = (text: string, label: string) => {
+    void navigator.clipboard.writeText(text);
+    toast.success(`${label} copied`);
+    setMenuOpenId(null);
+  };
+
+  const rangeStart = (pageCursors.length - 1) * PAGE_LIMIT + (customers.length ? 1 : 0);
+  const rangeEnd = (pageCursors.length - 1) * PAGE_LIMIT + customers.length;
+
+  const verifiedTotal = summary?.verifiedCustomers ?? 0;
+
   return (
     <div className="space-y-4">
-      {/* Header */}
       <div>
         <h1 className="text-xl font-bold text-gray-800">Customers</h1>
         <p className="text-sm text-gray-500">Manage and view all registered customers.</p>
       </div>
 
-      {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {[
-          { n: 1, label: "Total Customers", value: totalCustomers.toLocaleString(), sub: "↑ 12.5% from last 7 days", icon: Users, iconBg: "bg-blue-50", iconColor: "text-blue-500", badge: "bg-blue-500" },
-          { n: 2, label: "Verified Customers", value: verifiedCount.toLocaleString(), sub: "↑ 8.2% from last 7 days", icon: CheckCircle, iconBg: "bg-green-50", iconColor: "text-green-500", badge: "bg-green-500" },
-          { n: 3, label: "Total Orders", value: "12,842", sub: "↑ 10.3% from last 7 days", icon: ShoppingBag, iconBg: "bg-orange-50", iconColor: "text-orange-500", badge: "bg-orange-500" },
-          { n: 4, label: "Total Revenue", value: "₹18,76,430", sub: "↑ 14.6% from last 7 days", icon: IndianRupee, iconBg: "bg-red-50", iconColor: "text-red-500", badge: "bg-red-500" },
+          {
+            n: 1,
+            label: "Total Customers",
+            value: totalCustomers.toLocaleString(),
+            sub: "Matching search / filters",
+            icon: Users,
+            iconBg: "bg-blue-50",
+            iconColor: "text-blue-500",
+            badge: "bg-blue-500",
+          },
+          {
+            n: 2,
+            label: "Verified Customers",
+            value: verifiedTotal.toLocaleString(),
+            sub: "Verified emails (store-wide)",
+            icon: CheckCircle,
+            iconBg: "bg-green-50",
+            iconColor: "text-green-500",
+            badge: "bg-green-500",
+          },
+          {
+            n: 3,
+            label: "Total Orders",
+            value: (summary?.totalOrdersAllTime ?? 0).toLocaleString(),
+            sub: "All-time orders",
+            icon: ShoppingBag,
+            iconBg: "bg-orange-50",
+            iconColor: "text-orange-500",
+            badge: "bg-orange-500",
+          },
+          {
+            n: 4,
+            label: "Total Revenue",
+            value: `₹${Math.round(summary?.totalRevenueAllTime ?? 0).toLocaleString("en-IN")}`,
+            sub: "Paid orders (all-time)",
+            icon: IndianRupee,
+            iconBg: "bg-red-50",
+            iconColor: "text-red-500",
+            badge: "bg-red-500",
+          },
         ].map((card) => (
           <div key={card.n} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm relative overflow-hidden">
             <div className="absolute top-3 left-3">
@@ -91,12 +168,11 @@ export default function AdminCustomers() {
                 <p className="text-lg font-bold text-gray-800 leading-tight">{card.value}</p>
               </div>
             </div>
-            <p className="text-xs font-semibold text-green-500 pl-8">{card.sub}</p>
+            <p className="text-xs font-semibold text-gray-500 pl-8">{card.sub}</p>
           </div>
         ))}
       </div>
 
-      {/* Filters */}
       <div className="bg-white p-3 rounded-xl border border-gray-100 shadow-sm flex flex-col md:flex-row gap-3 items-center justify-between">
         <div className="relative flex-1 w-full max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -109,19 +185,18 @@ export default function AdminCustomers() {
           />
         </div>
         <div className="flex items-center gap-2 w-full md:w-auto">
-          <button className="flex items-center gap-1.5 px-3 py-2 border border-gray-200 bg-white text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors">
+          <button type="button" className="flex items-center gap-1.5 px-3 py-2 border border-gray-200 bg-white text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors">
             <Filter className="w-3.5 h-3.5" /> Filters
           </button>
           <div className="flex items-center gap-1.5 px-3 py-2 border border-gray-200 bg-white text-gray-600 rounded-lg text-sm font-semibold cursor-pointer hover:bg-gray-50">
             <Calendar className="w-3.5 h-3.5" /> Joined: All Time
           </div>
-          <button className="flex items-center gap-1.5 px-3 py-2 border border-gray-200 bg-white text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors shadow-sm">
+          <button type="button" className="flex items-center gap-1.5 px-3 py-2 border border-gray-200 bg-white text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors shadow-sm">
             <Download className="w-3.5 h-3.5" /> Export
           </button>
         </div>
       </div>
 
-      {/* Customers Table */}
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="overflow-x-auto min-h-[300px]">
           {loading ? (
@@ -176,7 +251,7 @@ export default function AdminCustomers() {
                       <td className="px-4 py-3">
                         <div className="flex flex-col">
                           <span className="text-sm font-semibold text-gray-700">{customer.email}</span>
-                          <span className="text-xs text-gray-500">{customer.address?.phone || "+91 98765 43210"}</span>
+                          <span className="text-xs text-gray-500">{customer.address?.phone || "—"}</span>
                         </div>
                       </td>
                       <td className="px-4 py-3">
@@ -192,15 +267,54 @@ export default function AdminCustomers() {
                       </td>
                       <td className="px-4 py-3 text-center font-bold text-gray-800 text-sm">{customer.orderCount}</td>
                       <td className="px-4 py-3 font-bold text-gray-800 text-sm">₹{customer.totalSpent.toLocaleString()}</td>
-                      <td className="px-4 py-3 text-sm text-gray-500">{customer.orderCount > 0 ? "Apr 28, 2026" : "-"}</td>
+                      <td className="px-4 py-3 text-sm text-gray-500">{formatLastOrder(customer)}</td>
                       <td className="px-4 py-3 text-sm text-gray-500">
                         {new Date(customer.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                       </td>
-                      <td className="px-4 py-3 text-right" onClick={(e) => e.stopPropagation()}>
+                      <td className="px-4 py-3 text-right relative" onClick={(e) => e.stopPropagation()}>
                         <div className="flex items-center justify-end gap-1 text-gray-400">
-                          <button className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all"><Eye className="w-3.5 h-3.5" /></button>
-                          <button className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all"><Calendar className="w-3.5 h-3.5" /></button>
-                          <button className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all"><MoreVertical className="w-3.5 h-3.5" /></button>
+                          <button
+                            type="button"
+                            title="View"
+                            onClick={() => setSelectedCustomer(customer)}
+                            className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            title="Joined date"
+                            onClick={() => toast.info(`Joined ${new Date(customer.createdAt).toLocaleDateString()}`)}
+                            className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all"
+                          >
+                            <Calendar className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            title="More"
+                            onClick={() => setMenuOpenId(menuOpenId === customer._id ? null : customer._id)}
+                            className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all"
+                          >
+                            <MoreVertical className="w-3.5 h-3.5" />
+                          </button>
+                          {menuOpenId === customer._id && (
+                            <div className="absolute right-2 top-10 z-30 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[160px] text-left">
+                              <button
+                                type="button"
+                                className="w-full px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                                onClick={() => copyText(customer.email, "Email")}
+                              >
+                                Copy email
+                              </button>
+                              <button
+                                type="button"
+                                className="w-full px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                                onClick={() => copyText(customer._id, "Customer ID")}
+                              >
+                                Copy customer ID
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </td>
                     </motion.tr>
@@ -211,26 +325,43 @@ export default function AdminCustomers() {
           )}
         </div>
 
-        {/* Pagination */}
-        <div className="px-4 py-3 border-t border-gray-100 flex items-center justify-between">
-          <p className="text-xs font-semibold text-gray-400">Showing 1 to {customers.length} of {totalCustomers} customers</p>
+        <div className="px-4 py-3 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-xs font-semibold text-gray-400">
+            {customers.length === 0
+              ? "No customers on this page"
+              : `Showing ${rangeStart} to ${rangeEnd} of ${totalCustomers} customers`}
+          </p>
           <div className="flex gap-1.5">
-            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">{"<"}</button>
-            <button className="px-2.5 py-1 bg-[#111827] text-white rounded text-xs font-bold">1</button>
-            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">2</button>
-            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">3</button>
-            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">...</button>
-            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">{totalCustomers}</button>
-            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">{">"}</button>
+            <button
+              type="button"
+              disabled={pageCursors.length <= 1}
+              onClick={() => setPageCursors((p) => (p.length > 1 ? p.slice(0, -1) : p))}
+              className="px-3 py-1.5 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              disabled={!hasNextPage || !nextCursor}
+              onClick={() => nextCursor && setPageCursors((p) => [...p, nextCursor])}
+              className="px-3 py-1.5 bg-[#111827] text-white rounded text-xs font-bold hover:bg-[#1f2937] disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Customer Detail Drawer */}
       <AnimatePresence>
         {selectedCustomer && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedCustomer(null)} className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedCustomer(null)}
+              className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+            />
             <motion.div
               initial={{ opacity: 0, x: "100%" }}
               animate={{ opacity: 1, x: 0 }}
@@ -239,8 +370,10 @@ export default function AdminCustomers() {
               className="fixed right-0 top-0 h-full w-full max-w-xs bg-white shadow-2xl z-50 flex flex-col"
             >
               <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
-                <h2 className="text-sm font-bold text-gray-800">Customer Detail (Preview)</h2>
-                <span className="text-xs font-semibold text-red-500 cursor-pointer" onClick={() => setSelectedCustomer(null)}>✕</span>
+                <h2 className="text-sm font-bold text-gray-800">Customer Detail</h2>
+                <span className="text-xs font-semibold text-red-500 cursor-pointer" onClick={() => setSelectedCustomer(null)}>
+                  ✕
+                </span>
               </div>
 
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -272,7 +405,7 @@ export default function AdminCustomers() {
                 <div className="space-y-2 pt-3 border-t border-gray-100">
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Phone className="w-3.5 h-3.5 text-gray-400" />
-                    <span>{selectedCustomer.address?.phone || "+91 98765 43210"}</span>
+                    <span>{selectedCustomer.address?.phone || "—"}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Mail className="w-3.5 h-3.5 text-gray-400" />
@@ -284,9 +417,13 @@ export default function AdminCustomers() {
                   </div>
                 </div>
 
-                <button className="w-full py-2.5 border border-gray-200 text-gray-700 rounded-lg text-sm font-bold hover:bg-gray-50 transition-all">
-                  View Order History →
-                </button>
+                <Link
+                  to={`/admin/orders?search=${encodeURIComponent(selectedCustomer.email)}`}
+                  className="block w-full py-2.5 border border-gray-200 text-gray-700 rounded-lg text-sm font-bold hover:bg-gray-50 transition-all text-center"
+                  onClick={() => setSelectedCustomer(null)}
+                >
+                  View orders for this customer →
+                </Link>
               </div>
             </motion.div>
           </>

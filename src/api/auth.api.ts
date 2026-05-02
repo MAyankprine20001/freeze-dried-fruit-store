@@ -82,6 +82,7 @@ export interface Customer {
   createdAt: string;
   orderCount: number;
   totalSpent: number;
+  lastOrderAt?: string | null;
   address?: {
     addressLine1?: string;
     addressLine2?: string;
@@ -95,18 +96,28 @@ export interface Customer {
 export interface GetCustomersResponse {
   success: boolean;
   total: number;
-  page: number;
-  pages: number;
+  limit: number;
+  nextCursor: string | null;
+  hasNextPage: boolean;
+  summary?: {
+    totalOrdersAllTime: number;
+    totalRevenueAllTime: number;
+    verifiedCustomers: number;
+  };
   data: Customer[];
 }
 
-export const getAllCustomers = async (
-  page: number = 1,
-  limit: number = 20,
-  search: string = ""
-): Promise<GetCustomersResponse> => {
+export const getAllCustomers = async (params: {
+  limit?: number;
+  cursor?: string | null;
+  search?: string;
+} = {}): Promise<GetCustomersResponse> => {
+  const q = new URLSearchParams();
+  q.set("limit", String(params.limit ?? 20));
+  if (params.cursor) q.set("cursor", params.cursor);
+  if (params.search) q.set("search", params.search);
   const res = await axiosInstance.get<GetCustomersResponse>(
-    `/auth/admin/customers?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`
+    `/auth/admin/customers?${q.toString()}`
   );
   return res.data;
 };

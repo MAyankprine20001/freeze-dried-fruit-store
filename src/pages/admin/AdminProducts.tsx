@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   Package,
   Plus,
@@ -17,11 +17,15 @@ import {
   ArrowUpDown,
   MoreVertical,
   Tag,
+  Copy,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { productApi } from "../../api/product.api";
 import { toast } from "react-toastify";
 import { getProductPrimaryImage } from "../../utils/productImage";
+
+const PAGE_LIMIT = 20;
 
 const NumberBadge = ({ n, color }: { n: number; color: string }) => (
   <span className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 ${color}`}>{n}</span>
@@ -77,9 +81,17 @@ const emptyForm = {
 };
 
 export default function AdminProducts() {
-  const [products, setProducts] = useState<any[]>([]);
+  const navigate = useNavigate();
+  const [fullCatalog, setFullCatalog] = useState<any[]>([]);
+  const [catalogItems, setCatalogItems] = useState<any[]>([]);
+  const [pageCursors, setPageCursors] = useState<(string | null)[]>([null]);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [catalogTotal, setCatalogTotal] = useState(0);
+  const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -92,21 +104,58 @@ export default function AdminProducts() {
 
   const [formData, setFormData] = useState({ ...emptyForm });
 
-  const fetchProducts = async () => {
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(searchTerm.trim()), 400);
+    return () => clearTimeout(t);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    setPageCursors([null]);
+  }, [debouncedSearch]);
+
+  const loadFullCatalog = useCallback(async () => {
     try {
-      setLoading(true);
       const res = await productApi.getAll();
-      setProducts(res.data);
+      setFullCatalog(res.data);
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to fetch products");
+    }
+  }, []);
+
+  const loadCatalogPage = useCallback(async () => {
+    setLoading(true);
+    try {
+      const cursor = pageCursors[pageCursors.length - 1];
+      const res = await productApi.getAdminCatalog({
+        limit: PAGE_LIMIT,
+        cursor: cursor || undefined,
+        search: debouncedSearch,
+      });
+      if (res.success) {
+        setCatalogItems(res.data);
+        setNextCursor(res.nextCursor);
+        setHasNextPage(res.hasNextPage);
+        setCatalogTotal(res.total);
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to fetch catalog page");
     } finally {
       setLoading(false);
     }
-  };
+  }, [pageCursors, debouncedSearch]);
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    loadFullCatalog();
+  }, [loadFullCatalog]);
+
+  useEffect(() => {
+    loadCatalogPage();
+  }, [loadCatalogPage]);
+
+  const refreshAfterMutation = async () => {
+    await loadFullCatalog();
+    setPageCursors([null]);
+  };
 
   useEffect(() => {
     const close = (ev: MouseEvent) => {
@@ -203,7 +252,7 @@ export default function AdminProducts() {
         toast.success("Product created successfully");
       }
       handleCloseModal();
-      fetchProducts();
+      await refreshAfterMutation();
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to save product");
     } finally {
@@ -232,20 +281,13 @@ export default function AdminProducts() {
     try {
       await productApi.delete(id);
       toast.success("Product deleted successfully");
-      fetchProducts();
+      await refreshAfterMutation();
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to delete product");
     }
   };
 
-  const filteredProducts = products.filter(
-    (p) =>
-      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (p.sku && p.sku.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
-
-  const filteredRelatedCandidates = products.filter((p) => {
+  const filteredRelatedCandidates = fullCatalog.filter((p) => {
     if (editingProduct && p._id === editingProduct._id) return false;
     if (formData.relatedProducts.includes(p._id)) return false;
     const q = relatedSearch.trim().toLowerCase();
@@ -257,9 +299,12 @@ export default function AdminProducts() {
     );
   });
 
-  const inStock = products.filter((p) => p.stock === "In Stock").length;
-  const lowStock = products.filter((p) => p.stock === "Low Stock").length;
-  const outOfStock = products.filter((p) => p.stock === "Out of Stock").length;
+  const inStock = fullCatalog.filter((p) => p.stock === "In Stock").length;
+  const lowStock = fullCatalog.filter((p) => p.stock === "Low Stock").length;
+  const outOfStock = fullCatalog.filter((p) => p.stock === "Out of Stock").length;
+
+  const rangeStart = (pageCursors.length - 1) * PAGE_LIMIT + (catalogItems.length ? 1 : 0);
+  const rangeEnd = (pageCursors.length - 1) * PAGE_LIMIT + catalogItems.length;
 
   const inputCls = "w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 focus:border-[#D4A017] outline-none";
   const labelCls = "text-xs font-bold text-gray-700";
@@ -327,7 +372,7 @@ export default function AdminProducts() {
               </thead>
               <tbody className="divide-y divide-gray-50">
                 <AnimatePresence>
-                  {filteredProducts.map((product) => (
+                  {catalogItems.map((product) => (
                     <motion.tr
                       key={product._id}
                       initial={{ opacity: 0 }}
@@ -381,11 +426,12 @@ export default function AdminProducts() {
                       </td>
                       <td className="px-4 py-3 text-center">
                         <button
+                          type="button"
                           onClick={async () => {
                             try {
                               await productApi.update(product._id, { featured: !product.featured });
                               toast.success(`Product ${!product.featured ? "featured" : "unfeatured"}`);
-                              fetchProducts();
+                              await refreshAfterMutation();
                             } catch {
                               toast.error("Failed to update feature status");
                             }
@@ -397,7 +443,12 @@ export default function AdminProducts() {
                       </td>
                       <td className="px-4 py-3 text-right">
                         <div className="flex items-center justify-end gap-1 text-gray-400">
-                          <button className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all" title="Preview">
+                          <button
+                            type="button"
+                            onClick={() => navigate(`/product/${product._id}`)}
+                            className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all"
+                            title="View on store"
+                          >
                             <Eye className="w-3.5 h-3.5" />
                           </button>
                           <button onClick={() => handleOpenModal(product)} className="p-1 hover:text-blue-500 hover:bg-blue-50 rounded transition-all" title="Edit">
@@ -406,9 +457,31 @@ export default function AdminProducts() {
                           <button onClick={() => handleDelete(product._id)} className="p-1 hover:text-red-500 hover:bg-red-50 rounded transition-all" title="Delete">
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
-                          <button className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all">
-                            <MoreVertical className="w-3.5 h-3.5" />
-                          </button>
+                          <div className="relative">
+                            <button
+                              type="button"
+                              onClick={() => setMenuOpenId(menuOpenId === product._id ? null : product._id)}
+                              className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all"
+                              title="More"
+                            >
+                              <MoreVertical className="w-3.5 h-3.5" />
+                            </button>
+                            {menuOpenId === product._id && (
+                              <div className="absolute right-0 top-8 z-30 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[140px]">
+                                <button
+                                  type="button"
+                                  className="w-full px-3 py-2 text-left text-xs font-semibold text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+                                  onClick={() => {
+                                    void navigator.clipboard.writeText(product._id);
+                                    toast.success("Product ID copied");
+                                    setMenuOpenId(null);
+                                  }}
+                                >
+                                  <Copy className="w-3.5 h-3.5" /> Copy ID
+                                </button>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </td>
                     </motion.tr>
@@ -419,22 +492,44 @@ export default function AdminProducts() {
           )}
         </div>
 
-        {!loading && filteredProducts.length === 0 && (
+        {!loading && catalogItems.length === 0 && (
           <div className="p-12 text-center text-gray-400">
             <Package className="w-10 h-10 mx-auto mb-3 opacity-20" />
             <p className="text-sm font-medium">No products found matching your search.</p>
           </div>
         )}
 
-        <div className="px-4 py-3 border-t border-gray-100 flex items-center justify-between">
-          <p className="text-xs font-semibold text-gray-400">Showing {filteredProducts.length} of {products.length} products</p>
+        <div className="px-4 py-3 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-xs font-semibold text-gray-400">
+            {catalogItems.length === 0
+              ? "No products on this page"
+              : `Showing ${rangeStart} to ${rangeEnd} of ${catalogTotal} products`}
+          </p>
+          <div className="flex gap-1.5">
+            <button
+              type="button"
+              disabled={pageCursors.length <= 1}
+              onClick={() => setPageCursors((p) => (p.length > 1 ? p.slice(0, -1) : p))}
+              className="px-3 py-1.5 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              disabled={!hasNextPage || !nextCursor}
+              onClick={() => nextCursor && setPageCursors((p) => [...p, nextCursor])}
+              className="px-3 py-1.5 bg-[#111827] text-white rounded text-xs font-bold hover:bg-[#1f2937] disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
 
       {/* KPI Summary Row */}
       <div className="grid grid-cols-4 gap-3">
         {[
-          { label: "Total Products", value: products.length, color: "bg-blue-500", iconColor: "text-blue-500", icon: Package },
+          { label: "Total Products", value: fullCatalog.length, color: "bg-blue-500", iconColor: "text-blue-500", icon: Package },
           { label: "In Stock", value: inStock, color: "bg-green-500", iconColor: "text-green-500", icon: CheckCircle },
           { label: "Low Stock", value: lowStock, color: "bg-orange-500", iconColor: "text-orange-500", icon: AlertTriangle },
           { label: "Out of Stock", value: outOfStock, color: "bg-red-500", iconColor: "text-red-500", icon: XCircle },
@@ -638,7 +733,7 @@ export default function AdminProducts() {
                     {formData.relatedProducts.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mb-2">
                         {formData.relatedProducts.map((id) => {
-                          const p = products.find((x) => x._id === id);
+                          const p = fullCatalog.find((x) => x._id === id);
                           if (!p) return null;
                           return (
                             <span

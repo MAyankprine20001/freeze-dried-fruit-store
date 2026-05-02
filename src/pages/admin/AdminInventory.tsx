@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Package, CheckCircle, AlertTriangle, XCircle, Search, Filter,
@@ -17,50 +18,83 @@ const categoryData = [
   { name: "Others", value: 84490, color: "#3b82f6", pct: "10%" },
 ];
 
+const PAGE_LIMIT = 15;
+
 const NumberBadge = ({ n, color }: { n: number; color: string }) => (
   <span className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 ${color}`}>{n}</span>
 );
 
 export default function AdminInventory() {
-  const [products, setProducts] = useState<any[]>([]);
+  const navigate = useNavigate();
+  const [fullCatalog, setFullCatalog] = useState<any[]>([]);
+  const [catalogRows, setCatalogRows] = useState<any[]>([]);
+  const [pageCursors, setPageCursors] = useState<(string | null)[]>([null]);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [catalogTotal, setCatalogTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [activeTab, setActiveTab] = useState("All Products");
 
   useEffect(() => {
-    fetchInventory();
-  }, []);
+    const t = setTimeout(() => setDebouncedSearch(searchTerm.trim()), 400);
+    return () => clearTimeout(t);
+  }, [searchTerm]);
 
-  const fetchInventory = async () => {
-    setLoading(true);
+  useEffect(() => {
+    setPageCursors([null]);
+  }, [debouncedSearch, activeTab]);
+
+  const loadFull = useCallback(async () => {
     try {
       const res = await productApi.getAll();
-      setProducts(res.data);
+      setFullCatalog(res.data);
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to fetch inventory");
+    }
+  }, []);
+
+  const loadPage = useCallback(async () => {
+    setLoading(true);
+    try {
+      const cursor = pageCursors[pageCursors.length - 1];
+      const res = await productApi.getAdminCatalog({
+        limit: PAGE_LIMIT,
+        cursor: cursor || undefined,
+        search: debouncedSearch,
+        stock: activeTab,
+      });
+      if (res.success) {
+        setCatalogRows(res.data);
+        setNextCursor(res.nextCursor);
+        setHasNextPage(res.hasNextPage);
+        setCatalogTotal(res.total);
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to load inventory page");
     } finally {
       setLoading(false);
     }
-  };
+  }, [pageCursors, debouncedSearch, activeTab]);
 
-  const filteredProducts = products.filter((p) => {
-    const matchesSearch =
-      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (p.sku && p.sku.toLowerCase().includes(searchTerm.toLowerCase()));
-    if (!matchesSearch) return false;
-    if (activeTab === "In Stock") return p.stock === "In Stock";
-    if (activeTab === "Low Stock") return p.stock === "Low Stock";
-    if (activeTab === "Out of Stock") return p.stock === "Out of Stock";
-    return true;
-  });
+  useEffect(() => {
+    loadFull();
+  }, [loadFull]);
 
-  const totalProducts = products.length;
-  const inStockCount = products.filter((p) => p.stock === "In Stock").length;
-  const lowStockCount = products.filter((p) => p.stock === "Low Stock").length;
-  const outOfStockCount = products.filter((p) => p.stock === "Out of Stock").length;
-  const totalValue = products.reduce((sum, p) => sum + (p.price || 0) * (p.stockCount || 0), 0);
+  useEffect(() => {
+    loadPage();
+  }, [loadPage]);
+
+  const totalProducts = fullCatalog.length;
+  const inStockCount = fullCatalog.filter((p) => p.stock === "In Stock").length;
+  const lowStockCount = fullCatalog.filter((p) => p.stock === "Low Stock").length;
+  const outOfStockCount = fullCatalog.filter((p) => p.stock === "Out of Stock").length;
+  const totalValue = fullCatalog.reduce((sum, p) => sum + (p.price || 0) * (p.stockCount || 0), 0);
   const inStockPercentage = totalProducts > 0 ? ((inStockCount / totalProducts) * 100).toFixed(1) : 0;
+
+  const rangeStart = (pageCursors.length - 1) * PAGE_LIMIT + (catalogRows.length ? 1 : 0);
+  const rangeEnd = (pageCursors.length - 1) * PAGE_LIMIT + catalogRows.length;
 
   return (
     <div className="space-y-4">
@@ -179,7 +213,7 @@ export default function AdminInventory() {
                     </div>
                   </td>
                 </tr>
-              ) : filteredProducts.length === 0 ? (
+              ) : catalogRows.length === 0 ? (
                 <tr>
                   <td colSpan={8} className="px-4 py-16 text-center">
                     <Package className="w-10 h-10 text-gray-300 mx-auto mb-3" />
@@ -187,7 +221,7 @@ export default function AdminInventory() {
                   </td>
                 </tr>
               ) : (
-                filteredProducts.map((product) => {
+                catalogRows.map((product) => {
                   const thumb = getProductPrimaryImage(product);
                   return (
                   <tr key={product._id} className="hover:bg-gray-50 transition-colors group">
@@ -230,8 +264,22 @@ export default function AdminInventory() {
                     </td>
                     <td className="px-4 py-3 text-right">
                       <div className="flex items-center justify-end gap-1 text-gray-400">
-                        <button className="p-1 hover:text-blue-500 hover:bg-blue-50 rounded transition-all"><Eye className="w-3.5 h-3.5" /></button>
-                        <button className="p-1 hover:text-orange-500 hover:bg-orange-50 rounded transition-all"><Edit2 className="w-3.5 h-3.5" /></button>
+                        <button
+                          type="button"
+                          title="View product"
+                          onClick={() => navigate(`/product/${product._id}`)}
+                          className="p-1 hover:text-blue-500 hover:bg-blue-50 rounded transition-all"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          title="Edit in catalog"
+                          onClick={() => navigate("/admin/products")}
+                          className="p-1 hover:text-orange-500 hover:bg-orange-50 rounded transition-all"
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -243,14 +291,29 @@ export default function AdminInventory() {
         </div>
 
         {/* Pagination */}
-        <div className="px-4 py-3 border-t border-gray-100 flex items-center justify-between">
-          <p className="text-xs font-semibold text-gray-400">Showing 1 to {filteredProducts.length} of {totalProducts} products</p>
+        <div className="px-4 py-3 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-xs font-semibold text-gray-400">
+            {catalogRows.length === 0
+              ? "No rows on this page"
+              : `Showing ${rangeStart} to ${rangeEnd} of ${catalogTotal} products (this tab)`}
+          </p>
           <div className="flex gap-1.5">
-            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">{"<"}</button>
-            <button className="px-2.5 py-1 bg-[#111827] text-white rounded text-xs font-bold">1</button>
-            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">2</button>
-            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">3</button>
-            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">{">"}</button>
+            <button
+              type="button"
+              disabled={pageCursors.length <= 1}
+              onClick={() => setPageCursors((p) => (p.length > 1 ? p.slice(0, -1) : p))}
+              className="px-3 py-1.5 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              disabled={!hasNextPage || !nextCursor}
+              onClick={() => nextCursor && setPageCursors((p) => [...p, nextCursor])}
+              className="px-3 py-1.5 bg-[#111827] text-white rounded text-xs font-bold hover:bg-[#1f2937] disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
           </div>
         </div>
       </div>

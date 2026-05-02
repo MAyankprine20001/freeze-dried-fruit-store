@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation, Outlet, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -20,6 +20,17 @@ export default function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const [headerSearch, setHeaderSearch] = useState("");
+
+  const runHeaderSearch = () => {
+    const q = headerSearch.trim();
+    if (!q) return;
+    if (q.includes("@")) {
+      navigate("/admin/customers", { state: { search: q } });
+      return;
+    }
+    navigate(`/admin/orders?search=${encodeURIComponent(q)}`);
+  };
 
   const menuItems = [
     { label: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
@@ -96,7 +107,12 @@ export default function AdminLayout() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search orders, products, customers..."
+                value={headerSearch}
+                onChange={(e) => setHeaderSearch(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") runHeaderSearch();
+                }}
+                placeholder="Search orders, products, customers… (Enter)"
                 className="w-full pl-9 pr-4 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 focus:border-[#D4A017] outline-none transition-colors"
               />
             </div>
