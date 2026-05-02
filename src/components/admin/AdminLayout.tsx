@@ -40,7 +40,7 @@ export default function AdminLayout() {
         {/* Logo */}
         <div className="px-4 py-5 border-b border-white/10">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-[#D4A017] flex items-center justify-center">
+            <div className="w-16 h-16 flex-shrink-0 flex items-center justify-center">
               <img
                 src="https://res.cloudinary.com/doi7id29n/image/upload/q_auto/f_auto/v1776528652/logo_2_on76wp.png"
                 alt="TDF Logo"
@@ -60,11 +60,10 @@ export default function AdminLayout() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition-all duration-150 ${
-                  isActive
-                    ? "bg-[#D4A017] text-[#111827]"
-                    : "text-[#9CA3AF] hover:bg-white/10 hover:text-white"
-                }`}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition-all duration-150 ${isActive
+                  ? "bg-[#D4A017] text-[#111827]"
+                  : "text-[#9CA3AF] hover:bg-white/10 hover:text-white"
+                  }`}
               >
                 <Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? "text-[#111827]" : ""}`} />
                 {item.label}
