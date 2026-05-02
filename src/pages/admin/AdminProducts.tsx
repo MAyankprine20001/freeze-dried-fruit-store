@@ -1,696 +1,437 @@
 import React, { useState, useEffect, useRef } from "react";
-import { 
- Package, 
- Plus, 
- Search, 
- Filter, 
- Edit2, 
- Trash2, 
- Eye,
- ArrowUpDown,
- X,
- Loader2,
- Image as ImageIcon,
- Upload,
- Link as LinkIcon,
- Star,
- CheckCircle,
- AlertTriangle,
- XCircle,
- ArrowRight
+import {
+  Package,
+  Plus,
+  Search,
+  Filter,
+  Edit2,
+  Trash2,
+  Eye,
+  X,
+  Loader2,
+  Upload,
+  Star,
+  CheckCircle,
+  AlertTriangle,
+  XCircle,
+  ArrowUpDown,
+  MoreVertical
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { productApi } from "../../api/product.api";
 import { toast } from "react-toastify";
 
+const NumberBadge = ({ n, color }: { n: number; color: string }) => (
+  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 ${color}`}>{n}</span>
+);
+
 export default function AdminProducts() {
- const [products, setProducts] = useState<any[]>([]);
- const [loading, setLoading] = useState(true);
- const [searchTerm, setSearchTerm] = useState("");
- const [isModalOpen, setIsModalOpen] = useState(false);
- const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
- const [editingProduct, setEditingProduct] = useState<any>(null);
- const [previewProduct, setPreviewProduct] = useState<any>(null);
- const [submitting, setSubmitting] = useState(false);
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<any>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
- const [isUploading, setIsUploading] = useState(false);
- const fileInputRef = useRef<HTMLInputElement>(null);
-
- // Form State
- const [formData, setFormData] = useState({
-  name: "",
-  category: "Fruit Powders",
-  price: 0,
-  stockCount: 0,
-  stock: "In Stock",
-  image: "",
-  subtitle: "",
-  weight: "",
-  description: "",
-  featured: false,
-  urgencyLine: ""
- });
-
- const fetchProducts = async () => {
-  try {
-   setLoading(true);
-   const res = await productApi.getAll();
-   setProducts(res.data);
-  } catch (error: any) {
-   toast.error(error.response?.data?.message || "Failed to fetch products");
-  } finally {
-   setLoading(false);
-  }
- };
-
- useEffect(() => {
-  fetchProducts();
- }, []);
-
- const handleOpenModal = (product: any = null) => {
-  if (product) {
-   setEditingProduct(product);
-   setFormData({
-    name: product.name,
-    category: product.category,
-    price: product.price,
-    stockCount: product.stockCount || 0,
-    stock: product.stock,
-    image: product.image,
-    subtitle: product.subtitle || "",
-    weight: product.weight || "",
-    description: product.description || "",
-    featured: product.featured || false,
-    urgencyLine: product.urgencyLine || ""
-   });
-  } else {
-   setEditingProduct(null);
-   setFormData({
+  const [formData, setFormData] = useState({
     name: "",
+    sku: "",
     category: "Fruit Powders",
     price: 0,
     stockCount: 0,
     stock: "In Stock",
+    status: "Active",
     image: "",
-    subtitle: "",
-    weight: "",
-    description: "",
     featured: false,
-    urgencyLine: ""
-   });
-  }
-  setIsModalOpen(true);
- };
+  });
 
- const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setSubmitting(true);
-  try {
-   if (editingProduct) {
-    await productApi.update(editingProduct._id, formData);
-    toast.success("Product updated successfully");
-   } else {
-    await productApi.create(formData);
-    toast.success("Product created successfully");
-   }
-   setIsModalOpen(false);
-   fetchProducts();
-  } catch (error: any) {
-   toast.error(error.response?.data?.message || "Failed to save product");
-  } finally {
-   setSubmitting(false);
-  }
- };
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      const res = await productApi.getAll();
+      setProducts(res.data);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to fetch products");
+    } finally {
+      setLoading(false);
+    }
+  };
 
- const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
-  try {
-   setIsUploading(true);
-   const res = await productApi.uploadImage(file);
-   setFormData({ ...formData, image: res.data.url });
-   toast.success("Image uploaded successfully");
-  } catch (error: any) {
-   toast.error(error.response?.data?.message || "Failed to upload image");
-  } finally {
-   setIsUploading(false);
-  }
- };
+  const handleOpenDrawer = (product: any = null) => {
+    if (product) {
+      setEditingProduct(product);
+      setFormData({
+        name: product.name,
+        sku: product.sku || "",
+        category: product.category,
+        price: product.price,
+        stockCount: product.stockCount || 0,
+        stock: product.stock,
+        status: product.status || "Active",
+        image: product.image,
+        featured: product.featured || false,
+      });
+    } else {
+      setEditingProduct(null);
+      setFormData({ name: "", sku: "", category: "Fruit Powders", price: 0, stockCount: 0, stock: "In Stock", status: "Active", image: "", featured: false });
+    }
+    setIsDrawerOpen(true);
+  };
 
- const handleDelete = async (id: string) => {
-  if (!window.confirm("Are you sure you want to delete this product?")) return;
-  try {
-   await productApi.delete(id);
-   toast.success("Product deleted successfully");
-   fetchProducts();
-  } catch (error: any) {
-   toast.error(error.response?.data?.message || "Failed to delete product");
-  }
- };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      if (editingProduct) {
+        await productApi.update(editingProduct._id, formData);
+        toast.success("Product updated successfully");
+      } else {
+        await productApi.create(formData);
+        toast.success("Product created successfully");
+      }
+      setIsDrawerOpen(false);
+      fetchProducts();
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to save product");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
- const filteredProducts = products.filter(p => 
-  p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-  p.category.toLowerCase().includes(searchTerm.toLowerCase())
- );
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      setIsUploading(true);
+      const res = await productApi.uploadImage(file);
+      setFormData({ ...formData, image: res.data.url });
+      toast.success("Image uploaded successfully");
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to upload image");
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
- return (
-  <div className="space-y-6">
-   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-    <div>
-     <h1 className="text-2xl font-bold text-[#1a1a1a]">Products</h1>
-     <p className="text-[#6c757d]">Manage your product catalog and inventory.</p>
-    </div>
-    <button 
-     onClick={() => handleOpenModal()}
-     className="flex items-center justify-center gap-2 bg-[#1a1a1a] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#2a2a2a] transition-all shadow-lg shadow-[#1a1a1a]/10"
-    >
-     <Plus className="w-5 h-5" />
-     Add Product
-    </button>
-   </div>
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this product?")) return;
+    try {
+      await productApi.delete(id);
+      toast.success("Product deleted successfully");
+      fetchProducts();
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to delete product");
+    }
+  };
 
-   {/* Filters & Search */}
-   <div className="bg-white p-4 rounded-2xl border border-[#eef0f2] shadow-sm flex flex-col md:flex-row gap-4 items-center">
-    <div className="relative flex-1 w-full">
-     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#adb5bd]" />
-     <input 
-      type="text" 
-      placeholder="Search products by name, category..." 
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      className="w-full pl-10 pr-4 py-2.5 bg-[#f8f9fa] border-none rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#1a1a1a]/5"
-     />
-    </div>
-    <div className="flex items-center gap-2 w-full md:w-auto">
-     <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-[#f8f9fa] text-[#6c757d] rounded-xl text-sm font-semibold hover:bg-[#eef0f2] transition-colors">
-      <Filter className="w-4 h-4" />
-      Filters
-     </button>
-     <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-[#f8f9fa] text-[#6c757d] rounded-xl text-sm font-semibold hover:bg-[#eef0f2] transition-colors">
-      <ArrowUpDown className="w-4 h-4" />
-      Sort
-     </button>
-    </div>
-   </div>
+  const filteredProducts = products.filter(
+    (p) =>
+      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (p.sku && p.sku.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
 
-   {/* Products Table */}
-   <div className="bg-white rounded-[32px] border border-[#eef0f2] shadow-sm overflow-hidden">
-    <div className="overflow-x-auto">
-     {loading ? (
-      <div className="p-20 flex flex-col items-center justify-center text-[#adb5bd]">
-       <Loader2 className="w-10 h-10 animate-spin mb-4" />
-       <p className="font-medium">Loading products...</p>
-      </div>
-     ) : (
-      <table className="w-full text-left border-collapse">
-       <thead>
-        <tr className="bg-[#f8f9fa] border-b border-[#eef0f2]">
-         <th className="px-6 py-4 text-xs font-bold text-[#adb5bd] uppercase tracking-wider">Product</th>
-         <th className="px-6 py-4 text-xs font-bold text-[#adb5bd] uppercase tracking-wider">Category</th>
-         <th className="px-6 py-4 text-xs font-bold text-[#adb5bd] uppercase tracking-wider">Price</th>
-         <th className="px-6 py-4 text-xs font-bold text-[#adb5bd] uppercase tracking-wider">Stock</th>
-         <th className="px-6 py-4 text-xs font-bold text-[#adb5bd] uppercase tracking-wider">Status</th>
-         <th className="px-6 py-4 text-xs font-bold text-[#adb5bd] uppercase tracking-wider text-center">Featured</th>
-         <th className="px-6 py-4 text-xs font-bold text-[#adb5bd] uppercase tracking-wider text-right">Actions</th>
-        </tr>
-       </thead>
-       <tbody className="divide-y divide-[#eef0f2]">
-        <AnimatePresence>
-         {filteredProducts.map((product) => (
-          <motion.tr 
-           key={product._id}
-           initial={{ opacity: 0 }}
-           animate={{ opacity: 1 }}
-           exit={{ opacity: 0 }}
-           className="hover:bg-[#fafbfc] transition-colors group"
-          >
-           <td className="px-6 py-4">
-            <div className="flex items-center gap-4">
-             <div className="w-12 h-12 rounded-xl overflow-hidden bg-[#f8f9fa] flex-shrink-0 border border-[#eef0f2]">
-              <img src={product.image} alt="" className="w-full h-full object-cover" />
-             </div>
-             <div>
-              <p className="text-sm font-bold text-[#1a1a1a]">{product.name}</p>
-              <p className="text-[10px] font-bold text-[#adb5bd] uppercase tracking-tight">{product._id.slice(-6)}</p>
-             </div>
-            </div>
-           </td>
-           <td className="px-6 py-4">
-            <span className="text-sm text-[#6c757d] font-medium">{product.category}</span>
-           </td>
-           <td className="px-6 py-4 font-bold text-[#1a1a1a]">₹{product.price}</td>
-           <td className="px-6 py-4 font-bold text-[#1a1a1a]">{product.stockCount || 0}</td>
-           <td className="px-6 py-4">
-            <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-             product.stock === "In Stock" ? "bg-green-50 text-green-600" :
-             product.stock === "Low Stock" ? "bg-orange-50 text-orange-600" :
-             "bg-red-50 text-red-600"
-            }`}>
-             {product.stock}
-            </span>
-           </td>
-           <td className="px-6 py-4 text-center">
-            <button 
-             onClick={async () => {
-              try {
-               await productApi.update(product._id, { featured: !product.featured });
-               toast.success(`Product ${!product.featured ? 'featured' : 'unfeatured'}`);
-               fetchProducts();
-              } catch (e) {
-               toast.error("Failed to update feature status");
-              }
-             }}
-             className="p-1 hover:bg-[#f8f9fa] rounded-lg transition-colors"
-             title={product.featured ? "Remove from Featured" : "Mark as Featured"}
-            >
-             <Star className={`w-5 h-5 ${product.featured ? 'fill-[#D4AF37] text-[#D4AF37]' : 'text-[#adb5bd]'}`} />
-            </button>
-           </td>
-           <td className="px-6 py-4 text-right">
-            <div className="flex items-center justify-end gap-2">
-             <button 
-              onClick={() => {
-               setPreviewProduct(product);
-               setIsPreviewModalOpen(true);
-              }}
-              className="p-2 text-[#8a8a8a] hover:text-[#1a1a1a] hover:bg-white rounded-lg shadow-sm transition-all"
-              title="Preview"
-             >
-              <Eye className="w-4 h-4" />
-             </button>
+  const inStock = products.filter((p) => p.stock === "In Stock").length;
+  const lowStock = products.filter((p) => p.stock === "Low Stock").length;
+  const outOfStock = products.filter((p) => p.stock === "Out of Stock").length;
 
-             <button 
-              onClick={() => handleOpenModal(product)}
-              className="p-2 text-[#8a8a8a] hover:text-blue-500 hover:bg-white rounded-lg shadow-sm transition-all"
-              title="Edit"
-             >
-              <Edit2 className="w-4 h-4" />
-             </button>
-             <button 
-              onClick={() => handleDelete(product._id)}
-              className="p-2 text-[#8a8a8a] hover:text-red-500 hover:bg-white rounded-lg shadow-sm transition-all"
-              title="Delete"
-             >
-              <Trash2 className="w-4 h-4" />
-             </button>
-            </div>
-           </td>
-          </motion.tr>
-         ))}
-        </AnimatePresence>
-       </tbody>
-      </table>
-     )}
-    </div>
-    
-    {!loading && filteredProducts.length === 0 && (
-     <div className="p-12 text-center text-[#adb5bd]">
-      <Package className="w-12 h-12 mx-auto mb-4 opacity-20" />
-      <p className="font-medium">No products found matching your search.</p>
-     </div>
-    )}
-
-    <div className="px-6 py-4 bg-[#f8f9fa] border-t border-[#eef0f2] flex items-center justify-between">
-     <p className="text-xs font-bold text-[#adb5bd] uppercase">Showing {filteredProducts.length} of {products.length} Products</p>
-     <div className="flex gap-2">
-      <button className="px-3 py-1.5 bg-white border border-[#eef0f2] rounded-lg text-xs font-bold text-[#6c757d] hover:bg-[#fafbfc] disabled:opacity-50" disabled>Previous</button>
-      <button className="px-3 py-1.5 bg-white border border-[#eef0f2] rounded-lg text-xs font-bold text-[#1a1a1a] hover:bg-[#fafbfc]">Next</button>
-     </div>
-    </div>
-   </div>
-
-   {/* Summary Cards */}
-   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-     {/* Total Products */}
-     <div className="bg-white rounded-2xl p-6 border border-[#eef0f2] shadow-sm flex flex-col items-center justify-center text-center hover:border-blue-200 transition-colors cursor-pointer group">
-       <div className="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-         <Package className="w-6 h-6" />
-       </div>
-       <p className="text-sm font-bold text-[#adb5bd] uppercase tracking-wider mb-1">Total Products</p>
-       <h3 className="text-3xl font-black text-[#1a1a1a] mb-4">{products.length}</h3>
-       <button className="text-sm text-blue-500 font-bold flex items-center gap-1 hover:gap-2 transition-all">View all products <ArrowRight className="w-4 h-4" /></button>
-     </div>
-     {/* In Stock */}
-     <div className="bg-white rounded-2xl p-6 border border-[#eef0f2] shadow-sm flex flex-col items-center justify-center text-center hover:border-green-200 transition-colors cursor-pointer group">
-       <div className="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-         <CheckCircle className="w-6 h-6" />
-       </div>
-       <p className="text-sm font-bold text-[#adb5bd] uppercase tracking-wider mb-1">In Stock</p>
-       <h3 className="text-3xl font-black text-[#1a1a1a] mb-4">{products.filter(p => p.stock === 'In Stock').length}</h3>
-       <button className="text-sm text-green-500 font-bold flex items-center gap-1 hover:gap-2 transition-all">View products <ArrowRight className="w-4 h-4" /></button>
-     </div>
-     {/* Low Stock */}
-     <div className="bg-white rounded-2xl p-6 border border-[#eef0f2] shadow-sm flex flex-col items-center justify-center text-center hover:border-orange-200 transition-colors cursor-pointer group">
-       <div className="w-12 h-12 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-         <AlertTriangle className="w-6 h-6" />
-       </div>
-       <p className="text-sm font-bold text-[#adb5bd] uppercase tracking-wider mb-1">Low Stock</p>
-       <h3 className="text-3xl font-black text-[#1a1a1a] mb-4">{products.filter(p => p.stock === 'Low Stock').length}</h3>
-       <button className="text-sm text-orange-500 font-bold flex items-center gap-1 hover:gap-2 transition-all">View products <ArrowRight className="w-4 h-4" /></button>
-     </div>
-     {/* Out of Stock */}
-     <div className="bg-white rounded-2xl p-6 border border-[#eef0f2] shadow-sm flex flex-col items-center justify-center text-center hover:border-red-200 transition-colors cursor-pointer group">
-       <div className="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-         <XCircle className="w-6 h-6" />
-       </div>
-       <p className="text-sm font-bold text-[#adb5bd] uppercase tracking-wider mb-1">Out of Stock</p>
-       <h3 className="text-3xl font-black text-[#1a1a1a] mb-4">{products.filter(p => p.stock === 'Out of Stock').length}</h3>
-       <button className="text-sm text-red-500 font-bold flex items-center gap-1 hover:gap-2 transition-all">View products <ArrowRight className="w-4 h-4" /></button>
-     </div>
-   </div>
-
-   {/* Add/Edit Modal */}
-   <AnimatePresence>
-    {isModalOpen && (
-     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <motion.div 
-       initial={{ opacity: 0 }}
-       animate={{ opacity: 1 }}
-       exit={{ opacity: 0 }}
-       onClick={() => setIsModalOpen(false)}
-       className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-      />
-      <motion.div 
-       initial={{ opacity: 0, scale: 0.95, y: 20 }}
-       animate={{ opacity: 1, scale: 1, y: 0 }}
-       exit={{ opacity: 0, scale: 0.95, y: 20 }}
-       className="relative w-full max-w-2xl bg-white rounded-[32px] shadow-2xl overflow-hidden"
-      >
-       <div className="p-6 border-b border-[#eef0f2] flex items-center justify-between bg-[#f8f9fa]">
-        <h2 className="text-xl font-bold text-[#1a1a1a]">
-         {editingProduct ? "Edit Product" : "Add New Product"}
-        </h2>
-        <button 
-         onClick={() => setIsModalOpen(false)}
-         className="p-2 hover:bg-white rounded-xl transition-colors"
-        >
-         <X className="w-5 h-5 text-[#6c757d]" />
-        </button>
-       </div>
-
-       <form onSubmit={handleSubmit} className="p-8 overflow-y-auto max-h-[70vh]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-         {/* Basic Info */}
-         <div className="space-y-4 md:col-span-2">
-          <label className="text-xs font-bold text-[#adb5bd] uppercase tracking-wider">Basic Information</label>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-           <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-[#1a1a1a] ml-1">Product Name</label>
-            <input 
-             type="text"
-             required
-             value={formData.name}
-             onChange={(e) => setFormData({...formData, name: e.target.value})}
-             className="w-full px-4 py-3 bg-[#f8f9fa] border-none rounded-xl text-sm focus:ring-2 focus:ring-[#1a1a1a]/5 outline-none"
-             placeholder="e.g. Strawberry Powder"
-            />
-           </div>
-           <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-[#1a1a1a] ml-1">Category</label>
-            <select 
-             value={formData.category}
-             onChange={(e) => setFormData({...formData, category: e.target.value})}
-             className="w-full px-4 py-3 bg-[#f8f9fa] border-none rounded-xl text-sm focus:ring-2 focus:ring-[#1a1a1a]/5 outline-none"
-            >
-             <option>Fruit Powders</option>
-             <option>Fruit Chunks</option>
-             <option>Smoothie Premix</option>
-             <option>Chocolates</option>
-             <option>Combos</option>
-             <option>Gifts</option>
-            </select>
-           </div>
-          </div>
-         </div>
-
-         {/* Pricing & Stock */}
-         <div className="space-y-4">
-          <label className="text-xs font-bold text-[#adb5bd] uppercase tracking-wider">Pricing & Stock</label>
-          <div className="space-y-4">
-           <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-[#1a1a1a] ml-1">Price (₹)</label>
-            <input 
-             type="number"
-             required
-             value={formData.price}
-             onChange={(e) => setFormData({...formData, price: Number(e.target.value)})}
-             className="w-full px-4 py-3 bg-[#f8f9fa] border-none rounded-xl text-sm focus:ring-2 focus:ring-[#1a1a1a]/5 outline-none"
-            />
-           </div>
-           <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-[#1a1a1a] ml-1">Stock Count</label>
-            <input 
-             type="number"
-             required
-             value={formData.stockCount}
-             onChange={(e) => setFormData({...formData, stockCount: Number(e.target.value)})}
-             className="w-full px-4 py-3 bg-[#f8f9fa] border-none rounded-xl text-sm focus:ring-2 focus:ring-[#1a1a1a]/5 outline-none"
-            />
-           </div>
-           <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-[#1a1a1a] ml-1">Status</label>
-            <select 
-             value={formData.stock}
-             onChange={(e) => setFormData({...formData, stock: e.target.value})}
-             className="w-full px-4 py-3 bg-[#f8f9fa] border-none rounded-xl text-sm focus:ring-2 focus:ring-[#1a1a1a]/5 outline-none"
-            >
-             <option>In Stock</option>
-             <option>Low Stock</option>
-             <option>Out of Stock</option>
-            </select>
-           </div>
-          </div>
-         </div>
-
-         {/* Media & Details */}
-         <div className="space-y-4">
-          <label className="text-xs font-bold text-[#adb5bd] uppercase tracking-wider">Media & Details</label>
-          <div className="space-y-4">
-           <div className="space-y-1.5">
-            <div className="flex items-center justify-between mb-1">
-             <label className="text-sm font-semibold text-[#1a1a1a] ml-1">Product Image</label>
-             <span className="text-[10px] font-bold text-[#adb5bd] uppercase">URL or Upload</span>
-            </div>
-            
-            <div className="space-y-2">
-             {/* Image Preview if exists */}
-             {formData.image && (
-              <div className="relative w-full h-32 rounded-2xl overflow-hidden border border-[#eef0f2] mb-2 group">
-               <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
-               <button 
-                type="button"
-                onClick={() => setFormData({...formData, image: ""})}
-                className="absolute top-2 right-2 p-1.5 bg-white/90 backdrop-blur-sm text-red-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
-               >
-                <X className="w-4 h-4" />
-               </button>
-              </div>
-             )}
-
-             <div className="flex gap-2">
-              <div className="relative flex-1">
-               <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#adb5bd]" />
-               <input 
-                type="text"
-                value={formData.image}
-                onChange={(e) => setFormData({...formData, image: e.target.value})}
-                className="w-full pl-10 pr-4 py-3 bg-[#f8f9fa] border-none rounded-xl text-sm focus:ring-2 focus:ring-[#1a1a1a]/5 outline-none"
-                placeholder="Paste Image URL..."
-               />
-              </div>
-              
-              <input 
-               type="file" 
-               ref={fileInputRef}
-               onChange={handleFileUpload}
-               className="hidden" 
-               accept="image/*"
-              />
-              
-              <button 
-               type="button"
-               disabled={isUploading}
-               onClick={() => fileInputRef.current?.click()}
-               className="px-4 py-3 bg-[#1a1a1a] text-white rounded-xl hover:bg-[#2a2a2a] transition-all disabled:opacity-50 flex items-center justify-center min-w-[48px]"
-               title="Upload Image"
-              >
-               {isUploading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-               ) : (
-                <Upload className="w-4 h-4" />
-               )}
-              </button>
-             </div>
-            </div>
-           </div>
-           
-           <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-[#1a1a1a] ml-1">Weight (e.g. 100g)</label>
-            <input 
-             type="text"
-             value={formData.weight}
-             onChange={(e) => setFormData({...formData, weight: e.target.value})}
-             className="w-full px-4 py-3 bg-[#f8f9fa] border-none rounded-xl text-sm focus:ring-2 focus:ring-[#1a1a1a]/5 outline-none"
-            />
-           </div>
-           <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-[#1a1a1a] ml-1">Urgency Line</label>
-            <input 
-             type="text"
-             value={formData.urgencyLine}
-             onChange={(e) => setFormData({...formData, urgencyLine: e.target.value})}
-             className="w-full px-4 py-3 bg-[#f8f9fa] border-none rounded-xl text-sm focus:ring-2 focus:ring-[#1a1a1a]/5 outline-none"
-             placeholder="e.g. 🔥 Perfect for guilt-free snacking"
-            />
-           </div>
-           
-           <div className="flex items-center gap-3 mt-2 px-2">
-            <input 
-             type="checkbox" 
-             id="featured" 
-             checked={formData.featured}
-             onChange={(e) => setFormData({...formData, featured: e.target.checked})}
-             className="w-5 h-5 rounded text-[#1a1a1a] focus:ring-[#1a1a1a]"
-            />
-            <label htmlFor="featured" className="text-sm font-semibold text-[#1a1a1a] cursor-pointer">
-             Mark as Featured Product
-            </label>
-           </div>
-          </div>
-         </div>
-        </div>
-
-        <div className="mt-8 flex gap-3">
-         <button 
-          type="button"
-          onClick={() => setIsModalOpen(false)}
-          className="flex-1 py-4 bg-[#f8f9fa] text-[#1a1a1a] rounded-2xl font-bold hover:bg-[#eef0f2] transition-all"
-         >
-          Cancel
-         </button>
-         <button 
-          type="submit"
-          disabled={submitting || isUploading}
-          className="flex-[2] py-4 bg-[#1a1a1a] text-white rounded-2xl font-bold hover:bg-[#2a2a2a] transition-all shadow-lg shadow-[#1a1a1a]/10 disabled:opacity-50 flex items-center justify-center gap-2"
-         >
-          {submitting ? (
-           <Loader2 className="w-5 h-5 animate-spin" />
-          ) : (
-           editingProduct ? "Update Product" : "Create Product"
-          )}
-         </button>
-        </div>
-       </form>
-      </motion.div>
-     </div>
-    )}
-   </AnimatePresence>
-   {/* Preview Modal */}
-   <AnimatePresence>
-    {isPreviewModalOpen && previewProduct && (
-     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <motion.div 
-       initial={{ opacity: 0 }}
-       animate={{ opacity: 1 }}
-       exit={{ opacity: 0 }}
-       onClick={() => setIsPreviewModalOpen(false)}
-       className="absolute inset-0 bg-black/60 backdrop-blur-md"
-      />
-      <motion.div 
-       initial={{ opacity: 0, scale: 0.9, y: 40 }}
-       animate={{ opacity: 1, scale: 1, y: 0 }}
-       exit={{ opacity: 0, scale: 0.9, y: 40 }}
-       className="relative w-full max-w-4xl bg-white rounded-[40px] shadow-2xl overflow-hidden flex flex-col md:flex-row h-[85vh] max-h-[800px]"
-      >
-       {/* Left: Image Section */}
-       <div className="md:w-1/2 bg-[#f8f9fa] relative overflow-hidden group">
-        <img 
-         src={previewProduct.image} 
-         alt={previewProduct.name} 
-         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-        <div className="absolute top-6 left-6">
-         <span className="px-4 py-2 bg-white/90 backdrop-blur-md text-[#1a1a1a] text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg">
-          {previewProduct.category}
-         </span>
-        </div>
-       </div>
-
-       {/* Right: Content Section */}
-       <div className="md:w-1/2 p-10 flex flex-col justify-between bg-white relative">
-        <button 
-         onClick={() => setIsPreviewModalOpen(false)}
-         className="absolute top-6 right-6 p-2 hover:bg-[#f8f9fa] rounded-full transition-colors"
-        >
-         <X className="w-5 h-5 text-[#adb5bd]" />
-        </button>
-
+  return (
+    <div className="space-y-4">
+      {/* Header */}
+      <div className="flex items-center justify-between">
         <div>
-         <div className="mb-8">
-          <h2 className="text-4xl font-black text-[#1a1a1a] mb-2 leading-tight">
-           {previewProduct.name}
-          </h2>
-          <p className="text-[#6c757d] text-lg font-medium">{previewProduct.subtitle || "Premium freeze-dried fruit selection."}</p>
-         </div>
-
-         <div className="grid grid-cols-2 gap-8 mb-10">
-          <div>
-           <p className="text-[10px] font-black text-[#adb5bd] uppercase tracking-[0.2em] mb-2">Price</p>
-           <p className="text-3xl font-black text-[#1a1a1a]">₹{previewProduct.price}</p>
-          </div>
-          <div>
-           <p className="text-[10px] font-black text-[#adb5bd] uppercase tracking-[0.2em] mb-2">Weight</p>
-           <p className="text-xl font-bold text-[#6c757d]">{previewProduct.weight || "100g"}</p>
-          </div>
-          <div>
-           <p className="text-[10px] font-black text-[#adb5bd] uppercase tracking-[0.2em] mb-2">Inventory</p>
-           <p className="text-xl font-bold text-[#1a1a1a]">{previewProduct.stockCount} Units</p>
-          </div>
-          <div>
-           <p className="text-[10px] font-black text-[#adb5bd] uppercase tracking-[0.2em] mb-2">Availability</p>
-           <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-            previewProduct.stock === "In Stock" ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"
-           }`}>
-            <div className={`w-1.5 h-1.5 rounded-full ${previewProduct.stock === "In Stock" ? "bg-green-600 animate-pulse" : "bg-red-600"}`} />
-            {previewProduct.stock}
-           </span>
-          </div>
-         </div>
-
-         <div className="space-y-4">
-           <p className="text-[10px] font-black text-[#adb5bd] uppercase tracking-[0.2em]">Product Description</p>
-           <p className="text-[#6c757d] text-sm leading-relaxed">
-            {previewProduct.description || "Our premium freeze-dried fruits are harvested at peak ripeness and processed using advanced cold-press technology to preserve 97% of vitamins, minerals, and flavor. No added sugars, no preservativesjust the pure essence of nature."}
-           </p>
-         </div>
+          <h1 className="text-xl font-bold text-gray-800">Products</h1>
+          <p className="text-sm text-gray-500">Manage your product catalog and inventory.</p>
         </div>
+        <button
+          onClick={() => handleOpenDrawer()}
+          className="flex items-center gap-2 bg-[#111827] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#1f2937] transition-all shadow-sm"
+        >
+          <Plus className="w-4 h-4" />
+          <NumberBadge n={1} color="bg-[#D4A017]" />
+          Add Product
+        </button>
+      </div>
 
-        <div className="mt-12 flex gap-4">
-          <button 
-           onClick={() => {
-            setIsPreviewModalOpen(false);
-            handleOpenModal(previewProduct);
-           }}
-           className="flex-1 py-4 bg-[#1a1a1a] text-white rounded-2xl font-bold hover:bg-[#2a2a2a] transition-all flex items-center justify-center gap-2"
-          >
-           <Edit2 className="w-4 h-4" />
-           Edit Product
+      {/* Filters & Search */}
+      <div className="bg-white p-3 rounded-xl border border-gray-100 shadow-sm flex flex-col md:flex-row gap-3 items-center">
+        <div className="relative flex-1 w-full">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search products by name, category, SKU..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#D4A017]/20 focus:border-[#D4A017] transition-colors"
+          />
+        </div>
+        <div className="flex items-center gap-2 w-full md:w-auto flex-wrap">
+          <select className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm font-semibold text-gray-600 focus:ring-0 outline-none">
+            <option>All Categories</option>
+            <option>Fruit Powders</option>
+            <option>Fruit Chunks</option>
+            <option>Chocolates</option>
+          </select>
+          <select className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm font-semibold text-gray-600 focus:ring-0 outline-none">
+            <option>Status: All</option>
+            <option>Active</option>
+            <option>Inactive</option>
+          </select>
+          <select className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm font-semibold text-gray-600 focus:ring-0 outline-none">
+            <option>Stock: All</option>
+            <option>In Stock</option>
+            <option>Low Stock</option>
+            <option>Out of Stock</option>
+          </select>
+          <button className="flex items-center gap-1.5 px-3 py-2 border border-gray-200 bg-white text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors">
+            <Filter className="w-3.5 h-3.5" /> Filters
           </button>
-          <button 
-           onClick={() => setIsPreviewModalOpen(false)}
-           className="px-8 py-4 bg-[#f8f9fa] text-[#1a1a1a] rounded-2xl font-bold hover:bg-[#eef0f2] transition-all"
-          >
-           Close
+          <button className="flex items-center gap-1.5 px-3 py-2 border border-gray-200 bg-white text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors">
+            <ArrowUpDown className="w-3.5 h-3.5" /> Sort
           </button>
         </div>
-       </div>
-      </motion.div>
-     </div>
-    )}
-   </AnimatePresence>
-  </div>
- );
+      </div>
+
+      {/* Products Table */}
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          {loading ? (
+            <div className="p-16 flex flex-col items-center justify-center text-gray-400">
+              <Loader2 className="w-8 h-8 animate-spin mb-3" />
+              <p className="text-sm font-medium">Loading products...</p>
+            </div>
+          ) : (
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-gray-100 bg-gray-50">
+                  <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Product</th>
+                  <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Category</th>
+                  <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Price</th>
+                  <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Stock</th>
+                  <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Featured</th>
+                  <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                <AnimatePresence>
+                  {filteredProducts.map((product) => (
+                    <motion.tr
+                      key={product._id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="hover:bg-gray-50 transition-colors group"
+                    >
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-50 flex-shrink-0 border border-gray-100">
+                            <img src={product.image} alt="" className="w-full h-full object-cover" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-gray-800">{product.name}</p>
+                            <p className="text-[10px] font-semibold text-gray-400">SKU: {product.sku || product._id.slice(-6).toUpperCase()}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="text-sm text-gray-600 font-semibold">{product.category}</span>
+                      </td>
+                      <td className="px-4 py-3 font-bold text-gray-800 text-sm">₹{product.price}</td>
+                      <td className="px-4 py-3">
+                        <div className="flex flex-col">
+                          <span className="text-sm font-bold text-gray-800">{product.stockCount || 0}</span>
+                          <span className={`text-[10px] font-bold uppercase tracking-wide mt-0.5 ${
+                            product.stock === "In Stock" ? "text-green-600" :
+                            product.stock === "Low Stock" ? "text-orange-500" : "text-red-500"
+                          }`}>
+                            {product.stock}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`px-2 py-0.5 rounded text-xs font-bold ${
+                          product.status === "Active" ? "bg-green-50 text-green-600" : "bg-red-50 text-red-600"
+                        }`}>
+                          {product.status || "Active"}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        <button
+                          onClick={async () => {
+                            try {
+                              await productApi.update(product._id, { featured: !product.featured });
+                              toast.success(`Product ${!product.featured ? "featured" : "unfeatured"}`);
+                              fetchProducts();
+                            } catch {
+                              toast.error("Failed to update feature status");
+                            }
+                          }}
+                          title={product.featured ? "Remove from Featured" : "Mark as Featured"}
+                        >
+                          <Star className={`w-4 h-4 ${product.featured ? "fill-[#D4A017] text-[#D4A017]" : "text-gray-300"}`} />
+                        </button>
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <div className="flex items-center justify-end gap-1 text-gray-400">
+                          <button className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all" title="Preview">
+                            <Eye className="w-3.5 h-3.5" />
+                          </button>
+                          <button onClick={() => handleOpenDrawer(product)} className="p-1 hover:text-blue-500 hover:bg-blue-50 rounded transition-all" title="Edit">
+                            <Edit2 className="w-3.5 h-3.5" />
+                          </button>
+                          <button onClick={() => handleDelete(product._id)} className="p-1 hover:text-red-500 hover:bg-red-50 rounded transition-all" title="Delete">
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                          <button className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all">
+                            <MoreVertical className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </AnimatePresence>
+              </tbody>
+            </table>
+          )}
+        </div>
+
+        {!loading && filteredProducts.length === 0 && (
+          <div className="p-12 text-center text-gray-400">
+            <Package className="w-10 h-10 mx-auto mb-3 opacity-20" />
+            <p className="text-sm font-medium">No products found matching your search.</p>
+          </div>
+        )}
+
+        <div className="px-4 py-3 border-t border-gray-100 flex items-center justify-between">
+          <p className="text-xs font-semibold text-gray-400">Showing {filteredProducts.length} of {products.length} products</p>
+          <div className="flex gap-1.5">
+            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">{"<"}</button>
+            <button className="px-2.5 py-1 bg-[#111827] text-white rounded text-xs font-bold">1</button>
+            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">2</button>
+            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">3</button>
+            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">...</button>
+            <button className="px-2.5 py-1 bg-white border border-gray-200 rounded text-xs font-bold text-gray-600 hover:bg-gray-50">{">"}</button>
+          </div>
+        </div>
+      </div>
+
+      {/* KPI Summary Row */}
+      <div className="grid grid-cols-4 gap-3">
+        {[
+          { n: 8, label: "Total Products", value: products.length, link: null, linkText: "View all products →", color: "bg-blue-500", iconColor: "text-blue-500", iconBg: "bg-blue-50", icon: Package },
+          { n: 9, label: "In Stock", value: inStock, link: null, linkText: "View products →", color: "bg-green-500", iconColor: "text-green-500", iconBg: "bg-green-50", icon: CheckCircle },
+          { n: 10, label: "Low Stock", value: lowStock, link: null, linkText: "View products →", color: "bg-orange-500", iconColor: "text-orange-500", iconBg: "bg-orange-50", icon: AlertTriangle },
+          { n: 11, label: "Out of Stock", value: outOfStock, link: null, linkText: "View products →", color: "bg-red-500", iconColor: "text-red-500", iconBg: "bg-red-50", icon: XCircle },
+        ].map((card) => (
+          <div key={card.n} className="bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+            <div className="flex items-center gap-2 mb-1">
+              <NumberBadge n={card.n} color={card.color} />
+              <p className="text-xs font-semibold text-gray-500">{card.label}</p>
+            </div>
+            <p className="text-2xl font-bold text-gray-800 mt-1">{card.value}</p>
+            <button className="text-xs font-semibold text-blue-500 hover:underline mt-1">{card.linkText}</button>
+          </div>
+        ))}
+      </div>
+
+      {/* Add/Edit Drawer */}
+      <AnimatePresence>
+        {isDrawerOpen && (
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsDrawerOpen(false)} className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" />
+            <motion.div
+              initial={{ opacity: 0, x: "100%" }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed right-0 top-0 h-full w-full max-w-sm bg-white shadow-2xl z-50 flex flex-col"
+            >
+              <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
+                <h2 className="text-base font-bold text-gray-800">{editingProduct ? "Edit Product" : "Add Product"}</h2>
+                <button onClick={() => setIsDrawerOpen(false)} className="p-1.5 hover:bg-white rounded-lg transition-colors">
+                  <X className="w-4 h-4 text-gray-500" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-gray-700">Product Name</label>
+                  <input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 focus:border-[#D4A017] outline-none" placeholder="e.g. Strawberry Powder" />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-700">Category</label>
+                    <select value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none">
+                      <option>Fruit Powders</option>
+                      <option>Fruit Chunks</option>
+                      <option>Smoothie Premix</option>
+                      <option>Chocolates</option>
+                      <option>Combos</option>
+                      <option>Gifts</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-700">Status</label>
+                    <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none">
+                      <option>Active</option>
+                      <option>Inactive</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-700">Price (₹)</label>
+                    <input type="number" required value={formData.price} onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-gray-700">Stock</label>
+                    <input type="number" required value={formData.stockCount} onChange={(e) => setFormData({ ...formData, stockCount: Number(e.target.value) })} className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none" />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-gray-700">Product Image</label>
+                  <div className="flex items-center justify-center bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl p-4">
+                    <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept="image/*" />
+                    {formData.image ? (
+                      <div className="relative w-20 h-20 rounded-lg overflow-hidden">
+                        <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                        <button type="button" onClick={() => setFormData({ ...formData, image: "" })} className="absolute top-1 right-1 bg-white/80 p-0.5 rounded-full">
+                          <X className="w-3 h-3 text-red-500" />
+                        </button>
+                      </div>
+                    ) : (
+                      <button type="button" onClick={() => fileInputRef.current?.click()} className="flex flex-col items-center gap-1.5 text-gray-400 hover:text-gray-700">
+                        <Upload className="w-5 h-5" />
+                        <span className="text-xs font-bold">Upload Image</span>
+                        <span className="text-[10px]">PNG, JPG, JPEG up to 5MB</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </form>
+
+              <div className="p-4 border-t border-gray-100 flex gap-2 bg-white">
+                <button type="button" onClick={() => setIsDrawerOpen(false)} className="flex-1 py-2.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-bold hover:bg-gray-200 transition-all">
+                  Cancel
+                </button>
+                <button type="submit" onClick={handleSubmit} disabled={submitting || isUploading} className="flex-1 py-2.5 bg-[#111827] text-white rounded-lg text-sm font-bold hover:bg-[#1f2937] transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+                  {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save Product"}
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }
-
