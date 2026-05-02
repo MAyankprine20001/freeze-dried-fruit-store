@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star, Truck, Heart, ArrowLeft, ShieldCheck, ShoppingBag, Package, ImageIcon, X, User } from "lucide-react";
@@ -179,113 +179,184 @@ export default function ProductDetail() {
        </motion.div>
       </div>
 
-      {/* Right: Details */}
-      <motion.div 
-       initial={{ opacity: 0, x: 20 }}
-       animate={{ opacity: 1, x: 0 }}
-       className="flex flex-col"
-      >
-       {/* Header section */}
-       <div className="mb-6">
-        <div className="flex items-center gap-2 text-[#D4AF37] mb-3">
-         <div className="flex">
-          {[1, 2, 3, 4, 5].map((star) => (
-           <Star key={star} className={`w-4 h-4 ${star <= Math.round(product.rating || 5) ? 'fill-current text-[#D4AF37]' : 'text-white/20'}`} />
-          ))}
+       {/* Right: Details */}
+       <motion.div 
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="flex flex-col"
+       >
+        {/* Header section */}
+        <div className="mb-6">
+         <div className="flex items-center gap-2 text-[#D4AF37] mb-3">
+          <div className="flex">
+           {[1, 2, 3, 4, 5].map((star) => (
+            <Star key={star} className={`w-4 h-4 ${star <= Math.round(product.rating || 5) ? 'fill-current text-[#D4AF37]' : 'text-white/20'}`} />
+           ))}
+          </div>
+          <span className="text-white/60 text-sm font-medium">{product.rating ? Number(product.rating).toFixed(1) : "5.0"} ({product.reviews || 0} reviews)</span>
          </div>
-         <span className="text-white/60 text-sm font-medium">{product.rating ? Number(product.rating).toFixed(1) : "5.0"} ({product.reviews || 0} reviews)</span>
-        </div>
-        <h1 className="text-4xl lg:text-5xl font-bold tracking-tight mb-4">{product.name}</h1>
-        <div className="flex items-end gap-4 mb-2">
-         <span className="text-4xl font-bold text-[#D4AF37]">₹{product.price}</span>
-         {product.originalPrice && (
-          <span className="text-xl text-white/40 line-through mb-1">₹{product.originalPrice}</span>
-         )}
-        </div>
-        <p className="text-white/40 text-sm">Inclusive of all taxes</p>
-       </div>
+         <h1 className="text-4xl lg:text-5xl font-bold tracking-tight mb-2">{product.name}</h1>
+         
+         {/* Benefit Line */}
+         <p className="text-xl text-white/80 font-medium mb-6">
+          {product.subtitle || "Premium freeze-dried fruits for guilt-free snacking"}
+         </p>
 
-       {/* Add to Cart Actions */}
-       <div className="flex flex-col sm:flex-row gap-4 mb-8">
-        <div className="flex items-center bg-[#1a1a1a] rounded-xl border border-white/10 h-14">
-         <button 
-          onClick={() => setQuantity(Math.max(1, quantity - 1))}
-          className="w-12 h-full flex items-center justify-center text-white/60 hover:text-white transition-colors"
-         >
-          -
-         </button>
-         <span className="w-12 text-center font-bold">{quantity}</span>
-         <button 
-          onClick={() => setQuantity(quantity + 1)}
-          className="w-12 h-full flex items-center justify-center text-white/60 hover:text-white transition-colors"
-         >
-          +
-         </button>
-        </div>
-        
-        <button 
-         onClick={() => {
-          for(let i=0; i<quantity; i++) addToCart(product);
-          toast.success(`${quantity} x ${product.name} added to cart!`);
-         }}
-         className="flex-1 h-14 border-2 border-[#D4AF37] text-[#D4AF37] font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-[#D4AF37] hover:text-black transition-all"
-        >
-         <ShoppingBag className="w-5 h-5" />
-         Add to Cart
-        </button>
-        
-        <button 
-         onClick={() => {
-          for(let i=0; i<quantity; i++) addToCart(product);
-          window.location.href = '/cart';
-         }}
-         className="flex-1 h-14 bg-[#D4AF37] text-black font-bold rounded-xl hover:bg-[#b5952f] transition-all shadow-lg shadow-[#D4AF37]/20"
-        >
-         Buy it now
-        </button>
-       </div>
+         <div className="flex items-end gap-4 mb-2">
+          <span className="text-4xl font-bold text-[#D4AF37]">₹{product.price}</span>
+          {product.originalPrice && (
+           <span className="text-xl text-white/40 line-through mb-1">₹{product.originalPrice}</span>
+          )}
+         </div>
+         <p className="text-white/40 text-sm mb-6">Inclusive of all taxes</p>
 
-       {/* Delivery info */}
-       <div className="bg-[#1a1a1a] border border-white/10 rounded-2xl p-5 mb-8 flex items-center gap-4">
-        <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center shrink-0">
-         <Truck className="w-6 h-6 text-[#D4AF37]" />
-        </div>
-        <div>
-         <h4 className="font-bold text-white mb-1">Fast Delivery</h4>
-         <p className="text-sm text-white/60">Dispatches within 24 hours. Delivered in 3-5 days.</p>
-        </div>
-       </div>
+         {/* Trust Points */}
+         <div className="flex flex-wrap gap-4 mb-6">
+           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5">
+            <span className="text-[#D4AF37]">🍃</span>
+            <span className="text-xs font-bold text-white/80">No Added Sugar</span>
+           </div>
+           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5">
+            <span className="text-[#D4AF37]">🧪</span>
+            <span className="text-xs font-bold text-white/80">No Preservatives</span>
+           </div>
+           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5">
+            <span className="text-[#D4AF37]">🍓</span>
+            <span className="text-xs font-bold text-white/80">Made from Real Fruit</span>
+           </div>
+         </div>
 
-       {/* Description */}
-       <div className="mb-8">
-        <h3 className="text-xl font-bold mb-4">Description:</h3>
-        <p className="text-white/60 leading-relaxed mb-6">
-         {product.subtitle || "Experience the pure essence of nature with our premium freeze-dried selection. Zero additives, maximum flavor, and perfect crunch in every bite."}
-        </p>
-        
-        {product.highlights && product.highlights.length > 0 && (
-         <ul className="space-y-3">
-          {product.highlights.map((highlight: string, idx: number) => (
-           <li key={idx} className="flex items-start gap-3 text-white/80">
-            <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#D4AF37] shrink-0" />
-            <span>{highlight}</span>
-           </li>
-          ))}
-         </ul>
-        )}
-       </div>
+         {/* Urgency Line */}
+         <div className="text-white/80 font-medium flex items-center gap-2 mb-2">
+           <span className="text-xl">🔥</span> 
+           {product.urgencyLine || "Perfect for guilt-free snacking & sweet cravings"}
+         </div>
+        </div>
 
-       {/* Store details equivalent */}
-       <div className="pt-6 border-t border-white/10 flex items-center gap-4">
-        <div className="w-12 h-12 rounded-full border-2 border-[#D4AF37] flex items-center justify-center bg-black font-serif text-lg font-bold text-[#D4AF37]">
-         TDF
+        {/* Add to Cart Actions */}
+        <div className="mb-8">
+         <div className="flex flex-col sm:flex-row gap-4 mb-3">
+          <div className="flex items-center bg-[#1a1a1a] rounded-xl border border-white/10 h-14">
+           <button 
+            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+            className="w-12 h-full flex items-center justify-center text-white/60 hover:text-white transition-colors"
+           >
+            -
+           </button>
+           <span className="w-12 text-center font-bold">{quantity}</span>
+           <button 
+            onClick={() => setQuantity(quantity + 1)}
+            className="w-12 h-full flex items-center justify-center text-white/60 hover:text-white transition-colors"
+           >
+            +
+           </button>
+          </div>
+          
+          <button 
+           onClick={() => {
+            for(let i=0; i<quantity; i++) addToCart(product);
+            toast.success(`${quantity} x ${product.name} added to cart!`);
+           }}
+           className="flex-1 h-14 border-2 border-[#D4AF37] text-[#D4AF37] font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-[#D4AF37] hover:text-black transition-all"
+          >
+           <ShoppingBag className="w-5 h-5" />
+           Add to Cart
+          </button>
+          
+          <button 
+           onClick={() => {
+            for(let i=0; i<quantity; i++) addToCart(product);
+            window.location.href = '/cart';
+           }}
+           className="flex-1 h-14 bg-[#D4AF37] text-black font-bold rounded-xl hover:bg-[#b5952f] transition-all shadow-lg shadow-[#D4AF37]/20"
+          >
+           Buy it now
+          </button>
+         </div>
+         {/* Low Stock Indicator */}
+         <div className="flex items-center gap-2 text-sm">
+          <div className={`w-2 h-2 rounded-full ${product.stock === 'Out of Stock' ? 'bg-red-500' : 'bg-green-500 animate-pulse'}`} />
+          <span className={product.stock === 'Out of Stock' ? 'text-red-400' : 'text-green-400'}>
+           {product.stock === 'Out of Stock' ? 'Out of stock' : 'Only few left in stock - order soon!'}
+          </span>
+         </div>
         </div>
-        <div>
-         <h4 className="font-bold text-white">The Dry Factory</h4>
-         <p className="text-xs text-white/40">Premium Freeze-Dried Fruits</p>
+
+        {/* Delivery & Security */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+         <div className="bg-[#1a1a1a] border border-white/10 rounded-2xl p-4 flex items-center gap-4 hover:border-white/20 transition-colors">
+          <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center shrink-0">
+           <Truck className="w-5 h-5 text-[#D4AF37]" />
+          </div>
+          <div>
+           <h4 className="font-bold text-white text-sm mb-0.5">Fast Delivery</h4>
+           <p className="text-xs text-white/50">Dispatched within 24 hours<br/>Delivered in 3-5 days</p>
+          </div>
+         </div>
+         <div className="bg-[#1a1a1a] border border-white/10 rounded-2xl p-4 flex items-center gap-4 hover:border-white/20 transition-colors">
+          <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center shrink-0">
+           <ShieldCheck className="w-5 h-5 text-[#D4AF37]" />
+          </div>
+          <div>
+           <h4 className="font-bold text-white text-sm mb-0.5">Secure Checkout</h4>
+           <p className="text-xs text-white/50">100% safe & secure<br/>transactions</p>
+          </div>
+         </div>
         </div>
-       </div>
-      </motion.div>
+
+        {/* Description & About TDF Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+         {/* Description */}
+         <div className="bg-[#161616] border border-white/5 rounded-2xl p-6">
+          <h3 className="text-lg font-bold mb-4">Description</h3>
+          <p className="text-white/60 text-sm leading-relaxed mb-4">
+           {product.description || "Experience the pure essence of nature with our premium freeze-dried products. No additives, no compromises - just real ingredients for a wholesome snacking experience."}
+          </p>
+          
+          <ul className="space-y-3">
+           {(product.highlights && product.highlights.length > 0 ? product.highlights : [
+             "Freeze-dried chunks for real fruit taste",
+             "Premium quality natural ingredients",
+             "No preservatives, no artificial colors or flavors",
+             "Light, crunchy, and naturally satisfying"
+           ]).map((highlight: string, idx: number) => (
+            <li key={idx} className="flex items-start gap-3 text-white/80 text-sm">
+             <div className="mt-1 flex items-center justify-center w-4 h-4 rounded-full bg-[#D4AF37]/20 shrink-0">
+               <span className="text-[#D4AF37] text-[10px]">✓</span>
+             </div>
+             <span>{highlight}</span>
+            </li>
+           ))}
+          </ul>
+          <p className="mt-6 text-[#D4AF37] text-sm font-bold italic">Perfect balance of taste + health in every bite.</p>
+         </div>
+
+         {/* About The Dry Factory */}
+         <div className="bg-[#161616] border border-white/5 rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+          <h3 className="text-lg font-bold mb-6">About The Dry Factory</h3>
+          <div className="w-16 h-16 rounded-full border-2 border-[#D4AF37] flex items-center justify-center bg-black font-serif text-2xl font-bold text-[#D4AF37] mb-4">
+           TDF
+          </div>
+          <p className="text-white/80 text-sm mb-2 font-medium">Trusted for clean, real-fruit products.</p>
+          <p className="text-white/50 text-xs mb-8">Made with care • No shortcuts</p>
+          
+          <div className="flex w-full justify-between px-2">
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-2xl">🍃</span>
+              <span className="text-[10px] font-bold text-white/70">100% Natural</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-2xl">✨</span>
+              <span className="text-[10px] font-bold text-white/70">Clean Ingredients</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-white/80" />
+              <span className="text-[10px] font-bold text-white/70">Quality Assured</span>
+            </div>
+          </div>
+         </div>
+        </div>
+       </motion.div>
      </div>
      
      {/* Reviews Section */}
@@ -425,25 +496,50 @@ export default function ProductDetail() {
      {/* Similar Items */}
      {similarProducts.length > 0 && (
       <div className="border-t border-white/10 pt-16">
-       <h2 className="text-2xl font-bold mb-8">Similar items</h2>
+       <div className="flex items-center justify-between mb-8">
+        <h2 className="text-2xl font-bold">You may also like</h2>
+        <Link to={`/products?category=${product.category}`} className="text-sm font-bold text-white/60 hover:text-white flex items-center gap-1 transition-colors">
+         View all <span className="textlg leading-none">→</span>
+        </Link>
+       </div>
        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {similarProducts.map((p) => (
-         <Link 
+         <div 
           key={p._id} 
-          to={`/product/${p._id}`}
-          className="group bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/10 hover:border-[#D4AF37]/50 transition-colors block"
+          className="group bg-[#161616] rounded-2xl overflow-hidden border border-white/10 hover:border-[#D4AF37]/35 transition-all block relative cursor-pointer"
+          onClick={() => window.location.href = `/product/${p._id}`}
          >
-          <div className="aspect-[4/3] bg-[#2a2a2a] overflow-hidden relative">
-           <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10" />
+          <button
+           aria-label="Add to wishlist"
+           className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:text-red-400 hover:bg-white/10 transition-all opacity-0 group-hover:opacity-100"
+          >
+           <Heart className="w-3.5 h-3.5" />
+          </button>
+          
+          <div className="aspect-[4/3] bg-[#222] overflow-hidden relative">
+           <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10 pointer-events-none" />
            <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
           </div>
-          <div className="p-5">
-           <h3 className="font-bold text-white mb-1 group-hover:text-[#D4AF37] transition-colors">{p.name}</h3>
-           <div className="flex items-center justify-between mt-3">
-            <span className="font-bold text-lg">₹{p.price}</span>
+          <div className="p-5 flex flex-col flex-1">
+           <h3 className="font-bold text-white text-base leading-snug group-hover:text-[#D4AF37] transition-colors">{p.name}</h3>
+           <p className="text-white/60 text-xs mt-1.5 line-clamp-2">{p.subtitle || "Premium freeze-dried fruit selection."}</p>
+           
+           <div className="mt-4 pt-4 border-t border-white/10">
+            <span className="font-bold text-lg text-white mb-3 block">₹{p.price}</span>
+            <button 
+             onClick={(e) => {
+              e.stopPropagation();
+              addToCart(p);
+              toast.success(`${p.name} added to cart!`);
+             }}
+             className="w-full py-2.5 bg-transparent border border-[#D4AF37]/50 text-[#D4AF37] rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#D4AF37] hover:text-black transition-all"
+            >
+             <ShoppingBag className="w-4 h-4" />
+             Add to Cart
+            </button>
            </div>
           </div>
-         </Link>
+         </div>
         ))}
        </div>
       </div>

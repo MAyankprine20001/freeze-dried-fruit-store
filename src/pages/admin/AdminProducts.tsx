@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { 
  Package, 
  Plus, 
@@ -12,7 +12,12 @@ import {
  Loader2,
  Image as ImageIcon,
  Upload,
- Link as LinkIcon
+ Link as LinkIcon,
+ Star,
+ CheckCircle,
+ AlertTriangle,
+ XCircle,
+ ArrowRight
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { productApi } from "../../api/product.api";
@@ -41,7 +46,9 @@ export default function AdminProducts() {
   image: "",
   subtitle: "",
   weight: "",
-  description: ""
+  description: "",
+  featured: false,
+  urgencyLine: ""
  });
 
  const fetchProducts = async () => {
@@ -72,7 +79,9 @@ export default function AdminProducts() {
     image: product.image,
     subtitle: product.subtitle || "",
     weight: product.weight || "",
-    description: product.description || ""
+    description: product.description || "",
+    featured: product.featured || false,
+    urgencyLine: product.urgencyLine || ""
    });
   } else {
    setEditingProduct(null);
@@ -85,7 +94,9 @@ export default function AdminProducts() {
     image: "",
     subtitle: "",
     weight: "",
-    description: ""
+    description: "",
+    featured: false,
+    urgencyLine: ""
    });
   }
   setIsModalOpen(true);
@@ -200,6 +211,7 @@ export default function AdminProducts() {
          <th className="px-6 py-4 text-xs font-bold text-[#adb5bd] uppercase tracking-wider">Price</th>
          <th className="px-6 py-4 text-xs font-bold text-[#adb5bd] uppercase tracking-wider">Stock</th>
          <th className="px-6 py-4 text-xs font-bold text-[#adb5bd] uppercase tracking-wider">Status</th>
+         <th className="px-6 py-4 text-xs font-bold text-[#adb5bd] uppercase tracking-wider text-center">Featured</th>
          <th className="px-6 py-4 text-xs font-bold text-[#adb5bd] uppercase tracking-wider text-right">Actions</th>
         </tr>
        </thead>
@@ -237,6 +249,23 @@ export default function AdminProducts() {
             }`}>
              {product.stock}
             </span>
+           </td>
+           <td className="px-6 py-4 text-center">
+            <button 
+             onClick={async () => {
+              try {
+               await productApi.update(product._id, { featured: !product.featured });
+               toast.success(`Product ${!product.featured ? 'featured' : 'unfeatured'}`);
+               fetchProducts();
+              } catch (e) {
+               toast.error("Failed to update feature status");
+              }
+             }}
+             className="p-1 hover:bg-[#f8f9fa] rounded-lg transition-colors"
+             title={product.featured ? "Remove from Featured" : "Mark as Featured"}
+            >
+             <Star className={`w-5 h-5 ${product.featured ? 'fill-[#D4AF37] text-[#D4AF37]' : 'text-[#adb5bd]'}`} />
+            </button>
            </td>
            <td className="px-6 py-4 text-right">
             <div className="flex items-center justify-end gap-2">
@@ -289,6 +318,46 @@ export default function AdminProducts() {
       <button className="px-3 py-1.5 bg-white border border-[#eef0f2] rounded-lg text-xs font-bold text-[#1a1a1a] hover:bg-[#fafbfc]">Next</button>
      </div>
     </div>
+   </div>
+
+   {/* Summary Cards */}
+   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+     {/* Total Products */}
+     <div className="bg-white rounded-2xl p-6 border border-[#eef0f2] shadow-sm flex flex-col items-center justify-center text-center hover:border-blue-200 transition-colors cursor-pointer group">
+       <div className="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+         <Package className="w-6 h-6" />
+       </div>
+       <p className="text-sm font-bold text-[#adb5bd] uppercase tracking-wider mb-1">Total Products</p>
+       <h3 className="text-3xl font-black text-[#1a1a1a] mb-4">{products.length}</h3>
+       <button className="text-sm text-blue-500 font-bold flex items-center gap-1 hover:gap-2 transition-all">View all products <ArrowRight className="w-4 h-4" /></button>
+     </div>
+     {/* In Stock */}
+     <div className="bg-white rounded-2xl p-6 border border-[#eef0f2] shadow-sm flex flex-col items-center justify-center text-center hover:border-green-200 transition-colors cursor-pointer group">
+       <div className="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+         <CheckCircle className="w-6 h-6" />
+       </div>
+       <p className="text-sm font-bold text-[#adb5bd] uppercase tracking-wider mb-1">In Stock</p>
+       <h3 className="text-3xl font-black text-[#1a1a1a] mb-4">{products.filter(p => p.stock === 'In Stock').length}</h3>
+       <button className="text-sm text-green-500 font-bold flex items-center gap-1 hover:gap-2 transition-all">View products <ArrowRight className="w-4 h-4" /></button>
+     </div>
+     {/* Low Stock */}
+     <div className="bg-white rounded-2xl p-6 border border-[#eef0f2] shadow-sm flex flex-col items-center justify-center text-center hover:border-orange-200 transition-colors cursor-pointer group">
+       <div className="w-12 h-12 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+         <AlertTriangle className="w-6 h-6" />
+       </div>
+       <p className="text-sm font-bold text-[#adb5bd] uppercase tracking-wider mb-1">Low Stock</p>
+       <h3 className="text-3xl font-black text-[#1a1a1a] mb-4">{products.filter(p => p.stock === 'Low Stock').length}</h3>
+       <button className="text-sm text-orange-500 font-bold flex items-center gap-1 hover:gap-2 transition-all">View products <ArrowRight className="w-4 h-4" /></button>
+     </div>
+     {/* Out of Stock */}
+     <div className="bg-white rounded-2xl p-6 border border-[#eef0f2] shadow-sm flex flex-col items-center justify-center text-center hover:border-red-200 transition-colors cursor-pointer group">
+       <div className="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+         <XCircle className="w-6 h-6" />
+       </div>
+       <p className="text-sm font-bold text-[#adb5bd] uppercase tracking-wider mb-1">Out of Stock</p>
+       <h3 className="text-3xl font-black text-[#1a1a1a] mb-4">{products.filter(p => p.stock === 'Out of Stock').length}</h3>
+       <button className="text-sm text-red-500 font-bold flex items-center gap-1 hover:gap-2 transition-all">View products <ArrowRight className="w-4 h-4" /></button>
+     </div>
    </div>
 
    {/* Add/Edit Modal */}
@@ -466,13 +535,27 @@ export default function AdminProducts() {
             />
            </div>
            <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-[#1a1a1a] ml-1">Subtitle</label>
+            <label className="text-sm font-semibold text-[#1a1a1a] ml-1">Urgency Line</label>
             <input 
              type="text"
-             value={formData.subtitle}
-             onChange={(e) => setFormData({...formData, subtitle: e.target.value})}
+             value={formData.urgencyLine}
+             onChange={(e) => setFormData({...formData, urgencyLine: e.target.value})}
              className="w-full px-4 py-3 bg-[#f8f9fa] border-none rounded-xl text-sm focus:ring-2 focus:ring-[#1a1a1a]/5 outline-none"
+             placeholder="e.g. 🔥 Perfect for guilt-free snacking"
             />
+           </div>
+           
+           <div className="flex items-center gap-3 mt-2 px-2">
+            <input 
+             type="checkbox" 
+             id="featured" 
+             checked={formData.featured}
+             onChange={(e) => setFormData({...formData, featured: e.target.checked})}
+             className="w-5 h-5 rounded text-[#1a1a1a] focus:ring-[#1a1a1a]"
+            />
+            <label htmlFor="featured" className="text-sm font-semibold text-[#1a1a1a] cursor-pointer">
+             Mark as Featured Product
+            </label>
            </div>
           </div>
          </div>

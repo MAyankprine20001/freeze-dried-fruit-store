@@ -76,22 +76,20 @@ function SafeImg({
 
 const categories = [
  { id: "all", label: "All Products", emoji: "✨" },
- { id: "smoothie-premix", label: "Smoothie Premix", emoji: "🥤" },
- { id: "chocolates", label: "Chocolates", emoji: "🍫" },
- { id: "fruit-chunks", label: "Fruit Chunks", emoji: "🍓" },
- { id: "fruit-powders", label: "Fruit Powders", emoji: "🌟" },
- { id: "combos", label: "Combos", emoji: "📦" },
- { id: "gifts", label: "Gifts", emoji: "🎁" },
+ { id: "smoothie-premix", label: "Smoothies (Ready in 10 sec)", emoji: "🥤" },
+ { id: "chocolates", label: "Chocolates (Guilt-free indulgence)", emoji: "🍫" },
+ { id: "fruit-chunks", label: "Fruit Chunks (Healthy snacking)", emoji: "🍓" },
+ { id: "bestsellers", label: "Bestsellers", emoji: "⭐" },
+ { id: "combos", label: "Combos & Gifts", emoji: "🎁" },
 ];
 
 const categoryBanners: Record<string, any> = {
- all: { title: "Shop All Products", sub: "Real fruit. Zero additives. Maximum flavor.", color: "#D4AF37", emoji: "✨" },
- "smoothie-premix": { title: "Smoothie Premix", sub: "Ready in 10 seconds. 100% natural.", color: "#D4AF37", emoji: "🥤" },
- chocolates: { title: "Chocolates", sub: "Real fruit meets rich couverture chocolate.", color: "#D4AF37", emoji: "🍫" },
- "fruit-chunks": { title: "Fruit Chunks", sub: "Intensely flavored crunchy chunks.", color: "#D4AF37", emoji: "🍓" },
- "fruit-powders": { title: "Fruit Powders", sub: "Concentrated fruit essence in fine powder.", color: "#D4AF37", emoji: "🌟" },
- combos: { title: "Combos & Bundles", sub: "More flavors, bigger savings.", color: "#D4AF37", emoji: "📦" },
- gifts: { title: "Gifts", sub: "Premium gift hampers for special occasions.", color: "#D4AF37", emoji: "🎁" },
+ all: { title: "Real Fruit. Real Taste. Zero Compromise.", sub: "Snack smarter with real fruit products made for taste, health, and convenience.", color: "#D4AF37", emoji: "✨" },
+ "smoothie-premix": { title: "Smoothies (Ready in 10 sec)", sub: "Ready in 10 seconds. 100% natural.", color: "#D4AF37", emoji: "🥤" },
+ chocolates: { title: "Chocolates (Guilt-free indulgence)", sub: "Real fruit meets rich couverture chocolate.", color: "#D4AF37", emoji: "🍫" },
+ "fruit-chunks": { title: "Fruit Chunks (Healthy snacking)", sub: "Intensely flavored crunchy chunks.", color: "#D4AF37", emoji: "🍓" },
+ "bestsellers": { title: "Bestsellers", sub: "Our most loved real fruit products.", color: "#D4AF37", emoji: "⭐" },
+ combos: { title: "Combos & Gifts", sub: "Premium gift hampers and bundles for special occasions.", color: "#D4AF37", emoji: "🎁" },
 };
 
 // ─── Product Card ─────────────────────────────────────────────────────────────
@@ -127,79 +125,119 @@ function ProductCard({ product, index }: { product: any; index: number }) {
    animate={{ opacity: 1, y: 0 }}
    transition={{ delay: index * 0.05 }}
    onClick={() => navigate(`/product/${product._id || product.id}`)}
-   className="group bg-[#161616] rounded-[20px] overflow-hidden border border-white/[0.07] hover:border-[#D4AF37]/35 hover:-translate-y-1 transition-all duration-300 flex flex-col cursor-pointer"
+   className="group bg-[#161616] rounded-[20px] overflow-hidden border border-white/[0.07] hover:border-[#D4AF37]/35 hover:-translate-y-2 transition-all duration-300 flex flex-col cursor-pointer relative"
    style={{
     boxShadow: "0 0 0 0 transparent",
    }}
    whileHover={{
-    boxShadow: "0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.1)",
+    boxShadow: "0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.2)",
    }}
   >
+   {/* Bestseller Badge */}
+   {product.featured && (
+    <div className="absolute top-3 left-3 z-20 px-2.5 py-1 bg-[#D4AF37] text-black text-[10px] font-bold rounded-sm tracking-widest uppercase shadow-lg shadow-[#D4AF37]/20">
+     Bestseller
+    </div>
+   )}
+
    {/* ── Image ── */}
    <div className="relative aspect-[4/3] overflow-hidden bg-[#222]">
-    {discount > 0 && (
-     <div className="absolute top-2.5 left-2.5 z-10 px-2 py-1 bg-[#D4AF37] text-black text-[10px] font-bold rounded-md tracking-wider">
+    {discount > 0 && !product.featured && (
+     <div className="absolute top-3 left-3 z-20 px-2 py-1 bg-red-500 text-white text-[10px] font-bold rounded-md tracking-wider">
       -{discount}%
      </div>
     )}
+    
     <button
      onClick={handleWishlist}
      aria-label="Add to wishlist"
-     className="absolute top-2.5 right-2.5 z-10 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:text-red-400 transition-colors"
+     className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:text-red-400 hover:bg-white/10 transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100 translate-y-0 sm:translate-y-2 sm:group-hover:translate-y-0"
     >
      <Heart className="w-3.5 h-3.5" />
     </button>
+    <button
+     aria-label="Quick View"
+     className="absolute top-14 right-3 z-20 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:text-[#D4AF37] hover:bg-white/10 transition-all opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 delay-75"
+    >
+     <Eye className="w-3.5 h-3.5" />
+    </button>
+    <button
+     onClick={handleAddToCart}
+     aria-label="Add to Cart"
+     className="absolute top-24 right-3 z-20 w-8 h-8 rounded-full bg-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/30 flex items-center justify-center hover:scale-110 transition-all opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 delay-150"
+    >
+     {added ? <CheckCircle2 className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
+    </button>
+
     <SafeImg
      src={product.image}
      alt={product.name}
      emoji={product.emoji}
      gradientFrom={product.gradientFrom || "#1a1a1a"}
      gradientTo={product.gradientTo || "#333"}
-     className="group-hover:scale-105 transition-transform duration-700"
+     className="group-hover:scale-110 transition-transform duration-700"
     />
     {/* Bottom gradient overlay */}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent pointer-events-none" />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
    </div>
 
    {/* ── Body ── */}
-   <div className="p-4 flex flex-col flex-1 gap-2.5">
+   <div className="p-5 flex flex-col flex-1 gap-3 relative z-10 bg-[#161616]">
     {/* Product info */}
     <div>
-     <p className="text-[#D4AF37] text-[10px] font-bold tracking-widest uppercase mb-1">
+     <p className="text-[#D4AF37] text-[10px] font-bold tracking-widest uppercase mb-1.5">
       {product.category}
      </p>
-     <h3 className="text-white font-semibold text-[15px] leading-snug line-clamp-2 group-hover:text-[#D4AF37] transition-colors duration-200">
+     <h3 className="text-white font-bold text-lg leading-snug line-clamp-2 group-hover:text-[#D4AF37] transition-colors duration-200">
       {product.name}
      </h3>
      {product.subtitle && (
-      <p className="text-white/50 text-[11px] italic mt-0.5 line-clamp-1">{product.subtitle}</p>
+      <p className="text-white/60 text-xs mt-1.5 line-clamp-2 leading-relaxed">{product.subtitle}</p>
      )}
      {product.weight && (
-      <p className="text-white/35 text-[11px] mt-0.5">{product.weight}</p>
+      <p className="text-white/40 text-[11px] mt-2 font-medium">{product.weight}</p>
      )}
+
+     {/* Trust Badges */}
+     <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-4">
+       <div className="flex items-center gap-1.5">
+         <Leaf className="w-3 h-3 text-[#D4AF37]" />
+         <span className="text-[10px] text-white/50 font-medium">No Sugar</span>
+       </div>
+       <div className="flex items-center gap-1.5">
+         <Shield className="w-3 h-3 text-[#D4AF37]" />
+         <span className="text-[10px] text-white/50 font-medium">No Preservatives</span>
+       </div>
+       <div className="flex items-center gap-1.5">
+         <Sparkles className="w-3 h-3 text-[#D4AF37]" />
+         <span className="text-[10px] text-white/50 font-medium">Real Fruit</span>
+       </div>
+     </div>
     </div>
 
     {/* Divider */}
-    <div className="h-px bg-white/[0.06]" />
+    <div className="h-px bg-white/[0.06] my-1" />
 
     {/* Price + CTA */}
-    <div className="flex flex-col gap-2.5 mt-auto">
+    <div className="flex flex-col gap-3 mt-auto">
      {/* Price row */}
      <div className="flex items-center justify-between">
-      <div className="flex items-baseline gap-1.5">
-       <span className="text-[18px] font-bold text-white tracking-tight leading-none">
+      <div className="flex items-baseline gap-2">
+       <span className="text-xl font-bold text-white tracking-tight leading-none">
         ₹{product.price}
        </span>
        {product.originalPrice && (
-        <span className="text-xs text-white/30 line-through leading-none">
+        <span className="text-xs text-white/30 line-through leading-none font-medium">
          ₹{product.originalPrice}
         </span>
        )}
       </div>
       <span
-       className={`text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border ${!product.stock || product.stock === "In Stock"
+       className={`text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-sm border ${!product.stock || product.stock === "In Stock"
          ? "text-green-400 bg-green-500/10 border-green-500/20"
-         : "text-orange-400 bg-orange-500/10 border-orange-500/20"
+         : product.stock === "Low Stock"
+         ? "text-orange-400 bg-orange-500/10 border-orange-500/20"
+         : "text-red-400 bg-red-500/10 border-red-500/20"
         }`}
       >
        {product.stock || "In Stock"}
@@ -209,8 +247,8 @@ function ProductCard({ product, index }: { product: any; index: number }) {
      {/* Add to Cart button */}
      <button
       onClick={handleAddToCart}
-      className={`w-full py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all duration-200 active:scale-[0.97] ${added
-        ? "bg-green-700 text-white shadow-none"
+      className={`w-full py-3 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all duration-200 active:scale-[0.98] ${added
+        ? "bg-green-600 text-white shadow-none"
         : "bg-[#D4AF37] text-black hover:bg-[#c4a030] shadow-lg shadow-[#D4AF37]/10"
        }`}
      >
