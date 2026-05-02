@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Star, Zap, Heart, Package, ChevronLeft, ChevronRight, Leaf, FlaskConical, Timer, Dumbbell, Briefcase, Laptop, Baby, Sparkles, Snowflake, CheckCircle2, Droplets } from 'lucide-react';
@@ -549,8 +549,8 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="font-serif text-4xl lg:text-5xl font-bold text-white mb-6">
-              Ready to Taste the{' '}
-              <span className="text-[#D4AF37]">Difference?</span>
+              Start Your Healthy Routine{' '}
+              <span className="text-[#D4AF37]">Today</span>
             </h2>
             <p className="text-white/75 text-lg mb-10 max-w-xl mx-auto">
               Explore our full range of freeze-dried fruit products and discover why thousands of health-conscious families choose Freeze Fruit.
