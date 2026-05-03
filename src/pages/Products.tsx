@@ -59,8 +59,14 @@ const categories = [
   { id: "combos", label: "Combos & Gifts", icon: "🎁" },
 ];
 
-const categoryBanners: Record<string, { title: string; sub: string }> = {
-  all: { title: "Real Fruit. Real Taste. Zero Compromise.", sub: "Snack smarter with real fruit products made for taste, health, and convenience." },
+type CategoryBanner = { title: string; sub: string; titleLines?: readonly [string, string] };
+
+const categoryBanners: Record<string, CategoryBanner> = {
+  all: {
+    title: "Real Fruit. Real Taste. Zero Compromise.",
+    titleLines: ["Real Fruit. Real Taste.", "Zero Compromise."],
+    sub: "Snack smarter with real fruit products made for taste, health, and convenience.",
+  },
   "smoothie-premix": { title: "Smoothies (Ready in 10 sec)", sub: "Ready in 10 seconds. 100% natural." },
   chocolates: { title: "Chocolates (Guilt-free indulgence)", sub: "Real fruit meets rich couverture chocolate." },
   "fruit-chunks": { title: "Fruit Chunks (Healthy snacking)", sub: "Intensely flavored crunchy chunks." },
@@ -297,12 +303,26 @@ export default function Products() {
             animate={{ opacity: 1, y: 0 }}
             className="text-2xl sm:text-4xl font-black mb-2 sm:mb-3 tracking-tight"
           >
-            {banner.title.split(".").map((part, i, arr) =>
-              i < arr.length - 1 ? (
-                <span key={i}>{part}.<br className="hidden sm:block" /></span>
-              ) : (
-                <span key={i} className="text-[#D4AF37]">{part}</span>
-              )
+            {banner.titleLines ? (
+              <>
+                <span className="block">{banner.titleLines[0]}</span>
+                <span className="block text-[#D4AF37]">{banner.titleLines[1]}</span>
+              </>
+            ) : (
+              banner.title
+                .split(".")
+                .filter((p) => p.trim().length > 0)
+                .map((part, i, arr) =>
+                  i < arr.length - 1 ? (
+                    <span key={i}>
+                      {part.trim()}.<br className="hidden sm:block" />
+                    </span>
+                  ) : (
+                    <span key={i} className="text-[#D4AF37]">
+                      {part.trim()}
+                    </span>
+                  )
+                )
             )}
           </motion.h1>
           <motion.p
