@@ -17,21 +17,21 @@ const FREE_SHIPPING_THRESHOLD = 499;
 // ─── Trust Strip ──────────────────────────────────────────────────────────────
 function TrustStrip() {
   const items = [
-    { icon: <Award className="w-4 h-4" />, label: "100% Natural", sub: "Made from real fruits" },
-    { icon: <Shield className="w-4 h-4" />, label: "No Preservatives", sub: "Nothing artificial" },
-    { icon: <Lock className="w-4 h-4" />, label: "Secure Payments", sub: "100% safe & secure" },
-    { icon: <Truck className="w-4 h-4" />, label: "Pan India Delivery", sub: "Fast & reliable shipping" },
-    { icon: <RotateCcw className="w-4 h-4" />, label: "Hassle Free Returns", sub: "Easy returns in 7 days" },
+    { icon: <Award className="w-5 h-5 shrink-0" />, label: "100% Natural", sub: "Made from real fruits" },
+    { icon: <Shield className="w-5 h-5 shrink-0" />, label: "No Preservatives", sub: "Nothing artificial" },
+    { icon: <Lock className="w-5 h-5 shrink-0" />, label: "Secure Payments", sub: "100% safe & secure" },
+    { icon: <Truck className="w-5 h-5 shrink-0" />, label: "Pan India Delivery", sub: "Fast & reliable shipping" },
+    { icon: <RotateCcw className="w-5 h-5 shrink-0" />, label: "Hassle Free Returns", sub: "Easy returns in 7 days" },
   ];
   return (
     <div className="border-t border-white/[0.07] mt-10 py-5">
       <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
         {items.map((item) => (
-          <div key={item.label} className="flex items-center gap-2.5 text-white/50">
+          <div key={item.label} className="flex items-center gap-3 text-white/50">
             <span className="text-[#D4AF37]">{item.icon}</span>
             <div>
-              <p className="text-xs font-bold text-white/65 leading-none">{item.label}</p>
-              <p className="text-[10px] text-white/35 mt-0.5">{item.sub}</p>
+              <p className="text-sm sm:text-base font-bold text-white leading-tight">{item.label}</p>
+              <p className="text-xs sm:text-sm text-white/45 mt-1 leading-snug">{item.sub}</p>
             </div>
           </div>
         ))}

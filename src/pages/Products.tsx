@@ -236,22 +236,22 @@ function ProductCard({ product, index }: { product: any; index: number }) {
 // ─── Trust Strip ──────────────────────────────────────────────────────────────
 function TrustStrip() {
   const items = [
-    { icon: <Award className="w-4 h-4" />, label: "100% Natural", sub: "Made from real fruits" },
-    { icon: <Shield className="w-4 h-4" />, label: "No Preservatives", sub: "Nothing artificial" },
-    { icon: <Leaf className="w-4 h-4" />, label: "No Added Sugar", sub: "Only natural sweetness" },
-    { icon: <Zap className="w-4 h-4" />, label: "Freeze-Dried", sub: "Locks in nutrients & flavor" },
-    { icon: <Lock className="w-4 h-4" />, label: "Secure Checkout", sub: "Safe & trusted payments" },
-    { icon: <Truck className="w-4 h-4" />, label: "Pan India Delivery", sub: "Fast & reliable shipping" },
+    { icon: <Award className="w-5 h-5 shrink-0" />, label: "100% Natural", sub: "Made from real fruits" },
+    { icon: <Shield className="w-5 h-5 shrink-0" />, label: "No Preservatives", sub: "Nothing artificial" },
+    { icon: <Leaf className="w-5 h-5 shrink-0" />, label: "No Added Sugar", sub: "Only natural sweetness" },
+    { icon: <Zap className="w-5 h-5 shrink-0" />, label: "Freeze-Dried", sub: "Locks in nutrients & flavor" },
+    { icon: <Lock className="w-5 h-5 shrink-0" />, label: "Secure Checkout", sub: "Safe & trusted payments" },
+    { icon: <Truck className="w-5 h-5 shrink-0" />, label: "Pan India Delivery", sub: "Fast & reliable shipping" },
   ];
   return (
     <div className="border-t border-white/[0.07] mt-12 py-6">
       <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
         {items.map((item) => (
-          <div key={item.label} className="flex items-center gap-2.5 text-white/50 hover:text-white/70 transition-colors">
+          <div key={item.label} className="flex items-center gap-3 text-white/50 hover:text-white/70 transition-colors">
             <span className="text-[#D4AF37]">{item.icon}</span>
             <div>
-              <p className="text-xs font-bold text-white/70 leading-none">{item.label}</p>
-              <p className="text-[10px] text-white/35 mt-0.5">{item.sub}</p>
+              <p className="text-sm sm:text-base font-bold text-white leading-tight">{item.label}</p>
+              <p className="text-xs sm:text-sm text-white/45 mt-1 leading-snug">{item.sub}</p>
             </div>
           </div>
         ))}

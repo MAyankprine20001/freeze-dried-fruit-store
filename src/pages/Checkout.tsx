@@ -410,16 +410,16 @@ export default function Checkout() {
             <div className="bg-[#161616] rounded-2xl border border-white/[0.08] p-5">
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { icon: <Award className="w-4 h-4" />, label: "100% Natural", sub: "Made from real fruits" },
-                  { icon: <Shield className="w-4 h-4" />, label: "No Preservatives", sub: "Nothing artificial" },
-                  { icon: <Leaf className="w-4 h-4" />, label: "No Added Sugar", sub: "Only natural sweetness" },
-                  { icon: <ShieldCheck className="w-4 h-4" />, label: "Premium Quality", sub: "Lab tested & safe" },
+                  { icon: <Award className="w-5 h-5 shrink-0" />, label: "100% Natural", sub: "Made from real fruits" },
+                  { icon: <Shield className="w-5 h-5 shrink-0" />, label: "No Preservatives", sub: "Nothing artificial" },
+                  { icon: <Leaf className="w-5 h-5 shrink-0" />, label: "No Added Sugar", sub: "Only natural sweetness" },
+                  { icon: <ShieldCheck className="w-5 h-5 shrink-0" />, label: "Premium Quality", sub: "Lab tested & safe" },
                 ].map((item) => (
-                  <div key={item.label} className="flex items-center gap-2">
+                  <div key={item.label} className="flex items-center gap-2.5">
                     <span className="text-[#D4AF37]">{item.icon}</span>
                     <div>
-                      <p className="text-xs font-bold text-white/65">{item.label}</p>
-                      <p className="text-[10px] text-white/30">{item.sub}</p>
+                      <p className="text-sm font-bold text-white leading-tight">{item.label}</p>
+                      <p className="text-xs sm:text-sm text-white/45 mt-1 leading-snug">{item.sub}</p>
                     </div>
                   </div>
                 ))}
