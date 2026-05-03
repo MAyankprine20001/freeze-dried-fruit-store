@@ -48,12 +48,12 @@ export default function WhyFreezeDryingSection() {
         .tdf-content {
           position: relative;
           z-index: 1;
-          max-width: 1440px;
+          max-width: 1600px;
           margin: 0 auto;
-          padding: 64px 40px 56px;
+          padding: 64px 32px 56px 40px;
           display: grid;
-          grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-          gap: 32px 44px;
+          grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.52fr);
+          gap: 32px 36px;
           align-items: stretch;
           box-sizing: border-box;
         }
@@ -110,6 +110,9 @@ export default function WhyFreezeDryingSection() {
         .tdf-col-right .tdf-fruit {
           margin-top: auto;
           align-self: flex-end;
+          max-width: min(100%, 720px);
+          width: 100%;
+          padding-top: 0;
         }
         .tdf-fruit img {
           width: 100%;
@@ -118,6 +121,11 @@ export default function WhyFreezeDryingSection() {
           object-fit: contain;
           object-position: bottom center;
           display: block;
+        }
+        .tdf-col-right .tdf-fruit img {
+          max-height: min(680px, 62vw);
+          object-fit: contain;
+          object-position: bottom right;
         }
         .tdf-fruit-label {
           position: absolute;
@@ -234,6 +242,12 @@ export default function WhyFreezeDryingSection() {
           }
           .tdf-fruit img {
             max-height: min(280px, 48vw);
+          }
+          .tdf-col-right .tdf-fruit img {
+            max-height: min(520px, 62vw);
+          }
+          .tdf-col-right .tdf-fruit {
+            max-width: min(100%, 600px);
           }
         }
 
@@ -381,7 +395,7 @@ export default function WhyFreezeDryingSection() {
           <div className="tdf-col-right">
             <div className="tdf-fruit tdf-fruit--desktop">
               <img
-                src="/freeze_dried_black_bg.png"
+                src="/freeze_dried_fruit_bowl.png"
                 alt="Bowl of freeze-dried fruit pieces"
               />
               <span className="tdf-fruit-label">Freeze-Dried Fruit</span>
