@@ -20,12 +20,20 @@ export default function BulkOrders() {
           {/* Background Image & Gradient */}
           <div className="absolute inset-0 w-full h-full">
             <img 
-              src="/hero_bulk_products.png" 
-              alt="Bulk freeze dried products" 
-              className="w-full h-full object-cover object-right"
+              src="/BulkSection.png" 
+              alt="Wholesale bulk freeze-dried fruit products for cafes and retailers" 
+              className="w-full h-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/90 to-transparent w-full md:w-3/4"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent"></div>
+            {/* Narrower, softer left scrim so the warehouse stays visible */}
+            <div
+              className="pointer-events-none absolute inset-y-0 left-0 w-full bg-gradient-to-r from-black/85 via-black/35 via-[45%] sm:via-[40%] to-transparent md:max-w-[58%] md:via-[48%]"
+              aria-hidden
+            />
+            {/* Light bottom fade only — avoids washing out the whole frame */}
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] bg-gradient-to-t from-black/55 via-black/15 to-transparent"
+              aria-hidden
+            />
           </div>
 
           {/* Hero Content */}
@@ -38,11 +46,11 @@ export default function BulkOrders() {
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4AF37]/40 bg-transparent text-[#D4AF37] text-[10px] font-bold tracking-widest uppercase mb-6">
                 Wholesale & Bulk
               </div>
-              <h1 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.1] mb-6">
+              <h1 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.1] mb-6 [text-shadow:0_2px_24px_rgba(0,0,0,0.55)]">
                 Bulk Freeze-Dried<br />
                 Products for <span className="text-[#D4AF37]">Cafes,<br/>Brands & Retailers</span>
               </h1>
-              <p className="text-lg text-white/80 mb-8 max-w-md">
+              <p className="text-lg text-white/90 mb-8 max-w-md [text-shadow:0_1px_16px_rgba(0,0,0,0.5)]">
                 Consistent supply. Premium quality.<br/>Zero additives.
               </p>
               
