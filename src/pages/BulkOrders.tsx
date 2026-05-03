@@ -214,7 +214,7 @@ export default function BulkOrders() {
                   Get Bulk Pricing <ArrowRight className="w-4 h-4 ml-1" />
                 </Link>
                 <a
-                  href="https://wa.me/919876543210"
+                  href="https://wa.me/917567350328"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/5 transition-all duration-200 text-sm"
@@ -241,7 +241,7 @@ export default function BulkOrders() {
                   </div>
                   <div>
                     <p className="text-[10px] text-[#D4AF37] font-semibold uppercase tracking-wider mb-0.5">Email Us</p>
-                    <a href="mailto:bulk@thedryfactory.com" className="text-[13px] font-medium hover:text-[#D4AF37] transition-colors text-white">bulk@thedryfactory.com</a>
+                    <a href="mailto:contact@thedryfactory.com" className="text-[13px] font-medium hover:text-[#D4AF37] transition-colors text-white">contact@thedryfactory.com</a>
                   </div>
                 </div>
                 <div className="w-full h-px bg-white/5 mb-4"></div>
@@ -251,7 +251,7 @@ export default function BulkOrders() {
                   </div>
                   <div>
                     <p className="text-[10px] text-[#D4AF37] font-semibold uppercase tracking-wider mb-0.5">Call Us</p>
-                    <a href="tel:+919876543210" className="text-[13px] font-medium hover:text-[#D4AF37] transition-colors text-white">+91 98765 43210</a>
+                    <a href="tel:+917567350328" className="text-[13px] font-medium hover:text-[#D4AF37] transition-colors text-white">+91 75673 50328</a>
                   </div>
                 </div>
               </div>
