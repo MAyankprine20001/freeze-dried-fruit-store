@@ -19,7 +19,12 @@ const heroHeadline =
 const heroDescription = 'font-sans text-base sm:text-lg font-medium leading-relaxed max-w-xl lg:max-w-[32rem]';
 /** DM Sans + !important so Radix Theme / globals cannot swap the hero body font between slides */
 const heroBodyText = `${heroDescription} !font-sans`;
-const heroBadgeGrid = 'grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mt-6 sm:mt-8 mb-4 w-full max-w-full sm:max-w-2xl';
+/** Tight horizontal rhythm: content-sized grid so 4-up row does not stretch with huge gutters */
+const heroBadgeGrid =
+  'inline-grid w-max max-w-full grid-cols-2 sm:grid-cols-4 gap-x-1.5 gap-y-2 sm:gap-x-2 sm:gap-y-2 mt-6 sm:mt-8 mb-4 justify-items-center';
+/** Fruit Chunks slide: even tighter gutters so four icons read as one cluster */
+const heroBadgeGridSlide3 =
+  'inline-grid w-max max-w-full grid-cols-2 sm:grid-cols-4 gap-x-0.5 gap-y-1.5 sm:gap-x-1 sm:gap-y-1.5 mt-6 sm:mt-8 mb-4 justify-items-center';
 const heroBadgeIconWrap =
   'flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 sm:h-12 sm:w-12';
 const heroBadgeLabel =
@@ -46,7 +51,7 @@ const heroSlides = [
       </span>
     ),
     badges: (
-      <div className={`${heroBadgeGrid} rounded-xl border border-white/60 bg-white/60 p-3 shadow-lg backdrop-blur-md sm:max-w-[26rem]`}>
+      <div className={`${heroBadgeGrid} rounded-xl border border-white/60 bg-white/60 p-2 sm:p-2.5 shadow-lg backdrop-blur-md`}>
         <div className="flex flex-col items-center gap-1.5 text-center">
           <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
             <Leaf className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
@@ -177,30 +182,32 @@ const heroSlides = [
       </span>
     ),
     badges: (
-      <div className={heroBadgeGrid}>
-        <div className="flex flex-col items-center gap-2 text-center">
+      <div className={heroBadgeGridSlide3}>
+        <div className="flex flex-col items-center gap-1 text-center">
           <div className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}>
             <Snowflake className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
           </div>
-          <span className={`${heroBadgeLabel} text-neutral-900`}>Freeze-dried goodness</span>
+          <span className={`${heroBadgeLabel} max-w-[5.25rem] text-neutral-900`}>Freeze-dried goodness</span>
         </div>
-        <div className="flex flex-col items-center gap-2 text-center">
+        <div className="flex flex-col items-center gap-1 text-center">
           <div className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}>
             <CheckCircle2 className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
           </div>
-          <span className={`${heroBadgeLabel} text-neutral-900`}>100% real fruit</span>
+          <span className={`${heroBadgeLabel} max-w-[5rem] text-neutral-900`}>100% real fruit</span>
         </div>
-        <div className="flex flex-col items-center gap-2 text-center">
+        <div className="flex flex-col items-center gap-1 text-center">
           <div className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}>
             <Leaf className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
           </div>
-          <span className={`${heroBadgeLabel} text-neutral-900`}>No added sugar or preservatives</span>
+          <span className={`${heroBadgeLabel} max-w-[5.5rem] text-neutral-900`}>
+            No added sugar or preservatives
+          </span>
         </div>
-        <div className="flex flex-col items-center gap-2 text-center">
+        <div className="flex flex-col items-center gap-1 text-center">
           <div className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}>
             <FlaskConical className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
           </div>
-          <span className={`${heroBadgeLabel} text-neutral-900`}>Clean, natural, wholesome</span>
+          <span className={`${heroBadgeLabel} max-w-[5.25rem] text-neutral-900`}>Clean, natural, wholesome</span>
         </div>
       </div>
     ),
