@@ -346,7 +346,7 @@ export default function Products() {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`flex-shrink-0 flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs font-bold transition-all border ${
+                className={`flex-shrink-0 flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold leading-snug transition-all border ${
                   activeCategory === cat.id
                     ? "bg-[#D4AF37] text-black border-[#D4AF37]"
                     : "bg-white/[0.04] text-white/55 hover:bg-white/[0.08] hover:text-white border-white/[0.06]"
