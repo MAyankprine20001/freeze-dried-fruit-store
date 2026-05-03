@@ -17,6 +17,8 @@ const heroTagline =
 const heroHeadline =
   'font-serif font-bold text-[clamp(2rem,5vw+1rem,4.25rem)] leading-[1.08] tracking-tight [&_span]:block [&>span+span]:mt-1 sm:[&>span+span]:mt-2';
 const heroDescription = 'font-sans text-base sm:text-lg font-medium leading-relaxed max-w-xl lg:max-w-[32rem]';
+/** DM Sans + !important so Radix Theme / globals cannot swap the hero body font between slides */
+const heroBodyText = `${heroDescription} !font-sans`;
 const heroBadgeGrid = 'grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mt-6 sm:mt-8 mb-4 w-full max-w-full sm:max-w-2xl';
 const heroBadgeIconWrap =
   'flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 sm:h-12 sm:w-12';
@@ -39,7 +41,7 @@ const heroSlides = [
       </>
     ),
     description: (
-      <span className={`${heroDescription} text-black`}>
+      <span className={`${heroBodyText} text-black`}>
         Shake it. Sip it. Feel the <span className="font-semibold text-[#9A7B3E]">difference</span> in seconds.
       </span>
     ),
@@ -115,7 +117,7 @@ const heroSlides = [
       </>
     ),
     description: (
-      <span className={`${heroDescription} text-neutral-200`}>
+      <span className={`${heroBodyText} text-neutral-200`}>
         Freeze-dried fruits meet premium chocolate for a crunch that melts your heart.
       </span>
     ),
@@ -169,9 +171,9 @@ const heroSlides = [
       </>
     ),
     description: (
-      <span className={`${heroDescription} text-neutral-900`}>
+      <span className={`${heroBodyText} text-neutral-900`}>
         Freeze-dried to lock in nutrition, flavour & crunch. Pure fruit,{' '}
-        <span className="font-semibold text-[#41622D]">nothing else.</span>
+        <span className="!font-sans font-semibold text-[#41622D]">nothing else.</span>
       </span>
     ),
     badges: (
