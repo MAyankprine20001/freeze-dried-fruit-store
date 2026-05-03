@@ -309,7 +309,7 @@ export default function Home() {
       <Header />
 
       {/* Hero — consistent vertical rhythm; padding clears fixed nav + carousel controls */}
-      <section className="relative flex min-h-[85vh] flex-col justify-center overflow-hidden bg-black pt-16 sm:min-h-[90vh] lg:min-h-screen">
+      <section className="relative flex min-h-[78vh] flex-col justify-center overflow-hidden bg-black pt-16 sm:min-h-[82vh] lg:min-h-[90vh]">
         <AnimatePresence mode="wait">
           <motion.div
             key={heroIndex}
@@ -330,7 +330,7 @@ export default function Home() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-[clamp(7rem,18vw,11rem)] pt-[clamp(1.75rem,4vw,3.5rem)] sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-[clamp(5.5rem,14vw,9rem)] pt-[clamp(1.5rem,3.5vw,3rem)] sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
             <AnimatePresence mode="wait">
               <motion.div
