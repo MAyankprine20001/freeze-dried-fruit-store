@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Star, Zap, Heart, Package, ChevronLeft, ChevronRight, Leaf, FlaskConical, Timer, Dumbbell, Briefcase, Laptop, Baby, Sparkles, Snowflake, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Star, Package, ChevronLeft, ChevronRight, Leaf, FlaskConical, Timer, Dumbbell, Briefcase, Laptop, Baby, Sparkles, Snowflake, CheckCircle2 } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import TrustBadges from '../components/TrustBadges';
@@ -251,24 +251,6 @@ const categories = [
     image: '/milk-chocolate-chunks.png',
     path: '/fruit-powder-chunks',
     tag: 'Versatile',
-  },
-];
-
-const whyUs = [
-  {
-    icon: Zap,
-    title: 'Peak Nutrition Locked In',
-    desc: 'Our freeze-drying process removes moisture without heat, preserving up to 97% of the original vitamins, minerals, and antioxidants.',
-  },
-  {
-    icon: Heart,
-    title: 'Whole Fruit. Nothing Else.',
-    desc: 'No added sugars, no artificial flavors, no preservatives. Just real fruit, harvested at peak ripeness and gently freeze-dried.',
-  },
-  {
-    icon: Package,
-    title: 'Long Shelf Life, Zero Waste',
-    desc: 'Enjoy the taste of summer strawberries in January. Our products last up to 25 years sealed and stay fresh for 12 months once opened.',
   },
 ];
 
