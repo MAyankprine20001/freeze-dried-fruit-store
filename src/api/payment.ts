@@ -95,6 +95,10 @@ export interface Order {
   status: string;
   orderStatus?: string;
   paymentMethod?: string;
+  razorpay?: {
+    orderId?: string | null;
+    paymentId?: string | null;
+  };
   createdAt: string;
   updatedAt: string;
   user?: string | { _id: string; email: string; fullName: string; phone?: string } | null;
@@ -122,6 +126,27 @@ export interface AdminOrderStatsResponse {
   success: boolean;
   total: number;
   countsByStatus: Record<string, number>;
+}
+
+export interface AdminTransactionStats {
+  totalRevenue: number;
+  successfulPayments: number;
+  pendingPayments: number;
+  failedPayments: number;
+  totalRefunds: number;
+  totalTransactions: number;
+  paymentMethodBreakdown: Array<{
+    name: string;
+    count: number;
+    percentage: number;
+  }>;
+  recentRefunds: Order[];
+  recentFailedPayments: Order[];
+}
+
+export interface AdminTransactionStatsResponse {
+  success: boolean;
+  data: AdminTransactionStats;
 }
 
 export const getMyOrders = async (): Promise<GetOrdersResponse> => {
@@ -171,6 +196,49 @@ export const getAdminOrders = async (params: {
   if (params.paymentMethod) q.set("paymentMethod", params.paymentMethod);
   const res = await axiosInstance.get<AdminOrdersResponse>(
     `/payments/admin/orders?${q.toString()}`
+  );
+  return res.data;
+};
+
+export const getAdminTransactionStats = async (params: {
+  search?: string;
+  paymentStatus?: string;
+  paymentMethod?: string;
+  dateFrom?: string;
+  dateTo?: string;
+} = {}): Promise<AdminTransactionStatsResponse> => {
+  const q = new URLSearchParams();
+  if (params.search) q.set("search", params.search);
+  if (params.paymentStatus) q.set("paymentStatus", params.paymentStatus);
+  if (params.paymentMethod) q.set("paymentMethod", params.paymentMethod);
+  if (params.dateFrom) q.set("dateFrom", params.dateFrom);
+  if (params.dateTo) q.set("dateTo", params.dateTo);
+  const qs = q.toString();
+  const res = await axiosInstance.get<AdminTransactionStatsResponse>(
+    `/payments/admin/transactions/stats${qs ? `?${qs}` : ""}`
+  );
+  return res.data;
+};
+
+export const getAdminTransactions = async (params: {
+  limit?: number;
+  cursor?: string | null;
+  search?: string;
+  paymentStatus?: string;
+  paymentMethod?: string;
+  dateFrom?: string;
+  dateTo?: string;
+} = {}): Promise<AdminOrdersResponse> => {
+  const q = new URLSearchParams();
+  q.set("limit", String(params.limit ?? 20));
+  if (params.cursor) q.set("cursor", params.cursor);
+  if (params.search) q.set("search", params.search);
+  if (params.paymentStatus) q.set("paymentStatus", params.paymentStatus);
+  if (params.paymentMethod) q.set("paymentMethod", params.paymentMethod);
+  if (params.dateFrom) q.set("dateFrom", params.dateFrom);
+  if (params.dateTo) q.set("dateTo", params.dateTo);
+  const res = await axiosInstance.get<AdminOrdersResponse>(
+    `/payments/admin/transactions?${q.toString()}`
   );
   return res.data;
 };
