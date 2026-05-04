@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import {
   getAdminTransactions,
   getAdminTransactionStats,
@@ -48,6 +49,7 @@ const fmtCurrency = (amount: number) =>
   `₹${Math.round(amount || 0).toLocaleString("en-IN")}`;
 
 export default function AdminTransactions() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -271,7 +273,14 @@ export default function AdminTransactions() {
                       </td>
                       <td className="px-4 py-3 text-right">
                         <div className="flex items-center justify-end gap-1 text-gray-400">
-                          <button className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all"><Eye className="w-3.5 h-3.5" /></button>
+                          <button
+                            type="button"
+                            onClick={() => navigate(`/admin/orders?open=${txn._id}`)}
+                            title="View order details"
+                            className="p-1 hover:text-gray-700 hover:bg-gray-100 rounded transition-all"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                          </button>
                           <button className="p-1 hover:text-blue-500 hover:bg-blue-50 rounded transition-all"><RefreshCw className="w-3.5 h-3.5" /></button>
                         </div>
                       </td>
