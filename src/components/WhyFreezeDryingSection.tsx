@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Zap, Heart, Package, Plus } from 'lucide-react';
 
 const intro =
-  'Freeze drying is one of the most advanced ways to preserve fruit. By removing moisture at low temperatures, it helps retain the natural taste, color, and nutrients — without adding anything artificial.';
+  'Freeze drying is one of the most advanced ways to preserve fruit. By removing moisture at low temperatures, it helps retain the natural taste, color, and nutrients  without adding anything artificial.';
 
 const features: {
   icon: typeof Zap;
@@ -17,7 +17,7 @@ const features: {
     description: (
       <>
         Our freeze-drying process helps preserve most of the natural vitamins and minerals found in
-        fresh fruit — without using{' '}
+        fresh fruit  without using{' '}
         <span className="font-semibold text-[#D4AF37]">heat</span> that can reduce nutritional value.
       </>
     ),
@@ -46,7 +46,18 @@ export default function WhyFreezeDryingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.55 }}
+            className="text-left"
           >
+            <header className="mb-8 max-w-xl sm:mb-10">
+              <span className="inline-block rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4AF37] sm:text-[11px]">
+                Why freeze drying?
+              </span>
+              <h2 className="mt-5 font-serif text-[clamp(2rem,4.5vw+0.75rem,3.35rem)] font-bold leading-[1.1] tracking-tight sm:mt-6">
+                <span className="block text-white">The Science of</span>
+                <span className="block text-[#D4AF37]">Keeping Fruit</span>
+                <span className="block text-[#D4AF37]">Perfect</span>
+              </h2>
+            </header>
             <p className="mb-10 max-w-xl text-base font-medium leading-relaxed text-white/90">
               {intro}
             </p>
