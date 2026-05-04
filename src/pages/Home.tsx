@@ -32,22 +32,24 @@ const heroBadgeLabel =
 
 const heroSlides = [
   {
-    image: "/SliderImage/Slideone.png",
+    image: "/SliderImage/Slide_one.png",
     subtitle: (
       <div className="flex flex-col items-start gap-1 sm:gap-1.5">
         <span className={`${heroBrand} text-[#9A7B3E]`}>SipReal</span>
-        <span className={`${heroTagline} text-black`}>Freeze-dried smoothie mix</span>
+        <span className={`${heroTagline} text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.75)]`}>
+          Freeze-dried smoothie mix
+        </span>
       </div>
     ),
     title: (
       <>
-        <span className="text-black drop-shadow-sm">Real Fruit.</span>
-        <span className="text-[#9A7B3E] drop-shadow-sm">Instant Energy.</span>
+        <span className="text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">Real Fruit.</span>
+        <span className="text-[#C49E5D] drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">Instant Energy.</span>
       </>
     ),
     description: (
-      <span className={`${heroBodyText} text-black`}>
-        Shake it. Sip it. Feel the <span className="font-semibold text-[#9A7B3E]">difference</span> in seconds.
+      <span className={`${heroBodyText} text-white/85 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]`}>
+        Shake it. Sip it. Feel the <span className="font-semibold text-[#D4AF37]">difference</span> in seconds.
       </span>
     ),
     badges: (
