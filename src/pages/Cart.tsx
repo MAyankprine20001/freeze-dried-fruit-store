@@ -11,8 +11,7 @@ import Footer from "../components/Footer";
 import { productApi } from "../api/product.api";
 import { getProductPrimaryImage } from "../utils/productImage";
 import { toast } from "react-toastify";
-
-const FREE_SHIPPING_THRESHOLD = 499;
+import { useShippingConfig, computeCartShipping } from "../hooks/useShippingConfig";
 
 // ─── Trust Strip ──────────────────────────────────────────────────────────────
 function TrustStrip() {
@@ -44,11 +43,14 @@ export default function Cart() {
   const { items, removeFromCart, updateQuantity, subtotal, totalItems, addToCart } = useCart();
   const [promoCode, setPromoCode] = useState("");
   const [upsellProducts, setUpsellProducts] = useState<any[]>([]);
+  const { deliveryCharge, freeShippingThreshold } = useShippingConfig();
 
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || items.length === 0 ? 0 : 50;
+  const shipping = computeCartShipping(subtotal, items.length, { deliveryCharge, freeShippingThreshold });
   const total = subtotal + shipping;
-  const freeShippingGap = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
-  const freeShippingProgress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
+  const freeShippingGap =
+    freeShippingThreshold > 0 ? Math.max(0, freeShippingThreshold - subtotal) : 0;
+  const freeShippingProgress =
+    freeShippingThreshold > 0 ? Math.min(100, (subtotal / freeShippingThreshold) * 100) : 100;
 
   useEffect(() => {
     productApi.getAll().then((res) => {
@@ -244,7 +246,7 @@ export default function Cart() {
                     </div>
                     <div className="flex justify-between mt-1">
                       <span className="text-[10px] text-white/30">₹{subtotal}</span>
-                      <span className="text-[10px] text-white/30">₹{FREE_SHIPPING_THRESHOLD}</span>
+                      <span className="text-[10px] text-white/30">₹{freeShippingThreshold}</span>
                     </div>
                   </div>
                 )}

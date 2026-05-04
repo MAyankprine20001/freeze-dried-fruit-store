@@ -16,8 +16,7 @@ import { useAuth } from "../context/AuthContext";
 import { productApi } from "../api/product.api";
 import { getProductPrimaryImage } from "../utils/productImage";
 import { createRazorpayOrder, verifyRazorpayPayment, loadRazorpayScript } from "../api/payment";
-
-const FREE_SHIPPING_THRESHOLD = 499;
+import { useShippingConfig, computeCartShipping } from "../hooks/useShippingConfig";
 
 const schema = z.object({
   fullName: z.string().min(2, "Enter your full name"),
@@ -110,11 +109,14 @@ export default function Checkout() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [upsellProducts, setUpsellProducts] = useState<any[]>([]);
+  const { deliveryCharge, freeShippingThreshold } = useShippingConfig();
 
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 50;
+  const shipping = computeCartShipping(subtotal, items.length, { deliveryCharge, freeShippingThreshold });
   const total = subtotal + shipping;
-  const freeShippingGap = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
-  const freeShippingProgress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
+  const freeShippingGap =
+    freeShippingThreshold > 0 ? Math.max(0, freeShippingThreshold - subtotal) : 0;
+  const freeShippingProgress =
+    freeShippingThreshold > 0 ? Math.min(100, (subtotal / freeShippingThreshold) * 100) : 100;
 
   useEffect(() => {
     productApi.getAll().then((res) => {
@@ -163,7 +165,6 @@ export default function Checkout() {
       const orderPayload = {
         items: items.map((item) => ({ id: item.id, productId: item.id, name: item.name, price: item.price, image: item.image, quantity: item.quantity, weight: item.weight ?? "", category: item.category ?? "" })),
         shippingAddress: { fullName: formData.fullName, phone: formData.phone, addressLine1: formData.addressLine1, addressLine2: formData.addressLine2 ?? "", city: formData.city, state: formData.state, pincode: formData.pincode },
-        subtotal, shipping, total,
       };
 
       const orderRes = await createRazorpayOrder(orderPayload);
@@ -333,7 +334,7 @@ export default function Checkout() {
                     </div>
                     <div className="flex justify-between mt-1">
                       <span className="text-[10px] text-white/30">₹{subtotal}</span>
-                      <span className="text-[10px] text-white/30">₹{FREE_SHIPPING_THRESHOLD}</span>
+                      <span className="text-[10px] text-white/30">₹{freeShippingThreshold}</span>
                     </div>
                   </div>
                 )}

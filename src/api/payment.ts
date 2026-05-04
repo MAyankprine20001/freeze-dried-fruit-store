@@ -29,9 +29,10 @@ export interface ShippingAddress {
 export interface CreateOrderPayload {
   items: CartItem[];
   shippingAddress: ShippingAddress;
-  subtotal: number;
-  shipping: number;
-  total: number;
+  /** Deprecated: server computes from items + store delivery settings */
+  subtotal?: number;
+  shipping?: number;
+  total?: number;
 }
 
 export interface CreateOrderResponse {

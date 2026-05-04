@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Store, CreditCard, Truck, Mail, Bell, Shield, Database,
-  Save, RefreshCw, Eye, Key, ToggleLeft, ToggleRight, CheckCircle
+  RefreshCw, ToggleLeft, ToggleRight, CheckCircle
 } from "lucide-react";
 import { toast } from "react-toastify";
+import { settingsApi } from "../../api/settings.api";
 
 const tabs = [
   { label: "General", sub: "Store details", icon: Store },
@@ -33,7 +34,7 @@ export default function AdminSettings() {
     storePhone: "+91 12345 67890",
     storeAddress: "123, Dry Fruits Street, Mumbai, Maharashtra - 400001, India",
     timezone: "Asia/Kolkata (IST)",
-    currency: "INR (₹) - Indian Rupee",
+    currency: "INR",
     currencyPosition: "Left (₹99.00)",
     language: "English",
     dateFormat: "DD MM, YYYY (28 Apr, 2026)",
@@ -41,7 +42,9 @@ export default function AdminSettings() {
     enableTax: true,
     taxRate: 18,
     enableCoupons: true,
-    minOrderAmount: 499,
+    minOrderAmount: 0,
+    deliveryCharge: 50,
+    freeShippingThreshold: 499,
     enableCOD: true,
     maintenanceMode: false,
     maintenanceMessage: "We are under maintenance.\nWe'll be back soon!",
@@ -51,7 +54,59 @@ export default function AdminSettings() {
     activityLogs: true,
   });
 
-  const save = () => toast.success("Settings saved successfully!");
+  useEffect(() => {
+    settingsApi
+      .get()
+      .then((res) => {
+        if (!res.success || !res.data) return;
+        const d = res.data;
+        setSettings((prev) => ({
+          ...prev,
+          storeName: d.storeName ?? prev.storeName,
+          storeEmail: d.storeEmail ?? prev.storeEmail,
+          storePhone: d.storePhone ?? prev.storePhone,
+          storeAddress: d.storeAddress ?? prev.storeAddress,
+          currency: d.currency ?? prev.currency,
+          enableTax: d.enableTax ?? prev.enableTax,
+          taxRate: d.taxRate ?? prev.taxRate,
+          enableCoupons: d.enableCoupons ?? prev.enableCoupons,
+          minOrderAmount: d.minOrderAmount ?? prev.minOrderAmount,
+          deliveryCharge: d.deliveryCharge ?? prev.deliveryCharge,
+          freeShippingThreshold: d.freeShippingThreshold ?? prev.freeShippingThreshold,
+          enableCOD: d.enableCOD ?? prev.enableCOD,
+          maintenanceMode: d.maintenanceMode ?? prev.maintenanceMode,
+          maintenanceMessage: d.maintenanceMessage ?? prev.maintenanceMessage,
+        }));
+      })
+      .catch(() => toast.error("Could not load settings"));
+  }, []);
+
+  const persist = async () => {
+    try {
+      await settingsApi.update({
+        storeName: settings.storeName,
+        storeEmail: settings.storeEmail,
+        storePhone: settings.storePhone,
+        storeAddress: settings.storeAddress,
+        currency: settings.currency,
+        enableTax: settings.enableTax,
+        taxRate: settings.taxRate,
+        enableCoupons: settings.enableCoupons,
+        minOrderAmount: settings.minOrderAmount,
+        deliveryCharge: settings.deliveryCharge,
+        freeShippingThreshold: settings.freeShippingThreshold,
+        enableCOD: settings.enableCOD,
+        maintenanceMode: settings.maintenanceMode,
+        maintenanceMessage: settings.maintenanceMessage,
+      });
+      toast.success("Settings saved successfully!");
+    } catch (e: unknown) {
+      const msg =
+        (e as { response?: { data?: { message?: string } } })?.response?.data?.message ??
+        "Failed to save settings";
+      toast.error(msg);
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -82,7 +137,51 @@ export default function AdminSettings() {
         ))}
       </div>
 
-      {/* Content Grid */}
+      {activeTab === "Shipping" ? (
+        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm max-w-xl">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
+              <Truck className="w-5 h-5 text-[#D4A017]" />
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-gray-800">Delivery &amp; free shipping</h3>
+              <p className="text-xs text-gray-500">These values match the cart, checkout, and payment total on the storefront.</p>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-gray-600">Standard delivery charge (₹)</label>
+              <input
+                type="number"
+                min={0}
+                value={settings.deliveryCharge}
+                onChange={(e) => setSettings({ ...settings, deliveryCharge: Math.max(0, Number(e.target.value) || 0) })}
+                className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none"
+              />
+              <p className="text-[11px] text-gray-400">Applied when the cart subtotal is below the free-delivery threshold.</p>
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-gray-600">Free delivery when subtotal is at least (₹)</label>
+              <input
+                type="number"
+                min={0}
+                value={settings.freeShippingThreshold}
+                onChange={(e) => setSettings({ ...settings, freeShippingThreshold: Math.max(0, Number(e.target.value) || 0) })}
+                className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none"
+              />
+              <p className="text-[11px] text-gray-400">Set to 0 for free delivery on every order (no minimum).</p>
+            </div>
+            <button
+              type="button"
+              onClick={persist}
+              className="w-full py-2.5 bg-[#D4A017] text-[#111827] rounded-lg text-sm font-bold hover:bg-[#c49015] transition-all"
+            >
+              Save delivery settings
+            </button>
+          </div>
+        </div>
+      ) : (
+      /* Content Grid */
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Store Information */}
         <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
@@ -123,7 +222,7 @@ export default function AdminSettings() {
                 <option>UTC</option>
               </select>
             </div>
-            <button onClick={save} className="w-full py-2 bg-[#D4A017] text-[#111827] rounded-lg text-sm font-bold hover:bg-[#c49015] transition-all">
+            <button onClick={persist} className="w-full py-2 bg-[#D4A017] text-[#111827] rounded-lg text-sm font-bold hover:bg-[#c49015] transition-all">
               Save Changes
             </button>
           </div>
@@ -138,7 +237,6 @@ export default function AdminSettings() {
           <p className="text-xs text-gray-400 mb-3">Manage currency and default language.</p>
           <div className="space-y-3">
             {[
-              { label: "Currency", options: ["INR (₹) - Indian Rupee", "USD ($) - US Dollar"] },
               { label: "Currency Position", options: ["Left (₹99.00)", "Right (99.00₹)"] },
               { label: "Language", options: ["English", "Hindi"] },
               { label: "Date Format", options: ["DD MM, YYYY (28 Apr, 2026)", "MM/DD/YYYY", "YYYY-MM-DD"] },
@@ -151,7 +249,18 @@ export default function AdminSettings() {
                 </select>
               </div>
             ))}
-            <button onClick={save} className="w-full py-2 bg-[#D4A017] text-[#111827] rounded-lg text-sm font-bold hover:bg-[#c49015] transition-all">
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-gray-600">Currency code</label>
+              <select
+                value={settings.currency}
+                onChange={(e) => setSettings({ ...settings, currency: e.target.value })}
+                className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none"
+              >
+                <option value="INR">INR (₹) - Indian Rupee</option>
+                <option value="USD">USD ($) - US Dollar</option>
+              </select>
+            </div>
+            <button onClick={persist} className="w-full py-2 bg-[#D4A017] text-[#111827] rounded-lg text-sm font-bold hover:bg-[#c49015] transition-all">
               Save Changes
             </button>
           </div>
@@ -194,7 +303,7 @@ export default function AdminSettings() {
               </div>
               <Toggle value={settings.enableCOD} onChange={() => setSettings({ ...settings, enableCOD: !settings.enableCOD })} />
             </div>
-            <button onClick={save} className="w-full py-2 bg-[#D4A017] text-[#111827] rounded-lg text-sm font-bold hover:bg-[#c49015] transition-all">
+            <button onClick={persist} className="w-full py-2 bg-[#D4A017] text-[#111827] rounded-lg text-sm font-bold hover:bg-[#c49015] transition-all">
               Save Changes
             </button>
           </div>
@@ -224,7 +333,7 @@ export default function AdminSettings() {
                 className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 outline-none resize-none"
               />
             </div>
-            <button onClick={save} className="w-full py-2 bg-[#D4A017] text-[#111827] rounded-lg text-sm font-bold hover:bg-[#c49015] transition-all">
+            <button onClick={persist} className="w-full py-2 bg-[#D4A017] text-[#111827] rounded-lg text-sm font-bold hover:bg-[#c49015] transition-all">
               Save Changes
             </button>
           </div>
@@ -267,7 +376,7 @@ export default function AdminSettings() {
               </div>
               <Toggle value={settings.activityLogs} onChange={() => setSettings({ ...settings, activityLogs: !settings.activityLogs })} />
             </div>
-            <button onClick={save} className="w-full py-2 bg-[#D4A017] text-[#111827] rounded-lg text-sm font-bold hover:bg-[#c49015] transition-all">
+            <button onClick={persist} className="w-full py-2 bg-[#D4A017] text-[#111827] rounded-lg text-sm font-bold hover:bg-[#c49015] transition-all">
               Save Changes
             </button>
           </div>
@@ -337,6 +446,7 @@ export default function AdminSettings() {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }
