@@ -1,34 +1,51 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, Star, Package, ChevronLeft, ChevronRight, Leaf, FlaskConical, Timer, Dumbbell, Briefcase, Laptop, Baby, Sparkles, Snowflake, CheckCircle2 } from 'lucide-react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import TrustBadges from '../components/TrustBadges';
-import CategoryCard from '../components/CategoryCard';
-import WhyFreezeDryingSection from '../components/WhyFreezeDryingSection';
-import { AnimatePresence } from 'framer-motion';
+import React from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  Star,
+  Package,
+  ChevronLeft,
+  ChevronRight,
+  Leaf,
+  FlaskConical,
+  Timer,
+  Dumbbell,
+  Briefcase,
+  Laptop,
+  Baby,
+  Sparkles,
+  Snowflake,
+  CheckCircle2,
+} from "lucide-react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import TrustBadges from "../components/TrustBadges";
+import CategoryCard from "../components/CategoryCard";
+import WhyFreezeDryingSection from "../components/WhyFreezeDryingSection";
+import { AnimatePresence } from "framer-motion";
 
 /** Shared hero typography & spacing — keeps slides visually aligned across breakpoints */
 const heroBrand =
-  'font-serif italic text-3xl sm:text-[2.35rem] lg:text-5xl leading-none tracking-tight drop-shadow-sm';
+  "font-serif italic text-3xl sm:text-[2.35rem] lg:text-5xl leading-none tracking-tight drop-shadow-sm";
 const heroTagline =
-  'font-sans text-[11px] sm:text-xs font-bold uppercase tracking-[0.22em] leading-snug';
+  "font-sans text-[11px] sm:text-xs font-bold uppercase tracking-[0.22em] leading-snug";
 const heroHeadline =
-  'font-serif font-bold text-[clamp(2rem,5vw+1rem,4.25rem)] leading-[1.08] tracking-tight [&_span]:block [&>span+span]:mt-1 sm:[&>span+span]:mt-2';
-const heroDescription = 'font-sans text-base sm:text-lg font-medium leading-relaxed max-w-xl lg:max-w-[32rem]';
+  "font-serif font-bold text-[clamp(2rem,5vw+1rem,4.25rem)] leading-[1.08] tracking-tight [&_span]:block [&>span+span]:mt-1 sm:[&>span+span]:mt-2";
+const heroDescription =
+  "font-sans text-base sm:text-lg font-medium leading-relaxed max-w-xl lg:max-w-[32rem]";
 /** DM Sans + !important so Radix Theme / globals cannot swap the hero body font between slides */
 const heroBodyText = `${heroDescription} !font-sans`;
 /** Tight horizontal rhythm: content-sized grid so 4-up row does not stretch with huge gutters */
 const heroBadgeGrid =
-  'inline-grid w-max max-w-full grid-cols-2 sm:grid-cols-4 gap-x-1.5 gap-y-2 sm:gap-x-2 sm:gap-y-2 mt-6 sm:mt-8 mb-4 justify-items-center';
+  "inline-grid w-max max-w-full grid-cols-2 sm:grid-cols-4 gap-x-1.5 gap-y-2 sm:gap-x-2 sm:gap-y-2 mt-6 sm:mt-8 mb-4 justify-items-center";
 /** Fruit Chunks slide: even tighter gutters so four icons read as one cluster */
 const heroBadgeGridSlide3 =
-  'inline-grid w-max max-w-full grid-cols-2 sm:grid-cols-4 gap-x-0.5 gap-y-1.5 sm:gap-x-1 sm:gap-y-1.5 mt-6 sm:mt-8 mb-4 justify-items-center';
+  "inline-grid w-max max-w-full grid-cols-2 sm:grid-cols-4 gap-x-0.5 gap-y-1.5 sm:gap-x-1 sm:gap-y-1.5 mt-6 sm:mt-8 mb-4 justify-items-center";
 const heroBadgeIconWrap =
-  'flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 sm:h-12 sm:w-12';
+  "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 sm:h-12 sm:w-12";
 const heroBadgeLabel =
-  'font-sans text-[10px] sm:text-xs font-semibold leading-tight text-center [text-wrap:balance]';
+  "font-sans text-[10px] sm:text-xs font-semibold leading-tight text-center [text-wrap:balance]";
 
 const heroSlides = [
   {
@@ -36,69 +53,115 @@ const heroSlides = [
     subtitle: (
       <div className="flex flex-col items-start gap-1 sm:gap-1.5">
         <span className={`${heroBrand} text-[#9A7B3E]`}>SipReal</span>
-        <span className={`${heroTagline} text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.75)]`}>
+        <span
+          className={`${heroTagline} text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.75)]`}
+        >
           Freeze-dried smoothie mix
         </span>
       </div>
     ),
     title: (
       <>
-        <span className="text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">Real Fruit.</span>
-        <span className="text-[#C49E5D] drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">Instant Energy.</span>
+        <span className="text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+          Real Fruit.
+        </span>
+        <span className="text-[#C49E5D] drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
+          Instant Energy.
+        </span>
       </>
     ),
     description: (
-      <span className={`${heroBodyText} text-white/85 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]`}>
-        Shake it. Sip it. Feel the <span className="font-semibold text-[#D4AF37]">difference</span> in seconds.
+      <span
+        className={`${heroBodyText} text-white/85 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]`}
+      >
+        Shake it. Sip it. Feel the{" "}
+        <span className="font-semibold text-[#D4AF37]">difference</span> in
+        seconds.
       </span>
     ),
     badges: (
-      <div className={`${heroBadgeGrid} rounded-xl border border-white/60 bg-white/60 p-2 sm:p-2.5 shadow-lg backdrop-blur-md`}>
+      <div
+        className={`${heroBadgeGrid} rounded-xl border border-white/60 bg-white/60 p-2 sm:p-2.5 shadow-lg backdrop-blur-md`}
+      >
         <div className="flex flex-col items-center gap-1.5 text-center">
           <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
-            <Leaf className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+            <Leaf
+              className="h-4 w-4 text-black sm:h-5 sm:w-5"
+              strokeWidth={2.5}
+            />
           </div>
           <span className={`${heroBadgeLabel} text-black`}>No added sugar</span>
         </div>
         <div className="flex flex-col items-center gap-1.5 text-center">
           <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
-            <FlaskConical className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+            <FlaskConical
+              className="h-4 w-4 text-black sm:h-5 sm:w-5"
+              strokeWidth={2.5}
+            />
           </div>
-          <span className={`${heroBadgeLabel} text-black`}>No preservatives</span>
+          <span className={`${heroBadgeLabel} text-black`}>
+            No preservatives
+          </span>
         </div>
         <div className="flex flex-col items-center gap-1.5 text-center">
           <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
-            <CheckCircle2 className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+            <CheckCircle2
+              className="h-4 w-4 text-black sm:h-5 sm:w-5"
+              strokeWidth={2.5}
+            />
           </div>
-          <span className={`${heroBadgeLabel} text-black`}>100% real fruit</span>
+          <span className={`${heroBadgeLabel} text-black`}>
+            100% real fruit
+          </span>
         </div>
         <div className="flex flex-col items-center gap-1.5 text-center">
           <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
-            <Timer className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+            <Timer
+              className="h-4 w-4 text-black sm:h-5 sm:w-5"
+              strokeWidth={2.5}
+            />
           </div>
-          <span className={`${heroBadgeLabel} text-black`}>Ready in 10 seconds</span>
+          <span className={`${heroBadgeLabel} text-black`}>
+            Ready in 10 seconds
+          </span>
         </div>
         <div className="flex flex-col items-center gap-1.5 text-center">
           <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
-            <Dumbbell className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+            <Dumbbell
+              className="h-4 w-4 text-black sm:h-5 sm:w-5"
+              strokeWidth={2.5}
+            />
           </div>
           <span className={`${heroBadgeLabel} text-black`}>Best for gym</span>
         </div>
         <div className="flex flex-col items-center gap-1.5 text-center">
           <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
-            <Briefcase className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+            <Briefcase
+              className="h-4 w-4 text-black sm:h-5 sm:w-5"
+              strokeWidth={2.5}
+            />
           </div>
-          <span className={`${heroBadgeLabel} text-black`}>Perfect for travel</span>
+          <span className={`${heroBadgeLabel} text-black`}>
+            Perfect for travel
+          </span>
         </div>
         <div className="flex flex-col items-center gap-1.5 text-center">
           <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
-            <Laptop className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+            <Laptop
+              className="h-4 w-4 text-black sm:h-5 sm:w-5"
+              strokeWidth={2.5}
+            />
           </div>
-          <span className={`${heroBadgeLabel} text-black`}>Great for office</span>
+          <span className={`${heroBadgeLabel} text-black`}>
+            Great for office
+          </span>
         </div>
         <div className="flex flex-col items-center gap-1.5 text-center">
           <div className={`${heroBadgeIconWrap} border-black bg-white/40`}>
-            <Baby className="h-4 w-4 text-black sm:h-5 sm:w-5" strokeWidth={2.5} />
+            <Baby
+              className="h-4 w-4 text-black sm:h-5 sm:w-5"
+              strokeWidth={2.5}
+            />
           </div>
           <span className={`${heroBadgeLabel} text-black`}>Loved by kids</span>
         </div>
@@ -106,14 +169,16 @@ const heroSlides = [
     ),
     overlay: "",
     buttonText: "TRY SIPREAL NOW",
-    buttonClass: "bg-[#C49E5D] text-white hover:bg-[#A58242]"
+    buttonClass: "bg-[#C49E5D] text-white hover:bg-[#A58242]",
   },
   {
     image: "/SliderImage/Slidetwo.png",
     subtitle: (
       <div className="flex flex-col items-start gap-1 sm:gap-1.5">
         <span className={`${heroBrand} text-[#D4AF37]`}>FreezeFusion</span>
-        <span className={`${heroTagline} text-neutral-200`}>Gourmet chocolates</span>
+        <span className={`${heroTagline} text-neutral-200`}>
+          Gourmet chocolates
+        </span>
       </div>
     ),
     title: (
@@ -125,40 +190,57 @@ const heroSlides = [
     ),
     description: (
       <span className={`${heroBodyText} text-neutral-200`}>
-        Freeze-dried fruits meet premium chocolate for a crunch that melts your heart.
+        Freeze-dried fruits meet premium chocolate for a crunch that melts your
+        heart.
       </span>
     ),
     badges: (
       <div className={heroBadgeGrid}>
         <div className="flex flex-col items-center gap-2 text-center">
-          <div className={`${heroBadgeIconWrap} border border-[#D4AF37] bg-black/20`}>
+          <div
+            className={`${heroBadgeIconWrap} border border-[#D4AF37] bg-black/20`}
+          >
             <CheckCircle2 className="h-5 w-5 text-[#D4AF37] sm:h-6 sm:w-6" />
           </div>
-          <span className={`${heroBadgeLabel} text-neutral-200`}>Real fruit inside</span>
+          <span className={`${heroBadgeLabel} text-neutral-200`}>
+            Real fruit inside
+          </span>
         </div>
         <div className="flex flex-col items-center gap-2 text-center">
-          <div className={`${heroBadgeIconWrap} border border-[#D4AF37] bg-black/20`}>
+          <div
+            className={`${heroBadgeIconWrap} border border-[#D4AF37] bg-black/20`}
+          >
             <Sparkles className="h-5 w-5 text-[#D4AF37] sm:h-6 sm:w-6" />
           </div>
-          <span className={`${heroBadgeLabel} text-neutral-200`}>Irresistible crunch</span>
+          <span className={`${heroBadgeLabel} text-neutral-200`}>
+            Irresistible crunch
+          </span>
         </div>
         <div className="flex flex-col items-center gap-2 text-center">
-          <div className={`${heroBadgeIconWrap} border border-[#D4AF37] bg-black/20`}>
+          <div
+            className={`${heroBadgeIconWrap} border border-[#D4AF37] bg-black/20`}
+          >
             <Package className="h-5 w-5 text-[#D4AF37] sm:h-6 sm:w-6" />
           </div>
-          <span className={`${heroBadgeLabel} text-neutral-200`}>Premium chocolate</span>
+          <span className={`${heroBadgeLabel} text-neutral-200`}>
+            Premium chocolate
+          </span>
         </div>
         <div className="flex flex-col items-center gap-2 text-center">
-          <div className={`${heroBadgeIconWrap} border border-[#D4AF37] bg-black/20`}>
+          <div
+            className={`${heroBadgeIconWrap} border border-[#D4AF37] bg-black/20`}
+          >
             <Leaf className="h-5 w-5 text-[#D4AF37] sm:h-6 sm:w-6" />
           </div>
-          <span className={`${heroBadgeLabel} text-neutral-200`}>No artificial flavours</span>
+          <span className={`${heroBadgeLabel} text-neutral-200`}>
+            No artificial flavours
+          </span>
         </div>
       </div>
     ),
     overlay: "bg-gradient-to-r from-black/80 via-black/40 to-transparent",
     buttonText: "EXPLORE FLAVOURS",
-    buttonClass: "bg-[#D4AF37] text-black hover:bg-[#BF953F]"
+    buttonClass: "bg-[#D4AF37] text-black hover:bg-[#BF953F]",
   },
   {
     image: "/SliderImage/Slidethree.png",
@@ -166,9 +248,14 @@ const heroSlides = [
       <div className="flex flex-col items-start gap-1 sm:gap-1.5">
         <span className="flex flex-wrap items-center gap-2">
           <span className={`${heroBrand} text-[#41622D]`}>Fruit Chunks</span>
-          <Leaf className="h-5 w-5 shrink-0 text-[#41622D] sm:h-6 sm:w-6" aria-hidden />
+          <Leaf
+            className="h-5 w-5 shrink-0 text-[#41622D] sm:h-6 sm:w-6"
+            aria-hidden
+          />
         </span>
-        <span className={`${heroTagline} text-[#41622D]`}>Pure freeze-dried fruit</span>
+        <span className={`${heroTagline} text-[#41622D]`}>
+          Pure freeze-dried fruit
+        </span>
       </div>
     ),
     title: (
@@ -179,26 +266,40 @@ const heroSlides = [
     ),
     description: (
       <span className={`${heroBodyText} text-neutral-900`}>
-        Freeze-dried to lock in nutrition, flavour & crunch. Pure fruit,{' '}
-        <span className="!font-sans font-semibold text-[#41622D]">nothing else.</span>
+        Freeze-dried to lock in nutrition, flavour & crunch. Pure fruit,{" "}
+        <span className="!font-sans font-semibold text-[#41622D]">
+          nothing else.
+        </span>
       </span>
     ),
     badges: (
       <div className={heroBadgeGridSlide3}>
         <div className="flex flex-col items-center gap-1 text-center">
-          <div className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}>
+          <div
+            className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}
+          >
             <Snowflake className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
           </div>
-          <span className={`${heroBadgeLabel} max-w-[5.25rem] text-neutral-900`}>Freeze-dried goodness</span>
+          <span
+            className={`${heroBadgeLabel} max-w-[5.25rem] text-neutral-900`}
+          >
+            Freeze-dried goodness
+          </span>
         </div>
         <div className="flex flex-col items-center gap-1 text-center">
-          <div className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}>
+          <div
+            className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}
+          >
             <CheckCircle2 className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
           </div>
-          <span className={`${heroBadgeLabel} max-w-[5rem] text-neutral-900`}>100% real fruit</span>
+          <span className={`${heroBadgeLabel} max-w-[5rem] text-neutral-900`}>
+            100% real fruit
+          </span>
         </div>
         <div className="flex flex-col items-center gap-1 text-center">
-          <div className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}>
+          <div
+            className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}
+          >
             <Leaf className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
           </div>
           <span className={`${heroBadgeLabel} max-w-[5.5rem] text-neutral-900`}>
@@ -206,71 +307,84 @@ const heroSlides = [
           </span>
         </div>
         <div className="flex flex-col items-center gap-1 text-center">
-          <div className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}>
+          <div
+            className={`${heroBadgeIconWrap} border-neutral-700 bg-white/40`}
+          >
             <FlaskConical className="h-5 w-5 text-neutral-800 sm:h-6 sm:w-6" />
           </div>
-          <span className={`${heroBadgeLabel} max-w-[5.25rem] text-neutral-900`}>Clean, natural, wholesome</span>
+          <span
+            className={`${heroBadgeLabel} max-w-[5.25rem] text-neutral-900`}
+          >
+            Clean, natural, wholesome
+          </span>
         </div>
       </div>
     ),
     overlay: "bg-gradient-to-r from-white/60 via-white/20 to-transparent",
     buttonText: "EXPLORE FLAVOURS",
-    buttonClass: "bg-[#657841] text-white hover:bg-[#41622D]"
-  }
+    buttonClass: "bg-[#657841] text-white hover:bg-[#41622D]",
+  },
 ];
 
 const categories = [
   {
-    title: 'Smoothie Premix',
-    subheading: 'Ready in 10 sec',
-    description: 'The ultimate nutrition shortcut. 100% raw freeze-dried fruit powders designed for instant, high-nutrient smoothies.',
-    image: '/beverage-2.png',
-    path: '/smoothie-premix',
-    tag: 'Instant',
+    title: "Smoothie Premix",
+    subheading: "Ready in 10 sec",
+    description:
+      "The ultimate nutrition shortcut. 100% raw freeze-dried fruit powders designed for instant, high-nutrient smoothies.",
+    image: "/beverage-2.png",
+    path: "/smoothie-premix",
+    tag: "Instant",
   },
   {
-    title: 'Chocolates',
-    subheading: 'Real fruit + premium indulgence',
-    description: 'Premium single-origin chocolate elevated by the bold, tangy crunch of freeze-dried fruit. A sensory experience unlike any other.',
-    image: '/premium-chocolate.png',
-    path: '/chocolate',
-    tag: 'Premium',
+    title: "Chocolates",
+    subheading: "Real fruit + premium indulgence",
+    description:
+      "Premium single-origin chocolate elevated by the bold, tangy crunch of freeze-dried fruit. A sensory experience unlike any other.",
+    image: "/premium-chocolate.png",
+    path: "/chocolate",
+    tag: "Premium",
   },
   {
-    title: 'Combos',
-    subheading: 'Best value packs for everyday snacking.',
-    description: 'Curated bundles of our finest products. Perfect for gifting, sampling, or stocking up your healthy pantry.',
-    image: '/SliderImage/Photo_one.jpg',
-    path: '/combos',
-    tag: 'Best Value',
+    title: "Combos",
+    subheading: "Best value packs for everyday snacking.",
+    description:
+      "Curated bundles of our finest products. Perfect for gifting, sampling, or stocking up your healthy pantry.",
+    image: "/SliderImage/Photo_one.jpg",
+    path: "/combos",
+    tag: "Best Value",
   },
   {
-    title: 'Fruit Chunks & Powders',
-    subheading: 'Snack smarter',
-    description: 'The pure essence of fruit. Choose between crunchy whole chunks for snacking or ultra-fine powders for blending and baking.',
-    image: '/milk-chocolate-chunks.png',
-    path: '/fruit-powder-chunks',
-    tag: 'Versatile',
+    title: "Fruit Chunks & Powders",
+    subheading: "Snack smarter",
+    description:
+      "The pure essence of fruit. Choose between crunchy whole chunks for snacking or ultra-fine powders for blending and baking.",
+    image: "/milk-chocolate-chunks.png",
+    path: "/fruit-powder-chunks",
+    tag: "Versatile",
   },
 ];
 
 const testimonials = [
   {
-    name: 'Sarah M.',
-    role: 'Nutritionist',
-    quote: 'I recommend Freeze Fruit to all my clients. The powder is incredible in smoothies and the ingredient list is exactly what it should be just fruit.',
+    name: "Sarah M.",
+    role: "Nutritionist",
+    quote:
+      "I recommend Freeze Fruit to all my clients. The powder is incredible in smoothies and the ingredient list is exactly what it should be just fruit.",
     rating: 5,
   },
   {
-    name: 'James T.',
-    role: 'Home Baker',
-    quote: 'The strawberry powder gives my macarons a natural pink color and real fruit flavor. No artificial dyes needed. Game changer.',
+    name: "James T.",
+    role: "Home Baker",
+    quote:
+      "The strawberry powder gives my macarons a natural pink color and real fruit flavor. No artificial dyes needed. Game changer.",
     rating: 5,
   },
   {
-    name: 'Priya K.',
-    role: 'Parent of Two',
-    quote: 'My kids absolutely love the mango chunks as a snack. I love that there\'s nothing hidden in the ingredients. Just mango.',
+    name: "Priya K.",
+    role: "Parent of Two",
+    quote:
+      "My kids absolutely love the mango chunks as a snack. I love that there's nothing hidden in the ingredients. Just mango.",
     rating: 5,
   },
 ];
@@ -286,7 +400,8 @@ export default function Home() {
   }, []);
 
   const nextHero = () => setHeroIndex((prev) => (prev + 1) % heroSlides.length);
-  const prevHero = () => setHeroIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  const prevHero = () =>
+    setHeroIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
 
   return (
     <div className="min-h-screen bg-black">
@@ -309,7 +424,9 @@ export default function Home() {
               className="h-full w-full object-cover object-center"
             />
             {heroSlides[heroIndex].overlay ? (
-              <div className={`absolute inset-0 ${heroSlides[heroIndex].overlay}`} />
+              <div
+                className={`absolute inset-0 ${heroSlides[heroIndex].overlay}`}
+              />
             ) : null}
           </motion.div>
         </AnimatePresence>
@@ -327,9 +444,13 @@ export default function Home() {
               >
                 <div className="shrink-0">{heroSlides[heroIndex].subtitle}</div>
 
-                <h1 className={`${heroHeadline} mb-0 sm:mb-1`}>{heroSlides[heroIndex].title}</h1>
+                <h1 className={`${heroHeadline} mb-0 sm:mb-1`}>
+                  {heroSlides[heroIndex].title}
+                </h1>
 
-                <div className="max-w-prose">{heroSlides[heroIndex].description}</div>
+                <div className="max-w-prose">
+                  {heroSlides[heroIndex].description}
+                </div>
 
                 {heroSlides[heroIndex].badges}
               </motion.div>
@@ -366,8 +487,9 @@ export default function Home() {
               <button
                 key={i}
                 onClick={() => setHeroIndex(i)}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === heroIndex ? "bg-[#D4AF37] w-8" : "bg-white/30"
-                  }`}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                  i === heroIndex ? "bg-[#D4AF37] w-8" : "bg-white/30"
+                }`}
               />
             ))}
           </div>
@@ -381,7 +503,7 @@ export default function Home() {
       </section>
 
       {/* Trust Badges */}
-      <TrustBadges />
+      <TrustBadges isHome={true} />
 
       {/* Categories */}
       <section className="py-24 bg-black overflow-hidden">
@@ -400,7 +522,8 @@ export default function Home() {
               Four Ways to Love Fruit
             </h2>
             <p className="text-white/70 text-lg max-w-2xl mx-auto">
-              Whether you're blending, baking, snacking, or gifting we have the perfect freeze-dried fruit product for every moment.
+              Whether you're blending, baking, snacking, or gifting we have the
+              perfect freeze-dried fruit product for every moment.
             </p>
           </motion.div>
 
@@ -476,11 +599,12 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="font-serif text-4xl lg:text-5xl font-bold text-white mb-6">
-              Start Your Healthy Routine{' '}
+              Start Your Healthy Routine{" "}
               <span className="text-[#D4AF37]">Today</span>
             </h2>
             <p className="text-white/75 text-lg mb-10 max-w-xl mx-auto">
-              Explore our full range of freeze-dried fruit products and discover why thousands of health-conscious families choose Freeze Fruit.
+              Explore our full range of freeze-dried fruit products and discover
+              why thousands of health-conscious families choose Freeze Fruit.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
