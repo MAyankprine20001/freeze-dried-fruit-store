@@ -205,7 +205,7 @@ export default function ProductDetail() {
               {/* Benefit line */}
               <p className="text-lg text-white/70 font-medium mb-1 flex items-center gap-2">
                 {product.subtitle || "Premium freeze-dried fruits for guilt-free snacking"}
-                <span className="text-lg">🌿</span>
+                {/* <span className="text-lg">🌿</span> */}
               </p>
 
               {/* Price */}
