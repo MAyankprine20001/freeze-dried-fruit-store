@@ -22,6 +22,7 @@ import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import { productApi } from "../api/product.api";
 import { getProductPrimaryImage } from "../utils/productImage";
+import LifestyleBadges from "../components/LifestyleBadges";
 
 // ─── Image with fallback ──────────────────────────────────────────────────────
 function SafeImg({ src, alt, emoji, className = "" }: { src: string; alt: string; emoji?: string; className?: string }) {
@@ -233,32 +234,6 @@ function ProductCard({ product, index }: { product: any; index: number }) {
   );
 }
 
-// ─── Trust Strip ──────────────────────────────────────────────────────────────
-function TrustStrip() {
-  const items = [
-    { icon: <Award className="w-5 h-5 shrink-0" />, label: "100% Natural", sub: "Made from real fruits" },
-    { icon: <Shield className="w-5 h-5 shrink-0" />, label: "No Preservatives", sub: "Nothing artificial" },
-    { icon: <Leaf className="w-5 h-5 shrink-0" />, label: "No Added Sugar", sub: "Only natural sweetness" },
-    { icon: <Zap className="w-5 h-5 shrink-0" />, label: "Freeze-Dried", sub: "Locks in nutrients & flavor" },
-    { icon: <Lock className="w-5 h-5 shrink-0" />, label: "Secure Checkout", sub: "Safe & trusted payments" },
-    { icon: <Truck className="w-5 h-5 shrink-0" />, label: "Pan India Delivery", sub: "Fast & reliable shipping" },
-  ];
-  return (
-    <div className="border-t border-white/[0.07] mt-12 py-6">
-      <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-        {items.map((item) => (
-          <div key={item.label} className="flex items-center gap-3 text-white/50 hover:text-white/70 transition-colors">
-            <span className="text-[#D4AF37]">{item.icon}</span>
-            <div>
-              <p className="text-sm sm:text-base font-bold text-white leading-tight">{item.label}</p>
-              <p className="text-xs sm:text-sm text-white/45 mt-1 leading-snug">{item.sub}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Products() {
@@ -396,8 +371,8 @@ export default function Products() {
           </div>
         )}
 
-        {/* Trust Strip */}
-        <TrustStrip />
+        {/* Lifestyle Badges */}
+        <LifestyleBadges />
       </main>
       <Footer />
     </div>
