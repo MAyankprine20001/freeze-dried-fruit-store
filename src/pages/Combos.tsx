@@ -34,7 +34,7 @@ const benefits = [
 
 export default function Combos() {
  return (
-  <div className="min-h-screen bg-white">
+  <div className="min-h-screen bg-black">
    <Header />
 
    <PageHero
@@ -43,11 +43,11 @@ export default function Combos() {
     highlight="Better Value"
     description="Experience everything The Dry Factory has to offer with our carefully curated combos. From baker's bundles to snacker's delights, we've paired our best products to give you the ultimate fruit experience."
     image="https://images.unsplash.com/photo-1549007994-cb92cd87dd39?w=1600&h=900&fit=crop"
-    tint="from-[#1a1a1a]/70"
+    tint="from-black/85"
    />
 
    {/* Why Combos */}
-   <section className="py-24 bg-white">
+   <section className="py-24 bg-black">
     <div className="max-w-7xl mx-auto px-6 lg:px-8">
      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       <motion.div
@@ -56,25 +56,25 @@ export default function Combos() {
        viewport={{ once: true }}
        transition={{ duration: 0.6 }}
       >
-       <span className="inline-block px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-6">
+       <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
         Curated Nutrition
        </span>
-       <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mb-6 leading-tight">
+       <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
         Designed for the Ultimate Fruit Lover
        </h2>
-       <div className="space-y-4 text-[#6a5a4a] text-base leading-relaxed">
+       <div className="space-y-4 text-white/70 text-base leading-relaxed">
         <p>
          Why settle for one when you can have them all? Our combos are designed to showcase the diversity of our range. Whether you're a home baker needing a variety of powders or a parent looking for healthy snacks, we have a combo for you.
         </p>
         <div className="grid grid-cols-1 gap-4 pt-6">
          {useCases.map((item) => (
-          <div key={item.title} className="flex gap-4 p-4 rounded-xl bg-[#fdf3ec]/50 border border-[#f0d9c8]">
-           <div className="w-10 h-10 bg-[#e85d26] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
-            <item.icon className="w-5 h-5 text-white" />
+          <div key={item.title} className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+           <div className="w-10 h-10 bg-[#D4AF37] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
+            <item.icon className="w-5 h-5 text-black" />
            </div>
            <div>
-            <h4 className="font-semibold text-[#1a1a1a] text-sm mb-1">{item.title}</h4>
-            <p className="text-[#6a5a4a] text-xs leading-relaxed">{item.desc}</p>
+            <h4 className="font-semibold text-white text-sm mb-1">{item.title}</h4>
+            <p className="text-white/60 text-xs leading-relaxed">{item.desc}</p>
            </div>
           </div>
          ))}
@@ -100,7 +100,7 @@ export default function Combos() {
    </section>
 
    {/* Benefits */}
-   <section className="py-24 bg-[#1a1a1a] text-white">
+   <section className="py-24 bg-black border-t border-white/5 text-white">
     <div className="max-w-4xl mx-auto px-6 lg:px-8">
      <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -109,7 +109,7 @@ export default function Combos() {
       transition={{ duration: 0.5 }}
       className="text-center mb-12"
      >
-      <span className="inline-block px-4 py-1.5 bg-white/10 text-[#f4a435] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/20 mb-4">
+      <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-4">
        Bundle Benefits
       </span>
       <h2 className="font-serif text-4xl font-bold">
@@ -117,21 +117,21 @@ export default function Combos() {
       </h2>
      </motion.div>
 
-     <div className="space-y-4">
-      {benefits.map((benefit, i) => (
-       <motion.div
-        key={i}
-        initial={{ opacity: 0, x: -16 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: i * 0.08 }}
-        className="flex items-start gap-4 p-6 bg-white/5 rounded-xl border border-white/10"
-       >
-        <CheckCircle2 className="w-5 h-5 text-[#f4a435] flex-shrink-0 mt-0.5" />
-        <p className="text-white/90 font-medium">{benefit}</p>
-       </motion.div>
-      ))}
-     </div>
+      <div className="space-y-4">
+       {benefits.map((benefit, i) => (
+        <motion.div
+         key={i}
+         initial={{ opacity: 0, x: -16 }}
+         whileInView={{ opacity: 1, x: 0 }}
+         viewport={{ once: true }}
+         transition={{ duration: 0.4, delay: i * 0.08 }}
+         className="flex items-start gap-4 p-6 bg-white/5 rounded-xl border border-white/10"
+        >
+         <CheckCircle2 className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+         <p className="text-white/90 font-medium">{benefit}</p>
+        </motion.div>
+       ))}
+      </div>
     </div>
    </section>
 

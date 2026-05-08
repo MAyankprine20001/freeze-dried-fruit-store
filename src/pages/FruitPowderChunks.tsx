@@ -52,7 +52,7 @@ const benefits = [
 
 export default function FruitPowderChunks() {
  return (
-  <div className="min-h-screen bg-white">
+  <div className="min-h-screen bg-black">
    <Header />
 
    <PageHero
@@ -61,11 +61,11 @@ export default function FruitPowderChunks() {
     highlight="Two Essential Forms"
     description="Whether you need the intense, dissolvable flavor of our ultra-fine powders or the satisfying, nutritious crunch of our whole chunks, we deliver the pure essence of fruit at its peak."
     image="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=1600&h=600&fit=crop"
-    tint="from-[#e85d26]/80"
+    tint="from-black/85"
    />
 
    {/* Introduction */}
-   <section className="py-24 bg-white border-b border-[#fdf3ec]">
+   <section className="py-24 bg-black border-b border-white/10">
     <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
      <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -74,10 +74,10 @@ export default function FruitPowderChunks() {
       transition={{ duration: 0.5 }}
       className="max-w-3xl mx-auto"
      >
-      <h2 className="font-serif text-4xl font-bold text-[#1a1a1a] mb-6">
+      <h2 className="font-serif text-4xl font-bold text-white mb-6">
        The Dry Factory Standard
       </h2>
-      <p className="text-[#6a5a4a] text-lg leading-relaxed">
+      <p className="text-white/70 text-lg leading-relaxed">
        Our unique freeze-drying process never uses heat, preserving the delicate vitamins, enzymes, and phytonutrients that make fruit so beneficial. We start with whole fruit at peak ripeness and remove only the moisture, leaving behind nothing but pure, shelf-stable nutrition.
       </p>
      </motion.div>
@@ -85,7 +85,7 @@ export default function FruitPowderChunks() {
    </section>
 
    {/* Fruit Powder Section */}
-   <section className="py-24 bg-white">
+   <section className="py-24 bg-black">
     <div className="max-w-7xl mx-auto px-6 lg:px-8">
      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       <motion.div
@@ -94,25 +94,25 @@ export default function FruitPowderChunks() {
        viewport={{ once: true }}
        transition={{ duration: 0.6 }}
       >
-       <span className="inline-block px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-6">
+       <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
         Fruit Powder
        </span>
-       <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mb-6 leading-tight">
+       <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
         Concentrated Flavor for Every Creation
        </h2>
-       <div className="space-y-4 text-[#6a5a4a] text-base leading-relaxed">
+       <div className="space-y-4 text-white/70 text-base leading-relaxed">
         <p>
          Milled into a fine, free-flowing powder, our freeze-dried fruits dissolve easily in liquids, batters, and creams. It's the most concentrated form of real fruit available, delivering extraordinary depth of flavor and vibrant, natural color without artificial dyes.
         </p>
         <div className="grid grid-cols-1 gap-4 pt-6">
          {powderUseCases.map((item) => (
-          <div key={item.title} className="flex gap-4 p-4 rounded-xl bg-[#fdf3ec]/50 border border-[#f0d9c8]">
-           <div className="w-10 h-10 bg-[#e85d26] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
-            <item.icon className="w-5 h-5 text-white" />
+          <div key={item.title} className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+           <div className="w-10 h-10 bg-[#D4AF37] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
+            <item.icon className="w-5 h-5 text-black" />
            </div>
            <div>
-            <h4 className="font-semibold text-[#1a1a1a] text-sm mb-1">{item.title}</h4>
-            <p className="text-[#6a5a4a] text-xs leading-relaxed">{item.desc}</p>
+            <h4 className="font-semibold text-white text-sm mb-1">{item.title}</h4>
+            <p className="text-white/60 text-xs leading-relaxed">{item.desc}</p>
            </div>
           </div>
          ))}
@@ -138,7 +138,7 @@ export default function FruitPowderChunks() {
    </section>
 
    {/* Fruit Chunks Section */}
-   <section className="py-24 bg-[#f0faf4]">
+   <section className="py-24 bg-black border-t border-white/5">
     <div className="max-w-7xl mx-auto px-6 lg:px-8">
      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       <motion.div
@@ -162,25 +162,25 @@ export default function FruitPowderChunks() {
        transition={{ duration: 0.6 }}
        className="order-1 lg:order-2"
       >
-       <span className="inline-block px-4 py-1.5 bg-white text-[#27ae60] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#c8e6d4] mb-6">
+       <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
         Fruit Chunks
        </span>
-       <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mb-6 leading-tight">
+       <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
         The Ultimate Crunchy, Healthy Snack
        </h2>
-       <div className="space-y-4 text-[#6a5a4a] text-base leading-relaxed">
+       <div className="space-y-4 text-white/70 text-base leading-relaxed">
         <p>
          Whole pieces of real fruit sliced, diced, or left whole. Our freeze-dried chunks provide a uniquely satisfying, light crunch that dissolves into an intense burst of fruit flavor. Perfect for snacking straight from the bag or topping your favorite breakfast.
         </p>
         <div className="grid grid-cols-1 gap-4 pt-6">
          {chunkUseCases.map((item) => (
-          <div key={item.title} className="flex gap-4 p-4 rounded-xl bg-white border border-[#c8e6d4]">
-           <div className="w-10 h-10 bg-[#27ae60] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
-            <item.icon className="w-5 h-5 text-white" />
+          <div key={item.title} className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+           <div className="w-10 h-10 bg-[#D4AF37] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
+            <item.icon className="w-5 h-5 text-black" />
            </div>
            <div>
-            <h4 className="font-semibold text-[#1a1a1a] text-sm mb-1">{item.title}</h4>
-            <p className="text-[#6a5a4a] text-xs leading-relaxed">{item.desc}</p>
+            <h4 className="font-semibold text-white text-sm mb-1">{item.title}</h4>
+            <p className="text-white/60 text-xs leading-relaxed">{item.desc}</p>
            </div>
           </div>
          ))}
@@ -192,7 +192,7 @@ export default function FruitPowderChunks() {
    </section>
 
    {/* Benefits */}
-   <section className="py-24 bg-white">
+   <section className="py-24 bg-white/5 border-t border-white/5">
     <div className="max-w-4xl mx-auto px-6 lg:px-8">
      <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -201,10 +201,10 @@ export default function FruitPowderChunks() {
       transition={{ duration: 0.5 }}
       className="text-center mb-12"
      >
-      <span className="inline-block px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-4">
+      <span className="inline-block px-4 py-1.5 bg-black text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-4">
        Why Choose Us
       </span>
-      <h2 className="font-serif text-4xl font-bold text-[#1a1a1a]">
+      <h2 className="font-serif text-4xl font-bold text-white">
        The Frozen Benefit
       </h2>
      </motion.div>
@@ -217,10 +217,10 @@ export default function FruitPowderChunks() {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.4, delay: i * 0.08 }}
-        className="flex items-start gap-4 p-6 bg-[#fdf3ec] rounded-xl border border-[#f0d9c8]"
+        className="flex items-start gap-4 p-6 bg-white/5 rounded-xl border border-white/10"
        >
-        <CheckCircle2 className="w-5 h-5 text-[#e85d26] flex-shrink-0 mt-0.5" />
-        <p className="text-[#4a3a2a] font-medium">{benefit}</p>
+        <CheckCircle2 className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+        <p className="text-white/80 font-medium">{benefit}</p>
        </motion.div>
       ))}
      </div>

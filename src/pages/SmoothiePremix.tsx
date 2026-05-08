@@ -34,7 +34,7 @@ const benefits = [
 
 export default function SmoothiePremix() {
  return (
-  <div className="min-h-screen bg-white">
+  <div className="min-h-screen bg-black">
    <Header />
 
    <PageHero
@@ -43,11 +43,11 @@ export default function SmoothiePremix() {
     highlight="Nutrition Shortcut"
     description="Our Smoothie Premixes are crafted from the finest freeze-dried fruits, ensuring you get peak nutrition and explosive flavor in every sip. Just add liquid and enjoy the pure essence of nature."
     image="https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=1600&h=900&fit=crop"
-    tint="from-[#f4a435]/80"
+    tint="from-black/85"
    />
 
    {/* Why Smoothie Premix */}
-   <section className="py-24 bg-white">
+   <section className="py-24 bg-black">
     <div className="max-w-7xl mx-auto px-6 lg:px-8">
      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       <motion.div
@@ -56,25 +56,25 @@ export default function SmoothiePremix() {
        viewport={{ once: true }}
        transition={{ duration: 0.6 }}
       >
-       <span className="inline-block px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-6">
+       <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
         Purely Convenient
        </span>
-       <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mb-6 leading-tight">
+       <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
         Nutrition Without the Prep Work
        </h2>
-       <div className="space-y-4 text-[#6a5a4a] text-base leading-relaxed">
+       <div className="space-y-4 text-white/70 text-base leading-relaxed">
         <p>
          We know your life is busy. That's why we've perfected the Smoothie Premix. We do the sourcing, the cleaning, the slicing, and the freeze-drying. You just reap the benefits.
         </p>
         <div className="grid grid-cols-1 gap-4 pt-6">
          {useCases.map((item) => (
-          <div key={item.title} className="flex gap-4 p-4 rounded-xl bg-[#fdf3ec]/50 border border-[#f0d9c8]">
-           <div className="w-10 h-10 bg-[#e85d26] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
-            <item.icon className="w-5 h-5 text-white" />
+          <div key={item.title} className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+           <div className="w-10 h-10 bg-[#D4AF37] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
+            <item.icon className="w-5 h-5 text-black" />
            </div>
            <div>
-            <h4 className="font-semibold text-[#1a1a1a] text-sm mb-1">{item.title}</h4>
-            <p className="text-[#6a5a4a] text-xs leading-relaxed">{item.desc}</p>
+            <h4 className="font-semibold text-white text-sm mb-1">{item.title}</h4>
+            <p className="text-white/60 text-xs leading-relaxed">{item.desc}</p>
            </div>
           </div>
          ))}
@@ -90,7 +90,7 @@ export default function SmoothiePremix() {
        className="rounded-2xl overflow-hidden shadow-xl"
       >
        <img
-        src="https://images.unsplash.com/photo-1626330332822-a1f2f4a453c1?w=700&h=800&fit=crop"
+        src="/IMG_4410.JPG.jpeg"
         alt="Colorful smoothies in glasses"
         className="w-full h-[600px] object-cover"
        />
@@ -100,7 +100,7 @@ export default function SmoothiePremix() {
    </section>
 
    {/* Benefits */}
-   <section className="py-24 bg-[#fdf3ec]">
+   <section className="py-24 bg-white/5">
     <div className="max-w-4xl mx-auto px-6 lg:px-8">
      <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -109,10 +109,10 @@ export default function SmoothiePremix() {
       transition={{ duration: 0.5 }}
       className="text-center mb-12"
      >
-      <span className="inline-block px-4 py-1.5 bg-white text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-4">
+      <span className="inline-block px-4 py-1.5 bg-black text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-4">
        Premium Benefits
       </span>
-      <h2 className="font-serif text-4xl font-bold text-[#1a1a1a]">
+      <h2 className="font-serif text-4xl font-bold text-white">
        The smoothie you've been waiting for
       </h2>
      </motion.div>
@@ -125,10 +125,10 @@ export default function SmoothiePremix() {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.4, delay: i * 0.08 }}
-        className="flex items-start gap-4 p-6 bg-white rounded-xl border border-[#f0d9c8]"
+        className="flex items-start gap-4 p-6 bg-white/5 rounded-xl border border-white/10"
        >
-        <CheckCircle2 className="w-5 h-5 text-[#e85d26] flex-shrink-0 mt-0.5" />
-        <p className="text-[#4a3a2a] font-medium">{benefit}</p>
+        <CheckCircle2 className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+        <p className="text-white/80 font-medium">{benefit}</p>
        </motion.div>
       ))}
      </div>

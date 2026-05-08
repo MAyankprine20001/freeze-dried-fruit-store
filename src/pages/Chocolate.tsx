@@ -34,7 +34,7 @@ const benefits = [
 
 export default function Chocolate() {
  return (
-  <div className="min-h-screen bg-white">
+  <div className="min-h-screen bg-black">
    <Header />
 
    <PageHero
@@ -43,11 +43,11 @@ export default function Chocolate() {
     highlight="Pure Fruit"
     description="We take premium chocolate and elevate it with the bold, tangy crunch of freeze-dried fruit. The result is a sensory experience that's visually stunning, intensely flavorful, and made from ingredients you can actually pronounce."
     image="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=1600&h=600&fit=crop"
-    tint="from-[#4a1a0a]/90"
+    tint="from-black/85"
    />
 
    {/* What It Is */}
-   <section className="py-24 bg-white">
+   <section className="py-24 bg-black">
     <div className="max-w-7xl mx-auto px-6 lg:px-8">
      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       <motion.div
@@ -56,13 +56,13 @@ export default function Chocolate() {
        viewport={{ once: true }}
        transition={{ duration: 0.6 }}
       >
-       <span className="inline-block px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-6">
+       <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
         The Perfect Pairing
        </span>
-       <h2 className="font-serif text-3xl font-bold text-[#1a1a1a] mb-6 leading-tight">
+       <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
         How Freeze-Dried Fruit Transforms Chocolate
        </h2>
-       <div className="space-y-4 text-[#6a5a4a] text-base leading-relaxed">
+       <div className="space-y-4 text-white/70 text-base leading-relaxed">
         <p>
          Chocolate and fruit have always been natural partners. But fresh fruit brings moisture the enemy of good chocolate. Freeze-dried fruit solves this beautifully: all the flavor, all the color, all the nutrition, with zero moisture to compromise the chocolate's texture or shelf life.
         </p>
@@ -95,8 +95,8 @@ export default function Chocolate() {
    </section>
 
    {/* Use Cases */}
-   <section className="py-24 bg-[#2c1a0e] relative overflow-hidden">
-    <div className="absolute inset-0 opacity-5">
+   <section className="py-24 bg-black relative overflow-hidden border-t border-white/5">
+    <div className="absolute inset-0 opacity-10">
      <img
       src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=1600&h=600&fit=crop"
       alt=""
@@ -114,7 +114,7 @@ export default function Chocolate() {
       transition={{ duration: 0.5 }}
       className="text-center mb-16"
      >
-      <span className="inline-block px-4 py-1.5 bg-white/10 text-[#f4a435] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/20 mb-4">
+      <span className="inline-block px-4 py-1.5 bg-black text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/20 mb-4">
        How to Enjoy It
       </span>
       <h2 className="font-serif text-4xl font-bold text-white">
@@ -130,10 +130,10 @@ export default function Chocolate() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: i * 0.1 }}
-        className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/15 hover:bg-white/15 hover:-translate-y-1 transition-all duration-300"
+        className="bg-black/40 backdrop-blur-md rounded-2xl p-8 border border-white/10 hover:bg-white/5 hover:-translate-y-1 transition-all duration-300"
        >
-        <div className="w-12 h-12 bg-[#e85d26] rounded-xl flex items-center justify-center mb-6 shadow-sm">
-         <item.icon className="w-5 h-5 text-white" />
+        <div className="w-12 h-12 bg-[#D4AF37] rounded-xl flex items-center justify-center mb-6 shadow-sm">
+         <item.icon className="w-5 h-5 text-black" />
         </div>
         <h3 className="font-serif text-xl font-bold text-white mb-3">{item.title}</h3>
         <p className="text-white/70 text-sm leading-relaxed">{item.desc}</p>
@@ -144,7 +144,7 @@ export default function Chocolate() {
    </section>
 
    {/* Benefits */}
-   <section className="py-24 bg-white">
+   <section className="py-24 bg-white/5 border-t border-white/5">
     <div className="max-w-4xl mx-auto px-6 lg:px-8">
      <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -153,10 +153,10 @@ export default function Chocolate() {
       transition={{ duration: 0.5 }}
       className="text-center mb-12"
      >
-      <span className="inline-block px-4 py-1.5 bg-[#fdf3ec] text-[#e85d26] text-xs font-semibold uppercase tracking-wider rounded-full border border-[#f0d9c8] mb-4">
+      <span className="inline-block px-4 py-1.5 bg-black text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-4">
        Key Benefits
       </span>
-      <h2 className="font-serif text-4xl font-bold text-[#1a1a1a]">
+      <h2 className="font-serif text-4xl font-bold text-white">
        Why Our Chocolate Stands Apart
       </h2>
      </motion.div>
@@ -169,10 +169,10 @@ export default function Chocolate() {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.4, delay: i * 0.08 }}
-        className="flex items-start gap-4 p-6 bg-[#fdf3ec] rounded-xl border border-[#f0d9c8]"
+        className="flex items-start gap-4 p-6 bg-white/5 rounded-xl border border-white/10"
        >
-        <CheckCircle2 className="w-5 h-5 text-[#e85d26] flex-shrink-0 mt-0.5" />
-        <p className="text-[#4a3a2a] font-medium">{benefit}</p>
+        <CheckCircle2 className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+        <p className="text-white/80 font-medium">{benefit}</p>
        </motion.div>
       ))}
      </div>
