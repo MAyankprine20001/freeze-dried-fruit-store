@@ -16,14 +16,14 @@ import { getProductPrimaryImage } from "../utils/productImage";
 
 // Map badge label → icon
 const BADGE_ICON_MAP: Record<string, React.ReactNode> = {
-  "No Sugar":        <Leaf className="w-3.5 h-3.5" />,
+  "No Sugar": <Leaf className="w-3.5 h-3.5" />,
   "No Preservatives": <Shield className="w-3.5 h-3.5" />,
-  "Real Fruit":      <Sparkles className="w-3.5 h-3.5" />,
-  "No Added Sugar":  <Leaf className="w-3.5 h-3.5" />,
-  "Freeze Dried":    <Zap className="w-3.5 h-3.5" />,
-  "Gluten Free":     <Award className="w-3.5 h-3.5" />,
-  "Vegan":           <Droplets className="w-3.5 h-3.5" />,
-  "100% Natural":    <Award className="w-3.5 h-3.5" />,
+  "Real Fruit": <Sparkles className="w-3.5 h-3.5" />,
+  "No Added Sugar": <Leaf className="w-3.5 h-3.5" />,
+  "Freeze Dried": <Zap className="w-3.5 h-3.5" />,
+  "Gluten Free": <Award className="w-3.5 h-3.5" />,
+  "Vegan": <Droplets className="w-3.5 h-3.5" />,
+  "100% Natural": <Award className="w-3.5 h-3.5" />,
 };
 const DEFAULT_BADGES = ["No Sugar", "No Preservatives", "Real Fruit"];
 
@@ -166,9 +166,8 @@ export default function ProductDetail() {
                     <button
                       key={`${thumb}-${i}`}
                       onClick={() => setActiveImg(i)}
-                      className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${
-                        activeImg === i ? "border-[#D4AF37]" : "border-white/10 hover:border-white/30"
-                      }`}
+                      className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${activeImg === i ? "border-[#D4AF37]" : "border-white/10 hover:border-white/30"
+                        }`}
                     >
                       <img src={thumb} alt="" className="w-full h-full object-cover" />
                     </button>
@@ -317,7 +316,7 @@ export default function ProductDetail() {
                   <p className="text-white/75 text-sm mb-1 font-medium">Trusted for clean, real-fruit products.</p>
                   <p className="text-white/40 text-xs mb-6">Made with care • No shortcuts</p>
                   <div className="flex w-full justify-between px-2">
-                    {[{ e: "🍃", l: "100% Natural" }, { e: "✨", l: "Clean Ingredients" }, { e: "🛡", l: "Quality Assured" }].map((i) => (
+                    {[{ e: "", l: "100% Natural" }, { e: "", l: "Clean Ingredients" }, { e: "🛡", l: "Quality Assured" }].map((i) => (
                       <div key={i.l} className="flex flex-col items-center gap-1.5">
                         <span className="text-2xl">{i.e}</span>
                         <span className="text-[10px] font-bold text-white/60">{i.l}</span>
