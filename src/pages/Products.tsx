@@ -359,16 +359,19 @@ export default function Products() {
 
         {/* Empty state */}
         {!loading && filtered.length === 0 && (
-          <div className="text-center py-20 bg-white/[0.03] rounded-[32px] border border-white/[0.07]">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20 bg-white/5 rounded-[32px] border border-white/10"
+          >
             <Package className="w-16 h-16 mx-auto mb-4 text-white/10" />
-            <h3 className="text-xl font-bold text-white/30">No products found in this category</h3>
-            <button
-              onClick={() => setActiveCategory("all")}
-              className="mt-4 text-[#D4AF37] font-bold hover:underline"
-            >
-              View all products
-            </button>
-          </div>
+            <h3 className="text-xl font-bold text-white/40 mb-2">
+              Products Coming Soon
+            </h3>
+            <p className="text-white/25 text-sm">
+              We're adding new products to this category — check back shortly.
+            </p>
+          </motion.div>
         )}
 
         {/* Lifestyle Badges */}
