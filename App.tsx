@@ -52,6 +52,7 @@ const AdminTransactions = lazy(() => import("./src/pages/admin/AdminTransactions
 const AdminAnalytics = lazy(() => import("./src/pages/admin/AdminAnalytics"));
 const AdminInventory = lazy(() => import("./src/pages/admin/AdminInventory"));
 const AdminCoupons = lazy(() => import("./src/pages/admin/AdminCoupons"));
+const AdminReviews = lazy(() => import("./src/pages/admin/AdminReviews"));
 const AdminSettings = lazy(() => import("./src/pages/admin/AdminSettings"));
 
 const PageLoader = () => (
@@ -129,6 +130,7 @@ const App: React.FC = () => {
                   <Route path="analytics" element={<AdminAnalytics />} />
                   <Route path="inventory" element={<AdminInventory />} />
                   <Route path="coupons" element={<AdminCoupons />} />
+                  <Route path="reviews" element={<AdminReviews />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>
 

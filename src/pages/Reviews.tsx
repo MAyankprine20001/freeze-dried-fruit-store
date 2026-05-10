@@ -591,6 +591,12 @@ export default function Reviews() {
     .sort((a, b) => b.rating - a.rating || b.helpful - a.helpful)
     .slice(0, 3);
 
+  const showFeaturedStrip = activeCategory === "all" && !activeTag;
+  const featuredIdSet = new Set(featured.map((r) => r._id));
+  const gridReviews = showFeaturedStrip
+    ? filtered.filter((r) => !featuredIdSet.has(r._id))
+    : filtered;
+
   const activeSortLabel = sortOptions.find((o) => o.value === sortBy)?.label ?? "Most Recent";
 
   const fiveStarPct = stats.breakdown.find((b) => b.stars === 5)?.pct ?? 0;
@@ -856,7 +862,7 @@ export default function Reviews() {
       </section>
 
       {/* ── Featured Reviews ── */}
-      {activeCategory === "all" && !activeTag && featured.length > 0 && (
+      {showFeaturedStrip && featured.length > 0 && (
         <section className="px-6 lg:px-8 pt-8 pb-4">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center gap-2 mb-5">
@@ -934,10 +940,10 @@ export default function Reviews() {
                 </button>
               )}
             </div>
-          ) : (
+          ) : gridReviews.length === 0 ? null : (
             <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               <AnimatePresence mode="popLayout">
-                {filtered.map((review, i) => (
+                {gridReviews.map((review, i) => (
                   <ReviewCard key={review._id} review={review} index={i} />
                 ))}
               </AnimatePresence>

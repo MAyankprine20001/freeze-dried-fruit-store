@@ -48,3 +48,10 @@ export const patchOrderStatus = async (
   });
   return res.data;
 };
+
+export const deleteGeneralReview = async (
+  id: string
+): Promise<{ success: boolean; message?: string }> => {
+  const res = await axiosInstance.delete(`/admin/general-reviews/${id}`);
+  return res.data;
+};

@@ -12,7 +12,8 @@ import {
   DollarSign,
   BarChart2,
   Box,
-  Ticket
+  Ticket,
+  MessageSquare,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
@@ -41,6 +42,7 @@ export default function AdminLayout() {
     { label: "Analytics", path: "/admin/analytics", icon: BarChart2 },
     { label: "Inventory", path: "/admin/inventory", icon: Box },
     { label: "Coupons", path: "/admin/coupons", icon: Ticket },
+    { label: "Reviews", path: "/admin/reviews", icon: MessageSquare },
     { label: "Settings", path: "/admin/settings", icon: Settings },
   ];
 
