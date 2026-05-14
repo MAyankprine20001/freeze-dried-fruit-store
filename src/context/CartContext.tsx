@@ -1,5 +1,6 @@
 ﻿import React, { createContext, useContext, useState, useEffect } from "react";
 import { getProductPrimaryImage } from "../utils/productImage";
+import type { CouponDiscountInput } from "../utils/couponDiscount";
 
 export interface CartItem {
  id: string;
@@ -11,6 +12,8 @@ export interface CartItem {
  category?: string;
 }
 
+export type AppliedCouponPayload = CouponDiscountInput & { code: string };
+
 interface CartContextType {
  items: CartItem[];
  addToCart: (product: any) => void;
@@ -19,11 +22,14 @@ interface CartContextType {
  clearCart: () => void;
  totalItems: number;
  subtotal: number;
+ appliedCoupon: AppliedCouponPayload | null;
+ setAppliedCoupon: (coupon: AppliedCouponPayload | null) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+ const [appliedCoupon, setAppliedCoupon] = useState<AppliedCouponPayload | null>(null);
  const [items, setItems] = useState<CartItem[]>(() => {
   const savedCart = localStorage.getItem("cart");
   if (savedCart) {
@@ -45,6 +51,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
  }, [items]);
 
  const addToCart = (product: any) => {
+  setAppliedCoupon(null);
   const productId = product.id || product._id;
   const image = getProductPrimaryImage(product);
   setItems((prevItems) => {
@@ -59,17 +66,22 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
  };
 
  const removeFromCart = (id: string) => {
+  setAppliedCoupon(null);
   setItems((prevItems) => prevItems.filter((item) => item.id !== id));
  };
 
  const updateQuantity = (id: string, quantity: number) => {
+  setAppliedCoupon(null);
   if (quantity < 1) return;
   setItems((prevItems) =>
    prevItems.map((item) => (item.id === id ? { ...item, quantity } : item))
   );
  };
 
- const clearCart = () => setItems([]);
+ const clearCart = () => {
+  setItems([]);
+  setAppliedCoupon(null);
+ };
 
  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -84,6 +96,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     clearCart,
     totalItems,
     subtotal,
+    appliedCoupon,
+    setAppliedCoupon,
    }}
   >
    {children}

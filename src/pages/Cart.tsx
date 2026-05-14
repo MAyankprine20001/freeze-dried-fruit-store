@@ -12,21 +12,65 @@ import { productApi } from "../api/product.api";
 import { getProductPrimaryImage } from "../utils/productImage";
 import { toast } from "react-toastify";
 import { useShippingConfig, computeCartShipping } from "../hooks/useShippingConfig";
+import { couponApi } from "../api/coupon.api";
+import { computeOrderTotalsWithCoupon } from "../utils/couponDiscount";
 
 import LifestyleBadges from "../components/LifestyleBadges";
 
 export default function Cart() {
-  const { items, removeFromCart, updateQuantity, subtotal, totalItems, addToCart } = useCart();
+  const { items, removeFromCart, updateQuantity, subtotal, totalItems, addToCart, appliedCoupon, setAppliedCoupon } = useCart();
   const [promoCode, setPromoCode] = useState("");
+  const [couponLoading, setCouponLoading] = useState(false);
   const [upsellProducts, setUpsellProducts] = useState<any[]>([]);
   const { deliveryCharge, freeShippingThreshold } = useShippingConfig();
 
   const shipping = computeCartShipping(subtotal, items.length, { deliveryCharge, freeShippingThreshold });
-  const total = subtotal + shipping;
+  const couponForPricing = appliedCoupon
+    ? { discountType: appliedCoupon.discountType, discountValue: appliedCoupon.discountValue }
+    : null;
+  const priced = computeOrderTotalsWithCoupon(subtotal, shipping, couponForPricing);
+  const total = priced.total;
+  const discount = priced.discount;
+  const displayShipping = priced.finalShipping;
   const freeShippingGap =
     freeShippingThreshold > 0 ? Math.max(0, freeShippingThreshold - subtotal) : 0;
   const freeShippingProgress =
     freeShippingThreshold > 0 ? Math.min(100, (subtotal / freeShippingThreshold) * 100) : 100;
+
+  useEffect(() => {
+    if (appliedCoupon) setPromoCode(appliedCoupon.code);
+  }, [appliedCoupon]);
+
+  const handleApplyCoupon = async () => {
+    const code = promoCode.trim();
+    if (!code) {
+      toast.error("Enter a coupon code");
+      return;
+    }
+    setCouponLoading(true);
+    try {
+      const res = await couponApi.validate(code, subtotal);
+      if (!res.success || !res.data) {
+        toast.error((res as { message?: string }).message || "Invalid coupon");
+        return;
+      }
+      const d = res.data as { code: string; discountType: string; discountValue: number };
+      setAppliedCoupon({
+        code: d.code,
+        discountType: d.discountType,
+        discountValue: d.discountValue,
+      });
+      toast.success(`Coupon ${d.code} applied`);
+    } catch (e: unknown) {
+      const msg =
+        typeof e === "object" && e !== null && "response" in e
+          ? (e as { response?: { data?: { message?: string } } }).response?.data?.message
+          : undefined;
+      toast.error(msg || "Could not apply coupon");
+    } finally {
+      setCouponLoading(false);
+    }
+  };
 
   useEffect(() => {
     productApi.getAll().then((res) => {
@@ -205,10 +249,16 @@ export default function Cart() {
                   </div>
                   <div className="flex justify-between text-white/55">
                     <span className="flex items-center gap-1">Shipping <span className="text-[10px] text-white/30 border border-white/20 rounded-full w-4 h-4 inline-flex items-center justify-center">ℹ</span></span>
-                    <span className={shipping === 0 ? "text-green-400 font-semibold" : "text-white font-semibold"}>
-                      {shipping === 0 ? "Free" : `₹${shipping}`}
+                    <span className={displayShipping === 0 ? "text-green-400 font-semibold" : "text-white font-semibold"}>
+                      {displayShipping === 0 ? "Free" : `₹${displayShipping}`}
                     </span>
                   </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between text-green-400/90">
+                      <span>Discount{appliedCoupon ? ` (${appliedCoupon.code})` : ""}</span>
+                      <span className="font-semibold">−₹{discount}</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Free Shipping Bar */}
@@ -238,8 +288,24 @@ export default function Cart() {
                       placeholder="Enter promo code"
                       className="bg-black border border-white/10 rounded-xl px-3 py-2.5 flex-1 text-white placeholder-white/20 focus:outline-none focus:border-[#D4AF37] transition-colors text-sm"
                     />
-                    <button className="bg-white/8 text-white font-bold px-4 rounded-xl hover:bg-white/15 transition-colors text-sm border border-white/10">Apply</button>
+                    <button
+                      type="button"
+                      disabled={couponLoading}
+                      onClick={handleApplyCoupon}
+                      className="bg-white/8 text-white font-bold px-4 rounded-xl hover:bg-white/15 transition-colors text-sm border border-white/10 disabled:opacity-50"
+                    >
+                      {couponLoading ? "…" : "Apply"}
+                    </button>
                   </div>
+                  {appliedCoupon && (
+                    <button
+                      type="button"
+                      onClick={() => { setAppliedCoupon(null); toast.info("Coupon removed"); }}
+                      className="mt-2 text-[11px] text-white/40 hover:text-red-400 transition-colors"
+                    >
+                      Remove coupon
+                    </button>
+                  )}
                 </div>
 
                 {/* Total */}

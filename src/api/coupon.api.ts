@@ -35,7 +35,10 @@ export const couponApi = {
 
   validate: async (code: string, orderValue?: number) => {
     const params = orderValue !== undefined ? { orderValue } : {};
-    const response = await axiosInstance.get(`/coupons/validate/${code}`, { params });
+    const response = await axiosInstance.get(
+      `/coupons/validate/${encodeURIComponent(code)}`,
+      { params }
+    );
     return response.data;
   },
 };

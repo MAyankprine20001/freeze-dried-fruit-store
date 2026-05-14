@@ -29,6 +29,8 @@ export interface ShippingAddress {
 export interface CreateOrderPayload {
   items: CartItem[];
   shippingAddress: ShippingAddress;
+  /** Applied promo — server recomputes discount from cart subtotal + shipping rules */
+  couponCode?: string;
   /** Deprecated: server computes from items + store delivery settings */
   subtotal?: number;
   shipping?: number;
@@ -91,6 +93,8 @@ export interface Order {
   shippingAddress: ShippingAddress;
   subtotal: number;
   shipping: number;
+  discount?: number;
+  couponCode?: string;
   total: number;
   status: string;
   orderStatus?: string;
