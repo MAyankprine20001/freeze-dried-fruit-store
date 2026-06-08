@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Instagram, Youtube, Linkedin } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 const productLinks = [
  { label: "Smoothie Premix", path: "/smoothie-premix" },
@@ -27,6 +27,7 @@ const socialLinks = [
   label: "Instagram",
   href: "https://www.instagram.com/thedryfactoryofficial/?hl=en",
  },
+ /*
  {
   icon: Youtube,
   label: "YouTube",
@@ -37,6 +38,7 @@ const socialLinks = [
   label: "LinkedIn",
   href: "https://linkedin.com",
  },
+ */
 ];
 
 export default function Footer() {
