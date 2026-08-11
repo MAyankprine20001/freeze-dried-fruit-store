@@ -111,7 +111,7 @@ export default function Chocolate() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-5 space-y-6">
+            <div className="lg:col-span-6 space-y-6">
               <div>
                 <span className="font-serif text-5xl sm:text-6xl lg:text-7xl font-extrabold text-[#4A2D1B] leading-none block">
                   Freeze
@@ -168,11 +168,11 @@ export default function Chocolate() {
             </div>
 
             {/* Foreground Product Image on the Right */}
-            <div className="lg:col-span-7 flex justify-center z-20">
+            <div className="lg:col-span-6 flex justify-center z-20 lg:translate-x-8">
               <img
                 src="/freeze_product_image.png"
                 alt="Freeze Fusion Chocolates Showcase"
-                className="w-full max-w-4xl lg:max-w-[850px] xl:max-w-[950px] h-auto object-contain lg:scale-[1.3] hover:scale-[1.32] transition-transform duration-500"
+                className="w-full max-w-lg lg:max-w-[500px] xl:max-w-[550px] h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
               />
             </div>
           </div>

@@ -206,9 +206,9 @@ export default function Home() {
             {/* Foreground Product Image on the Right */}
             <div className="lg:col-span-7 flex justify-center z-20">
               <img
-                src="/Home_Product_image.png"
+                src="/HomeProductImage.png"
                 alt="The Dry Factory Products Showcase"
-                className="w-full max-w-4xl lg:max-w-[900px] xl:max-w-[1000px] h-auto object-contain lg:scale-[1.33] hover:scale-[1.35] transition-transform duration-500"
+                className="w-full max-w-2xl lg:max-w-[760px] xl:max-w-[820px] h-auto object-contain lg:scale-[1.1] hover:scale-[1.12] transition-transform duration-500"
               />
             </div>
           </div>
