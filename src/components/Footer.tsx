@@ -1,163 +1,97 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Instagram } from "lucide-react";
-
-const productLinks = [
- { label: "Smoothie Premix", path: "/smoothie-premix" },
- { label: "Chocolates", path: "/chocolate" },
- { label: "Combos", path: "/combos" },
- { label: "Fruit Chunks & Powders", path: "/fruit-powder-chunks" },
-];
-
-const supportLinks = [
- { label: "Blog", path: "/blog" },
- { label: "Reviews", path: "/reviews" },
- { label: "FAQ", path: "/faq" },
- { label: "Contact", path: "/contact" },
-];
-
-const legalLinks = [
- { label: "Privacy Policy", path: "/privacy" },
- { label: "Terms of Service", path: "/terms" },
-];
-
-const socialLinks = [
- {
-  icon: Instagram,
-  label: "Instagram",
-  href: "https://www.instagram.com/thedryfactoryofficial/?hl=en",
- },
- /*
- {
-  icon: Youtube,
-  label: "YouTube",
-  href: "https://youtube.com",
- },
- {
-  icon: Linkedin,
-  label: "LinkedIn",
-  href: "https://linkedin.com",
- },
- */
-];
+import { Instagram, Facebook, Youtube, Linkedin, Mail, Phone, Globe, Leaf } from "lucide-react";
 
 export default function Footer() {
- return (
-  <footer className="bg-black text-white border-t border-white/10">
-   <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-     <div className="lg:col-span-1">
-      <Link
-       to="/"
-       className="flex items-center gap-2 mb-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] rounded-lg"
-      >
-       <img
-        src="https://res.cloudinary.com/doi7id29n/image/upload/q_auto/f_auto/v1776528652/logo_2_on76wp.png"
-        alt=""
-        className="w-12 h-12 object-contain"
-       />
-       <span className="font-serif text-xl font-bold">
-        The Dry<span className="text-[#D4AF37]"> Factory</span>
-       </span>
-      </Link>
-      <p className="text-[#a0a0a0] text-sm leading-relaxed mb-6">
-       Real Fruit. Real Taste. Naturally Crafted
-      </p>
-      <div className="flex items-center gap-3">
-       {socialLinks.map(({ icon: Icon, label, href }) => (
-        <a
-         key={label}
-         href={href}
-         aria-label={label}
-         className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-[#a0a0a0] hover:bg-[#D4AF37] hover:text-black transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
-        >
-         <Icon className="w-4 h-4" />
-        </a>
-       ))}
-      </div>
-     </div>
+  return (
+    <footer className="bg-[#FAF7F2] text-[#213B14] border-t border-[#213B14]/10 select-none">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+          {/* Brand Info Column */}
+          <div className="lg:col-span-2 space-y-6">
+            <Link to="/" className="flex flex-col items-start gap-0.5 group focus:outline-none">
+              <div className="flex items-center gap-1">
+                <span className="font-serif text-lg sm:text-xl font-bold text-[#1C2A18] tracking-wider uppercase">
+                  THE DRY <span className="font-serif italic font-normal text-[#3F622D]">FACTORY</span>
+                </span>
+                <Leaf className="w-4 h-4 text-[#3F622D] -rotate-12 fill-[#3F622D]/10 shrink-0" />
+              </div>
+              <span className="text-[8px] sm:text-[9px] font-bold text-[#3F622D] uppercase tracking-[0.2em] leading-none">
+                REAL TASTE. REAL NUTRITION.
+              </span>
+            </Link>
+            <p className="text-gray-500 text-xs leading-relaxed max-w-sm">
+              We bring you premium freeze dried goodness that lets you snack smart and live better.
+            </p>
+            {/* Social Icons */}
+            <div className="flex items-center gap-3">
+              {[
+                { icon: Instagram, href: "https://www.instagram.com/thedryfactoryofficial/?hl=en" },
+                { icon: Facebook, href: "#" },
+                { icon: Youtube, href: "#" },
+                { icon: Linkedin, href: "#" }
+              ].map((soc, idx) => (
+                <a
+                  key={idx}
+                  href={soc.href}
+                  className="w-8 h-8 rounded-full border border-[#213B14]/15 flex items-center justify-center text-[#213B14]/75 hover:bg-[#213B14] hover:text-white transition-all duration-200"
+                >
+                  <soc.icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
+          </div>
 
-     <div>
-      <Link to="/products" className="inline-block group/title">
-       <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4 group-hover/title:text-[#D4AF37] transition-colors duration-200">
-        Products
-       </h3>
-      </Link>
-      <ul className="space-y-3">
-       {productLinks.map((link) => (
-        <li key={link.path}>
-         <Link
-          to={link.path}
-          className="text-[#a0a0a0] text-sm hover:text-[#D4AF37] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] rounded"
-         >
-          {link.label}
-         </Link>
-        </li>
-       ))}
-      </ul>
-     </div>
+          {/* Shop Column */}
+          <div>
+            <h4 className="text-xs font-black uppercase tracking-widest text-[#3F622D] mb-4">
+              SHOP
+            </h4>
+            <ul className="space-y-3 text-xs font-semibold text-gray-500">
+              <li><Link to="/smoothie-premix" className="hover:text-[#213B14] transition-colors">SipReal Premix Smoothie</Link></li>
+              <li><Link to="/chocolate" className="hover:text-[#213B14] transition-colors">Freeze Fusion Chocolates</Link></li>
+              <li><Link to="/fruit-powder-chunks" className="hover:text-[#213B14] transition-colors">Crispy Bites Snacks</Link></li>
+              <li><Link to="/products" className="hover:text-[#213B14] transition-colors">All Products</Link></li>
+            </ul>
+          </div>
 
-     <div>
-      <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4">
-       Support
-      </h3>
-      <ul className="space-y-3">
-       {supportLinks.map((link) => (
-        <li key={link.path}>
-         <Link
-          to={link.path}
-          className="text-[#a0a0a0] text-sm hover:text-[#D4AF37] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] rounded"
-         >
-          {link.label}
-         </Link>
-        </li>
-       ))}
-      </ul>
-     </div>
+          {/* Help Column */}
+          <div>
+            <h4 className="text-xs font-black uppercase tracking-widest text-[#3F622D] mb-4">
+              HELP
+            </h4>
+            <ul className="space-y-3 text-xs font-semibold text-gray-500">
+              <li><Link to="/faq" className="hover:text-[#213B14] transition-colors">FAQs</Link></li>
+              <li><a href="#" className="hover:text-[#213B14] transition-colors">Shipping & Delivery</a></li>
+              <li><a href="#" className="hover:text-[#213B14] transition-colors">Returns & Refunds</a></li>
+              <li><Link to="/terms" className="hover:text-[#213B14] transition-colors">Terms & Conditions</Link></li>
+            </ul>
+          </div>
 
-     <div>
-      <h3 className="font-semibold text-white text-sm uppercase tracking-wider mb-4">
-       Trust Badges
-      </h3>
-      <div className="grid grid-cols-2 gap-2">
-       {[
-        "No Preservatives",
-        "100% Natural",
-        "Clean Indulgence",
-        "No Added Sugar",
-        "Secure Checkout",
-        "Pan India Delivery",
-       ].map((badge) => (
-        <div
-         key={badge}
-         className="px-2 py-2 bg-white/5 border border-white/10 rounded-lg text-center text-xs text-[#a0a0a0] font-medium"
-        >
-         {badge}
+          {/* Company Column */}
+          <div>
+            <h4 className="text-xs font-black uppercase tracking-widest text-[#3F622D] mb-4">
+              COMPANY
+            </h4>
+            <ul className="space-y-3 text-xs font-semibold text-gray-500">
+              <li><Link to="/about" className="hover:text-[#213B14] transition-colors">Our Story</Link></li>
+              <li><a href="#" className="hover:text-[#213B14] transition-colors">Why Freeze Dried?</a></li>
+              <li><Link to="/blog" className="hover:text-[#213B14] transition-colors">Blog</Link></li>
+              <li><Link to="/contact" className="hover:text-[#213B14] transition-colors">Contact Us</Link></li>
+            </ul>
+          </div>
         </div>
-       ))}
-      </div>
-     </div>
-    </div>
-   </div>
 
-   <div className="border-t border-white/10">
-    <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-     <p className="text-[#606060] text-xs">
-      © 2026 The Dry Factory. All rights reserved.
-     </p>
-     <div className="flex items-center gap-6">
-      {legalLinks.map((link) => (
-       <Link
-        key={link.path}
-        to={link.path}
-        className="text-[#606060] text-xs hover:text-[#D4AF37] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] rounded"
-       >
-        {link.label}
-       </Link>
-      ))}
-     </div>
-    </div>
-   </div>
-  </footer>
- );
+        {/* Bottom copyright details */}
+        <div className="mt-16 pt-8 border-t border-[#213B14]/10 flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] sm:text-xs font-semibold text-gray-400">
+          <p>© 2026 The Dry Factory. All Rights Reserved.</p>
+          <div className="flex flex-wrap justify-center gap-6">
+            <span className="flex items-center gap-1.5"><Globe className="w-3.5 h-3.5 text-[#3F622D]" /> thedryfactory.com</span>
+            <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-[#3F622D]" /> hello@thedryfactory.com</span>
+            <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-[#3F622D]" /> +91 7567350328</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 }

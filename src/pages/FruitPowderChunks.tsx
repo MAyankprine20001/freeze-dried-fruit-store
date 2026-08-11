@@ -1,245 +1,476 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle2, Blend, Cake, Baby, Backpack, Coffee, Apple } from 'lucide-react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import PageHero from '../components/PageHero';
-import CategoryProductSection from '../components/CategoryProductSection';
-
-const powderUseCases = [
- {
-  icon: Blend,
-  title: 'Smoothies & Drinks',
-  desc: 'Add a teaspoon of strawberry, mango, or blueberry powder to your morning smoothie for an intense burst of real fruit flavor and a natural color boost no artificial dyes needed.',
- },
- {
-  icon: Cake,
-  title: 'Baking & Confectionery',
-  desc: 'Fold raspberry powder into buttercream, swirl mango powder into cheesecake batter, or dust passion fruit powder over macarons. Natural flavor and color in one ingredient.',
- },
- {
-  icon: Baby,
-  title: 'Baby & Toddler Food',
-  desc: 'Stir a small amount of our single-ingredient fruit powder into purees, oatmeal, or yogurt for a nutritious flavor boost. No added sugar, no additives just fruit.',
- },
-];
-
-const chunkUseCases = [
- {
-  icon: Backpack,
-  title: 'Trail Mix & On-the-Go Snacking',
-  desc: 'Toss freeze-dried mango, strawberry, or pineapple chunks into your trail mix for a lightweight, nutrient-dense snack that travels anywhere without refrigeration.',
- },
- {
-  icon: Coffee,
-  title: 'Yogurt & Breakfast Toppings',
-  desc: 'Scatter a handful of freeze-dried blueberry or raspberry chunks over Greek yogurt, granola, or overnight oats for a crunchy, intensely fruity topping that won\'t go soggy.',
- },
- {
-  icon: Apple,
-  title: 'Direct Snacking',
-  desc: 'Eat them straight from the bag. The satisfying crunch, the burst of concentrated fruit flavor, and the knowledge that you\'re eating nothing but real fruit it\'s snacking at its best.',
- },
-];
-
-const benefits = [
- 'Concentrated fruit flavor up to 10x more intense than fresh fruit',
- 'Satisfying crunch with zero added sugar or preservatives',
- 'Retains up to 97% of vitamins, minerals, and antioxidants',
- 'Lightweight and shelf-stable perfect for travel, baking, and snacks',
- 'Natural food coloring and flavoring in one pure ingredient',
-];
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Leaf, FlaskConical, Sparkles, Snowflake, Heart, ShoppingBag, CheckCircle2, ChevronLeft, ChevronRight, SlidersHorizontal, ArrowUpDown, X, ArrowRight } from "lucide-react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { productApi } from "../api/product.api";
+import { useCart } from "../context/CartContext";
+import { toast } from "react-toastify";
 
 export default function FruitPowderChunks() {
- return (
-  <div className="min-h-screen bg-black">
-   <Header />
+  const [allProducts, setAllProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { addToCart } = useCart();
+  const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
 
-   <PageHero
-    tag="Fruit Chunks & Powders"
-    title="Pure Fruit,"
-    highlight="Two Essential Forms"
-    description="Whether you need the intense, dissolvable flavor of our ultra-fine powders or the satisfying, nutritious crunch of our whole chunks, we deliver the pure essence of fruit at its peak."
-    image="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=1600&h=600&fit=crop"
-    tint="from-black/85"
-   />
+  // Filter Drawer State
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [outOfStockOnly, setOutOfStockOnly] = useState(false);
+  const [priceFrom, setPriceFrom] = useState("");
+  const [priceTo, setPriceTo] = useState("");
 
-   {/* Introduction */}
-   <section className="py-24 bg-black border-b border-white/10">
-    <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="max-w-3xl mx-auto"
-     >
-      <h2 className="font-serif text-4xl font-bold text-white mb-6">
-       The Dry Factory Standard
-      </h2>
-      <p className="text-white/70 text-lg leading-relaxed">
-       Our unique freeze-drying process never uses heat, preserving the delicate vitamins, enzymes, and phytonutrients that make fruit so beneficial. We start with whole fruit at peak ripeness and remove only the moisture, leaving behind nothing but pure, shelf-stable nutrition.
-      </p>
-     </motion.div>
-    </div>
-   </section>
+  // Sort Drawer State
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const [sortOption, setSortOption] = useState("featured");
 
-   {/* Fruit Powder Section */}
-   <section className="py-24 bg-black">
-    <div className="max-w-7xl mx-auto px-6 lg:px-8">
-     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-      <motion.div
-       initial={{ opacity: 0, x: -24 }}
-       whileInView={{ opacity: 1, x: 0 }}
-       viewport={{ once: true }}
-       transition={{ duration: 0.6 }}
-      >
-       <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
-        Fruit Powder
-       </span>
-       <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
-        Concentrated Flavor for Every Creation
-       </h2>
-       <div className="space-y-4 text-white/70 text-base leading-relaxed">
-        <p>
-         Milled into a fine, free-flowing powder, our freeze-dried fruits dissolve easily in liquids, batters, and creams. It's the most concentrated form of real fruit available, delivering extraordinary depth of flavor and vibrant, natural color without artificial dyes.
-        </p>
-        <div className="grid grid-cols-1 gap-4 pt-6">
-         {powderUseCases.map((item) => (
-          <div key={item.title} className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
-           <div className="w-10 h-10 bg-[#D4AF37] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
-            <item.icon className="w-5 h-5 text-black" />
-           </div>
-           <div>
-            <h4 className="font-semibold text-white text-sm mb-1">{item.title}</h4>
-            <p className="text-white/60 text-xs leading-relaxed">{item.desc}</p>
-           </div>
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await productApi.getAll();
+        const data = res.data ?? res;
+        // Filter by Fruit Chunks category
+        const filtered = data.filter((p: any) =>
+          p.category.toLowerCase().replace(/[\s_]+/g, "-") === "fruit-chunks"
+        );
+        setAllProducts(filtered);
+        setProducts(filtered);
+      } catch (err) {
+        console.error("Failed to load crispy bites products", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  const applyFiltersAndSort = () => {
+    let result = [...allProducts];
+
+    // Availability
+    if (inStockOnly && !outOfStockOnly) {
+      result = result.filter(p => !p.stock || p.stock === "In Stock");
+    } else if (outOfStockOnly && !inStockOnly) {
+      result = result.filter(p => p.stock === "Out of Stock");
+    }
+
+    // Price
+    if (priceFrom) {
+      result = result.filter(p => p.price >= parseFloat(priceFrom));
+    }
+    if (priceTo) {
+      result = result.filter(p => p.price <= parseFloat(priceTo));
+    }
+
+    // Sorting
+    if (sortOption === "featured") {
+      result = result.filter(p => p.featured).concat(result.filter(p => !p.featured));
+    } else if (sortOption === "best-selling") {
+      result.sort((a, b) => (b.salesCount || 0) - (a.salesCount || 0));
+    } else if (sortOption === "price-low-to-high") {
+      result.sort((a, b) => a.price - b.price);
+    } else if (sortOption === "price-high-to-low") {
+      result.sort((a, b) => b.price - a.price);
+    } else if (sortOption === "alpha-a-z") {
+      result.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortOption === "alpha-z-a") {
+      result.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    setProducts(result);
+  };
+
+  useEffect(() => {
+    applyFiltersAndSort();
+  }, [inStockOnly, outOfStockOnly, priceFrom, priceTo, sortOption, allProducts]);
+
+  const handleAddToCart = (product: any) => {
+    addToCart(product);
+    setAddedItems((prev) => ({ ...prev, [product._id || product.id]: true }));
+    toast.success(`${product.name} added to cart!`);
+    setTimeout(() => {
+      setAddedItems((prev) => ({ ...prev, [product._id || product.id]: false }));
+    }, 1500);
+  };
+
+  const testimonials = [
+    { text: "The mango bites are super crunchy and taste exactly like real mango! My go-to healthy snack.", author: "Ananya, Delhi" },
+    { text: "Jamun bites are so unique and tasty. Love the tangy flavor and the crunch.", author: "Rohan, Bangalore" },
+    { text: "Mixed fruit is my favorite! Kids love it too. Finally a snack I can trust.", author: "Priya, Mumbai" }
+  ];
+
+  const [reviewIdx, setReviewIdx] = useState(0);
+
+  return (
+    <div className="min-h-screen bg-[#FAF7F2] text-[#213B14]">
+      <Header />
+
+      {/* Hero Banner Section */}
+      <section className="relative pt-32 pb-16 bg-gradient-to-br from-[#EEF4EC] via-[#E4EFE0] to-[#FAF7F2]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-6 space-y-6">
+              <span className="inline-block px-3 py-1 bg-[#2B4C1F]/10 border border-[#2B4C1F]/20 text-[#2B4C1F] text-xs font-bold uppercase tracking-wider rounded-md">
+                Crispy Bites
+              </span>
+              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#213B14] leading-tight">
+                Crispy Bites <br />
+                <span className="text-[#3F622D] font-normal italic">Freeze Dried Snack</span>
+              </h1>
+              <p className="text-[#2B4C1F] text-lg font-bold uppercase tracking-widest leading-none">
+                CRISPY, CRUNCHY, 100% REAL FRUIT
+              </p>
+              <p className="text-gray-600 text-sm leading-relaxed max-w-sm">
+                Light, crispy & delicious freeze dried fruit snacks made from 100% real fruits. No preservatives, no added sugar, no artificial anything.
+              </p>
+
+              {/* Badges */}
+              <div className="flex flex-wrap gap-2.5 pt-2">
+                {["100% REAL FRUIT", "NO ADDED SUGAR", "NO PRESERVATIVES", "NATURAL GOODNESS"].map((b, i) => (
+                  <span key={i} className="px-3 py-1.5 bg-[#FAF7F2] border border-[#2B4C1F]/15 rounded-md text-[9px] font-black text-[#2B4C1F] tracking-wider uppercase">
+                    {b}
+                  </span>
+                ))}
+              </div>
+
+              <div className="pt-4">
+                <a
+                  href="#flavors"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#2B4C1F] hover:bg-[#1E3615] text-white font-bold rounded-full transition-all shadow-md hover:scale-[1.02]"
+                >
+                  SHOP ALL FLAVORS
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+
+            {/* Collage Mockup */}
+            <div className="lg:col-span-6 flex justify-center">
+              <div className="relative w-full max-w-lg aspect-[5/4] rounded-2xl overflow-hidden shadow-lg bg-[#EEF4EC] border border-[#2B4C1F]/10">
+                <img
+                  src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800&q=80"
+                  alt="Crispy Bites Product Packages"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
-         ))}
         </div>
-       </div>
-      </motion.div>
+      </section>
 
-      <motion.div
-       initial={{ opacity: 0, x: 24 }}
-       whileInView={{ opacity: 1, x: 0 }}
-       viewport={{ once: true }}
-       transition={{ duration: 0.6 }}
-       className="rounded-2xl overflow-hidden shadow-xl"
-      >
-       <img
-        src="https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=700&h=800&fit=crop"
-        alt="Colorful fruit powders"
-        className="w-full h-[600px] object-cover"
-       />
-      </motion.div>
-     </div>
-    </div>
-   </section>
+      {/* Badges Banner */}
+      <section className="bg-[#2B4C1F] text-[#FAF7F2] py-4 select-none">
+        <div className="max-w-7xl mx-auto px-4 text-center text-[10px] sm:text-xs font-bold tracking-widest uppercase flex flex-wrap justify-center gap-6 md:gap-12">
+          <span>❄️ FREEZE DRIED (To Lock Nutrition)</span>
+          <span>⚡ LIGHT & CRISPY (Crunchy Goodness)</span>
+          <span>🧪 NO PRESERVATIVES (No Additives)</span>
+          <span>🎒 TRAVEL FRIENDLY (Easy to Carry)</span>
+          <span>👶 KIDS APPROVED (Healthy Snacking)</span>
+        </div>
+      </section>
 
-   {/* Fruit Chunks Section */}
-   <section className="py-24 bg-black border-t border-white/5">
-    <div className="max-w-7xl mx-auto px-6 lg:px-8">
-     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-      <motion.div
-       initial={{ opacity: 0, x: 24 }}
-       whileInView={{ opacity: 1, x: 0 }}
-       viewport={{ once: true }}
-       transition={{ duration: 0.6 }}
-       className="order-2 lg:order-1 rounded-2xl overflow-hidden shadow-xl"
-      >
-       <img
-        src="https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=700&h=800&fit=crop"
-        alt="Colorful fruit chunks"
-        className="w-full h-[600px] object-cover"
-       />
-      </motion.div>
-
-      <motion.div
-       initial={{ opacity: 0, x: -24 }}
-       whileInView={{ opacity: 1, x: 0 }}
-       viewport={{ once: true }}
-       transition={{ duration: 0.6 }}
-       className="order-1 lg:order-2"
-      >
-       <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
-        Fruit Chunks
-       </span>
-       <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
-        The Ultimate Crunchy, Healthy Snack
-       </h2>
-       <div className="space-y-4 text-white/70 text-base leading-relaxed">
-        <p>
-         Whole pieces of real fruit sliced, diced, or left whole. Our freeze-dried chunks provide a uniquely satisfying, light crunch that dissolves into an intense burst of fruit flavor. Perfect for snacking straight from the bag or topping your favorite breakfast.
-        </p>
-        <div className="grid grid-cols-1 gap-4 pt-6">
-         {chunkUseCases.map((item) => (
-          <div key={item.title} className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
-           <div className="w-10 h-10 bg-[#D4AF37] rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
-            <item.icon className="w-5 h-5 text-black" />
-           </div>
-           <div>
-            <h4 className="font-semibold text-white text-sm mb-1">{item.title}</h4>
-            <p className="text-white/60 text-xs leading-relaxed">{item.desc}</p>
-           </div>
+      {/* Flavors Grid */}
+      <section id="flavors" className="py-20 bg-[#FAF7F2]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#2B4C1F] bg-[#2B4C1F]/10 px-3 py-1 rounded">Our</span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-black text-[#213B14] mt-2">
+              Our Flavors
+            </h2>
+            <p className="text-[#3F622D] text-xs font-bold uppercase tracking-widest mt-2">
+              100% Real Fruits. 100% Delicious.
+            </p>
           </div>
-         ))}
+
+          {/* Filter & Sort Action Row */}
+          <div className="flex justify-between items-center max-w-5xl mx-auto mb-10 pt-4 border-t border-[#213B14]/10">
+            <button
+              onClick={() => setIsFilterOpen(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#213B14]/15 rounded-full text-xs font-bold uppercase tracking-wider bg-white hover:bg-gray-50 transition-colors shadow-sm"
+            >
+              <SlidersHorizontal className="w-4 h-4 text-[#2B4C1F]" />
+              Filter
+            </button>
+            <button
+              onClick={() => setIsSortOpen(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#213B14]/15 rounded-full text-xs font-bold uppercase tracking-wider bg-white hover:bg-gray-50 transition-colors shadow-sm"
+            >
+              <ArrowUpDown className="w-4 h-4 text-[#2B4C1F]" />
+              Sort
+            </button>
+          </div>
+
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="w-8 h-8 border-2 border-[#2B4C1F] border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : products.length === 0 ? (
+            <div className="text-center py-12 bg-white/40 rounded-2xl border border-[#213B14]/5 max-w-5xl mx-auto">
+              <h3 className="font-serif text-lg font-bold text-gray-400">No Fruit Snacks match your filters</h3>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {products.map((product) => (
+                <div
+                  key={product._id || product.id}
+                  className="bg-white rounded-2xl p-6 border border-[#213B14]/5 flex flex-col justify-between hover:shadow-lg transition-all"
+                >
+                  <div className="space-y-4">
+                    <div className="aspect-[4/3] w-full rounded-xl bg-[#EEF4EC] overflow-hidden relative">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-serif text-xl font-bold text-[#213B14]">
+                        {product.name}
+                      </h3>
+                      <p className="text-xs text-gray-400 mt-1">{product.subtitle}</p>
+                    </div>
+
+                    <div className="space-y-2 pt-2">
+                      {product.trustBadges?.slice(0, 3).map((badge: string, idx: number) => (
+                        <div key={idx} className="flex items-center gap-1.5 text-xs text-[#3F622D] font-bold">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#2B4C1F]" />
+                          <span>{badge}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-8 pt-4 border-t border-[#213B14]/5 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] text-gray-400 block">{product.weight}</span>
+                      <span className="font-serif text-xl font-black text-[#213B14]">₹{product.price}</span>
+                    </div>
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      className={`inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                        addedItems[product._id || product.id]
+                          ? "bg-green-700 text-white shadow-none"
+                          : "bg-[#2B4C1F] text-white hover:bg-[#1E3615] shadow-md shadow-[#2B4C1F]/15"
+                      }`}
+                    >
+                      <ShoppingBag className="w-3.5 h-3.5" />
+                      {addedItems[product._id || product.id] ? "Added!" : "SHOP NOW"}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-       </div>
-      </motion.div>
-     </div>
+      </section>
+
+      {/* Ways to Enjoy */}
+      <section className="py-20 bg-white border-t border-b border-[#213B14]/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="text-center">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#2B4C1F]">Perfect Snacking</span>
+            <h3 className="font-serif text-3xl font-extrabold text-[#213B14] mt-2">
+              Ways to Enjoy 🍃
+            </h3>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { title: "Straight from the pack", desc: "Open and enjoy the crispy real fruit goodness anytime, anywhere on the go." },
+              { title: "Top on Yogurt", desc: "Add a crunchy, sweet, and tangy element to your morning bowl of Greek yogurt." },
+              { title: "Add to Cereal", desc: "Elevate your daily breakfast oatmeal or cornflakes with rich fruit nutrients." },
+              { title: "Perfect for Desserts", desc: "Decorate cakes, ice creams, or custards with gorgeous, natural fruit chunks." }
+            ].map((item, idx) => (
+              <div key={idx} className="p-6 bg-[#FAF7F2] rounded-xl border border-[#213B14]/5 space-y-2 text-center">
+                <h4 className="font-bold text-[#2B4C1F] text-sm">{item.title}</h4>
+                <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-[#FAF7F2]">
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#2B4C1F]">Loved by Our Customers</span>
+          <div className="relative bg-white p-8 rounded-2xl border border-[#213B14]/5 shadow-sm min-h-[140px] flex flex-col justify-center">
+            <p className="font-serif text-lg italic text-[#213B14] leading-relaxed">
+              "{testimonials[reviewIdx].text}"
+            </p>
+            <h4 className="text-xs font-black uppercase text-[#2B4C1F] tracking-widest mt-4">
+              - {testimonials[reviewIdx].author}
+            </h4>
+            <div className="absolute top-1/2 -translate-y-1/2 left-3">
+              <button
+                onClick={() => setReviewIdx((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
+                className="w-8 h-8 rounded-full border border-[#213B14]/10 bg-white flex items-center justify-center text-[#213B14] hover:bg-gray-50 transition-colors shadow-sm"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="absolute top-1/2 -translate-y-1/2 right-3">
+              <button
+                onClick={() => setReviewIdx((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
+                className="w-8 h-8 rounded-full border border-[#213B14]/10 bg-white flex items-center justify-center text-[#213B14] hover:bg-gray-50 transition-colors shadow-sm"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FILTER DRAWER PANEL */}
+      <AnimatePresence>
+        {isFilterOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsFilterOpen(false)}
+              className="fixed inset-0 bg-black z-50"
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 right-0 bottom-0 w-80 bg-white z-50 p-6 shadow-2xl flex flex-col justify-between"
+            >
+              <div className="space-y-6">
+                <div className="flex justify-between items-center border-b pb-4">
+                  <h3 className="font-serif text-xl font-black uppercase tracking-wider">FILTER</h3>
+                  <button onClick={() => setIsFilterOpen(false)} className="text-[#213B14]/65 hover:text-[#213B14]">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="space-y-3">
+                  <h4 className="font-bold text-xs uppercase tracking-wider text-gray-500">Availability</h4>
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={inStockOnly}
+                        onChange={(e) => {
+                          setInStockOnly(e.target.checked);
+                          if (e.target.checked) setOutOfStockOnly(false);
+                        }}
+                        className="rounded border-[#213B14]/20 focus:ring-[#2B4C1F] text-[#2B4C1F]"
+                      />
+                      In stock
+                    </label>
+                    <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={outOfStockOnly}
+                        onChange={(e) => {
+                          setOutOfStockOnly(e.target.checked);
+                          if (e.target.checked) setInStockOnly(false);
+                        }}
+                        className="rounded border-[#213B14]/20 focus:ring-[#2B4C1F] text-[#2B4C1F]"
+                      />
+                      Out of stock
+                    </label>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <h4 className="font-bold text-xs uppercase tracking-wider text-gray-500">Price</h4>
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="number"
+                      placeholder="From"
+                      value={priceFrom}
+                      onChange={(e) => setPriceFrom(e.target.value)}
+                      className="w-full px-3 py-2 bg-gray-50 border rounded-lg text-xs outline-none"
+                    />
+                    <span className="text-gray-400">-</span>
+                    <input
+                      type="number"
+                      placeholder="To"
+                      value={priceTo}
+                      onChange={(e) => setPriceTo(e.target.value)}
+                      className="w-full px-3 py-2 bg-gray-50 border rounded-lg text-xs outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="pt-6 border-t">
+                <button
+                  onClick={() => setIsFilterOpen(false)}
+                  className="w-full py-3 bg-[#2B4C1F] hover:bg-[#1E3615] text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                >
+                  APPLY
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* SORT DRAWER PANEL */}
+      <AnimatePresence>
+        {isSortOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsSortOpen(false)}
+              className="fixed inset-0 bg-black z-50"
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 right-0 bottom-0 w-80 bg-white z-50 p-6 shadow-2xl flex flex-col justify-between"
+            >
+              <div className="space-y-6">
+                <div className="flex justify-between items-center border-b pb-4">
+                  <h3 className="font-serif text-xl font-black uppercase tracking-wider">SORT</h3>
+                  <button onClick={() => setIsSortOpen(false)} className="text-[#213B14]/65 hover:text-[#213B14]">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { value: "featured", label: "Featured" },
+                    { value: "best-selling", label: "Best selling" },
+                    { value: "alpha-a-z", label: "Alphabetically, A-Z" },
+                    { value: "alpha-z-a", label: "Alphabetically, Z-A" },
+                    { value: "price-low-to-high", label: "Price, low to high" },
+                    { value: "price-high-to-low", label: "Price, high to low" }
+                  ].map((opt) => (
+                    <label key={opt.value} className="flex items-center gap-3 text-xs font-semibold text-gray-600 cursor-pointer py-1">
+                      <input
+                        type="radio"
+                        name="sort-opt"
+                        checked={sortOption === opt.value}
+                        onChange={() => setSortOption(opt.value)}
+                        className="text-[#2B4C1F] focus:ring-[#2B4C1F]"
+                      />
+                      {opt.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div className="pt-6 border-t">
+                <button
+                  onClick={() => setIsSortOpen(false)}
+                  className="w-full py-3 bg-[#2B4C1F] hover:bg-[#1E3615] text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                >
+                  APPLY
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      <Footer />
     </div>
-   </section>
-
-   {/* Benefits */}
-   <section className="py-24 bg-white/5 border-t border-white/5">
-    <div className="max-w-4xl mx-auto px-6 lg:px-8">
-     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="text-center mb-12"
-     >
-      <span className="inline-block px-4 py-1.5 bg-black text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-4">
-       Why Choose Us
-      </span>
-      <h2 className="font-serif text-4xl font-bold text-white">
-       The Frozen Benefit
-      </h2>
-     </motion.div>
-
-     <div className="space-y-4">
-      {benefits.map((benefit, i) => (
-       <motion.div
-        key={i}
-        initial={{ opacity: 0, x: -16 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: i * 0.08 }}
-        className="flex items-start gap-4 p-6 bg-white/5 rounded-xl border border-white/10"
-       >
-        <CheckCircle2 className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
-        <p className="text-white/80 font-medium">{benefit}</p>
-       </motion.div>
-      ))}
-     </div>
-    </div>
-   </section>
-
-   <CategoryProductSection
-    categoryKey="fruit-powders"
-    title="Shop Fruit Powders"
-    subtitle="Ultra-fine, concentrated fruit powder — natural flavor and color in one ingredient."
-   />
-
-   <CategoryProductSection
-    categoryKey="fruit-chunks"
-    title="Shop Fruit Chunks"
-    subtitle="Crunchy, intensely flavored whole fruit pieces — snack straight or top any dish."
-   />
-
-   <Footer />
-  </div>
- );
+  );
 }

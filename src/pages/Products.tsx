@@ -1,252 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import {
-  Leaf,
-  ShoppingBag,
-  Shield,
-  Sparkles,
-  Heart,
-  Eye,
-  Package,
-  CheckCircle2,
-  Truck,
-  Lock,
-  Zap,
-  Award,
-  Droplets,
-} from "lucide-react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { SlidersHorizontal, ArrowUpDown, X, Star, Heart, ShoppingBag, CheckCircle2, Award, Zap, ShieldCheck } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import { productApi } from "../api/product.api";
-import { getProductPrimaryImage } from "../utils/productImage";
-import LifestyleBadges from "../components/LifestyleBadges";
 
-// ─── Image with fallback ──────────────────────────────────────────────────────
-function SafeImg({ src, alt, emoji, className = "" }: { src: string; alt: string; emoji?: string; className?: string }) {
-  const [broken, setBroken] = useState(false);
-  if (broken) {
-    return (
-      <div className={`w-full h-full flex flex-col items-center justify-center bg-[#2a2a2a] ${className}`}>
-        <span style={{ fontSize: "3rem", lineHeight: 1 }}>{emoji || "🍓"}</span>
-        <span className="text-white/50 text-[10px] font-semibold mt-2 text-center px-2">{alt}</span>
-      </div>
-    );
-  }
-  return <img src={src} alt={alt} className={`w-full h-full object-cover ${className}`} onError={() => setBroken(true)} />;
-}
-
-// ─── Badge icon map ───────────────────────────────────────────────────────────
-const BADGE_ICONS: Record<string, React.ReactNode> = {
-  "No Sugar":        <Leaf className="w-3 h-3" />,
-  "No Preservatives": <Shield className="w-3 h-3" />,
-  "Real Fruit":      <Sparkles className="w-3 h-3" />,
-  "No Added Sugar":  <Leaf className="w-3 h-3" />,
-  "Freeze Dried":    <Zap className="w-3 h-3" />,
-  "Gluten Free":     <Award className="w-3 h-3" />,
-  "Vegan":           <Droplets className="w-3 h-3" />,
-  "100% Natural":    <Award className="w-3 h-3" />,
-};
-const DEFAULT_CARD_BADGES = ["No Sugar", "No Preservatives", "Real Fruit"];
-
-const categories = [
-  { id: "all", label: "All Products", icon: "✨" },
-  { id: "smoothie-premix", label: "Smoothies (Ready in 10 sec)", icon: "🥤" },
-  { id: "chocolates", label: "Chocolates (Guilt-free indulgence)", icon: "🍫" },
-  { id: "fruit-chunks", label: "Fruit Chunks (Healthy snacking)", icon: "🍓" },
-  { id: "bestsellers", label: "Bestsellers", icon: "⭐" },
-  { id: "combos", label: "Combos & Gifts", icon: "🎁" },
-];
-
-type CategoryBanner = { title: string; sub: string; titleLines?: readonly [string, string] };
-
-const categoryBanners: Record<string, CategoryBanner> = {
-  all: {
-    title: "Real Fruit. Real Taste. Zero Compromise.",
-    titleLines: ["Real Fruit. Real Taste.", "Zero Compromise."],
-    sub: "Snack smarter with real fruit products made for taste, health, and convenience.",
-  },
-  "smoothie-premix": { title: "Smoothies (Ready in 10 sec)", sub: "Ready in 10 seconds. 100% natural." },
-  chocolates: { title: "Chocolates (Guilt-free indulgence)", sub: "Real fruit meets rich couverture chocolate." },
-  "fruit-chunks": { title: "Fruit Chunks (Healthy snacking)", sub: "Intensely flavored crunchy chunks." },
-  bestsellers: { title: "Bestsellers", sub: "Our most loved real fruit products." },
-  combos: { title: "Combos & Gifts", sub: "Premium gift hampers and bundles for special occasions." },
-};
-
-// ─── Product Card ─────────────────────────────────────────────────────────────
-function ProductCard({ product, index }: { product: any; index: number }) {
-  const { addToCart } = useCart();
-  const navigate = useNavigate();
-  const [added, setAdded] = useState(false);
-  const [wishlisted, setWishlisted] = useState(false);
-
-  const discount = product.originalPrice && product.originalPrice > product.price
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : 0;
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addToCart(product);
-    setAdded(true);
-    toast.success(`${product.name} added to cart!`);
-    setTimeout(() => setAdded(false), 1500);
-  };
-
-  const isInStock = !product.stock || product.stock === "In Stock";
-  const isLowStock = product.stock === "Low Stock";
-
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.04, duration: 0.35 }}
-      onClick={() => navigate(`/product/${product._id || product.id}`)}
-      className="group bg-[#161616] rounded-[18px] overflow-hidden border border-white/[0.07] hover:border-[#D4AF37]/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col cursor-pointer relative"
-      style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.3)" }}
-      whileHover={{ boxShadow: "0 20px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,175,55,0.25)" }}
-    >
-      {/* Bestseller Badge */}
-      {product.featured && (
-        <div className="absolute top-3 left-3 z-20 px-2.5 py-1 bg-[#D4AF37] text-black text-[9px] font-black rounded-sm tracking-[0.15em] uppercase shadow-lg">
-          ★ BESTSELLER
-        </div>
-      )}
-
-      {/* Discount Badge */}
-      {discount > 0 && !product.featured && (
-        <div className="absolute top-3 left-3 z-20 px-2 py-1 bg-red-500 text-white text-[9px] font-bold rounded-sm tracking-wide">
-          -{discount}%
-        </div>
-      )}
-
-      {/* Image Area */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-[#1e1e1e]">
-        {/* Hover Actions */}
-        <button
-          onClick={(e) => { e.stopPropagation(); setWishlisted(!wishlisted); }}
-          aria-label="Add to wishlist"
-          className={`absolute top-3 right-3 z-20 w-8 h-8 rounded-full backdrop-blur-md border flex items-center justify-center transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:translate-y-1 sm:group-hover:translate-y-0 ${
-            wishlisted ? "bg-red-500 border-red-500 text-white" : "bg-black/50 border-white/10 text-white hover:text-red-400 hover:border-red-400/40"
-          }`}
-        >
-          <Heart className={`w-3.5 h-3.5 ${wishlisted ? "fill-current" : ""}`} />
-        </button>
-        <button
-          aria-label="Quick view"
-          onClick={(e) => { e.stopPropagation(); navigate(`/product/${product._id || product.id}`); }}
-          className="absolute top-[52px] right-3 z-20 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:text-[#D4AF37] hover:border-[#D4AF37]/40 transition-all opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 delay-75"
-        >
-          <Eye className="w-3.5 h-3.5" />
-        </button>
-        <button
-          onClick={handleAddToCart}
-          aria-label="Add to Cart"
-          className="absolute top-[100px] right-3 z-20 w-8 h-8 rounded-full bg-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/30 flex items-center justify-center hover:scale-110 transition-all opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 delay-150"
-        >
-          {added ? <CheckCircle2 className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
-        </button>
-
-        <SafeImg
-          src={getProductPrimaryImage(product)}
-          alt={product.name}
-          emoji={product.emoji}
-          className="group-hover:scale-108 transition-transform duration-700"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      </div>
-
-      {/* Body */}
-      <div className="p-4 flex flex-col flex-1 gap-2.5">
-        {/* Category Tag */}
-        <p className="text-[#D4AF37] text-[10px] font-black tracking-[0.14em] uppercase">
-          {product.category}
-        </p>
-
-        {/* Product Name */}
-        <h3 className="text-white font-bold text-[15px] leading-snug line-clamp-2 group-hover:text-[#D4AF37] transition-colors duration-200">
-          {product.name}
-        </h3>
-
-        {/* Benefit line */}
-        {product.subtitle && (
-          <p className="text-white/55 text-[11px] leading-relaxed line-clamp-2">{product.subtitle}</p>
-        )}
-
-        {/* Weight */}
-        {product.weight && (
-          <p className="text-white/35 text-[11px] font-semibold">{product.weight}</p>
-        )}
-
-        {/* Trust Badges — dynamic from backend */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-0.5">
-          {(product.trustBadges?.length > 0 ? product.trustBadges : DEFAULT_CARD_BADGES).map((badge: string, bi: number) => (
-            <div key={`${badge}-${bi}`} className="flex items-center gap-1.5">
-              <span className="text-[#D4AF37]">{BADGE_ICONS[badge] ?? <Award className="w-3 h-3" />}</span>
-              <span className="text-[10px] text-white/45 font-medium">{badge}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* Divider */}
-        <div className="h-px bg-white/[0.06] my-0.5" />
-
-        {/* Price + Stock + CTA */}
-        <div className="flex flex-col gap-2.5 mt-auto">
-          <div className="flex items-center justify-between">
-            <div className="flex items-baseline gap-2">
-              <span className="text-xl font-black text-white tracking-tight">₹{product.price}</span>
-              {product.originalPrice > 0 && (
-                <span className="text-xs text-white/30 line-through font-medium">₹{product.originalPrice}</span>
-              )}
-            </div>
-            <span className={`text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-sm border ${
-              isInStock
-                ? "text-green-400 bg-green-500/10 border-green-500/25"
-                : isLowStock
-                ? "text-orange-400 bg-orange-500/10 border-orange-500/25"
-                : "text-red-400 bg-red-500/10 border-red-500/25"
-            }`}>
-              {product.stock || "In Stock"}
-            </span>
-          </div>
-
-          <button
-            onClick={handleAddToCart}
-            className={`w-full py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all duration-200 active:scale-[0.98] ${
-              added
-                ? "bg-green-600 text-white"
-                : "bg-[#D4AF37] text-black hover:bg-[#c4a030] shadow-md shadow-[#D4AF37]/15"
-            }`}
-          >
-            {added ? (
-              <><CheckCircle2 className="w-4 h-4" /> Added!</>
-            ) : (
-              <><ShoppingBag className="w-4 h-4" /> Add to Cart</>
-            )}
-          </button>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-
-// ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Products() {
   const [allProducts, setAllProducts] = useState<any[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [searchParams] = useSearchParams();
+  const [activeCategory, setActiveCategory] = useState(searchParams.get("category") || "all");
+
+  useEffect(() => {
+    setActiveCategory(searchParams.get("category") || "all");
+  }, [searchParams]);
+
+  // Filter Drawer State
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [outOfStockOnly, setOutOfStockOnly] = useState(false);
+  const [priceFrom, setPriceFrom] = useState("");
+  const [priceTo, setPriceTo] = useState("");
+
+  // Sort Drawer State
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const [sortOption, setSortOption] = useState("featured");
+
+  const { addToCart } = useCart();
+  const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
         const res = await productApi.getAll();
-        setAllProducts(res.data);
+        const data = res.data ?? res;
+        setAllProducts(data);
+        setFilteredProducts(data);
       } catch (err) {
         console.error("Failed to fetch products", err);
       } finally {
@@ -256,127 +51,413 @@ export default function Products() {
     fetchProducts();
   }, []);
 
-  const filtered = allProducts.filter((p) => {
-    if (activeCategory === "all") return true;
-    if (activeCategory === "bestsellers") return p.featured;
-    return p.category?.toLowerCase().replace(/\s+/g, "-").replace(/[()]/g, "") === activeCategory ||
-      p.category?.toLowerCase().replace(/\s+/g, "-") === activeCategory;
-  });
+  // Handle Filtering & Sorting
+  const applyFiltersAndSort = () => {
+    let result = [...allProducts];
 
-  const banner = categoryBanners[activeCategory] || categoryBanners.all;
+    // Category filter mapping
+    if (activeCategory === "fruits") {
+      result = result.filter(p => p.category.toLowerCase().replace(/[\s_]+/g, "-") === "fruit-chunks");
+    } else if (activeCategory === "ice-creams") {
+      result = result.filter(p => p.category.toLowerCase().replace(/[\s_]+/g, "-") === "smoothie-premix");
+    } else if (activeCategory === "candies") {
+      result = result.filter(p => p.category.toLowerCase().replace(/[\s_]+/g, "-") === "chocolates");
+    }
+
+    // Availability filter
+    if (inStockOnly && !outOfStockOnly) {
+      result = result.filter(p => !p.stock || p.stock === "In Stock");
+    } else if (outOfStockOnly && !inStockOnly) {
+      result = result.filter(p => p.stock === "Out of Stock");
+    }
+
+    // Price filter
+    if (priceFrom) {
+      result = result.filter(p => p.price >= parseFloat(priceFrom));
+    }
+    if (priceTo) {
+      result = result.filter(p => p.price <= parseFloat(priceTo));
+    }
+
+    // Sorting options
+    if (sortOption === "featured") {
+      result = result.filter(p => p.featured).concat(result.filter(p => !p.featured));
+    } else if (sortOption === "best-selling") {
+      result.sort((a, b) => (b.salesCount || 0) - (a.salesCount || 0));
+    } else if (sortOption === "price-low-to-high") {
+      result.sort((a, b) => a.price - b.price);
+    } else if (sortOption === "price-high-to-low") {
+      result.sort((a, b) => b.price - a.price);
+    } else if (sortOption === "alpha-a-z") {
+      result.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortOption === "alpha-z-a") {
+      result.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (sortOption === "date-new-to-old") {
+      result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } else if (sortOption === "date-old-to-new") {
+      result.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    }
+
+    setFilteredProducts(result);
+  };
+
+  useEffect(() => {
+    applyFiltersAndSort();
+  }, [activeCategory, allProducts]);
+
+  const handleApplyFilter = () => {
+    applyFiltersAndSort();
+    setIsFilterOpen(false);
+  };
+
+  const handleApplySort = () => {
+    applyFiltersAndSort();
+    setIsSortOpen(false);
+  };
+
+  const handleAddToCart = (product: any, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(product);
+    setAddedItems((prev) => ({ ...prev, [product._id || product.id]: true }));
+    toast.success(`${product.name} added to cart!`);
+    setTimeout(() => {
+      setAddedItems((prev) => ({ ...prev, [product._id || product.id]: false }));
+    }, 1500);
+  };
+
+  // Helper to show category labels
+  const getCategoryTitle = () => {
+    if (activeCategory === "fruits") return "Fruits / Crispy Bites";
+    if (activeCategory === "ice-creams") return "Ice Creams / SipReal Premixes";
+    if (activeCategory === "candies") return "Candies / Freeze Fusion Chocolates";
+    return "All Products";
+  };
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d] text-white">
+    <div className="min-h-screen bg-[#FAF7F2] text-[#213B14]">
       <Header />
-      <main className="pt-20 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
 
+      <main className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
         {/* Page Heading */}
-        <div className="mb-8 mt-4 text-center">
-          <motion.h1
-            key={activeCategory + "-title"}
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-2xl sm:text-4xl font-black mb-2 sm:mb-3 tracking-tight"
-          >
-            {banner.titleLines ? (
-              <>
-                <span className="block">{banner.titleLines[0]}</span>
-                <span className="block text-[#D4AF37]">{banner.titleLines[1]}</span>
-              </>
-            ) : (
-              banner.title
-                .split(".")
-                .filter((p) => p.trim().length > 0)
-                .map((part, i, arr) =>
-                  i < arr.length - 1 ? (
-                    <span key={i}>
-                      {part.trim()}.<br className="hidden sm:block" />
-                    </span>
-                  ) : (
-                    <span key={i} className="text-[#D4AF37]">
-                      {part.trim()}
-                    </span>
-                  )
-                )
-            )}
-          </motion.h1>
-          <motion.p
-            key={activeCategory + "-sub"}
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05 }}
-            className="text-white/50 max-w-2xl mx-auto text-sm sm:text-base"
-          >
-            {banner.sub}
-          </motion.p>
+        <div className="text-center">
+          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#213B14]">
+            {getCategoryTitle()}
+          </h1>
+          <p className="text-gray-500 text-xs sm:text-sm font-semibold uppercase tracking-widest mt-2">
+            Enjoy organic, freeze-dried goodness crafted for taste & health.
+          </p>
         </div>
 
-        {/* Category Filter */}
-        <div className="mb-8 sm:mb-10">
-          <div
-            className="flex gap-2 sm:gap-2.5 overflow-x-auto pb-2 sm:flex-wrap sm:justify-center"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        {/* 3 Dedicated Categories Option Cards (Shop Selector Index) */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {[
+            {
+              id: "ice-creams",
+              title: "SipReal",
+              subtitle: "PREMIX SMOOTHIE",
+              desc: "Real fruit smoothie premixes. Just add water & sip.",
+              bgClass: "bg-[#FCEAEB]",
+              btnBg: "bg-[#B82A5F]",
+              textColor: "text-[#B82A5F]",
+              btnText: "EXPLORE SIPREAL →",
+              image: "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400&q=80"
+            },
+            {
+              id: "candies",
+              title: "FreezeFusion",
+              subtitle: "CHOCOLATES",
+              desc: "Real fruit infused rich couverture chocolates.",
+              bgClass: "bg-[#F5ECE6]",
+              btnBg: "bg-[#4A2D1B]",
+              textColor: "text-[#4A2D1B]",
+              btnText: "EXPLORE CHOCOLATES →",
+              image: "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400&q=80"
+            },
+            {
+              id: "fruits",
+              title: "Crispy Bites",
+              subtitle: "FREEZE DRIED SNACKS",
+              desc: "Crispy, crunchy & naturally delicious fruit bites.",
+              bgClass: "bg-[#EEF4EC]",
+              btnBg: "bg-[#2B4C1F]",
+              textColor: "text-[#2B4C1F]",
+              btnText: "EXPLORE BITES →",
+              image: "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=400&q=80"
+            }
+          ].map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => {
+                if (cat.id === "fruits") navigate("/fruit-powder-chunks");
+                if (cat.id === "ice-creams") navigate("/smoothie-premix");
+                if (cat.id === "candies") navigate("/chocolate");
+              }}
+              className={`rounded-[24px] p-6 flex flex-col text-left transition-all duration-300 hover:shadow-lg ${cat.bgClass} hover:scale-[1.01]`}
+            >
+              <div className="flex-1 space-y-4">
+                <div>
+                  <h3 className={`font-serif text-2xl font-black ${cat.textColor}`}>
+                    {cat.title}
+                  </h3>
+                  <span className="text-[10px] font-bold text-gray-500 tracking-[0.15em] block mt-0.5">
+                    {cat.subtitle}
+                  </span>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed font-medium">
+                  {cat.desc}
+                </p>
+                <div className="w-full h-36 rounded-xl overflow-hidden relative">
+                  <img
+                    src={cat.image}
+                    alt={cat.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+              <div className="w-full mt-6">
+                <div className={`w-full py-3 ${cat.btnBg} text-white rounded-full text-[10px] font-black uppercase tracking-widest text-center shadow-sm`}>
+                  {cat.btnText}
+                </div>
+              </div>
+            </button>
+          ))}
+        </section>
+
+        {/* Filter and Sort Action Buttons Row */}
+        <div className="flex justify-between items-center max-w-5xl mx-auto pt-6 border-t border-[#213B14]/10">
+          <button
+            onClick={() => setIsFilterOpen(true)}
+            className="inline-flex items-center gap-2 px-5 py-3 border border-[#213B14]/15 rounded-full text-xs font-bold uppercase tracking-wider bg-white hover:bg-gray-50 transition-colors shadow-sm"
           >
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`flex-shrink-0 flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold leading-snug transition-all border ${
-                  activeCategory === cat.id
-                    ? "bg-[#D4AF37] text-black border-[#D4AF37]"
-                    : "bg-white/[0.04] text-white/55 hover:bg-white/[0.08] hover:text-white border-white/[0.06]"
-                }`}
-              >
-                <span>{cat.icon}</span>
-                {cat.label}
-              </button>
-            ))}
-          </div>
+            <SlidersHorizontal className="w-4 h-4 text-[#3F622D]" />
+            Filter
+          </button>
+
+          <button
+            onClick={() => setIsSortOpen(true)}
+            className="inline-flex items-center gap-2 px-5 py-3 border border-[#213B14]/15 rounded-full text-xs font-bold uppercase tracking-wider bg-white hover:bg-gray-50 transition-colors shadow-sm"
+          >
+            <ArrowUpDown className="w-4 h-4 text-[#3F622D]" />
+            Sort
+          </button>
         </div>
 
-        {/* Loading */}
+        {/* Products Grid */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-24">
-            <div className="w-10 h-10 border-4 border-[#D4AF37] border-t-transparent rounded-full animate-spin mb-4" />
-            <p className="text-white/35 font-bold uppercase tracking-widest text-xs">Fetching deliciousness...</p>
+          <div className="flex justify-center items-center py-20">
+            <div className="w-8 h-8 border-2 border-[#213B14] border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : filteredProducts.length === 0 ? (
+          <div className="text-center py-20 bg-white/40 rounded-2xl border border-[#213B14]/5 max-w-5xl mx-auto">
+            <h3 className="font-serif text-xl font-bold text-gray-400">No Products Found</h3>
+            <p className="text-xs text-gray-400 mt-1">Try resetting your filters or select a different category.</p>
           </div>
         ) : (
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCategory}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
-            >
-              {filtered.map((product, i) => (
-                <ProductCard key={product._id} product={product} index={i} />
-              ))}
-            </motion.div>
-          </AnimatePresence>
-        )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {filteredProducts.map((product) => (
+              <div
+                key={product._id || product.id}
+                onClick={() => navigate(`/product/${product._id || product.id}`)}
+                className="bg-white rounded-2xl p-4 border border-[#213B14]/5 flex flex-col justify-between hover:shadow-md transition-all cursor-pointer"
+              >
+                <div className="space-y-4">
+                  <div className="aspect-square w-full rounded-xl bg-[#FAF7F2] overflow-hidden relative">
+                    <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-bold text-[#3F622D] uppercase tracking-wider">{product.category}</span>
+                    <h3 className="font-serif text-sm font-bold text-[#213B14] mt-1 line-clamp-1">{product.name}</h3>
+                    <p className="text-[11px] text-gray-500 line-clamp-2 mt-1">{product.subtitle}</p>
+                  </div>
+                </div>
 
-        {/* Empty state */}
-        {!loading && filtered.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-20 bg-white/5 rounded-[32px] border border-white/10"
-          >
-            <Package className="w-16 h-16 mx-auto mb-4 text-white/10" />
-            <h3 className="text-xl font-bold text-white/40 mb-2">
-              Products Coming Soon
-            </h3>
-            <p className="text-white/25 text-sm">
-              We're adding new products to this category — check back shortly.
-            </p>
-          </motion.div>
+                <div className="mt-4 pt-4 border-t border-[#213B14]/5 flex items-center justify-between">
+                  <span className="font-serif text-base font-black text-[#213B14]">₹{product.price}</span>
+                  <button
+                    onClick={(e) => handleAddToCart(product, e)}
+                    className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${
+                      addedItems[product._id || product.id]
+                        ? "bg-green-700 text-white"
+                        : "bg-[#213B14] text-white hover:bg-[#3F622D]"
+                    }`}
+                  >
+                    {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
-
-        {/* Lifestyle Badges */}
-        <LifestyleBadges />
       </main>
+
+      {/* FILTER DRAWER PANEL */}
+      <AnimatePresence>
+        {isFilterOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsFilterOpen(false)}
+              className="fixed inset-0 bg-black z-50"
+            />
+            {/* Panel */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 right-0 bottom-0 w-80 bg-white z-50 p-6 shadow-2xl flex flex-col justify-between"
+            >
+              <div className="space-y-6">
+                <div className="flex justify-between items-center border-b pb-4">
+                  <h3 className="font-serif text-xl font-black uppercase tracking-wider">FILTER</h3>
+                  <button onClick={() => setIsFilterOpen(false)} className="text-[#213B14]/65 hover:text-[#213B14]">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* Availability Section */}
+                <div className="space-y-3">
+                  <h4 className="font-bold text-xs uppercase tracking-wider text-gray-500">Availability</h4>
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={inStockOnly}
+                        onChange={(e) => {
+                          setInStockOnly(e.target.checked);
+                          if (e.target.checked) setOutOfStockOnly(false);
+                        }}
+                        className="rounded border-[#213B14]/20 focus:ring-[#213B14]"
+                      />
+                      In stock
+                    </label>
+                    <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={outOfStockOnly}
+                        onChange={(e) => {
+                          setOutOfStockOnly(e.target.checked);
+                          if (e.target.checked) setInStockOnly(false);
+                        }}
+                        className="rounded border-[#213B14]/20 focus:ring-[#213B14]"
+                      />
+                      Out of stock
+                    </label>
+                  </div>
+                </div>
+
+                {/* Price Section */}
+                <div className="space-y-3">
+                  <h4 className="font-bold text-xs uppercase tracking-wider text-gray-500">Price</h4>
+                  <div className="flex items-center gap-3">
+                    <div className="relative flex-1">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">₹</span>
+                      <input
+                        type="number"
+                        placeholder="From"
+                        value={priceFrom}
+                        onChange={(e) => setPriceFrom(e.target.value)}
+                        className="w-full pl-6 pr-3 py-2 bg-gray-50 border rounded-lg text-xs outline-none"
+                      />
+                    </div>
+                    <span className="text-gray-400">-</span>
+                    <div className="relative flex-1">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">₹</span>
+                      <input
+                        type="number"
+                        placeholder="To"
+                        value={priceTo}
+                        onChange={(e) => setPriceTo(e.target.value)}
+                        className="w-full pl-6 pr-3 py-2 bg-gray-50 border rounded-lg text-xs outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t">
+                <button
+                  onClick={handleApplyFilter}
+                  className="w-full py-3 bg-[#213B14] hover:bg-[#3F622D] text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                >
+                  APPLY
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* SORT DRAWER PANEL */}
+      <AnimatePresence>
+        {isSortOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsSortOpen(false)}
+              className="fixed inset-0 bg-black z-50"
+            />
+            {/* Panel */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 right-0 bottom-0 w-80 bg-white z-50 p-6 shadow-2xl flex flex-col justify-between"
+            >
+              <div className="space-y-6">
+                <div className="flex justify-between items-center border-b pb-4">
+                  <h3 className="font-serif text-xl font-black uppercase tracking-wider">SORT</h3>
+                  <button onClick={() => setIsSortOpen(false)} className="text-[#213B14]/65 hover:text-[#213B14]">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  {[
+                    { value: "featured", label: "Featured" },
+                    { value: "best-selling", label: "Best selling" },
+                    { value: "alpha-a-z", label: "Alphabetically, A-Z" },
+                    { value: "alpha-z-a", label: "Alphabetically, Z-A" },
+                    { value: "price-low-to-high", label: "Price, low to high" },
+                    { value: "price-high-to-low", label: "Price, high to low" },
+                    { value: "date-old-to-new", label: "Date, old to new" },
+                    { value: "date-new-to-old", label: "Date, new to old" }
+                  ].map((opt) => (
+                    <label key={opt.value} className="flex items-center gap-3 text-xs font-semibold text-gray-600 cursor-pointer py-1">
+                      <input
+                        type="radio"
+                        name="sort-opt"
+                        checked={sortOption === opt.value}
+                        onChange={() => setSortOption(opt.value)}
+                        className="text-[#213B14] focus:ring-[#213B14]"
+                      />
+                      {opt.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-6 border-t">
+                <button
+                  onClick={handleApplySort}
+                  className="w-full py-3 bg-[#213B14] hover:bg-[#3F622D] text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                >
+                  APPLY
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       <Footer />
     </div>
   );

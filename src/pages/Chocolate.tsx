@@ -1,191 +1,433 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle2, Gift, Candy, UtensilsCrossed } from 'lucide-react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import PageHero from '../components/PageHero';
-import CategoryProductSection from '../components/CategoryProductSection';
-
-const useCases = [
- {
-  icon: Gift,
-  title: 'Gifting',
-  desc: 'Our chocolate bars make extraordinary gifts. The striking visual of vibrant freeze-dried fruit embedded in premium chocolate is as beautiful as it is delicious perfect for any occasion.',
- },
- {
-  icon: Candy,
-  title: 'Everyday Snacking',
-  desc: 'A square of dark chocolate with freeze-dried raspberry is a genuinely satisfying snack that feels indulgent but is made from real, recognizable ingredients. Treat yourself, guilt-free.',
- },
- {
-  icon: UtensilsCrossed,
-  title: 'Dessert Topping',
-  desc: 'Break our chocolate into shards and scatter over ice cream, panna cotta, or mousse for a dramatic, flavor-packed garnish that elevates any dessert to restaurant quality.',
- },
-];
-
-const benefits = [
- 'Premium single-origin chocolate paired with real freeze-dried fruit',
- 'The tartness of freeze-dried fruit perfectly balances the richness of chocolate',
- 'Visually stunning vibrant fruit pieces visible throughout',
- 'No artificial flavors, colors, or preservatives',
- 'Available in dark, milk, and white chocolate bases',
-];
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Leaf, FlaskConical, Sparkles, Snowflake, Heart, ShoppingBag, CheckCircle2, SlidersHorizontal, ArrowUpDown, X, ArrowRight } from "lucide-react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { productApi } from "../api/product.api";
+import { useCart } from "../context/CartContext";
+import { toast } from "react-toastify";
 
 export default function Chocolate() {
- return (
-  <div className="min-h-screen bg-black">
-   <Header />
+  const [allProducts, setAllProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { addToCart } = useCart();
+  const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
 
-   <PageHero
-    tag="Chocolates"
-    title="Where Chocolate Meets"
-    highlight="Pure Fruit"
-    description="We take premium chocolate and elevate it with the bold, tangy crunch of freeze-dried fruit. The result is a sensory experience that's visually stunning, intensely flavorful, and made from ingredients you can actually pronounce."
-    image="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=1600&h=600&fit=crop"
-    tint="from-black/85"
-   />
+  // Filter Drawer State
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [outOfStockOnly, setOutOfStockOnly] = useState(false);
+  const [priceFrom, setPriceFrom] = useState("");
+  const [priceTo, setPriceTo] = useState("");
 
-   {/* What It Is */}
-   <section className="py-24 bg-black">
-    <div className="max-w-7xl mx-auto px-6 lg:px-8">
-     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-      <motion.div
-       initial={{ opacity: 0, x: -24 }}
-       whileInView={{ opacity: 1, x: 0 }}
-       viewport={{ once: true }}
-       transition={{ duration: 0.6 }}
-      >
-       <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
-        The Perfect Pairing
-       </span>
-       <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
-        How Freeze-Dried Fruit Transforms Chocolate
-       </h2>
-       <div className="space-y-4 text-white/70 text-base leading-relaxed">
-        <p>
-         Chocolate and fruit have always been natural partners. But fresh fruit brings moisture the enemy of good chocolate. Freeze-dried fruit solves this beautifully: all the flavor, all the color, all the nutrition, with zero moisture to compromise the chocolate's texture or shelf life.
-        </p>
-        <p>
-         The tartness and acidity of freeze-dried raspberry, strawberry, or passion fruit cuts through the richness of chocolate in a way that fresh fruit simply can't. The contrast is extraordinary a snap of chocolate, then a burst of intense, concentrated fruit flavor.
-        </p>
-        <p>
-         We source our chocolate from ethical, single-origin producers and pair each variety with the freeze-dried fruit that complements it best. Every bar is a considered combination, not an afterthought.
-        </p>
-       </div>
-      </motion.div>
+  // Sort Drawer State
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const [sortOption, setSortOption] = useState("featured");
 
-      <motion.div
-       initial={{ opacity: 0, x: 24 }}
-       whileInView={{ opacity: 1, x: 0 }}
-       viewport={{ once: true }}
-       transition={{ duration: 0.6 }}
-       className="rounded-2xl overflow-hidden shadow-xl"
-      >
-       <img
-        src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=700&h=600&fit=crop"
-        alt="Dark chocolate bar with freeze-dried raspberries"
-        width={700}
-        height={600}
-        className="w-full h-[480px] object-cover"
-       />
-      </motion.div>
-     </div>
-    </div>
-   </section>
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await productApi.getAll();
+        const data = res.data ?? res;
+        // Filter by Chocolates category
+        const filtered = data.filter((p: any) =>
+          p.category.toLowerCase().replace(/[\s_]+/g, "-") === "chocolates"
+        );
+        setAllProducts(filtered);
+        setProducts(filtered);
+      } catch (err) {
+        console.error("Failed to load chocolate products", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
 
-   {/* Use Cases */}
-   <section className="py-24 bg-black relative overflow-hidden border-t border-white/5">
-    <div className="absolute inset-0 opacity-10">
-     <img
-      src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=1600&h=600&fit=crop"
-      alt=""
-      aria-hidden="true"
-      width={1600}
-      height={600}
-      className="w-full h-full object-cover"
-     />
-    </div>
-    <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="text-center mb-16"
-     >
-      <span className="inline-block px-4 py-1.5 bg-black text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/20 mb-4">
-       How to Enjoy It
-      </span>
-      <h2 className="font-serif text-4xl font-bold text-white">
-       Three Perfect Occasions
-      </h2>
-     </motion.div>
+  const applyFiltersAndSort = () => {
+    let result = [...allProducts];
 
-     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {useCases.map((item, i) => (
-       <motion.div
-        key={item.title}
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: i * 0.1 }}
-        className="bg-black/40 backdrop-blur-md rounded-2xl p-8 border border-white/10 hover:bg-white/5 hover:-translate-y-1 transition-all duration-300"
-       >
-        <div className="w-12 h-12 bg-[#D4AF37] rounded-xl flex items-center justify-center mb-6 shadow-sm">
-         <item.icon className="w-5 h-5 text-black" />
+    // Availability
+    if (inStockOnly && !outOfStockOnly) {
+      result = result.filter(p => !p.stock || p.stock === "In Stock");
+    } else if (outOfStockOnly && !inStockOnly) {
+      result = result.filter(p => p.stock === "Out of Stock");
+    }
+
+    // Price
+    if (priceFrom) {
+      result = result.filter(p => p.price >= parseFloat(priceFrom));
+    }
+    if (priceTo) {
+      result = result.filter(p => p.price <= parseFloat(priceTo));
+    }
+
+    // Sorting
+    if (sortOption === "featured") {
+      result = result.filter(p => p.featured).concat(result.filter(p => !p.featured));
+    } else if (sortOption === "best-selling") {
+      result.sort((a, b) => (b.salesCount || 0) - (a.salesCount || 0));
+    } else if (sortOption === "price-low-to-high") {
+      result.sort((a, b) => a.price - b.price);
+    } else if (sortOption === "price-high-to-low") {
+      result.sort((a, b) => b.price - a.price);
+    } else if (sortOption === "alpha-a-z") {
+      result.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortOption === "alpha-z-a") {
+      result.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    setProducts(result);
+  };
+
+  useEffect(() => {
+    applyFiltersAndSort();
+  }, [inStockOnly, outOfStockOnly, priceFrom, priceTo, sortOption, allProducts]);
+
+  const handleAddToCart = (product: any) => {
+    addToCart(product);
+    setAddedItems((prev) => ({ ...prev, [product._id || product.id]: true }));
+    toast.success(`${product.name} added to cart!`);
+    setTimeout(() => {
+      setAddedItems((prev) => ({ ...prev, [product._id || product.id]: false }));
+    }, 1500);
+  };
+
+  return (
+    <div className="min-h-screen bg-[#FAF7F2] text-[#213B14]">
+      <Header />
+
+      {/* Hero Banner Section */}
+      <section className="relative pt-32 pb-16 bg-gradient-to-br from-[#FAF5F0] via-[#F3ECE6] to-[#FAF7F2]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-6 space-y-6">
+              <span className="inline-block px-3 py-1 bg-[#4A2D1B]/10 border border-[#4A2D1B]/20 text-[#4A2D1B] text-xs font-bold uppercase tracking-wider rounded-md">
+                Freeze Fusion
+              </span>
+              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#213B14] leading-tight">
+                Freeze <br />
+                <span className="text-[#4A2D1B] font-normal italic">Fusion</span>
+              </h1>
+              <p className="text-[#4A2D1B] text-lg font-bold uppercase tracking-widest leading-none">
+                REAL FRUIT INFUSED RICH COUVERTURE CHOCOLATES
+              </p>
+              <p className="text-gray-600 text-sm leading-relaxed max-w-sm">
+                Crunchy outside. Creamy inside. Real joy in every bite.
+              </p>
+
+              {/* Badges */}
+              <div className="flex flex-wrap gap-2.5 pt-2">
+                {["REAL FRUIT INSIDE", "COUVERTURE CHOCOLATE", "FREEZE DRIED", "TRUE INDULGENCE"].map((b, i) => (
+                  <span key={i} className="px-3 py-1.5 bg-[#FAF7F2] border border-[#4A2D1B]/15 rounded-md text-[9px] font-black text-[#4A2D1B] tracking-wider uppercase">
+                    {b}
+                  </span>
+                ))}
+              </div>
+
+              <div className="pt-4">
+                <a
+                  href="#flavors"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#4A2D1B] hover:bg-[#3A1F13] text-white font-bold rounded-full transition-all shadow-md hover:scale-[1.02]"
+                >
+                  EXPLORE FLAVORS
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+
+            {/* Collage Mockup */}
+            <div className="lg:col-span-6 flex justify-center">
+              <div className="relative w-full max-w-lg aspect-[5/4] rounded-2xl overflow-hidden shadow-lg bg-[#FAF5F0] border border-[#4A2D1B]/10">
+                <img
+                  src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=800&q=80"
+                  alt="Freeze Fusion Product Packages"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        <h3 className="font-serif text-xl font-bold text-white mb-3">{item.title}</h3>
-        <p className="text-white/70 text-sm leading-relaxed">{item.desc}</p>
-       </motion.div>
-      ))}
-     </div>
+      </section>
+
+      {/* Badges Bar */}
+      <section className="bg-[#4A2D1B] text-[#FAF7F2] py-4 select-none">
+        <div className="max-w-7xl mx-auto px-4 text-center text-xs font-bold tracking-widest uppercase flex flex-wrap justify-center gap-8 md:gap-16">
+          <span>🍓 100% Real Fruits</span>
+          <span>🍫 Rich Couverture</span>
+          <span>🧪 No Preservatives</span>
+          <span>❄️ Freeze Dried</span>
+        </div>
+      </section>
+
+      {/* 4 Irresistible Flavors Grid */}
+      <section id="flavors" className="py-20 bg-[#FAF7F2]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#4A2D1B] bg-[#4A2D1B]/10 px-3 py-1 rounded">Our</span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-black text-[#213B14] mt-2">
+              Irresistible Flavors
+            </h2>
+          </div>
+
+          {/* Filter & Sort Action Row */}
+          <div className="flex justify-between items-center max-w-5xl mx-auto mb-10 pt-4 border-t border-[#213B14]/10">
+            <button
+              onClick={() => setIsFilterOpen(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#213B14]/15 rounded-full text-xs font-bold uppercase tracking-wider bg-white hover:bg-gray-50 transition-colors shadow-sm"
+            >
+              <SlidersHorizontal className="w-4 h-4 text-[#4A2D1B]" />
+              Filter
+            </button>
+            <button
+              onClick={() => setIsSortOpen(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#213B14]/15 rounded-full text-xs font-bold uppercase tracking-wider bg-white hover:bg-gray-50 transition-colors shadow-sm"
+            >
+              <ArrowUpDown className="w-4 h-4 text-[#4A2D1B]" />
+              Sort
+            </button>
+          </div>
+
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="w-8 h-8 border-2 border-[#4A2D1B] border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : products.length === 0 ? (
+            <div className="text-center py-12 bg-white/40 rounded-2xl border border-[#213B14]/5 max-w-5xl mx-auto">
+              <h3 className="font-serif text-lg font-bold text-gray-400">No Chocolates match your filters</h3>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+              {products.map((product) => (
+                <div
+                  key={product._id || product.id}
+                  className="bg-white rounded-2xl p-5 border border-[#213B14]/5 flex flex-col justify-between hover:shadow-lg transition-all"
+                >
+                  <div className="space-y-4">
+                    <div className="aspect-[4/3] w-full rounded-xl bg-[#FAF5F0] overflow-hidden relative">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-serif text-base font-bold text-[#213B14] line-clamp-1">
+                        {product.name}
+                      </h3>
+                      <p className="text-xs text-gray-400 mt-1 line-clamp-2">{product.subtitle}</p>
+                    </div>
+
+                    <div className="space-y-1.5 pt-2">
+                      {product.trustBadges?.slice(0, 2).map((badge: string, idx: number) => (
+                        <div key={idx} className="flex items-center gap-1.5 text-xs text-[#3F622D] font-bold">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#4A2D1B]" />
+                          <span>{badge}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-8 pt-4 border-t border-[#213B14]/5 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] text-gray-400 block">{product.weight}</span>
+                      <span className="font-serif text-lg font-black text-[#213B14]">₹{product.price}</span>
+                    </div>
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                        addedItems[product._id || product.id]
+                          ? "bg-green-700 text-white shadow-none"
+                          : "bg-[#4A2D1B] text-white hover:bg-[#382012] shadow-md shadow-[#4A2D1B]/15"
+                      }`}
+                    >
+                      <ShoppingBag className="w-3.5 h-3.5" />
+                      {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Why You'll Love It Section */}
+      <section className="py-20 bg-white border-t border-[#213B14]/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="text-center">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#4A2D1B] bg-[#4A2D1B]/10 px-3 py-1 rounded">Indulge</span>
+            <h3 className="font-serif text-3xl font-extrabold text-[#213B14] mt-2">
+              Why You'll Love It
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {[
+              { title: "Real Fruit Infused", desc: "Every bite has real freeze-dried fruit chunks inside for authentic taste and crunch." },
+              { title: "Rich Couverture Chocolate", desc: "Made with premium cocoa butter for a smooth, luxurious melt-in-your-mouth experience." },
+              { title: "Freeze Dried Technology", desc: "Locks in taste, color, and nutritional value of fresh fruit with zero preservatives." },
+              { title: "Made for True Indulgence", desc: "A perfect balance of sweet, tangy fruit and rich premium chocolate — no compromise." }
+            ].map((item, idx) => (
+              <div key={idx} className="p-6 bg-[#FAF7F2] rounded-xl border border-[#213B14]/5 space-y-3">
+                <h4 className="font-bold text-[#4A2D1B] text-sm">{item.title}</h4>
+                <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FILTER DRAWER PANEL */}
+      <AnimatePresence>
+        {isFilterOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsFilterOpen(false)}
+              className="fixed inset-0 bg-black z-50"
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 right-0 bottom-0 w-80 bg-white z-50 p-6 shadow-2xl flex flex-col justify-between"
+            >
+              <div className="space-y-6">
+                <div className="flex justify-between items-center border-b pb-4">
+                  <h3 className="font-serif text-xl font-black uppercase tracking-wider">FILTER</h3>
+                  <button onClick={() => setIsFilterOpen(false)} className="text-[#213B14]/65 hover:text-[#213B14]">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="space-y-3">
+                  <h4 className="font-bold text-xs uppercase tracking-wider text-gray-500">Availability</h4>
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={inStockOnly}
+                        onChange={(e) => {
+                          setInStockOnly(e.target.checked);
+                          if (e.target.checked) setOutOfStockOnly(false);
+                        }}
+                        className="rounded border-[#213B14]/20 focus:ring-[#4A2D1B] text-[#4A2D1B]"
+                      />
+                      In stock
+                    </label>
+                    <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={outOfStockOnly}
+                        onChange={(e) => {
+                          setOutOfStockOnly(e.target.checked);
+                          if (e.target.checked) setInStockOnly(false);
+                        }}
+                        className="rounded border-[#213B14]/20 focus:ring-[#4A2D1B] text-[#4A2D1B]"
+                      />
+                      Out of stock
+                    </label>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <h4 className="font-bold text-xs uppercase tracking-wider text-gray-500">Price</h4>
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="number"
+                      placeholder="From"
+                      value={priceFrom}
+                      onChange={(e) => setPriceFrom(e.target.value)}
+                      className="w-full px-3 py-2 bg-gray-50 border rounded-lg text-xs outline-none"
+                    />
+                    <span className="text-gray-400">-</span>
+                    <input
+                      type="number"
+                      placeholder="To"
+                      value={priceTo}
+                      onChange={(e) => setPriceTo(e.target.value)}
+                      className="w-full px-3 py-2 bg-gray-50 border rounded-lg text-xs outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="pt-6 border-t">
+                <button
+                  onClick={() => setIsFilterOpen(false)}
+                  className="w-full py-3 bg-[#4A2D1B] hover:bg-[#382012] text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                >
+                  APPLY
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* SORT DRAWER PANEL */}
+      <AnimatePresence>
+        {isSortOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsSortOpen(false)}
+              className="fixed inset-0 bg-black z-50"
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 right-0 bottom-0 w-80 bg-white z-50 p-6 shadow-2xl flex flex-col justify-between"
+            >
+              <div className="space-y-6">
+                <div className="flex justify-between items-center border-b pb-4">
+                  <h3 className="font-serif text-xl font-black uppercase tracking-wider">SORT</h3>
+                  <button onClick={() => setIsSortOpen(false)} className="text-[#213B14]/65 hover:text-[#213B14]">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { value: "featured", label: "Featured" },
+                    { value: "best-selling", label: "Best selling" },
+                    { value: "alpha-a-z", label: "Alphabetically, A-Z" },
+                    { value: "alpha-z-a", label: "Alphabetically, Z-A" },
+                    { value: "price-low-to-high", label: "Price, low to high" },
+                    { value: "price-high-to-low", label: "Price, high to low" }
+                  ].map((opt) => (
+                    <label key={opt.value} className="flex items-center gap-3 text-xs font-semibold text-gray-600 cursor-pointer py-1">
+                      <input
+                        type="radio"
+                        name="sort-opt"
+                        checked={sortOption === opt.value}
+                        onChange={() => setSortOption(opt.value)}
+                        className="text-[#4A2D1B] focus:ring-[#4A2D1B]"
+                      />
+                      {opt.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div className="pt-6 border-t">
+                <button
+                  onClick={() => setIsSortOpen(false)}
+                  className="w-full py-3 bg-[#4A2D1B] hover:bg-[#382012] text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                >
+                  APPLY
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      <Footer />
     </div>
-   </section>
-
-   {/* Benefits */}
-   <section className="py-24 bg-white/5 border-t border-white/5">
-    <div className="max-w-4xl mx-auto px-6 lg:px-8">
-     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="text-center mb-12"
-     >
-      <span className="inline-block px-4 py-1.5 bg-black text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-4">
-       Key Benefits
-      </span>
-      <h2 className="font-serif text-4xl font-bold text-white">
-       Why Our Chocolate Stands Apart
-      </h2>
-     </motion.div>
-
-     <div className="space-y-4">
-      {benefits.map((benefit, i) => (
-       <motion.div
-        key={i}
-        initial={{ opacity: 0, x: -16 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: i * 0.08 }}
-        className="flex items-start gap-4 p-6 bg-white/5 rounded-xl border border-white/10"
-       >
-        <CheckCircle2 className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
-        <p className="text-white/80 font-medium">{benefit}</p>
-       </motion.div>
-      ))}
-     </div>
-    </div>
-   </section>
-
-   <CategoryProductSection
-    categoryKey="chocolates"
-    title="Shop Chocolates"
-    subtitle="Premium single-origin chocolate elevated with real freeze-dried fruit."
-   />
-
-   <Footer />
-  </div>
- );
+  );
 }
