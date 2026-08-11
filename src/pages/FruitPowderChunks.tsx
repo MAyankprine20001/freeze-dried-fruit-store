@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Leaf, FlaskConical, Sparkles, Snowflake, Heart, ShoppingBag, CheckCircle2, ChevronLeft, ChevronRight, SlidersHorizontal, ArrowUpDown, X, ArrowRight, Smile } from "lucide-react";
+import { Leaf, FlaskConical, Sparkles, Snowflake, Heart, ShoppingBag, CheckCircle2, ChevronLeft, ChevronRight, SlidersHorizontal, ArrowUpDown, X, ArrowRight, Smile, Gift } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { productApi } from "../api/product.api";
@@ -304,27 +304,67 @@ export default function FruitPowderChunks() {
         </div>
       </section>
 
-      {/* Ways to Enjoy */}
-      <section className="py-20 bg-white border-t border-b border-[#213B14]/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#2B4C1F]">Perfect Snacking</span>
-            <h3 className="font-serif text-3xl font-extrabold text-[#213B14] mt-2">
-              Ways to Enjoy 🍃
-            </h3>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { title: "Straight from the pack", desc: "Open and enjoy the crispy real fruit goodness anytime, anywhere on the go." },
-              { title: "Top on Yogurt", desc: "Add a crunchy, sweet, and tangy element to your morning bowl of Greek yogurt." },
-              { title: "Add to Cereal", desc: "Elevate your daily breakfast oatmeal or cornflakes with rich fruit nutrients." },
-              { title: "Perfect for Desserts", desc: "Decorate cakes, ice creams, or custards with gorgeous, natural fruit chunks." }
-            ].map((item, idx) => (
-              <div key={idx} className="p-6 bg-[#FAF7F2] rounded-xl border border-[#213B14]/5 space-y-2 text-center">
-                <h4 className="font-bold text-[#2B4C1F] text-sm">{item.title}</h4>
-                <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+      {/* Ways to Enjoy & Banner Section */}
+      <section className="py-16 bg-white border-t border-b border-[#213B14]/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {/* Left Card: Ways to Enjoy */}
+            <div className="lg:col-span-7 bg-[#EEF4EC]/30 rounded-2xl p-6 md:p-8 border border-[#2B4C1F]/10 flex flex-col justify-between">
+              <div className="space-y-6">
+                <div className="flex items-center gap-2 border-b border-[#2B4C1F]/10 pb-4">
+                  <h3 className="font-serif text-xl sm:text-2xl font-black text-[#213B14]">
+                    Ways to Enjoy 🍃
+                  </h3>
+                </div>
+                
+                <div className="grid grid-cols-4 gap-2 sm:gap-4 pt-2">
+                  {[
+                    { title: "Straight from the pack", icon: "/straight_pack.png" },
+                    { title: "Top on Yogurt", icon: "/top_yogurt.png" },
+                    { title: "Add to Cereal", icon: "/add_cereal.png" },
+                    { title: "Perfect for Desserts", icon: "/perfect_desserts.png" }
+                  ].map((item, idx) => {
+                    const words = item.title.split(" ");
+                    const line1 = words.slice(0, 2).join(" ");
+                    const line2 = words.slice(2).join(" ");
+                    return (
+                      <div key={idx} className="flex flex-col items-center text-center gap-3">
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-[#2B4C1F]/20 shadow-sm bg-white">
+                          <img src={item.icon} alt={item.title} className="w-full h-full object-cover" />
+                        </div>
+                        <span className="text-[9px] sm:text-[11px] font-bold text-[#213B14] leading-tight tracking-wide">
+                          {line1}
+                          {line2 && <><br />{line2}</>}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            ))}
+            </div>
+
+            {/* Right Card: Dark Green Banner */}
+            <div className="lg:col-span-5 relative overflow-hidden rounded-2xl flex items-center p-8 md:p-10 bg-[#1C2A18] text-[#FAF7F2] shadow-sm min-h-[220px]">
+              {/* Background Image of Banner */}
+              <img 
+                src="/real_goodness_banner.png" 
+                alt="Real Goodness Background" 
+                className="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-90" 
+              />
+              {/* Overlay for legibility */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#1C2A18]/90 via-[#1C2A18]/45 to-transparent z-10 pointer-events-none" />
+              
+              <div className="relative z-20 space-y-3 max-w-[280px] text-left">
+                <h4 className="font-serif text-xl sm:text-2xl font-black uppercase tracking-wider leading-tight text-[#FAF7F2]">
+                  REAL FRUIT. <br />
+                  REAL GOODNESS.
+                </h4>
+                <p className="text-[10px] sm:text-xs text-gray-300 font-semibold leading-relaxed">
+                  Nothing Artificial, Nothing Extra. <br />
+                  Just Pure Fruit, Freeze Dried.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -356,6 +396,31 @@ export default function FruitPowderChunks() {
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Join Family Section */}
+      <section className="bg-[#1C2A18] text-[#FAF7F2] py-6 select-none border-t border-[#FAF7F2]/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5 text-left">
+            <div className="text-[#FAF7F2]">
+              <Gift className="w-8 h-8 stroke-[1.5]" />
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-[#D6C5A0] tracking-wider uppercase">Join The Dry Factory Family</h4>
+              <p className="text-[11px] text-gray-300 font-medium">Get exclusive offers, new launches & healthy tips straight to your inbox.</p>
+            </div>
+          </div>
+          <div className="flex w-full md:w-auto max-w-md items-center bg-white rounded-lg overflow-hidden p-1">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-full px-4 py-2 text-xs text-[#213B14] bg-transparent border-none outline-none placeholder-gray-400"
+            />
+            <button className="bg-[#E4B34F] hover:bg-[#D4A13F] text-[#213B14] text-[10px] font-black tracking-widest px-6 py-2.5 rounded-md uppercase transition-colors">
+              SUBSCRIBE
+            </button>
           </div>
         </div>
       </section>
