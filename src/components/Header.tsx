@@ -43,7 +43,7 @@ export default function Header() {
  return (
   <>
    {/* Announcement Bar */}
-   <div className="fixed top-0 left-0 right-0 z-50 bg-[#1C2A18] text-[#F3EFE0] py-2 px-4 text-[10px] sm:text-xs font-semibold tracking-wider flex justify-center items-center gap-6 overflow-x-auto whitespace-nowrap border-b border-white/5 select-none shadow-sm">
+   <div className="fixed top-0 left-0 right-0 z-50 bg-[#1C2A18] text-[#F3EFE0] h-9 px-4 text-[10px] sm:text-xs font-semibold tracking-wider flex justify-center items-center gap-6 overflow-x-auto whitespace-nowrap border-b border-white/5 select-none shadow-sm">
      <span className="flex items-center gap-1.5"><Leaf className="w-3.5 h-3.5 text-[#B5C99A]" /> 100% Real Fruits</span>
      <span className="opacity-30">|</span>
      <span className="flex items-center gap-1.5"><FlaskConical className="w-3.5 h-3.5 text-[#B5C99A]" /> No Preservatives</span>
