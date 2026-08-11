@@ -219,46 +219,59 @@ export default function Home() {
       <section className="py-16 bg-white border-t border-b border-[#213B14]/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {promoCategories.map((cat, i) => (
-              <div
-                key={i}
-                className={`rounded-2xl p-8 flex flex-col justify-between items-start transition-all duration-300 hover:shadow-lg border border-[#213B14]/5 ${cat.bgClass}`}
-              >
-                <div className="space-y-3 w-full">
-                  <div className="flex justify-between items-start">
+            {promoCategories.map((cat, i) => {
+              const localImage = cat.brand === "SipReal" 
+                ? "/home_slip_real.png" 
+                : cat.brand === "FreezeFusion" 
+                ? "/home_freexze_frozen.png" 
+                : "/home_cripsey.png";
+
+              return (
+                <div
+                  key={i}
+                  className={`rounded-2xl p-8 flex flex-col justify-between items-start transition-all duration-300 hover:shadow-lg border border-[#213B14]/5 ${cat.bgClass} relative overflow-hidden group min-h-[280px] md:min-h-[300px]`}
+                >
+                  {/* Left Side text content */}
+                  <div className="space-y-3 z-10 w-[55%]">
                     <div>
                       <h3 className={`font-serif text-2xl font-black ${cat.textColor}`}>
                         {cat.brand}
                       </h3>
-                      <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mt-0.5">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mt-0.5">
                         {cat.subtitle}
                       </p>
                     </div>
+                    <p className="text-gray-600 text-xs leading-relaxed">
+                      {cat.desc}
+                    </p>
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed max-w-[200px]">
-                    {cat.desc}
-                  </p>
-                </div>
 
-                <div className="mt-8 w-full flex flex-col gap-4">
-                  {/* Category illustrative block */}
-                  <div className="w-full h-32 rounded-xl bg-white/60 overflow-hidden relative">
+                  {/* Explore button CTA */}
+                  <div className="mt-8 z-10">
+                    <Link
+                      to={cat.path}
+                      className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 text-[10px] font-bold tracking-wider uppercase transition-all duration-300 rounded ${cat.btnClass}`}
+                    >
+                      {cat.btnText}
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </div>
+
+                  {/* Transparent product image positioned on the right */}
+                  <div className="absolute right-0 bottom-0 w-[55%] h-full flex items-end justify-end pointer-events-none z-0">
                     <img
-                      src={cat.image}
+                      src={localImage}
                       alt={cat.brand}
-                      className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700"
+                      className={`w-full h-full object-contain object-right-bottom origin-bottom-right transition-transform duration-500 ${
+                        cat.brand === "FreezeFusion"
+                          ? "scale-[1.1] group-hover:scale-[1.15]"
+                          : "scale-[1.35] group-hover:scale-[1.42]"
+                      }`}
                     />
                   </div>
-                  <Link
-                    to={cat.path}
-                    className={`inline-flex items-center justify-center gap-2 w-full py-3 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${cat.btnClass}`}
-                  >
-                    {cat.btnText}
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
