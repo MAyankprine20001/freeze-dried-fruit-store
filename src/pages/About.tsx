@@ -27,7 +27,7 @@ const differentiators = [
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[#111111]">
       <Header />
 
       <PageHero
@@ -36,11 +36,11 @@ export default function About() {
         highlight="Thoughtfully Preserved"
         description="We’re on a mission to bring you food that’s as real as it should be - clean, honest, and made to fit your everyday life."
         image="/About_main.png"
-        tint="from-black/85"
+        tint="from-[#111111]/85"
       />
 
       {/* Origin Story */}
-      <section className="py-24 bg-black">
+      <section className="py-24 bg-[#111111]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -59,7 +59,7 @@ export default function About() {
                   className="w-full h-[480px] object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 bg-[#D4AF37] rounded-2xl p-6 shadow-xl text-black">
+              <div className="absolute -bottom-6 -right-6 bg-[#E4B34F] rounded-2xl p-6 shadow-xl text-black">
                 <p className="font-serif text-3xl font-bold">The Dry Factory</p>
                 <p className="text-black/80 text-sm font-medium">Simple. Honest. Trustworthy.</p>
               </div>
@@ -71,7 +71,7 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
+              <span className="inline-block px-4 py-1.5 bg-white/5 text-[#E4B34F] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
                 Where It All Began
               </span>
               <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
@@ -79,7 +79,7 @@ export default function About() {
               </h2>
               <div className="space-y-6 text-white/70 text-base leading-relaxed">
                 <div>
-                  <h3 className="font-serif text-xl font-semibold text-[#D4AF37] mb-2">Why We Started</h3>
+                  <h3 className="font-serif text-xl font-semibold text-[#E4B34F] mb-2">Why We Started</h3>
                   <p>
                     We noticed something strange. The more “convenient” food became, the less real it felt. Hidden sugars, artificial flavors, and long ingredient lists became the norm.
                   </p>
@@ -91,13 +91,13 @@ export default function About() {
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-serif text-xl font-semibold text-[#D4AF37] mb-2">The Problem We’re Solving</h3>
+                  <h3 className="font-serif text-xl font-semibold text-[#E4B34F] mb-2">The Problem We’re Solving</h3>
                   <p>
                     Fresh fruits are seasonal, fragile, and hard to store. Most processed alternatives? Loaded with things your body doesn’t need. We chose a different path.
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-serif text-xl font-semibold text-[#D4AF37] mb-2">Our Solution</h3>
+                  <h3 className="font-serif text-xl font-semibold text-[#E4B34F] mb-2">Our Solution</h3>
                   <p>
                     Using freeze-drying, we remove moisture without heat - preserving the taste, nutrition, and texture of real fruit. No shortcuts. No additives. No compromises. Just real food, made smarter.
                   </p>
@@ -117,7 +117,7 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 bg-black text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-8">
+            <span className="inline-block px-4 py-1.5 bg-[#111111] text-[#E4B34F] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-8">
               Our Mission
             </span>
             
@@ -143,7 +143,7 @@ export default function About() {
               </div>
 
               <div className="pt-6">
-                <p className="text-[#D4AF37] text-xl font-serif font-medium italic">
+                <p className="text-[#E4B34F] text-xl font-serif font-medium italic">
                   “Trusted by people who care about what they eat - and what they avoid.”
                 </p>
               </div>
@@ -153,7 +153,7 @@ export default function About() {
       </section>
 
       {/* What Makes Us Different */}
-      <section className="py-24 bg-black">
+      <section className="py-24 bg-[#111111]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -162,7 +162,7 @@ export default function About() {
             transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <span className="inline-block px-4 py-1.5 bg-white/5 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-4">
+            <span className="inline-block px-4 py-1.5 bg-white/5 text-[#E4B34F] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-4">
               The Dry Factory Difference
             </span>
             <h2 className="font-serif text-4xl font-bold text-white">
@@ -180,7 +180,7 @@ export default function About() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="bg-white/5 rounded-2xl p-8 border border-white/10 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               >
-                <div className="w-10 h-10 bg-[#D4AF37] rounded-xl flex items-center justify-center mb-6 shadow-sm">
+                <div className="w-10 h-10 bg-[#E4B34F] rounded-xl flex items-center justify-center mb-6 shadow-sm">
                   <CheckCircle2 className="w-5 h-5 text-black" />
                 </div>
                 <h3 className="font-serif text-xl font-bold text-white mb-3">{item.title}</h3>

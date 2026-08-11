@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -63,7 +63,7 @@ export default function Contact() {
  };
 
  return (
-  <div className="min-h-screen bg-black">
+  <div className="min-h-screen bg-[#111111]">
    <Header />
 
    <PageHero
@@ -71,9 +71,10 @@ export default function Contact() {
     title="We'd Love to"
     highlight="Hear from You"
     description="Whether you're curious about our products, interested in bulk orders, or just want to say hello we're a real team of real people and we read every message."
+    tint="from-[#111111]/85"
    />
 
-   <section className="py-24 bg-black">
+   <section className="py-24 bg-[#111111]">
     <div className="max-w-7xl mx-auto px-6 lg:px-8">
      <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
       {/* ── Info ─────────────────────────────────────────────────────── */}
@@ -100,7 +101,7 @@ export default function Contact() {
        <div className="space-y-6">
         <div className="flex items-start gap-4">
          <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/10">
-          <Mail className="w-5 h-5 text-[#D4AF37]" />
+          <Mail className="w-5 h-5 text-[#E4B34F]" />
          </div>
          <div>
           <p className="font-semibold text-white text-sm">
@@ -114,7 +115,7 @@ export default function Contact() {
 
         <div className="flex items-start gap-4">
          <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/10">
-          <Clock className="w-5 h-5 text-[#D4AF37]" />
+          <Clock className="w-5 h-5 text-[#E4B34F]" />
          </div>
          <div>
           <p className="font-semibold text-white text-sm">
@@ -129,7 +130,7 @@ export default function Contact() {
 
         <div className="flex items-start gap-4">
          <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/10">
-          <MessageSquare className="w-5 h-5 text-[#D4AF37]" />
+          <MessageSquare className="w-5 h-5 text-[#E4B34F]" />
          </div>
          <div>
           <p className="font-semibold text-white text-sm">
@@ -164,14 +165,14 @@ export default function Contact() {
            htmlFor="name"
            className="block text-sm font-semibold text-white mb-2"
           >
-           Your Name <span className="text-[#D4AF37]">*</span>
+           Your Name <span className="text-[#E4B34F]">*</span>
           </label>
           <input
            id="name"
            type="text"
            autoComplete="name"
            {...register("name")}
-           className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 focus:border-[#D4AF37] transition-all duration-200"
+           className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#E4B34F]/40 focus:border-[#E4B34F] transition-all duration-200"
            placeholder="Elena Rossi"
           />
           {errors.name && (
@@ -186,14 +187,14 @@ export default function Contact() {
            htmlFor="email"
            className="block text-sm font-semibold text-white mb-2"
           >
-           Email Address <span className="text-[#D4AF37]">*</span>
+           Email Address <span className="text-[#E4B34F]">*</span>
           </label>
           <input
            id="email"
            type="email"
            autoComplete="email"
            {...register("email")}
-           className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 focus:border-[#D4AF37] transition-all duration-200"
+           className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#E4B34F]/40 focus:border-[#E4B34F] transition-all duration-200"
            placeholder="you@example.com"
           />
           {errors.email && (
@@ -209,13 +210,13 @@ export default function Contact() {
           htmlFor="subject"
           className="block text-sm font-semibold text-white mb-2"
          >
-          Subject <span className="text-[#D4AF37]">*</span>
+           Subject <span className="text-[#E4B34F]">*</span>
          </label>
          <input
           id="subject"
           type="text"
           {...register("subject")}
-          className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 focus:border-[#D4AF37] transition-all duration-200"
+          className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#E4B34F]/40 focus:border-[#E4B34F] transition-all duration-200"
           placeholder="Bulk order enquiry / Product question / ..."
          />
          {errors.subject && (
@@ -230,13 +231,13 @@ export default function Contact() {
           htmlFor="message"
           className="block text-sm font-semibold text-white mb-2"
          >
-          Message <span className="text-[#D4AF37]">*</span>
+           Message <span className="text-[#E4B34F]">*</span>
          </label>
          <textarea
           id="message"
           rows={6}
           {...register("message")}
-          className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 focus:border-[#D4AF37] transition-all duration-200 resize-none"
+          className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#E4B34F]/40 focus:border-[#E4B34F] transition-all duration-200 resize-none"
           placeholder="Tell us how we can help..."
          />
          {errors.message && (
@@ -249,7 +250,7 @@ export default function Contact() {
         <button
          type="submit"
          disabled={isSubmitting}
-         className="w-full py-4 bg-[#D4AF37] text-black font-semibold rounded-full hover:bg-[#BF953F] hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 shadow-sm"
+         className="w-full py-4 bg-[#E4B34F] text-[#213B14] font-black rounded-full hover:bg-[#D4A13F] hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E4B34F] focus-visible:ring-offset-2 shadow-lg shadow-[#E4B34F]/10"
         >
          {isSubmitting ? "Sending…" : "Send Message"}
         </button>
