@@ -8,9 +8,6 @@ import { useCart } from "../context/CartContext";
 const navLinks = [
  { label: "HOME", path: "/" },
  { label: "SHOP", path: "/products" },
- { label: "SIPREAL", path: "/smoothie-premix" },
- { label: "FREEZE FUSION", path: "/chocolate" },
- { label: "CRISPY BITES", path: "/fruit-powder-chunks" },
  { label: "OUR STORY", path: "/about" },
  { label: "BLOG", path: "/blog" },
  { label: "CONTACT", path: "/contact" },

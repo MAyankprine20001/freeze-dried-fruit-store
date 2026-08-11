@@ -400,16 +400,24 @@ export default function Home() {
       </section>
 
       {/* Real Ingredients. Real People. Real Results. Section */}
-      <section className="py-20 bg-[#FAF7F2]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
+      <section className="relative min-h-[400px] md:min-h-[480px] flex items-center py-20 overflow-hidden">
+        {/* Absolute Background Image */}
+        <img 
+          src="/Home_banner_image.png" 
+          alt="Real Ingredients Background" 
+          className="absolute inset-0 w-full h-full object-cover object-center z-0" 
+        />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Text content overlaid on the left */}
+            <div className="lg:col-span-4 space-y-6 lg:-translate-x-12">
               <h2 className="font-serif text-4xl font-extrabold text-[#213B14] leading-[1.15]">
                 Real Ingredients. <br />
                 Real People. <br />
                 Real Results.
               </h2>
-              <p className="text-gray-600 text-base leading-relaxed max-w-md">
+              <p className="text-gray-750 text-base leading-relaxed max-w-md">
                 We bridge the gap between delicious taste and raw nutrition. Our products help busy professionals, children, and fitness enthusiasts fuel their bodies without sacrificing simplicity.
               </p>
               <div className="pt-2">
@@ -423,18 +431,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Collage of images */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="rounded-2xl overflow-hidden shadow-md h-64 bg-[#FCEAEB]">
-                <img src="https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=300&q=80" alt="Smoothie" className="w-full h-full object-cover" />
-              </div>
-              <div className="rounded-2xl overflow-hidden shadow-md h-64 mt-8 bg-[#F5ECE6]">
-                <img src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=300&q=80" alt="Chocolate" className="w-full h-full object-cover" />
-              </div>
-              <div className="rounded-2xl overflow-hidden shadow-md h-64 bg-[#EEF4EC]">
-                <img src="https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=300&q=80" alt="Berry" className="w-full h-full object-cover" />
-              </div>
-            </div>
+            {/* Right side is kept empty so the banner graphics show through */}
+            <div className="hidden lg:block lg:col-span-8" />
           </div>
         </div>
       </section>
