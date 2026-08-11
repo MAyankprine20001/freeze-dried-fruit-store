@@ -5,7 +5,7 @@ import { Plane, Briefcase, Bed, Baby, Timer, CupSoda, Luggage, Coffee, BookOpen 
 const badges = [
   {
     icon: (
-      <div className="relative flex items-center justify-center w-full h-full text-[#D4AF37]">
+      <div className="relative flex items-center justify-center w-full h-full text-[#E4B34F]">
         <Luggage className="w-7 h-7" strokeWidth={1.5} />
         <Plane className="w-4 h-4 absolute top-1 right-1" strokeWidth={1.5} />
       </div>
@@ -15,7 +15,7 @@ const badges = [
   },
   {
     icon: (
-      <div className="relative flex items-center justify-center w-full h-full text-[#D4AF37]">
+      <div className="relative flex items-center justify-center w-full h-full text-[#E4B34F]">
         <Briefcase className="w-7 h-7" strokeWidth={1.5} />
         <Coffee className="w-4 h-4 absolute bottom-2 -left-1" strokeWidth={1.5} />
       </div>
@@ -25,9 +25,9 @@ const badges = [
   },
   {
     icon: (
-      <div className="relative flex items-center justify-center w-full h-full text-[#D4AF37]">
-        <Bed className="w-7 h-7" strokeWidth={1.5} />
-        <BookOpen className="w-4 h-4 absolute -top-1 left-2" strokeWidth={1.5} />
+      <div className="relative flex items-center justify-center w-full h-full text-[#E4B34F]">
+        <Briefcase className="w-7 h-7" strokeWidth={1.5} />
+        <Coffee className="w-4 h-4 absolute bottom-2 -left-1" strokeWidth={1.5} />
       </div>
     ),
     title: "HOSTEL\nLIFE",
@@ -35,7 +35,7 @@ const badges = [
   },
   {
     icon: (
-      <div className="relative flex items-center justify-center w-full h-full text-[#D4AF37]">
+      <div className="relative flex items-center justify-center w-full h-full text-[#E4B34F]">
         <Baby className="w-8 h-8" strokeWidth={1.5} />
       </div>
     ),
@@ -44,7 +44,7 @@ const badges = [
   },
   {
     icon: (
-      <div className="relative flex items-center justify-center w-full h-full text-[#D4AF37]">
+      <div className="relative flex items-center justify-center w-full h-full text-[#E4B34F]">
         <Timer className="w-8 h-8" strokeWidth={1.5} />
       </div>
     ),
@@ -53,7 +53,7 @@ const badges = [
   },
   {
     icon: (
-      <div className="relative flex items-center justify-center w-full h-full text-[#D4AF37]">
+      <div className="relative flex items-center justify-center w-full h-full text-[#E4B34F]">
         <CupSoda className="w-8 h-8" strokeWidth={1.5} />
       </div>
     ),
@@ -77,19 +77,19 @@ export default function LifestyleBadges() {
               className="relative flex flex-col items-center pt-8"
             >
               {/* Icon Circle */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full bg-[#0d0d0d] border border-[#D4AF37] flex items-center justify-center z-10 shadow-[0_0_15px_rgba(212,175,55,0.15)]">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full bg-[#111111] border border-[#E4B34F] flex items-center justify-center z-10 shadow-[0_0_15px_rgba(228,179,79,0.15)]">
                 {/* Inner faint circle */}
-                <div className="absolute inset-1 rounded-full border border-[#D4AF37]/30" />
+                <div className="absolute inset-1 rounded-full border border-[#E4B34F]/30" />
                 {badge.icon}
               </div>
 
               {/* Card Body */}
-              <div className="w-full h-full pt-10 pb-6 px-4 bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] rounded-[20px] border border-[#D4AF37]/30 shadow-[0_4px_20px_rgba(0,0,0,0.5)] flex flex-col items-center text-center">
-                <h3 className="text-[#D4AF37] font-bold text-sm tracking-widest leading-tight whitespace-pre-line min-h-[2.5rem]">
+              <div className="w-full h-full pt-10 pb-6 px-4 bg-gradient-to-b from-[#1C1C1C] to-[#141414] rounded-[20px] border border-[#E4B34F]/20 shadow-[0_4px_20px_rgba(0,0,0,0.5)] flex flex-col items-center text-center">
+                <h3 className="text-[#E4B34F] font-bold text-sm tracking-widest leading-tight whitespace-pre-line min-h-[2.5rem]">
                   {badge.title}
                 </h3>
                 
-                <div className="w-4 h-[2px] bg-[#D4AF37]/50 my-3 rounded-full" />
+                <div className="w-4 h-[2px] bg-[#E4B34F]/50 my-3 rounded-full" />
                 
                 <p className="text-white/80 text-xs leading-snug whitespace-pre-line min-h-[2rem]">
                   {badge.subtitle}
