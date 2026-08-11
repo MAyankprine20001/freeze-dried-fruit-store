@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Leaf, FlaskConical, Sparkles, Snowflake, Heart, ShoppingBag, CheckCircle2, ChevronLeft, ChevronRight, SlidersHorizontal, ArrowUpDown, X, ArrowRight } from "lucide-react";
+import { Leaf, FlaskConical, Sparkles, Snowflake, Heart, ShoppingBag, CheckCircle2, ChevronLeft, ChevronRight, SlidersHorizontal, ArrowUpDown, X, ArrowRight, Smile } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { productApi } from "../api/product.api";
@@ -108,37 +108,61 @@ export default function FruitPowderChunks() {
       <Header />
 
       {/* Hero Banner Section */}
-      <section className="relative pt-32 pb-16 bg-gradient-to-br from-[#EEF4EC] via-[#E4EFE0] to-[#FAF7F2]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-6 space-y-6">
-              <span className="inline-block px-3 py-1 bg-[#2B4C1F]/10 border border-[#2B4C1F]/20 text-[#2B4C1F] text-xs font-bold uppercase tracking-wider rounded-md">
-                Crispy Bites
-              </span>
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#213B14] leading-tight">
-                Crispy Bites <br />
-                <span className="text-[#3F622D] font-normal italic">Freeze Dried Snack</span>
+      <section className="relative min-h-[500px] md:min-h-[600px] lg:min-h-[680px] flex items-center pt-32 pb-20 overflow-hidden">
+        {/* Absolute Background Image */}
+        <img 
+          src="/cripsy_background_img.png" 
+          alt="Hero Background" 
+          className="absolute inset-0 w-full h-full object-cover object-center z-0" 
+        />
+        {/* Subtle gradient overlay for readability on small screens */}
+        <div className="absolute inset-0 bg-[#FAF7F2]/40 md:bg-transparent md:bg-gradient-to-r md:from-[#FAF7F2]/80 md:to-transparent z-10 pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
+            <div className="lg:col-span-5 space-y-5">
+              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#213B14] leading-[1.1] tracking-tight">
+                CRISPY. CRUNCHY. <br />
+                100% REAL FRUIT.
               </h1>
-              <p className="text-[#2B4C1F] text-lg font-bold uppercase tracking-widest leading-none">
-                CRISPY, CRUNCHY, 100% REAL FRUIT
-              </p>
+              <div>
+                <span className="inline-block px-3 py-1.5 bg-[#2B4C1F] text-white text-[10px] font-extrabold tracking-widest uppercase rounded">
+                  FREEZE DRIED BITE
+                </span>
+              </div>
               <p className="text-gray-600 text-sm leading-relaxed max-w-sm">
                 Light, crispy & delicious freeze dried fruit snacks made from 100% real fruits. No preservatives, no added sugar, no artificial anything.
               </p>
 
-              {/* Badges */}
-              <div className="flex flex-wrap gap-2.5 pt-2">
-                {["100% REAL FRUIT", "NO ADDED SUGAR", "NO PRESERVATIVES", "NATURAL GOODNESS"].map((b, i) => (
-                  <span key={i} className="px-3 py-1.5 bg-[#FAF7F2] border border-[#2B4C1F]/15 rounded-md text-[9px] font-black text-[#2B4C1F] tracking-wider uppercase">
-                    {b}
-                  </span>
-                ))}
+              {/* Grid of Badges - Horizontal row with icon top, text bottom */}
+              <div className="flex flex-wrap items-start gap-4 md:gap-6 pt-2">
+                {[
+                  { label: "100% Real Fruit", icon: Leaf },
+                  { label: "No Added Sugar", icon: Sparkles },
+                  { label: "No Preservatives", icon: FlaskConical },
+                  { label: "Natural Goodness", icon: Heart }
+                ].map((badge, idx) => {
+                  const words = badge.label.split(" ");
+                  const line1 = words.slice(0, 2).join(" ");
+                  const line2 = words.slice(2).join(" ");
+                  return (
+                    <div key={idx} className="flex flex-col items-center text-center gap-1.5 w-18 md:w-20">
+                      <div className="w-9 h-9 rounded-full border border-[#213B14]/20 flex items-center justify-center text-[#213B14] bg-white/50 backdrop-blur-sm">
+                        <badge.icon className="w-4 h-4 stroke-[1.75]" />
+                      </div>
+                      <span className="text-[9px] md:text-[10px] font-bold text-[#213B14] leading-tight tracking-wider uppercase">
+                        {line1}
+                        {line2 && <><br />{line2}</>}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
 
               <div className="pt-4">
                 <a
                   href="#flavors"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#2B4C1F] hover:bg-[#1E3615] text-white font-bold rounded-full transition-all shadow-md hover:scale-[1.02]"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#2B4C1F] hover:bg-[#1E3615] text-[#FAF7F2] font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
                 >
                   SHOP ALL FLAVORS
                   <ArrowRight className="w-4 h-4" />
@@ -146,30 +170,19 @@ export default function FruitPowderChunks() {
               </div>
             </div>
 
-            {/* Collage Mockup */}
-            <div className="lg:col-span-6 flex justify-center">
-              <div className="relative w-full max-w-lg aspect-[5/4] rounded-2xl overflow-hidden shadow-lg bg-[#EEF4EC] border border-[#2B4C1F]/10">
-                <img
-                  src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800&q=80"
-                  alt="Crispy Bites Product Packages"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            {/* Foreground Product Image on the Right */}
+            <div className="lg:col-span-7 flex justify-center z-20">
+              <img
+                src="/CripsyProductImage.png"
+                alt="Crispy Bites Products Showcase"
+                className="w-full max-w-4xl lg:max-w-[850px] xl:max-w-[950px] h-auto object-contain lg:scale-[1.3] hover:scale-[1.32] transition-transform duration-500"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Badges Banner */}
-      <section className="bg-[#2B4C1F] text-[#FAF7F2] py-4 select-none">
-        <div className="max-w-7xl mx-auto px-4 text-center text-[10px] sm:text-xs font-bold tracking-widest uppercase flex flex-wrap justify-center gap-6 md:gap-12">
-          <span>❄️ FREEZE DRIED (To Lock Nutrition)</span>
-          <span>⚡ LIGHT & CRISPY (Crunchy Goodness)</span>
-          <span>🧪 NO PRESERVATIVES (No Additives)</span>
-          <span>🎒 TRAVEL FRIENDLY (Easy to Carry)</span>
-          <span>👶 KIDS APPROVED (Healthy Snacking)</span>
-        </div>
-      </section>
+    
 
       {/* Flavors Grid */}
       <section id="flavors" className="py-20 bg-[#FAF7F2]">
@@ -263,6 +276,31 @@ export default function FruitPowderChunks() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Product Characteristics Banner */}
+      <section className="py-8 bg-[#FAF7F2]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-[#EEF4EC]/60 rounded-2xl p-6 border border-[#2B4C1F]/10 flex flex-wrap justify-between items-center gap-6 divide-y md:divide-y-0 md:divide-x divide-[#2B4C1F]/15">
+            {[
+              { title: "FREEZE DRIED", desc: "To Lock Nutrition", icon: Snowflake },
+              { title: "LIGHT & CRISPY", desc: "Crunchy Goodness", icon: Leaf },
+              { title: "NO PRESERVATIVES", desc: "No Additives", icon: FlaskConical },
+              { title: "TRAVEL FRIENDLY", desc: "Easy to Carry", icon: ShoppingBag },
+              { title: "KIDS APPROVED", desc: "Healthy Snacking", icon: Smile }
+            ].map((b, idx) => (
+              <div key={idx} className="flex-1 min-w-[180px] flex items-center justify-center gap-4 px-4 py-2 md:py-0">
+                <div className="text-[#2B4C1F]">
+                  <b.icon className="w-8 h-8 stroke-[1.5]" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-[11px] font-black text-[#213B14] uppercase tracking-wider">{b.title}</span>
+                  <span className="text-[10px] text-gray-500 font-semibold">{b.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
