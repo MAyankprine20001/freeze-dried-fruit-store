@@ -99,38 +99,67 @@ export default function Chocolate() {
     <div className="min-h-screen bg-[#FAF7F2] text-[#213B14]">
       <Header />
 
-      {/* Hero Banner Section */}
-      <section className="relative pt-32 pb-16 bg-gradient-to-br from-[#FAF5F0] via-[#F3ECE6] to-[#FAF7F2]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative pt-32 pb-20 overflow-hidden flex items-center min-h-[520px] lg:min-h-[640px]">
+        {/* Absolute Background Image */}
+        <img 
+          src="/Freeze_background_image.png" 
+          alt="Hero Background" 
+          className="absolute inset-0 w-full h-full object-cover object-center z-0" 
+        />
+        {/* Subtle overlay for legibility on small screens */}
+        <div className="absolute inset-0 bg-[#FAF7F2]/40 md:bg-transparent z-10 pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-6 space-y-6">
-              <span className="inline-block px-3 py-1 bg-[#4A2D1B]/10 border border-[#4A2D1B]/20 text-[#4A2D1B] text-xs font-bold uppercase tracking-wider rounded-md">
-                Freeze Fusion
-              </span>
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#213B14] leading-tight">
-                Freeze <br />
-                <span className="text-[#4A2D1B] font-normal italic">Fusion</span>
-              </h1>
-              <p className="text-[#4A2D1B] text-lg font-bold uppercase tracking-widest leading-none">
-                REAL FRUIT INFUSED RICH COUVERTURE CHOCOLATES
-              </p>
+            <div className="lg:col-span-5 space-y-6">
+              <div>
+                <span className="font-serif text-5xl sm:text-6xl lg:text-7xl font-extrabold text-[#4A2D1B] leading-none block">
+                  Freeze
+                </span>
+                <span className="font-serif text-5xl sm:text-6xl lg:text-7xl font-light italic text-[#4A2D1B] leading-none block mt-1">
+                  Fusion
+                </span>
+              </div>
+              
+              <h2 className="text-[#4A2D1B] text-[13px] sm:text-sm font-black uppercase tracking-[0.18em] leading-tight max-w-md">
+                REAL FRUIT INFUSED <br />
+                RICH COUVERTURE CHOCOLATES
+              </h2>
+              
               <p className="text-gray-600 text-sm leading-relaxed max-w-sm">
-                Crunchy outside. Creamy inside. Real joy in every bite.
+                Crunchy outside. Creamy inside. <br />
+                Real joy in every bite.
               </p>
 
-              {/* Badges */}
-              <div className="flex flex-wrap gap-2.5 pt-2">
-                {["REAL FRUIT INSIDE", "COUVERTURE CHOCOLATE", "FREEZE DRIED", "TRUE INDULGENCE"].map((b, i) => (
-                  <span key={i} className="px-3 py-1.5 bg-[#FAF7F2] border border-[#4A2D1B]/15 rounded-md text-[9px] font-black text-[#4A2D1B] tracking-wider uppercase">
-                    {b}
-                  </span>
-                ))}
+              {/* Badges - Circular Icons under text */}
+              <div className="flex flex-wrap items-start gap-4 md:gap-5 pt-2">
+                {[
+                  { label: "Real Fruit Inside", icon: Leaf },
+                  { label: "Premium Couverture", icon: Sparkles },
+                  { label: "Freeze Dried Goodness", icon: Snowflake },
+                  { label: "True Indulgence", icon: Heart }
+                ].map((badge, idx) => {
+                  const words = badge.label.split(" ");
+                  const line1 = words.slice(0, 2).join(" ");
+                  const line2 = words.slice(2).join(" ");
+                  return (
+                    <div key={idx} className="flex flex-col items-center text-center gap-1 w-18 md:w-20">
+                      <div className="w-8 h-8 rounded-full border border-[#4A2D1B]/20 flex items-center justify-center text-[#4A2D1B] bg-white/50 backdrop-blur-sm">
+                        <badge.icon className="w-3.5 h-3.5 stroke-[1.75]" />
+                      </div>
+                      <span className="text-[8px] md:text-[9px] font-bold text-[#4A2D1B] leading-tight tracking-wider uppercase">
+                        {line1}
+                        {line2 && <><br />{line2}</>}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
 
               <div className="pt-4">
                 <a
                   href="#flavors"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#4A2D1B] hover:bg-[#3A1F13] text-white font-bold rounded-full transition-all shadow-md hover:scale-[1.02]"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#4A2D1B] hover:bg-[#382012] text-[#FAF7F2] font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
                 >
                   EXPLORE FLAVORS
                   <ArrowRight className="w-4 h-4" />
@@ -138,27 +167,39 @@ export default function Chocolate() {
               </div>
             </div>
 
-            {/* Collage Mockup */}
-            <div className="lg:col-span-6 flex justify-center">
-              <div className="relative w-full max-w-lg aspect-[5/4] rounded-2xl overflow-hidden shadow-lg bg-[#FAF5F0] border border-[#4A2D1B]/10">
-                <img
-                  src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=800&q=80"
-                  alt="Freeze Fusion Product Packages"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            {/* Foreground Product Image on the Right */}
+            <div className="lg:col-span-7 flex justify-center z-20">
+              <img
+                src="/freeze_product_image.png"
+                alt="Freeze Fusion Chocolates Showcase"
+                className="w-full max-w-4xl lg:max-w-[850px] xl:max-w-[950px] h-auto object-contain lg:scale-[1.3] hover:scale-[1.32] transition-transform duration-500"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Badges Bar */}
-      <section className="bg-[#4A2D1B] text-[#FAF7F2] py-4 select-none">
-        <div className="max-w-7xl mx-auto px-4 text-center text-xs font-bold tracking-widest uppercase flex flex-wrap justify-center gap-8 md:gap-16">
-          <span>🍓 100% Real Fruits</span>
-          <span>🍫 Rich Couverture</span>
-          <span>🧪 No Preservatives</span>
-          <span>❄️ Freeze Dried</span>
+      {/* Badges Bar below Hero */}
+      <section className="bg-[#4A2D1B] text-[#FAF7F2] py-5 select-none">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap justify-between items-center gap-6 divide-y md:divide-y-0 md:divide-x divide-[#FAF7F2]/15">
+            {[
+              { title: "100% REAL FRUITS", desc: "Nothing Artificial", icon: Leaf },
+              { title: "RICH COUVERTURE", desc: "Luxury Chocolate", icon: Sparkles },
+              { title: "NO PRESERVATIVES", desc: "No Additives", icon: FlaskConical },
+              { title: "FREEZE DRIED", desc: "To Lock Nutrition", icon: Snowflake }
+            ].map((b, idx) => (
+              <div key={idx} className="flex-1 min-w-[180px] flex items-center justify-center gap-4 px-4 py-1 md:py-0">
+                <div className="text-[#FAF7F2]">
+                  <b.icon className="w-7 h-7 stroke-[1.5]" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-[11px] font-black text-white uppercase tracking-wider">{b.title}</span>
+                  <span className="text-[10px] text-gray-300 font-semibold">{b.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -166,9 +207,9 @@ export default function Chocolate() {
       <section id="flavors" className="py-20 bg-[#FAF7F2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#4A2D1B] bg-[#4A2D1B]/10 px-3 py-1 rounded">Our</span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-black text-[#213B14] mt-2">
-              Irresistible Flavors
+            <span className="font-serif italic text-base font-normal text-[#C48C5B] block mb-1">Our</span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-extrabold text-[#4A2D1B] tracking-wider uppercase">
+              4 Irresistible Flavors
             </h2>
           </div>
 
@@ -256,25 +297,74 @@ export default function Chocolate() {
 
       {/* Why You'll Love It Section */}
       <section className="py-20 bg-white border-t border-[#213B14]/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#4A2D1B] bg-[#4A2D1B]/10 px-3 py-1 rounded">Indulge</span>
-            <h3 className="font-serif text-3xl font-extrabold text-[#213B14] mt-2">
-              Why You'll Love It
-            </h3>
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative w-full rounded-2xl overflow-hidden border border-[#4A2D1B]/15 shadow-md p-8 md:p-12 bg-[#FAF7F2] min-h-[420px] flex flex-col justify-between gap-8">
+            {/* Background Image showing chocolate stack on left and strawberry bowl on right */}
+            <img 
+              src="/why_love_it_bg.png" 
+              alt="Why You'll Love It Background" 
+              className="absolute inset-0 w-full h-full object-cover object-center z-0" 
+            />
+            {/* Soft overlay for text contrast */}
+            <div className="absolute inset-0 bg-white/15 z-10 pointer-events-none" />
+
+            {/* Inner Title centered inside the card */}
+            <div className="relative z-20 text-center w-full">
+              <h3 className="font-serif text-xl sm:text-2xl font-black text-[#4D2E1A] tracking-widest uppercase">
+                WHY YOU'LL LOVE IT
+              </h3>
+            </div>
+
+            {/* Grid of features with individual translucent cards */}
+            <div className="relative z-20 w-full grid grid-cols-1 md:grid-cols-4 gap-6 items-stretch">
+              {[
+                { title: "Real Fruit Infused", desc: "Every bite has real freeze-dried fruit for authentic taste and crunch.", icon: Leaf },
+                { title: "Rich Couverture Chocolate", desc: "Made with premium quality chocolate for a smooth & luxurious experience.", icon: Sparkles },
+                { title: "Freeze Dried Technology", desc: "Locks nutrition, color and natural goodness of real fruits.", icon: Snowflake },
+                { title: "Made for True Indulgence", desc: "A perfect balance of taste, texture and real ingredients — no compromise.", icon: Heart }
+              ].map((item, idx) => (
+                <div key={idx} className="bg-white/85 backdrop-blur-sm rounded-2xl p-6 border border-white/60 flex flex-col items-center text-center gap-3 hover:scale-[1.02] transition-transform duration-300 shadow-sm">
+                  <div className="text-[#C48C5B]">
+                    <item.icon className="w-7 h-7 stroke-[1.5]" />
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-[#4A2D1B] text-xs uppercase tracking-wider leading-tight">{item.title}</h4>
+                    <p className="text-[10.5px] sm:text-[11px] text-gray-600 font-semibold leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-              { title: "Real Fruit Infused", desc: "Every bite has real freeze-dried fruit chunks inside for authentic taste and crunch." },
-              { title: "Rich Couverture Chocolate", desc: "Made with premium cocoa butter for a smooth, luxurious melt-in-your-mouth experience." },
-              { title: "Freeze Dried Technology", desc: "Locks in taste, color, and nutritional value of fresh fruit with zero preservatives." },
-              { title: "Made for True Indulgence", desc: "A perfect balance of sweet, tangy fruit and rich premium chocolate — no compromise." }
-            ].map((item, idx) => (
-              <div key={idx} className="p-6 bg-[#FAF7F2] rounded-xl border border-[#213B14]/5 space-y-3">
-                <h4 className="font-bold text-[#4A2D1B] text-sm">{item.title}</h4>
-                <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
+        </div>
+      </section>
+
+      {/* Explore Chocolates Banner */}
+      <section className="relative py-12 md:py-16 overflow-hidden bg-[#1C2A18]">
+        <img
+          src="/chocolate_banner_bg.png"
+          alt="Real Chocolate Banner"
+          className="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-40 md:opacity-50"
+        />
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-[#4A2D1B]/75 md:bg-gradient-to-r md:from-[#4A2D1B]/95 md:to-transparent z-10 pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="text-center md:text-left space-y-2">
+            <h3 className="font-serif text-3xl md:text-4xl font-extrabold text-[#FAF7F2] tracking-wide">
+              Real Fruit. Real Chocolate. Real Joy.
+            </h3>
+            <p className="text-gray-300 text-xs sm:text-sm font-medium">
+              Experience the ultimate fusion of freeze-dried fruit and rich premium couverture chocolate.
+            </p>
+          </div>
+          <div className="shrink-0">
+            <Link
+              to="/products"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#FAF7F2] hover:bg-[#FAF7F2]/90 text-[#4A2D1B] font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
+            >
+              EXPLORE ALL CHOCOLATES
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>

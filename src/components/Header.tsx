@@ -233,22 +233,22 @@ export default function Header() {
        >
         {/* Fruits -> Crispy Bites */}
         <Link to="/fruit-powder-chunks" className="group block text-center space-y-3 p-4 hover:bg-[#EEF4EC] rounded-xl transition-all">
-         <div className="w-full h-32 rounded-xl overflow-hidden bg-[#EEF4EC] relative">
-          <img src="https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=400&q=80" alt="Crispy Bites" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+         <div className="w-full h-32 rounded-xl overflow-hidden bg-[#EEF4EC] relative flex items-center justify-center">
+          <img src="/home_cripsey.png" alt="Crispy Bites" className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500" />
          </div>
          <h5 className="font-serif text-sm font-black tracking-wider text-[#2B4C1F]">CRISPY BITES</h5>
         </Link>
         {/* Ice Creams -> SipReal */}
         <Link to="/smoothie-premix" className="group block text-center space-y-3 p-4 hover:bg-[#FCEAEB] rounded-xl transition-all">
-         <div className="w-full h-32 rounded-xl overflow-hidden bg-[#FCEAEB] relative">
-          <img src="https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400&q=80" alt="SipReal" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+         <div className="w-full h-32 rounded-xl overflow-hidden bg-[#FCEAEB] relative flex items-center justify-center">
+          <img src="/home_slip_real.png" alt="SipReal" className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500" />
          </div>
          <h5 className="font-serif text-sm font-black tracking-wider text-[#B82A5F]">SIPREAL</h5>
         </Link>
         {/* Candies -> FreezeFusion */}
         <Link to="/chocolate" className="group block text-center space-y-3 p-4 hover:bg-[#F5ECE6] rounded-xl transition-all">
-         <div className="w-full h-32 rounded-xl overflow-hidden bg-[#F5ECE6] relative">
-          <img src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400&q=80" alt="FreezeFusion" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+         <div className="w-full h-32 rounded-xl overflow-hidden bg-[#F5ECE6] relative flex items-center justify-center">
+          <img src="/home_freexze_frozen.png" alt="FreezeFusion" className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500" />
          </div>
          <h5 className="font-serif text-sm font-black tracking-wider text-[#4A2D1B]">FREEZEFUSION</h5>
         </Link>
