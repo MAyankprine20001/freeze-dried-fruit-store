@@ -25,7 +25,6 @@ const SmoothiePremix = lazy(() => import("./src/pages/SmoothiePremix"));
 const Combos = lazy(() => import("./src/pages/Combos"));
 const Reviews = lazy(() => import("./src/pages/Reviews"));
 const BulkOrders = lazy(() => import("./src/pages/BulkOrders"));
-const Blog = lazy(() => import("./src/pages/Blog"));
 const PrivacyPolicy = lazy(() => import("./src/pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./src/pages/TermsOfService"));
 
@@ -79,7 +78,6 @@ const App: React.FC = () => {
                 <Route path="/products" element={<Products />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/bulk-orders" element={<BulkOrders />} />
-                <Route path="/blog" element={<Blog />} />
                 <Route path="/smoothie-premix" element={<SmoothiePremix />} />
                 <Route path="/combos" element={<Combos />} />
                 <Route path="/reviews" element={<Reviews />} />

@@ -76,7 +76,6 @@ export default function Footer() {
             <ul className="space-y-3 text-xs font-semibold text-gray-400">
               <li><Link to="/about" className="hover:text-white transition-colors">Our Story</Link></li>
               <li><a href="#" className="hover:text-white transition-colors">Why Freeze Dried?</a></li>
-              <li><Link to="/blog" className="hover:text-white transition-colors">Blog</Link></li>
               <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>
