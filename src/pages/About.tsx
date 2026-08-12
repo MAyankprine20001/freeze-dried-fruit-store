@@ -1,150 +1,137 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Leaf, Heart, Smile, Sparkles } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import PageHero from '../components/PageHero';
 import TrustBadges from '../components/TrustBadges';
 
 const differentiators = [
   {
     title: 'Real Ingredients, No Shortcuts',
     desc: 'What you see is what you get. No hidden additives, no artificial flavours.',
+    icon: Leaf
   },
   {
     title: 'Freeze-Drying with Purpose',
     desc: 'Not just a process — a way to preserve real nutrition and real taste.',
+    icon: Sparkles
   },
   {
     title: 'Built for Real Life',
     desc: 'Whether you’re at work, travelling, or at home - healthy should be easy.',
+    icon: Smile
   },
   {
     title: 'Balanced, Not Extreme',
     desc: 'We don’t believe in perfection. Just better, cleaner everyday choices.',
+    icon: Heart
   },
 ];
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-[#111111]">
+    <div className="min-h-screen bg-[#FAF7F2] font-sans text-[#213B14]">
       <Header />
 
-      <PageHero
-        tag="Our Story"
-        title="Real Food,"
-        highlight="Thoughtfully Preserved"
-        description="We’re on a mission to bring you food that’s as real as it should be - clean, honest, and made to fit your everyday life."
-        image="/About_main.png"
-        tint="from-[#111111]/85"
-      />
+      {/* ── 1. HERO BANNER SECTION ── */}
+      <section className="relative min-h-[480px] flex items-center pt-40 pb-20 overflow-hidden w-full">
+        {/* Background Image matching Homepage */}
+        <div className="absolute inset-0 w-full h-full z-0">
+          <img 
+            src="/Home_backgroun_Image.png" 
+            alt="The Dry Factory Background" 
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Subtle gradient scrim */}
+          <div className="absolute inset-0 bg-[#FAF7F2]/50 md:bg-transparent md:bg-gradient-to-r md:from-[#FAF7F2]/90 md:to-transparent z-10" />
+        </div>
 
-      {/* Origin Story */}
-      <section className="py-24 bg-[#111111]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative"
-            >
-              <div className="rounded-2xl overflow-hidden shadow-xl">
-                <img
-                  src="/AboutLeft_Side.png"
-                  alt="Fresh fruit being harvested on a farm"
-                  width={700}
-                  height={600}
-                  className="w-full h-[480px] object-cover"
-                />
-              </div>
-              <div className="absolute -bottom-6 -right-6 bg-[#E4B34F] rounded-2xl p-6 shadow-xl text-black">
-                <p className="font-serif text-3xl font-bold">The Dry Factory</p>
-                <p className="text-black/80 text-sm font-medium">Simple. Honest. Trustworthy.</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <span className="inline-block px-4 py-1.5 bg-white/5 text-[#E4B34F] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-6">
-                Where It All Began
-              </span>
-              <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
-                Our Story
-              </h2>
-              <div className="space-y-6 text-white/70 text-base leading-relaxed">
-                <div>
-                  <h3 className="font-serif text-xl font-semibold text-[#E4B34F] mb-2">Why We Started</h3>
-                  <p>
-                    We noticed something strange. The more “convenient” food became, the less real it felt. Hidden sugars, artificial flavors, and long ingredient lists became the norm.
-                  </p>
-                  <p className="mt-2">
-                    At the same time, perfectly good fruits were going to waste - just because they didn’t last long enough. That didn’t sit right with us.
-                  </p>
-                  <p className="mt-2">
-                    So we asked a simple question: What if real food could stay real… longer? That question led to The Dry Factory.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="font-serif text-xl font-semibold text-[#E4B34F] mb-2">The Problem We’re Solving</h3>
-                  <p>
-                    Fresh fruits are seasonal, fragile, and hard to store. Most processed alternatives? Loaded with things your body doesn’t need. We chose a different path.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="font-serif text-xl font-semibold text-[#E4B34F] mb-2">Our Solution</h3>
-                  <p>
-                    Using freeze-drying, we remove moisture without heat - preserving the taste, nutrition, and texture of real fruit. No shortcuts. No additives. No compromises. Just real food, made smarter.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+        {/* Hero Content */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20 text-left">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-2xl space-y-4"
+          >
+            <span className="inline-block px-3 py-1.5 rounded-full border border-[#213B14]/20 bg-white text-[#213B14] text-[10px] font-black tracking-widest uppercase shadow-sm">
+              Our Story
+            </span>
+            <h1 className="font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#1C2A18] leading-[1.1]">
+              Real Food,<br />
+              <span className="text-[#3F622D]">Thoughtfully Preserved</span>
+            </h1>
+            <p className="text-sm sm:text-base text-[#213B14]/75 font-semibold leading-relaxed max-w-lg">
+              We’re on a mission to bring you food that’s as real as it should be - clean, honest, and made to fit your everyday life.
+            </p>
+          </motion.div>
         </div>
       </section>
 
-      {/* Mission */}
-      <section className="py-24 bg-white/5">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+      {/* ── 2. ORIGIN STORY ── */}
+      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          {/* Left Column: Image */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="relative"
           >
-            <span className="inline-block px-4 py-1.5 bg-[#111111] text-[#E4B34F] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-8">
-              Our Mission
+            <div className="rounded-3xl overflow-hidden shadow-md border border-[#213B14]/10">
+              <img
+                src="/AboutLeft_Side.png"
+                alt="Fresh fruit packaging showcase"
+                className="w-full h-[480px] object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-6 -right-6 bg-[#213B14] rounded-2xl p-6 shadow-md text-white border border-white/10 text-left">
+              <p className="font-bold text-xl uppercase tracking-wider">The Dry Factory</p>
+              <p className="text-white/70 text-xs font-semibold mt-1">Simple. Honest. Trustworthy.</p>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Text Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-left space-y-6"
+          >
+            <span className="inline-block px-3 py-1 bg-[#3F622D]/10 text-[#3F622D] text-xs font-bold uppercase tracking-wider rounded border border-[#3F622D]/20">
+              Where It All Began
             </span>
-            
-            <div className="space-y-12">
-              <div>
-                <h2 className="font-serif text-3xl font-bold text-white mb-6 leading-tight">
-                  More Than Just a Food Brand
-                </h2>
-                <div className="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto space-y-1">
-                  <p>We’re not here to sell “healthy products.”</p>
-                  <p>We’re here to make better eating effortless.</p>
-                  <p>Because when real food becomes convenient,</p>
-                  <p>better choices become natural.</p>
-                </div>
+            <h2 className="text-3xl font-extrabold text-[#1C2A18]">
+              Our Story
+            </h2>
+            <div className="space-y-6 text-[#213B14]/80 text-sm sm:text-base font-medium leading-relaxed">
+              <div className="bg-white p-5 rounded-2xl border border-[#213B14]/10 space-y-2 shadow-sm">
+                <h3 className="text-base font-black uppercase tracking-wider text-[#3F622D]">Why We Started</h3>
+                <p>
+                  We noticed something strange. The more “convenient” food became, the less real it felt. Hidden sugars, artificial flavors, and long ingredient lists became the norm.
+                </p>
+                <p>
+                  At the same time, perfectly good fruits were going to waste - just because they didn’t last long enough. That didn’t sit right with us.
+                </p>
+                <p>
+                  So we asked a simple question: What if real food could stay real… longer? That question led to The Dry Factory.
+                </p>
               </div>
 
-              <div>
-                <div className="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto">
-                  <p>
-                    To make real, clean food accessible anytime - without compromising taste, nutrition, or trust.
-                  </p>
-                </div>
+              <div className="bg-white p-5 rounded-2xl border border-[#213B14]/10 space-y-2 shadow-sm">
+                <h3 className="text-base font-black uppercase tracking-wider text-[#3F622D]">The Problem We’re Solving</h3>
+                <p>
+                  Fresh fruits are seasonal, fragile, and hard to store. Most processed alternatives? Loaded with things your body doesn’t need. We chose a different path.
+                </p>
               </div>
 
-              <div className="pt-6">
-                <p className="text-[#E4B34F] text-xl font-serif font-medium italic">
-                  “Trusted by people who care about what they eat - and what they avoid.”
+              <div className="bg-white p-5 rounded-2xl border border-[#213B14]/10 space-y-2 shadow-sm">
+                <h3 className="text-base font-black uppercase tracking-wider text-[#3F622D]">Our Solution</h3>
+                <p>
+                  Using freeze-drying, we remove moisture without heat - preserving the taste, nutrition, and texture of real fruit. No shortcuts. No additives. No compromises. Just real food, made smarter.
                 </p>
               </div>
             </div>
@@ -152,42 +139,81 @@ export default function About() {
         </div>
       </section>
 
-      {/* What Makes Us Different */}
-      <section className="py-24 bg-[#111111]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      {/* ── 3. MISSION SECTION ── */}
+      <section className="py-24 bg-white border-y border-[#213B14]/5 text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-16"
+            transition={{ duration: 0.6 }}
+            className="space-y-8"
           >
-            <span className="inline-block px-4 py-1.5 bg-white/5 text-[#E4B34F] text-xs font-semibold uppercase tracking-wider rounded-full border border-white/10 mb-4">
-              The Dry Factory Difference
+            <span className="inline-block px-3 py-1 bg-[#213B14]/10 text-[#213B14] text-xs font-bold uppercase tracking-wider rounded border border-[#213B14]/20">
+              Our Mission
             </span>
-            <h2 className="font-serif text-4xl font-bold text-white">
-              What Sets Us Apart
+            
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1C2A18]">
+              More Than Just a Food Brand
             </h2>
-          </motion.div>
+            
+            <div className="text-[#213B14]/80 text-base sm:text-lg font-semibold max-w-2xl mx-auto space-y-2 leading-relaxed">
+              <p>We’re not here to sell “healthy products.”</p>
+              <p>We’re here to make better eating effortless.</p>
+              <p>Because when real food becomes convenient,</p>
+              <p>better choices become natural.</p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {differentiators.map((item, i) => (
+            <p className="text-[#213B14]/65 text-sm sm:text-base font-medium max-w-2xl mx-auto italic">
+              To make real, clean food accessible anytime - without compromising taste, nutrition, or trust.
+            </p>
+
+            <div className="pt-4">
+              <p className="text-[#3F622D] text-lg font-bold italic">
+                “Trusted by people who care about what they eat - and what they avoid.”
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── 4. DIFFERENCE SECTION ── */}
+      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center space-y-2"
+        >
+          <span className="inline-block px-3 py-1 bg-[#3F622D]/10 text-[#3F622D] text-xs font-bold uppercase tracking-wider rounded border border-[#3F622D]/20">
+            The Dry Factory Difference
+          </span>
+          <h2 className="text-3xl font-extrabold text-[#1C2A18]">
+            What Sets Us Apart
+          </h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
+          {differentiators.map((item, i) => {
+            const Icon = item.icon;
+            return (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white/5 rounded-2xl p-8 border border-white/10 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                className="bg-white rounded-3xl p-8 border border-[#213B14]/10 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
               >
-                <div className="w-10 h-10 bg-[#E4B34F] rounded-xl flex items-center justify-center mb-6 shadow-sm">
-                  <CheckCircle2 className="w-5 h-5 text-black" />
+                <div className="w-10 h-10 bg-[#3F622D]/10 text-[#3F622D] rounded-xl flex items-center justify-center mb-6 border border-[#3F622D]/20">
+                  <Icon className="w-5 h-5" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-white mb-3">{item.title}</h3>
-                <p className="text-white/60 text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="text-lg font-bold text-[#1C2A18] mb-3">{item.title}</h3>
+                <p className="text-[#213B14]/70 text-xs sm:text-sm font-semibold leading-relaxed">{item.desc}</p>
               </motion.div>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </section>
 
