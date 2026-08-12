@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { 
   Package, Truck, ShieldCheck, Mail, ArrowRight, CheckCircle2, Leaf, 
   FlaskConical, Users, CupSoda, Coffee, Store, Tag, Headphones, 
-  Clock, MessageCircle, Phone, Award, Handshake, Star, ChevronDown, CheckCircle
+  Clock, MessageCircle, Phone, Award, Handshake, Star, ChevronDown, CheckCircle,
+  ClipboardEdit, FileText, Boxes
 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -452,53 +453,79 @@ export default function BulkOrders() {
 
       {/* ── 5. WHY CHOOSE & PROCESS SECTION ── */}
       <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
-        <div className="grid md:grid-cols-2 gap-8 items-stretch">
+        <div className="bg-[#FAF7F2] rounded-3xl border border-[#213B14]/10 p-6 md:p-8 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Why Choose */}
-          <div className="bg-white rounded-[2.5rem] border border-[#213B14]/10 p-8 sm:p-10 shadow-sm flex flex-col justify-between">
-            <div className="space-y-6">
-              <h3 className="text-2xl font-extrabold text-[#1C2A18]">Why Choose The Dry Factory?</h3>
-              <ul className="space-y-4">
+          {/* Left Block: Why Choose (col-span-6) */}
+          <div className="lg:col-span-6 flex flex-col md:flex-row items-center gap-6 justify-between border-b lg:border-b-0 lg:border-r border-[#213B14]/10 pb-6 lg:pb-0 lg:pr-8">
+            <div className="space-y-4 text-left">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-[#3F622D]/10 flex items-center justify-center text-[#3F622D]">
+                  <Leaf className="w-4 h-4" />
+                </div>
+                <h3 className="text-lg font-black text-[#1C2A18]">Why Choose The Dry Factory?</h3>
+              </div>
+              <ul className="space-y-2">
                 {[
-                  "100% Natural & Real Ingredients (Zero fillers)",
-                  "No Preservatives & Additives (Completely clean label)",
-                  "Advanced Freeze Drying Technology (Retains 97% nutrients)",
-                  "Long Shelf Life with Maximum Nutrition & Taste",
-                  "Bulk Supply for All Business Needs (MOQ flexible)"
+                  "100% Natural & Real Ingredients",
+                  "No Preservatives & Additives",
+                  "Advanced Freeze Drying Technology",
+                  "Long Shelf Life with Maximum Nutrition",
+                  "Bulk Supply for All Business Needs"
                 ].map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-sm font-semibold text-[#213B14]/80">
-                    <CheckCircle className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
+                  <li key={idx} className="flex items-center gap-2 text-xs font-bold text-[#213B14]/85">
+                    <CheckCircle2 className="w-4 h-4 text-[#3F622D] shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
             
-            <div className="mt-8 h-40 rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#213B14]/5 relative">
-              <img src="/SliderImage/slider-2.png" alt="Fresh fruits" className="w-full h-full object-cover" />
+            <div className="w-full md:w-44 h-32 rounded-2xl overflow-hidden bg-white border border-[#213B14]/5 shrink-0 shadow-sm">
+              <img 
+                src="/bulk_why_choose.png" 
+                alt="Fresh fruits and vegetables representing clean ingredients" 
+                className="w-full h-full object-cover" 
+              />
             </div>
           </div>
 
-          {/* Our Bulk Order Process */}
-          <div className="bg-white rounded-[2.5rem] border border-[#213B14]/10 p-8 sm:p-10 shadow-sm space-y-6">
-            <h3 className="text-2xl font-extrabold text-[#1C2A18]">Our Bulk Order Process</h3>
+          {/* Right Block: Our Bulk Order Process (col-span-6) */}
+          <div className="lg:col-span-6 space-y-6 text-center">
+            <div className="flex items-center justify-center gap-1.5">
+              <span className="text-[#3F622D]">✿</span>
+              <h3 className="text-sm font-extrabold uppercase tracking-widest text-[#1C2A18]">Our Bulk Order Process</h3>
+              <span className="text-[#3F622D]">✿</span>
+            </div>
             
-            <div className="relative border-l-2 border-[#213B14]/10 pl-6 ml-3 space-y-6">
+            {/* Horizontal flow */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               {[
-                { title: "1. Inquiry", desc: "Share your business details and requirements in the form below." },
-                { title: "2. Quotation", desc: "Get custom pricing, sample options, and technical specifications." },
-                { title: "3. Confirmation", desc: "Approve the quotation and confirm delivery schedules." },
-                { title: "4. Production", desc: "We prepare and pack with strict quality checks." },
-                { title: "5. Delivery", desc: "Get safe, trackable, and on-time shipment to your address." }
-              ].map((step, idx) => (
-                <div key={idx} className="relative">
-                  <div className="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-white border-2 border-[#3F622D] flex items-center justify-center">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#3F622D]" />
-                  </div>
-                  <h4 className="text-xs font-black uppercase tracking-wider text-[#1C2A18] leading-none mb-1">{step.title}</h4>
-                  <p className="text-xs text-[#213B14]/65 font-medium leading-relaxed">{step.desc}</p>
-                </div>
-              ))}
+                { title: "Inquiry", sub: "Share your requirements", icon: ClipboardEdit },
+                { title: "Quotation", sub: "Get best price & details", icon: FileText },
+                { title: "Confirmation", sub: "Confirm order & payment", icon: CheckCircle2 },
+                { title: "Production", sub: "We prepare with quality", icon: Boxes },
+                { title: "Delivery", sub: "On-time delivery doorstep", icon: Truck }
+              ].map((step, idx) => {
+                const IconComponent = step.icon;
+                return (
+                  <React.Fragment key={idx}>
+                    <div className="flex flex-col items-center text-center space-y-2 max-w-[100px] flex-1">
+                      <div className="w-12 h-12 rounded-full bg-white border border-[#213B14]/10 flex items-center justify-center text-[#3F622D] shadow-sm hover:scale-105 transition-transform">
+                        <IconComponent className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="text-[10px] font-black text-[#1C2A18] uppercase tracking-wider">{step.title}</h4>
+                        <p className="text-[8px] text-[#213B14]/60 font-semibold leading-tight mt-0.5">{step.sub}</p>
+                      </div>
+                    </div>
+                    {idx < 4 && (
+                      <div className="hidden sm:block text-[#213B14]/30 font-light text-base">
+                        →
+                      </div>
+                    )}
+                  </React.Fragment>
+                );
+              })}
             </div>
           </div>
 
