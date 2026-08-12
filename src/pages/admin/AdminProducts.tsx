@@ -74,6 +74,7 @@ const emptyForm = {
   status: "Active" as string,
   images: [] as string[],
   featured: false,
+  isBulk: false,
   urgencyLine: "",
   highlights: "",
   trustBadgesPredefined: [] as string[],
@@ -187,6 +188,7 @@ export default function AdminProducts() {
             ? [product.image]
             : [],
         featured: product.featured || false,
+        isBulk: product.isBulk || false,
         urgencyLine: product.urgencyLine || "",
         highlights: Array.isArray(product.highlights) ? product.highlights.join(", ") : "",
         trustBadgesPredefined: TRUST_BADGE_OPTIONS.filter((b) => badges.includes(b)),
@@ -237,6 +239,7 @@ export default function AdminProducts() {
         stock: formData.stock,
         status: formData.status,
         featured: formData.featured,
+        isBulk: formData.isBulk,
         urgencyLine: formData.urgencyLine,
         highlights,
         trustBadges,
@@ -367,6 +370,7 @@ export default function AdminProducts() {
                   <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Stock</th>
                   <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
                   <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Featured</th>
+                  <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Bulk</th>
                   <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
                 </tr>
               </thead>
@@ -439,6 +443,23 @@ export default function AdminProducts() {
                           title={product.featured ? "Remove from Featured" : "Mark as Featured"}
                         >
                           <Star className={`w-4 h-4 ${product.featured ? "fill-[#D4A017] text-[#D4A017]" : "text-gray-300"}`} />
+                        </button>
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            try {
+                              await productApi.update(product._id, { isBulk: !product.isBulk });
+                              toast.success(`Product ${!product.isBulk ? "marked as bulk" : "removed from bulk"}`);
+                              await refreshAfterMutation();
+                            } catch {
+                              toast.error("Failed to update bulk status");
+                            }
+                          }}
+                          title={product.isBulk ? "Remove from Bulk" : "Mark as Bulk"}
+                        >
+                          <Package className={`w-4 h-4 mx-auto ${product.isBulk ? "text-green-600 fill-green-600/10" : "text-gray-300"}`} />
                         </button>
                       </td>
                       <td className="px-4 py-3 text-right">
@@ -789,6 +810,14 @@ export default function AdminProducts() {
                       </div>
                       <label className="text-xs font-bold text-gray-700 cursor-pointer flex items-center gap-1">
                         <Star className="w-3.5 h-3.5 text-[#D4A017]" /> Mark as Bestseller / Featured
+                      </label>
+                    </div>
+                    <div className="mt-3 flex items-center gap-2 cursor-pointer" onClick={() => setFormData({ ...formData, isBulk: !formData.isBulk })}>
+                      <div className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors ${formData.isBulk ? "bg-[#D4A017] border-[#D4A017]" : "border-gray-300"}`}>
+                        {formData.isBulk && <span className="text-white text-[10px] font-bold">✓</span>}
+                      </div>
+                      <label className="text-xs font-bold text-gray-700 cursor-pointer flex items-center gap-1">
+                        <Package className="w-3.5 h-3.5 text-[#D4A017]" /> Mark as Bulk Product (for Bulk Orders page)
                       </label>
                     </div>
                   </div>

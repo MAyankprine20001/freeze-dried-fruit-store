@@ -31,10 +31,11 @@ export default function FruitPowderChunks() {
       try {
         const res = await productApi.getAll();
         const data = res.data ?? res;
-        // Filter by Fruit Chunks category
-        const filtered = data.filter((p: any) =>
-          p.category.toLowerCase().replace(/[\s_]+/g, "-") === "fruit-chunks"
-        );
+        // Filter by Fruit Chunks & Fruit Powders categories
+        const filtered = data.filter((p: any) => {
+          const cat = p.category.toLowerCase().replace(/[\s_]+/g, "-");
+          return cat === "fruit-chunks" || cat === "fruit-powders";
+        });
         setAllProducts(filtered);
         setProducts(filtered);
       } catch (err) {
@@ -108,10 +109,10 @@ export default function FruitPowderChunks() {
       <Header />
 
       {/* Hero Banner Section */}
-      <section className="relative min-h-[500px] md:min-h-[600px] lg:min-h-[680px] flex items-center pt-32 pb-20 overflow-hidden">
+      <section className="relative min-h-[600px] md:min-h-[700px] lg:min-h-[780px] flex items-center pt-40 pb-28 overflow-hidden">
         {/* Absolute Background Image */}
         <img 
-          src="/cripsy_background_img.png" 
+          src="/Home_backgroun_Image.png" 
           alt="Hero Background" 
           className="absolute inset-0 w-full h-full object-cover object-center z-0" 
         />
@@ -120,27 +121,23 @@ export default function FruitPowderChunks() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
-            <div className="lg:col-span-5 space-y-5">
+            <div className="lg:col-span-5 space-y-5 text-left">
               <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#213B14] leading-[1.1] tracking-tight">
-                CRISPY. CRUNCHY. <br />
-                100% REAL FRUIT.
+                Real Fruit. <br />
+                Real Taste. <br />
+                Real Nutrition.
               </h1>
-              <div>
-                <span className="inline-block px-3 py-1.5 bg-[#2B4C1F] text-white text-[10px] font-extrabold tracking-widest uppercase rounded">
-                  FREEZE DRIED BITE
-                </span>
-              </div>
-              <p className="text-gray-600 text-sm leading-relaxed max-w-sm">
-                Light, crispy & delicious freeze dried fruit snacks made from 100% real fruits. No preservatives, no added sugar, no artificial anything.
+              <p className="text-[#3F622D] text-base md:text-lg font-medium max-w-md">
+                Freeze Dried Goodness You Can Trust.
               </p>
 
               {/* Grid of Badges - Horizontal row with icon top, text bottom */}
-              <div className="flex flex-wrap items-start gap-4 md:gap-6 pt-2">
+              <div className="flex flex-wrap items-start gap-4 md:gap-6 pt-4">
                 {[
                   { label: "100% Real Fruit", icon: Leaf },
                   { label: "No Added Sugar", icon: Sparkles },
                   { label: "No Preservatives", icon: FlaskConical },
-                  { label: "Natural Goodness", icon: Heart }
+                  { label: "No Artificial Flavors", icon: Heart }
                 ].map((badge, idx) => {
                   const words = badge.label.split(" ");
                   const line1 = words.slice(0, 2).join(" ");
@@ -159,23 +156,23 @@ export default function FruitPowderChunks() {
                 })}
               </div>
 
-              <div className="pt-4">
+              <div className="pt-6">
                 <a
                   href="#flavors"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#2B4C1F] hover:bg-[#1E3615] text-[#FAF7F2] font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#213B14] hover:bg-[#3F622D] text-[#FAF7F2] font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
                 >
-                  SHOP ALL FLAVORS
+                  SHOP NOW
                   <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
             </div>
 
-            {/* Foreground Product Image on the Right */}
+            {/* Foreground Product Showcase Image on the Right */}
             <div className="lg:col-span-7 flex justify-center z-20">
               <img
-                src="/CripsyProductImage.png"
-                alt="Crispy Bites Products Showcase"
-                className="w-full max-w-4xl lg:max-w-[850px] xl:max-w-[950px] h-auto object-contain lg:scale-[1.3] hover:scale-[1.32] transition-transform duration-500"
+                src="/HomeProductImage.png"
+                alt="The Dry Factory Products Showcase"
+                className="w-full max-w-2xl lg:max-w-[760px] xl:max-w-[820px] h-auto object-contain lg:scale-[1.1] hover:scale-[1.12] transition-transform duration-500"
               />
             </div>
           </div>
