@@ -51,6 +51,7 @@ export default function Footer() {
               <li><Link to="/smoothie-premix" className="hover:text-white transition-colors">SipReal Premix Smoothie</Link></li>
               <li><Link to="/chocolate" className="hover:text-white transition-colors">Freeze Fusion Chocolates</Link></li>
               <li><Link to="/fruit-powder-chunks" className="hover:text-white transition-colors">Crispy Bites Snacks</Link></li>
+              <li><Link to="/gift-hampers" className="hover:text-white transition-colors">Gift Hampers</Link></li>
               <li><Link to="/products" className="hover:text-white transition-colors">All Products</Link></li>
             </ul>
           </div>

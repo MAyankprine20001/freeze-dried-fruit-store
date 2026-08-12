@@ -18,6 +18,7 @@ import {
   MoreVertical,
   Tag,
   Copy,
+  Gift,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -75,6 +76,7 @@ const emptyForm = {
   images: [] as string[],
   featured: false,
   isBulk: false,
+  isGift: false,
   urgencyLine: "",
   highlights: "",
   trustBadgesPredefined: [] as string[],
@@ -189,6 +191,7 @@ export default function AdminProducts() {
             : [],
         featured: product.featured || false,
         isBulk: product.isBulk || false,
+        isGift: product.isGift || false,
         urgencyLine: product.urgencyLine || "",
         highlights: Array.isArray(product.highlights) ? product.highlights.join(", ") : "",
         trustBadgesPredefined: TRUST_BADGE_OPTIONS.filter((b) => badges.includes(b)),
@@ -240,6 +243,7 @@ export default function AdminProducts() {
         status: formData.status,
         featured: formData.featured,
         isBulk: formData.isBulk,
+        isGift: formData.isGift,
         urgencyLine: formData.urgencyLine,
         highlights,
         trustBadges,
@@ -371,6 +375,7 @@ export default function AdminProducts() {
                   <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
                   <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Featured</th>
                   <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Bulk</th>
+                  <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Gift</th>
                   <th className="px-4 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
                 </tr>
               </thead>
@@ -460,6 +465,23 @@ export default function AdminProducts() {
                           title={product.isBulk ? "Remove from Bulk" : "Mark as Bulk"}
                         >
                           <Package className={`w-4 h-4 mx-auto ${product.isBulk ? "text-green-600 fill-green-600/10" : "text-gray-300"}`} />
+                        </button>
+                      </td>
+                       <td className="px-4 py-3 text-center">
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            try {
+                              await productApi.update(product._id, { isGift: !product.isGift });
+                              toast.success(`Product ${!product.isGift ? "marked as gift" : "removed from gift"}`);
+                              await refreshAfterMutation();
+                            } catch {
+                              toast.error("Failed to update gift status");
+                            }
+                          }}
+                          title={product.isGift ? "Remove from Gift" : "Mark as Gift"}
+                        >
+                          <Gift className={`w-4 h-4 mx-auto ${product.isGift ? "text-purple-600 fill-purple-600/10" : "text-gray-300"}`} />
                         </button>
                       </td>
                       <td className="px-4 py-3 text-right">
@@ -794,6 +816,10 @@ export default function AdminProducts() {
                           <option>Fruit Powders</option>
                           <option>Combos</option>
                           <option>Gifts</option>
+                          <option>Festive Specials</option>
+                          <option>Corporate Gifting</option>
+                          <option>Personalized</option>
+                          <option>New Arrivals</option>
                         </select>
                       </div>
                       <div className="space-y-1">
@@ -818,6 +844,14 @@ export default function AdminProducts() {
                       </div>
                       <label className="text-xs font-bold text-gray-700 cursor-pointer flex items-center gap-1">
                         <Package className="w-3.5 h-3.5 text-[#D4A017]" /> Mark as Bulk Product (for Bulk Orders page)
+                      </label>
+                    </div>
+                    <div className="mt-3 flex items-center gap-2 cursor-pointer" onClick={() => setFormData({ ...formData, isGift: !formData.isGift })}>
+                      <div className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors ${formData.isGift ? "bg-[#D4A017] border-[#D4A017]" : "border-gray-300"}`}>
+                        {formData.isGift && <span className="text-white text-[10px] font-bold">✓</span>}
+                      </div>
+                      <label className="text-xs font-bold text-gray-700 cursor-pointer flex items-center gap-1">
+                        <Gift className="w-3.5 h-3.5 text-[#D4A017]" /> Mark as Gift / Hamper (for Gift Hampers page)
                       </label>
                     </div>
                   </div>

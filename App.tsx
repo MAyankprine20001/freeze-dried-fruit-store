@@ -23,6 +23,7 @@ const Products = lazy(() => import("./src/pages/Products"));
 const ProductDetail = lazy(() => import("./src/pages/ProductDetail"));
 const SmoothiePremix = lazy(() => import("./src/pages/SmoothiePremix"));
 const Combos = lazy(() => import("./src/pages/Combos"));
+const GiftHampers = lazy(() => import("./src/pages/GiftHampers"));
 const Reviews = lazy(() => import("./src/pages/Reviews"));
 const BulkOrders = lazy(() => import("./src/pages/BulkOrders"));
 const PrivacyPolicy = lazy(() => import("./src/pages/PrivacyPolicy"));
@@ -45,6 +46,7 @@ const Profile = lazy(() => import("./src/pages/Profile"));            // ← NEW
 const AdminLayout = lazy(() => import("./src/components/admin/AdminLayout"));
 const AdminDashboard = lazy(() => import("./src/pages/admin/Dashboard"));
 const AdminProducts = lazy(() => import("./src/pages/admin/AdminProducts"));
+const AdminGifts = lazy(() => import("./src/pages/admin/AdminGifts"));
 const AdminOrders = lazy(() => import("./src/pages/admin/AdminOrders"));
 const AdminCustomers = lazy(() => import("./src/pages/admin/AdminCustomers"));
 const AdminTransactions = lazy(() => import("./src/pages/admin/AdminTransactions"));
@@ -80,6 +82,7 @@ const App: React.FC = () => {
                 <Route path="/bulk-orders" element={<BulkOrders />} />
                 <Route path="/smoothie-premix" element={<SmoothiePremix />} />
                 <Route path="/combos" element={<Combos />} />
+                <Route path="/gift-hampers" element={<GiftHampers />} />
                 <Route path="/reviews" element={<Reviews />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/terms" element={<TermsOfService />} />
@@ -122,6 +125,7 @@ const App: React.FC = () => {
                   <Route index element={<AdminDashboard />} />
                   <Route path="dashboard" element={<AdminDashboard />} />
                   <Route path="products" element={<AdminProducts />} />
+                  <Route path="gifts" element={<AdminGifts />} />
                   <Route path="orders" element={<AdminOrders />} />
                   <Route path="transactions" element={<AdminTransactions />} />
                   <Route path="customers" element={<AdminCustomers />} />

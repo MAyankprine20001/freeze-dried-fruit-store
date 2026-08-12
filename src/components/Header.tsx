@@ -8,6 +8,7 @@ import { useCart } from "../context/CartContext";
 const navLinks = [
  { label: "HOME", path: "/" },
  { label: "SHOP", path: "/products" },
+ { label: "GIFT HAMPERS", path: "/gift-hampers" },
  { label: "OUR STORY", path: "/about" },
  { label: "BULK ORDERS", path: "/bulk-orders" },
  { label: "CONTACT", path: "/contact" },

@@ -14,6 +14,7 @@ import {
   Box,
   Ticket,
   MessageSquare,
+  Gift,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
@@ -36,6 +37,7 @@ export default function AdminLayout() {
   const menuItems = [
     { label: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
     { label: "Products", path: "/admin/products", icon: Package },
+    { label: "Gifts", path: "/admin/gifts", icon: Gift },
     { label: "Orders", path: "/admin/orders", icon: ShoppingBag },
     { label: "Customers", path: "/admin/customers", icon: Users },
     { label: "Transactions", path: "/admin/transactions", icon: DollarSign },
