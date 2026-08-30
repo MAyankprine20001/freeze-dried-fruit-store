@@ -56,11 +56,7 @@ const AdminCoupons = lazy(() => import("./src/pages/admin/AdminCoupons"));
 const AdminReviews = lazy(() => import("./src/pages/admin/AdminReviews"));
 const AdminSettings = lazy(() => import("./src/pages/admin/AdminSettings"));
 
-const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-black">
-    <div className="w-8 h-8 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin" />
-  </div>
-);
+import Loader from "./src/components/Loader";
 
 const App: React.FC = () => {
   return (
@@ -68,7 +64,7 @@ const App: React.FC = () => {
       <AuthProvider>
         <CartProvider>
           <Router>
-            <Suspense fallback={<PageLoader />}>
+            <Suspense fallback={<Loader size="fullscreen" />}>
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Home />} />

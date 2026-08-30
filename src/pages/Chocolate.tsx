@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Leaf, FlaskConical, Sparkles, Snowflake, Heart, ShoppingBag, CheckCircle2, SlidersHorizontal, ArrowUpDown, X, ArrowRight } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
@@ -99,7 +100,7 @@ export default function Chocolate() {
     <div className="min-h-screen bg-[#FAF7F2] text-[#213B14]">
       <Header />
 
-      <section className="relative pt-32 pb-20 overflow-hidden flex items-center min-h-[520px] lg:min-h-[640px]">
+      <section className="relative pt-32 pb-8 sm:pt-36 sm:pb-12 md:pt-40 md:pb-16 overflow-hidden flex items-center min-h-[380px] sm:min-h-[500px] lg:min-h-[640px]">
         {/* Absolute Background Image */}
         <img 
           src="/Freeze_background_image.png" 
@@ -110,29 +111,31 @@ export default function Chocolate() {
         <div className="absolute inset-0 bg-[#FAF7F2]/40 md:bg-transparent z-10 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-6 space-y-6">
+          <div className="grid grid-cols-12 gap-3 sm:gap-6 lg:gap-12 items-center">
+            <div className="col-span-7 lg:col-span-6 space-y-2.5 sm:space-y-4 lg:space-y-6">
               <div>
-                <span className="font-serif text-5xl sm:text-6xl lg:text-7xl font-extrabold text-[#4A2D1B] leading-none block">
-                  Freeze
-                </span>
-                <span className="font-serif text-5xl sm:text-6xl lg:text-7xl font-light italic text-[#4A2D1B] leading-none block mt-1">
-                  Fusion
-                </span>
+                <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold text-[#4A2D1B] leading-none">
+                  Freeze<span className="font-serif font-light italic text-[#7A4B2A]"> Fusion</span>
+                </h1>
+                <div className="mt-1 sm:mt-2.5 inline-block">
+                  <span className="bg-[#4A2D1B]/10 border border-[#4A2D1B]/20 text-[#4A2D1B] text-[9px] sm:text-xs font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] px-2 sm:px-3.5 py-0.5 sm:py-1 rounded-full backdrop-blur-sm shadow-sm inline-block">
+                    CHOCOLATES
+                  </span>
+                </div>
               </div>
               
-              <h2 className="text-[#4A2D1B] text-[13px] sm:text-sm font-black uppercase tracking-[0.18em] leading-tight max-w-md">
+              <h2 className="text-[#4A2D1B] text-[10.5px] sm:text-sm font-black uppercase tracking-[0.12em] sm:tracking-[0.18em] leading-tight max-w-md">
                 REAL FRUIT INFUSED <br />
                 RICH COUVERTURE CHOCOLATES
               </h2>
               
-              <p className="text-gray-600 text-sm leading-relaxed max-w-sm">
-                Crunchy outside. Creamy inside. <br />
+              <p className="text-gray-600 text-[10.5px] sm:text-xs md:text-sm leading-relaxed max-w-sm line-clamp-2 sm:line-clamp-none">
+                Crunchy outside. Creamy inside. <br className="hidden sm:inline" />
                 Real joy in every bite.
               </p>
 
               {/* Badges - Circular Icons under text */}
-              <div className="flex flex-wrap items-start gap-4 md:gap-5 pt-2">
+              <div className="hidden xs:flex flex-wrap items-start gap-2 sm:gap-4 md:gap-5 pt-1 sm:pt-2">
                 {[
                   { label: "Real Fruit Inside", icon: Leaf },
                   { label: "Premium Couverture", icon: Sparkles },
@@ -143,11 +146,11 @@ export default function Chocolate() {
                   const line1 = words.slice(0, 2).join(" ");
                   const line2 = words.slice(2).join(" ");
                   return (
-                    <div key={idx} className="flex flex-col items-center text-center gap-1 w-18 md:w-20">
-                      <div className="w-8 h-8 rounded-full border border-[#4A2D1B]/20 flex items-center justify-center text-[#4A2D1B] bg-white/50 backdrop-blur-sm">
+                    <div key={idx} className="flex flex-col items-center text-center gap-1 w-14 sm:w-18 md:w-20">
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#4A2D1B]/20 flex items-center justify-center text-[#4A2D1B] bg-white/50 backdrop-blur-sm">
                         <badge.icon className="w-3.5 h-3.5 stroke-[1.75]" />
                       </div>
-                      <span className="text-[8px] md:text-[9px] font-bold text-[#4A2D1B] leading-tight tracking-wider uppercase">
+                      <span className="text-[7.5px] sm:text-[8px] md:text-[9px] font-bold text-[#4A2D1B] leading-tight tracking-wider uppercase">
                         {line1}
                         {line2 && <><br />{line2}</>}
                       </span>
@@ -156,23 +159,23 @@ export default function Chocolate() {
                 })}
               </div>
 
-              <div className="pt-4">
+              <div className="pt-1 sm:pt-4">
                 <a
                   href="#flavors"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#4A2D1B] hover:bg-[#382012] text-[#FAF7F2] font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
+                  className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-7 sm:py-3.5 md:px-8 md:py-3.5 bg-[#4A2D1B] hover:bg-[#382012] text-[#FAF7F2] text-xs sm:text-sm font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
                 >
                   EXPLORE FLAVORS
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </a>
               </div>
             </div>
 
             {/* Foreground Product Image on the Right */}
-            <div className="lg:col-span-6 flex justify-center z-20 lg:translate-x-8">
+            <div className="col-span-5 lg:col-span-6 flex justify-center items-center z-20 lg:translate-x-8">
               <img
                 src="/freeze_product_image.png"
                 alt="Freeze Fusion Chocolates Showcase"
-                className="w-full max-w-lg lg:max-w-[500px] xl:max-w-[550px] h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
+                className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-lg lg:max-w-[500px] xl:max-w-[550px] h-auto object-contain transition-transform duration-500 hover:scale-[1.02] drop-shadow-md"
               />
             </div>
           </div>
@@ -203,6 +206,97 @@ export default function Chocolate() {
         </div>
       </section>
 
+      {/* 3 Pillars of Value Section: What It Is, Why Buy, Health Benefits */}
+      <section className="py-16 bg-white border-b border-[#213B14]/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="bg-[#4A2D1B]/10 text-[#4A2D1B] text-[11px] font-extrabold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full inline-block mb-3">
+              KNOW YOUR CHOCOLATE
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-extrabold text-[#4A2D1B]">
+              Why Choose Freeze Fusion Chocolates?
+            </h2>
+            <p className="text-gray-600 text-sm mt-2 font-medium">
+              Real freeze-dried fruit chunks dipped in rich, velvety couverture chocolate.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1: What is it? */}
+            <div className="bg-[#FAF7F2] rounded-3xl p-8 border border-[#4A2D1B]/10 hover:border-[#4A2D1B]/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#F5ECE6] border border-[#4A2D1B]/20 flex items-center justify-center text-[#4A2D1B] group-hover:scale-110 transition-transform">
+                  <Snowflake className="w-7 h-7 stroke-[1.75]" />
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#4A2D1B] block">
+                  1. WHAT IS IT?
+                </span>
+                <h3 className="font-serif text-2xl font-bold text-[#4A2D1B]">
+                  Real Fruit Dipped in Premium Couverture
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  Freeze Fusion blends whole freeze-dried fruits with high-grade artisan chocolate. Not flavored essence or jelly — you bite into actual crunchy real fruit wrapped in silky dark or white chocolate.
+                </p>
+              </div>
+              <div className="pt-6 mt-6 border-t border-[#213B14]/10">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#4A2D1B]">
+                  <CheckCircle2 className="w-4 h-4 text-[#4A2D1B]" />
+                  <span>Real fruit center with authentic cocoa butter</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2: Why Buy? */}
+            <div className="bg-[#FAF7F2] rounded-3xl p-8 border border-[#4A2D1B]/10 hover:border-[#4A2D1B]/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#F5ECE6] border border-[#4A2D1B]/20 flex items-center justify-center text-[#4A2D1B] group-hover:scale-110 transition-transform">
+                  <Sparkles className="w-7 h-7 stroke-[1.75]" />
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#4A2D1B] block">
+                  2. WHY BUY THIS?
+                </span>
+                <h3 className="font-serif text-2xl font-bold text-[#4A2D1B]">
+                  Gourmet Taste & Guilt-Free Indulgence
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  Say goodbye to cheap compound chocolates packed with palm oil. Perfect for luxurious gifting, sweet cravings after meals, and elevating dessert times.
+                </p>
+              </div>
+              <div className="pt-6 mt-6 border-t border-[#213B14]/10">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#4A2D1B]">
+                  <CheckCircle2 className="w-4 h-4 text-[#4A2D1B]" />
+                  <span>No vegetable fat/palm oil shortcuts</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3: Key Benefits */}
+            <div className="bg-[#FAF7F2] rounded-3xl p-8 border border-[#4A2D1B]/10 hover:border-[#4A2D1B]/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#F5ECE6] border border-[#4A2D1B]/20 flex items-center justify-center text-[#4A2D1B] group-hover:scale-110 transition-transform">
+                  <Heart className="w-7 h-7 stroke-[1.75]" />
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#4A2D1B] block">
+                  3. HEALTH BENEFITS
+                </span>
+                <h3 className="font-serif text-2xl font-bold text-[#4A2D1B]">
+                  Antioxidant-Rich & Wholesome
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  Combines the polyphenol antioxidants of dark chocolate with the fruit vitamins and dietary fiber of freeze-dried fruit for mood-boosting health.
+                </p>
+              </div>
+              <div className="pt-6 mt-6 border-t border-[#213B14]/10">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#4A2D1B]">
+                  <CheckCircle2 className="w-4 h-4 text-[#4A2D1B]" />
+                  <span>Mood booster with natural fruit nutrition</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 4 Irresistible Flavors Grid */}
       <section id="flavors" className="py-20 bg-[#FAF7F2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -211,6 +305,9 @@ export default function Chocolate() {
             <h2 className="font-serif text-3xl sm:text-4xl font-extrabold text-[#4A2D1B] tracking-wider uppercase">
               4 Irresistible Flavors
             </h2>
+            <p className="text-[#4A2D1B] text-xs font-bold uppercase tracking-widest mt-2">
+              Real fruit infused rich couverture chocolates.
+            </p>
           </div>
 
           {/* Filter & Sort Action Row */}
@@ -232,9 +329,7 @@ export default function Chocolate() {
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center py-12">
-              <div className="w-8 h-8 border-2 border-[#4A2D1B] border-t-transparent rounded-full animate-spin" />
-            </div>
+            <Loader color="#4A2D1B" text="Loading Freeze Fusion Chocolates..." />
           ) : products.length === 0 ? (
             <div className="text-center py-12 bg-white/40 rounded-2xl border border-[#213B14]/5 max-w-5xl mx-auto">
               <h3 className="font-serif text-lg font-bold text-gray-400">No Chocolates match your filters</h3>

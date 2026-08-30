@@ -12,7 +12,7 @@ interface PageHeroProps {
 
 export default function PageHero({ tag, title, highlight, description, image, tint = 'from-black/80' }: PageHeroProps) {
  return (
-  <section className="relative pt-16 overflow-hidden bg-black">
+  <section className="relative pt-32 sm:pt-36 md:pt-40 overflow-hidden bg-black">
    {image && (
     <div className="absolute inset-0 z-0">
      <img
@@ -26,13 +26,13 @@ export default function PageHero({ tag, title, highlight, description, image, ti
      <div className={`absolute inset-0 bg-gradient-to-r ${tint} via-black/40 to-transparent`} />
     </div>
    )}
-   <div className={`relative z-10 max-w-4xl mx-auto px-6 lg:px-8 py-24 text-white`}>
+   <div className={`relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 md:py-24 text-white`}>
     {tag && (
      <motion.span
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6 bg-white/10 text-[#D4AF37] border border-white/20 backdrop-blur-sm"
+      className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-3 sm:mb-6 bg-white/10 text-[#D4AF37] border border-white/20 backdrop-blur-sm"
      >
       {tag}
      </motion.span>
@@ -41,7 +41,7 @@ export default function PageHero({ tag, title, highlight, description, image, ti
      initial={{ opacity: 0, y: 20 }}
      animate={{ opacity: 1, y: 0 }}
      transition={{ duration: 0.5, delay: 0.1 }}
-     className="font-serif text-4xl lg:text-5xl font-bold leading-tight mb-6"
+     className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-3 sm:mb-6"
     >
      {title}{' '}
      {highlight && (
@@ -52,7 +52,7 @@ export default function PageHero({ tag, title, highlight, description, image, ti
      initial={{ opacity: 0, y: 20 }}
      animate={{ opacity: 1, y: 0 }}
      transition={{ duration: 0.5, delay: 0.2 }}
-     className="text-lg leading-relaxed max-w-2xl text-white/80"
+     className="text-xs sm:text-base lg:text-lg leading-relaxed max-w-2xl text-white/80"
     >
      {description}
     </motion.p>

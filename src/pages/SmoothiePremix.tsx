@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Leaf, FlaskConical, Sparkles, Snowflake, Heart, CheckCircle2, ChevronLeft, ChevronRight, ShoppingBag, ArrowRight, SlidersHorizontal, ArrowUpDown, X } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
@@ -108,10 +109,10 @@ export default function SmoothiePremix() {
       <Header />
 
       {/* Hero Banner Section */}
-      <section className="relative pt-32 pb-16 overflow-hidden flex items-center min-h-[540px] lg:min-h-[640px]">
+      <section className="relative pt-32 pb-8 sm:pt-36 sm:pb-12 md:pt-40 md:pb-16 overflow-hidden flex items-center min-h-[380px] sm:min-h-[500px] lg:min-h-[640px]">
         {/* Absolute Background Image */}
         <img 
-          src="/Home_backgroun_Image.png" 
+          src="/sliprealBackgrpound_image.png" 
           alt="SipReal Background" 
           className="absolute inset-0 w-full h-full object-cover object-center z-0" 
         />
@@ -119,40 +120,42 @@ export default function SmoothiePremix() {
         <div className="absolute inset-0 bg-[#FAF7F2]/45 md:bg-transparent z-10 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-6 space-y-6">
+          <div className="grid grid-cols-12 gap-3 sm:gap-6 lg:gap-12 items-center">
+            <div className="col-span-7 lg:col-span-6 space-y-2.5 sm:space-y-4 lg:space-y-6">
               <div>
-                <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-extrabold text-[#213B14] leading-none">
-                  Sip<span className="text-[#B82A5F]">Real</span>
+                <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold text-[#B82A5F] leading-none">
+                  Sip<span className="text-[#8E1B46]">Real</span>
                 </h1>
-                <span className="text-[#213B14] text-xs sm:text-sm font-black uppercase tracking-[0.2em] block mt-2">
-                  PREMIX SMOOTHIE
-                </span>
+                <div className="mt-1 sm:mt-2.5 inline-block">
+                  <span className="bg-[#B82A5F]/10 border border-[#B82A5F]/20 text-[#B82A5F] text-[9px] sm:text-xs font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] px-2 sm:px-3.5 py-0.5 sm:py-1 rounded-full backdrop-blur-sm shadow-sm inline-block">
+                    SMOOTHIE PREMIX
+                  </span>
+                </div>
               </div>
               
-              <h2 className="text-[#213B14] text-lg sm:text-xl font-bold leading-tight max-w-md">
+              <h2 className="text-[#3A1420] text-xs sm:text-base md:text-lg lg:text-xl font-bold leading-tight max-w-md">
                 Real Taste. Real Nutrition. <br />
                 Just Add Water & <span className="text-[#B82A5F]">Sip</span>.
               </h2>
               
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed max-w-sm">
-                Delicious premix smoothies made with 100% real freeze-dried fruits. <br />
+              <p className="text-gray-700 text-[10.5px] sm:text-xs md:text-sm leading-relaxed max-w-sm line-clamp-2 sm:line-clamp-none">
+                Delicious smoothie premixes made with 100% real freeze-dried fruits. <br className="hidden sm:inline" />
                 No added sugar, no preservatives, no artificial anything.
               </p>
 
               {/* Circular Badges */}
-              <div className="flex flex-wrap items-start gap-4 pt-2">
+              <div className="hidden xs:flex flex-wrap items-start gap-2 sm:gap-4 pt-1 sm:pt-2">
                 {[
                   { label: "No Added Sugar", icon: Leaf },
                   { label: "No Preservatives", icon: FlaskConical },
                   { label: "100% Real Fruits", icon: Sparkles },
                   { label: "Just Add Water & Sip", icon: Heart }
                 ].map((badge, idx) => (
-                  <div key={idx} className="flex flex-col items-center text-center gap-1 w-18 md:w-20">
-                    <div className="w-8 h-8 rounded-full border border-[#B82A5F]/20 flex items-center justify-center text-[#B82A5F] bg-white/50 backdrop-blur-sm">
-                      <badge.icon className="w-3.5 h-3.5 stroke-[1.75]" />
+                  <div key={idx} className="flex flex-col items-center text-center gap-1 w-14 sm:w-18 md:w-20">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#B82A5F]/25 flex items-center justify-center text-[#B82A5F] bg-white/70 backdrop-blur-sm shadow-sm">
+                      <badge.icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[1.75]" />
                     </div>
-                    <span className="text-[8px] md:text-[9px] font-bold text-[#213B14] leading-tight tracking-wider uppercase">
+                    <span className="text-[7.5px] sm:text-[8px] md:text-[9px] font-bold text-[#3A1420] leading-tight tracking-wider uppercase">
                       {badge.label.split(" ").slice(0, 2).join(" ")}
                       {badge.label.split(" ").length > 2 && <><br />{badge.label.split(" ").slice(2).join(" ")}</>}
                     </span>
@@ -160,23 +163,23 @@ export default function SmoothiePremix() {
                 ))}
               </div>
 
-              <div className="pt-4">
+              <div className="pt-1 sm:pt-4">
                 <a
                   href="#flavors"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#213B14] hover:bg-[#1C2A18] text-white font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
+                  className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-7 sm:py-3.5 md:px-8 md:py-3.5 bg-[#B82A5F] hover:bg-[#961F4B] text-white text-xs sm:text-sm font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
                 >
                   EXPLORE FLAVORS
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </a>
               </div>
             </div>
 
             {/* Foreground Product Image on the Right */}
-            <div className="lg:col-span-6 flex justify-center z-20">
+            <div className="col-span-5 lg:col-span-6 flex justify-center items-center z-20">
               <img
                 src="/slipreal_product_image.png"
                 alt="SipReal Products Showcase"
-                className="w-full max-w-3xl lg:max-w-[700px] xl:max-w-[760px] h-auto object-contain transition-transform duration-500 lg:scale-[1.28] hover:scale-[1.3] lg:translate-y-16 lg:translate-x-12"
+                className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-3xl lg:max-w-[700px] xl:max-w-[760px] h-auto object-contain transition-transform duration-500 lg:scale-[1.28] hover:scale-[1.3] lg:translate-y-16 lg:translate-x-12 drop-shadow-md"
               />
             </div>
           </div>
@@ -207,6 +210,97 @@ export default function SmoothiePremix() {
         </div>
       </section>
 
+      {/* 3 Pillars of Value Section: What It Is, Why Buy, Health Benefits */}
+      <section className="py-16 bg-white border-b border-[#213B14]/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="bg-[#B82A5F]/10 text-[#B82A5F] text-[11px] font-extrabold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full inline-block mb-3">
+              KNOW YOUR SMOOTHIE
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-extrabold text-[#213B14]">
+              Why Choose SipReal Smoothie Premix?
+            </h2>
+            <p className="text-gray-600 text-sm mt-2 font-medium">
+              Instant café-style smoothies at home with 100% real freeze-dried fruits.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1: What is it? */}
+            <div className="bg-[#FAF7F2] rounded-3xl p-8 border border-[#B82A5F]/10 hover:border-[#B82A5F]/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#FCEAEB] border border-[#B82A5F]/20 flex items-center justify-center text-[#B82A5F] group-hover:scale-110 transition-transform">
+                  <Snowflake className="w-7 h-7 stroke-[1.75]" />
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#B82A5F] block">
+                  1. WHAT IS IT?
+                </span>
+                <h3 className="font-serif text-2xl font-bold text-[#213B14]">
+                  Instant Real Fruit Smoothie Powder
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  SipReal is a 100% natural smoothie premix made from real freeze-dried fruits. No blender needed — just mix 2 spoons in water, shake, and your fresh fruit smoothie is ready!
+                </p>
+              </div>
+              <div className="pt-6 mt-6 border-t border-[#213B14]/10">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#B82A5F]">
+                  <CheckCircle2 className="w-4 h-4 text-[#B82A5F]" />
+                  <span>Real fruit pulp, natural taste & authentic color</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2: Why Buy? */}
+            <div className="bg-[#FAF7F2] rounded-3xl p-8 border border-[#B82A5F]/10 hover:border-[#B82A5F]/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#FCEAEB] border border-[#B82A5F]/20 flex items-center justify-center text-[#B82A5F] group-hover:scale-110 transition-transform">
+                  <Sparkles className="w-7 h-7 stroke-[1.75]" />
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#B82A5F] block">
+                  2. WHY BUY THIS?
+                </span>
+                <h3 className="font-serif text-2xl font-bold text-[#213B14]">
+                  No Cutting, No Mess, Café Taste in 30s
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  Skip buying perishable fruits, peeling, blending, and cleaning up. Get consistent, premium taste and instant refreshment anywhere — at work, gym, or on-the-go.
+                </p>
+              </div>
+              <div className="pt-6 mt-6 border-t border-[#213B14]/10">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#B82A5F]">
+                  <CheckCircle2 className="w-4 h-4 text-[#B82A5F]" />
+                  <span>Cost-effective & zero food wastage</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3: Key Benefits */}
+            <div className="bg-[#FAF7F2] rounded-3xl p-8 border border-[#B82A5F]/10 hover:border-[#B82A5F]/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#FCEAEB] border border-[#B82A5F]/20 flex items-center justify-center text-[#B82A5F] group-hover:scale-110 transition-transform">
+                  <Heart className="w-7 h-7 stroke-[1.75]" />
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#B82A5F] block">
+                  3. HEALTH BENEFITS
+                </span>
+                <h3 className="font-serif text-2xl font-bold text-[#213B14]">
+                  Pure Fruit Fiber & Daily Immunity
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  Contains all the natural antioxidants, dietary fiber, and vitamins of whole fruits. 100% clean label with no added refined sugar or synthetic chemicals.
+                </p>
+              </div>
+              <div className="pt-6 mt-6 border-t border-[#213B14]/10">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#B82A5F]">
+                  <CheckCircle2 className="w-4 h-4 text-[#B82A5F]" />
+                  <span>Supports digestion, energy & daily wellness</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Refreshing Flavors Grid */}
       <section id="flavors" className="py-20 bg-[#FAF7F2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -215,6 +309,9 @@ export default function SmoothiePremix() {
             <h2 className="font-serif text-3xl sm:text-4xl font-black text-[#213B14] mt-2">
               Refreshing Flavors
             </h2>
+            <p className="text-[#B82A5F] text-xs font-bold uppercase tracking-widest mt-2">
+              Real fruit smoothie premixes. Just add water & sip.
+            </p>
           </div>
 
           {/* Filter & Sort Action Row */}
@@ -236,9 +333,7 @@ export default function SmoothiePremix() {
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center py-12">
-              <div className="w-8 h-8 border-2 border-[#B82A5F] border-t-transparent rounded-full animate-spin" />
-            </div>
+            <Loader color="#B82A5F" text="Loading Smoothie Premixes..." />
           ) : products.length === 0 ? (
             <div className="text-center py-12 bg-white/40 rounded-2xl border border-[#213B14]/5 max-w-5xl mx-auto">
               <h3 className="font-serif text-lg font-bold text-gray-400">No Smoothies match your filters</h3>

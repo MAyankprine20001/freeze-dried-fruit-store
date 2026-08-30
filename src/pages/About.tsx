@@ -34,7 +34,7 @@ export default function About() {
       <Header />
 
       {/* ── 1. HERO BANNER SECTION ── */}
-      <section className="relative min-h-[480px] flex items-center pt-40 pb-20 overflow-hidden w-full">
+      <section className="relative min-h-[300px] sm:min-h-[380px] md:min-h-[480px] flex items-center pt-32 pb-10 sm:pt-36 sm:pb-16 md:pt-40 md:pb-20 overflow-hidden w-full">
         {/* Background Image matching Homepage */}
         <div className="absolute inset-0 w-full h-full z-0">
           <img 
@@ -52,16 +52,16 @@ export default function About() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="max-w-2xl space-y-4"
+            className="max-w-2xl space-y-2.5 sm:space-y-4"
           >
-            <span className="inline-block px-3 py-1.5 rounded-full border border-[#213B14]/20 bg-white text-[#213B14] text-[10px] font-black tracking-widest uppercase shadow-sm">
+            <span className="inline-block px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full border border-[#213B14]/20 bg-white text-[#213B14] text-[9px] sm:text-[10px] font-black tracking-widest uppercase shadow-sm">
               Our Story
             </span>
-            <h1 className="font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#1C2A18] leading-[1.1]">
+            <h1 className="font-extrabold text-2xl sm:text-4xl lg:text-5xl text-[#1C2A18] leading-[1.08]">
               Real Food,<br />
               <span className="text-[#3F622D]">Thoughtfully Preserved</span>
             </h1>
-            <p className="text-sm sm:text-base text-[#213B14]/75 font-semibold leading-relaxed max-w-lg">
+            <p className="text-xs sm:text-sm md:text-base text-[#213B14]/75 font-semibold leading-relaxed max-w-lg">
               We’re on a mission to bring you food that’s as real as it should be - clean, honest, and made to fit your everyday life.
             </p>
           </motion.div>

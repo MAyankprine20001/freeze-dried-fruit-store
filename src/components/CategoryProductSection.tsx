@@ -6,6 +6,7 @@ import { useCart } from '../context/CartContext';
 import { productApi } from '../api/product.api';
 import { toast } from 'react-toastify';
 import { getProductPrimaryImage } from '../utils/productImage';
+import Loader from './Loader';
 
 // ── Safe image with emoji fallback ──────────────────────────────────────────
 function SafeImg({
@@ -246,12 +247,7 @@ export default function CategoryProductSection({
 
         {/* Loading spinner */}
         {loading && (
-          <div className="flex flex-col items-center justify-center py-20">
-            <div className="w-10 h-10 border-4 border-[#D4AF37] border-t-transparent rounded-full animate-spin mb-4" />
-            <p className="text-white/40 font-bold uppercase tracking-widest text-xs">
-              Loading Products…
-            </p>
-          </div>
+          <Loader text="Loading Products..." />
         )}
 
         {/* Product Grid */}

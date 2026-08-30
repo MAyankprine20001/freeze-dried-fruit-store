@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
@@ -121,7 +122,7 @@ export default function GiftHampers() {
       <Header />
 
       {/* ── 1. HERO SECTION ── */}
-      <section className="relative min-h-[600px] md:min-h-[700px] lg:min-h-[780px] flex items-center pt-40 pb-28 overflow-hidden w-full">
+      <section className="relative min-h-[380px] sm:min-h-[520px] md:min-h-[700px] lg:min-h-[780px] flex items-center pt-32 pb-8 sm:pt-36 sm:pb-12 md:pt-40 md:pb-28 overflow-hidden w-full">
         {/* Absolute Background Image */}
         <div className="absolute inset-0 w-full h-full z-0">
           <img 
@@ -135,86 +136,86 @@ export default function GiftHampers() {
 
         {/* Hero Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
+          <div className="grid grid-cols-12 gap-3 sm:gap-6 lg:gap-12 items-center">
             
             {/* Left Column: Text Content */}
-            <div className="lg:col-span-5 text-left space-y-6 z-20">
+            <div className="col-span-7 lg:col-span-5 text-left space-y-2.5 sm:space-y-4 lg:space-y-6 z-20">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
-                className="space-y-6"
+                className="space-y-2.5 sm:space-y-4 lg:space-y-6"
               >
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#213B14]/20 bg-white text-[#213B14] text-[10px] font-black tracking-widest uppercase shadow-sm">
-                  <Gift className="w-3.5 h-3.5" /> Gift Hampers
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full border border-[#213B14]/20 bg-white text-[#213B14] text-[9px] sm:text-[10px] font-black tracking-widest uppercase shadow-sm">
+                  <Gift className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> Gift Hampers
                 </div>
                 
-                <h1 className="font-extrabold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-[#1C2A18] leading-[1.1]">
+                <h1 className="font-extrabold text-2xl sm:text-4xl lg:text-5xl xl:text-6xl text-[#1C2A18] leading-[1.08]">
                   Thoughtful Gifts.<br />
                   Real <span className="text-[#3F622D]">Goodness.</span>
                 </h1>
                 
-                <p className="text-sm sm:text-base text-[#213B14]/75 max-w-md font-semibold leading-relaxed">
+                <p className="text-[10.5px] sm:text-sm md:text-base text-[#213B14]/75 max-w-md font-semibold leading-relaxed line-clamp-2 sm:line-clamp-none">
                   Premium freeze dried treats, beautifully packed for every celebration.
                 </p>
                 
                 {/* Features Row */}
-                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#213B14]/10 max-w-md">
+                <div className="hidden xs:grid grid-cols-2 gap-2 sm:gap-4 pt-1 sm:pt-4 border-t border-[#213B14]/10 max-w-md">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-[#3F622D]/10 flex items-center justify-center text-[#3F622D] shrink-0">
-                      <ShieldCheck className="w-4.5 h-4.5" />
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#3F622D]/10 flex items-center justify-center text-[#3F622D] shrink-0">
+                      <ShieldCheck className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5" />
                     </div>
                     <div>
-                      <p className="text-[10px] font-black uppercase tracking-wider text-[#1C2A18] leading-none">Premium Quality</p>
-                      <p className="text-[9px] text-[#213B14]/60 font-semibold">100% Certified</p>
+                      <p className="text-[8.5px] sm:text-[10px] font-black uppercase tracking-wider text-[#1C2A18] leading-none">Premium Quality</p>
+                      <p className="text-[7.5px] sm:text-[9px] text-[#213B14]/60 font-semibold">100% Certified</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-[#3F622D]/10 flex items-center justify-center text-[#3F622D] shrink-0">
-                      <Gift className="w-4.5 h-4.5" />
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#3F622D]/10 flex items-center justify-center text-[#3F622D] shrink-0">
+                      <Gift className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5" />
                     </div>
                     <div>
-                      <p className="text-[10px] font-black uppercase tracking-wider text-[#1C2A18] leading-none">Beautifully Packed</p>
-                      <p className="text-[9px] text-[#213B14]/60 font-semibold">Elegant Design</p>
+                      <p className="text-[8.5px] sm:text-[10px] font-black uppercase tracking-wider text-[#1C2A18] leading-none">Beautifully Packed</p>
+                      <p className="text-[7.5px] sm:text-[9px] text-[#213B14]/60 font-semibold">Elegant Design</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-[#3F622D]/10 flex items-center justify-center text-[#3F622D] shrink-0">
-                      <Sparkles className="w-4.5 h-4.5" />
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#3F622D]/10 flex items-center justify-center text-[#3F622D] shrink-0">
+                      <Sparkles className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5" />
                     </div>
                     <div>
-                      <p className="text-[10px] font-black uppercase tracking-wider text-[#1C2A18] leading-none">Perfect For</p>
-                      <p className="text-[9px] text-[#213B14]/60 font-semibold">Every Occasion</p>
+                      <p className="text-[8.5px] sm:text-[10px] font-black uppercase tracking-wider text-[#1C2A18] leading-none">Perfect For</p>
+                      <p className="text-[7.5px] sm:text-[9px] text-[#213B14]/60 font-semibold">Every Occasion</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-[#3F622D]/10 flex items-center justify-center text-[#3F622D] shrink-0">
-                      <Leaf className="w-4.5 h-4.5" />
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#3F622D]/10 flex items-center justify-center text-[#3F622D] shrink-0">
+                      <Leaf className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5" />
                     </div>
                     <div>
-                      <p className="text-[10px] font-black uppercase tracking-wider text-[#1C2A18] leading-none">Made With</p>
-                      <p className="text-[9px] text-[#213B14]/60 font-semibold">Real Ingredients</p>
+                      <p className="text-[8.5px] sm:text-[10px] font-black uppercase tracking-wider text-[#1C2A18] leading-none">Made With</p>
+                      <p className="text-[7.5px] sm:text-[9px] text-[#213B14]/60 font-semibold">Real Ingredients</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-1 sm:pt-4">
                   <a
                     href="#gift-grid-section"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#213B14] hover:bg-[#3F622D] text-white font-black rounded-xl text-xs uppercase tracking-wider transition-colors shadow-sm"
+                    className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-8 sm:py-3.5 bg-[#213B14] hover:bg-[#3F622D] text-white font-black rounded-xl text-xs sm:text-sm uppercase tracking-wider transition-colors shadow-sm"
                   >
-                    Explore Hampers <ArrowRight className="w-4 h-4" />
+                    Explore Hampers <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </a>
                 </div>
               </motion.div>
             </div>
 
             {/* Right Column: Foreground Product Showcase Image */}
-            <div className="lg:col-span-7 flex justify-center z-20 lg:translate-x-12">
+            <div className="col-span-5 lg:col-span-7 flex justify-center items-center z-20 lg:translate-x-12">
               <img
                 src="/gift_product.png"
                 alt="Premium Gift Hamper Box Showcase"
-                className="w-full max-w-2xl lg:max-w-[850px] xl:max-w-[950px] h-auto object-contain lg:scale-[1.25] hover:scale-[1.27] transition-transform duration-500"
+                className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-2xl lg:max-w-[850px] xl:max-w-[950px] h-auto object-contain lg:scale-[1.25] hover:scale-[1.27] transition-transform duration-500 drop-shadow-md"
               />
             </div>
 
@@ -270,10 +271,7 @@ export default function GiftHampers() {
 
         {/* Dynamic Hampers Grid */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20">
-            <div className="w-8 h-8 border-2 border-[#213B14] border-t-transparent rounded-full animate-spin mb-3" />
-            <p className="text-xs font-bold text-[#213B14]/60">Loading gift hampers...</p>
-          </div>
+          <Loader color="#213B14" text="Loading gift hampers..." />
         ) : products.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-3xl border border-[#213B14]/10 max-w-lg mx-auto">
             <Gift className="w-10 h-10 text-gray-300 mx-auto mb-3" />

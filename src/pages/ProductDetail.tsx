@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
@@ -100,21 +101,24 @@ export default function ProductDetail() {
   };
 
   if (loading) return (
-    <div className="min-h-screen bg-[#0d0d0d] flex flex-col">
+    <div className="min-h-screen bg-[#FAF7F2] text-[#213B14] flex flex-col">
       <Header />
-      <main className="flex-1 flex items-center justify-center">
-        <div className="w-10 h-10 border-4 border-[#D4AF37] border-t-transparent rounded-full animate-spin" />
+      <main className="flex-1 flex items-center justify-center pt-24">
+        <Loader text="Loading product details..." />
       </main>
       <Footer />
     </div>
   );
 
   if (!product) return (
-    <div className="min-h-screen bg-[#0d0d0d] flex flex-col text-white">
+    <div className="min-h-screen bg-[#FAF7F2] text-[#213B14] flex flex-col">
       <Header />
-      <main className="flex-1 flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold mb-4">Product Not Found</h1>
-        <Link to="/products" className="text-[#D4AF37] hover:underline">Return to Products</Link>
+      <main className="flex-1 flex flex-col items-center justify-center pt-32 pb-20 text-center px-4">
+        <h1 className="font-serif text-3xl font-extrabold mb-3 text-[#213B14]">Product Not Found</h1>
+        <p className="text-sm text-gray-500 mb-6 max-w-sm">The product you are looking for does not exist or may have been moved.</p>
+        <Link to="/products" className="px-6 py-3 bg-[#213B14] hover:bg-[#3F622D] text-white text-xs font-bold uppercase tracking-wider rounded-full transition-all">
+          Return to Products
+        </Link>
       </main>
       <Footer />
     </div>

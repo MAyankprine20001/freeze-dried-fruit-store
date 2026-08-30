@@ -9,16 +9,23 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
           {/* Brand Info Column */}
           <div className="lg:col-span-3 space-y-6">
-            <Link to="/" className="flex flex-col items-start gap-0.5 group focus:outline-none">
-              <div className="flex items-center gap-1">
-                <span className="font-serif text-lg sm:text-xl font-bold text-white tracking-wider uppercase">
-                  THE DRY <span className="font-serif italic font-normal text-[#B5C99A]">FACTORY</span>
+            <Link to="/" className="flex items-center gap-3 group focus:outline-none">
+              <img 
+                src="/logo.png" 
+                alt="The Dry Factory Logo" 
+                draggable={false}
+                className="h-12 w-auto object-contain pointer-events-none select-none brightness-0 invert transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="flex flex-col items-start">
+                <div className="flex items-center gap-1">
+                  <span className="font-serif text-lg sm:text-xl font-bold text-white tracking-wider uppercase leading-tight">
+                    THE DRY <span className="font-serif italic font-normal text-[#B5C99A]">FACTORY</span>
+                  </span>
+                </div>
+                <span className="text-[7.5px] sm:text-[8.5px] font-bold text-[#B5C99A] uppercase tracking-[0.2em] leading-none">
+                  REAL TASTE. REAL NUTRITION.
                 </span>
-                <Leaf className="w-4 h-4 text-[#B5C99A] -rotate-12 fill-[#B5C99A]/10 shrink-0" />
               </div>
-              <span className="text-[8px] sm:text-[9px] font-bold text-[#B5C99A] uppercase tracking-[0.2em] leading-none">
-                REAL TASTE. REAL NUTRITION.
-              </span>
             </Link>
             <p className="text-gray-400 text-xs leading-relaxed max-w-sm">
               We craft premium freeze-dried goodness that lets you snack smart and live better.
@@ -48,7 +55,7 @@ export default function Footer() {
               SHOP
             </h4>
             <ul className="space-y-3 text-xs font-semibold text-gray-400">
-              <li><Link to="/smoothie-premix" className="hover:text-white transition-colors">SipReal Premix Smoothie</Link></li>
+              <li><Link to="/smoothie-premix" className="hover:text-white transition-colors">SipReal Smoothie Premix</Link></li>
               <li><Link to="/chocolate" className="hover:text-white transition-colors">Freeze Fusion Chocolates</Link></li>
               <li><Link to="/fruit-powder-chunks" className="hover:text-white transition-colors">Crispy Bites Snacks</Link></li>
               <li><Link to="/gift-hampers" className="hover:text-white transition-colors">Gift Hampers</Link></li>

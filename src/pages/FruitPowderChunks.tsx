@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Leaf, FlaskConical, Sparkles, Snowflake, Heart, ShoppingBag, CheckCircle2, ChevronLeft, ChevronRight, SlidersHorizontal, ArrowUpDown, X, ArrowRight, Smile, Gift } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
@@ -109,71 +110,193 @@ export default function FruitPowderChunks() {
       <Header />
 
       {/* Hero Banner Section */}
-      <section className="relative min-h-[600px] md:min-h-[700px] lg:min-h-[780px] flex items-center pt-40 pb-28 overflow-hidden">
+      <section className="relative pt-32 pb-8 sm:pt-36 sm:pb-12 md:pt-40 md:pb-16 overflow-hidden flex items-center min-h-[380px] sm:min-h-[500px] lg:min-h-[640px]">
         {/* Absolute Background Image */}
         <img 
-          src="/Home_backgroun_Image.png" 
-          alt="Hero Background" 
+          src="/cripsy_background_img.png" 
+          alt="Crispy Bites Background" 
           className="absolute inset-0 w-full h-full object-cover object-center z-0" 
         />
-        {/* Subtle gradient overlay for readability on small screens */}
-        <div className="absolute inset-0 bg-[#FAF7F2]/40 md:bg-transparent md:bg-gradient-to-r md:from-[#FAF7F2]/80 md:to-transparent z-10 pointer-events-none" />
+        {/* Gradient overlay to soften background leaves and ensure crystal-clear text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2]/95 via-[#FAF7F2]/70 md:via-[#FAF7F2]/50 to-transparent z-10 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
-            <div className="lg:col-span-5 space-y-5 text-left">
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#213B14] leading-[1.1] tracking-tight">
-                Real Fruit. <br />
-                Real Taste. <br />
-                Real Nutrition.
-              </h1>
-              <p className="text-[#3F622D] text-base md:text-lg font-medium max-w-md">
-                Freeze Dried Goodness You Can Trust.
+          <div className="grid grid-cols-12 gap-3 sm:gap-6 lg:gap-12 items-center">
+            <div className="col-span-7 lg:col-span-6 space-y-2.5 sm:space-y-4 lg:space-y-6">
+              <div>
+                <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold text-[#193011] leading-none drop-shadow-sm">
+                  Crispy<span className="text-[#325520]"> Bites</span>
+                </h1>
+                <div className="mt-1 sm:mt-2.5 inline-block">
+                  <span className="bg-[#2B4C1F]/10 border border-[#2B4C1F]/20 text-[#1E3615] text-[9px] sm:text-xs font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] px-2 sm:px-3.5 py-0.5 sm:py-1 rounded-full backdrop-blur-sm shadow-sm inline-block">
+                    FREEZE DRIED SNACKS
+                  </span>
+                </div>
+              </div>
+              
+              <h2 className="text-[#193011] text-xs sm:text-base md:text-lg lg:text-xl font-bold leading-tight max-w-md">
+                Real Taste. Real Nutrition. <br />
+                Crispy, Crunchy & Naturally <span className="text-[#2B4C1F] font-extrabold">Delicious</span>.
+              </h2>
+              
+              <p className="text-gray-800 text-[10.5px] sm:text-xs md:text-sm font-medium leading-relaxed max-w-sm line-clamp-2 sm:line-clamp-none">
+                Delicious freeze-dried fruit chunks made with 100% real fruit. <br className="hidden sm:inline" />
+                No added sugar, no preservatives, zero artificial additives.
               </p>
 
-              {/* Grid of Badges - Horizontal row with icon top, text bottom */}
-              <div className="flex flex-wrap items-start gap-4 md:gap-6 pt-4">
+              {/* Badges - Circular Icons under text */}
+              <div className="hidden xs:flex flex-wrap items-start gap-2 sm:gap-4 pt-1 sm:pt-2">
                 {[
                   { label: "100% Real Fruit", icon: Leaf },
                   { label: "No Added Sugar", icon: Sparkles },
                   { label: "No Preservatives", icon: FlaskConical },
-                  { label: "No Artificial Flavors", icon: Heart }
-                ].map((badge, idx) => {
-                  const words = badge.label.split(" ");
-                  const line1 = words.slice(0, 2).join(" ");
-                  const line2 = words.slice(2).join(" ");
-                  return (
-                    <div key={idx} className="flex flex-col items-center text-center gap-1.5 w-18 md:w-20">
-                      <div className="w-9 h-9 rounded-full border border-[#213B14]/20 flex items-center justify-center text-[#213B14] bg-white/50 backdrop-blur-sm">
-                        <badge.icon className="w-4 h-4 stroke-[1.75]" />
-                      </div>
-                      <span className="text-[9px] md:text-[10px] font-bold text-[#213B14] leading-tight tracking-wider uppercase">
-                        {line1}
-                        {line2 && <><br />{line2}</>}
-                      </span>
+                  { label: "Super Crunchy", icon: Heart }
+                ].map((badge, idx) => (
+                  <div key={idx} className="flex flex-col items-center text-center gap-1 w-14 sm:w-18 md:w-20">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#2B4C1F]/30 flex items-center justify-center text-[#2B4C1F] bg-white/80 backdrop-blur-md shadow-sm">
+                      <badge.icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2]" />
                     </div>
-                  );
-                })}
+                    <span className="text-[7.5px] sm:text-[8px] md:text-[9px] font-extrabold text-[#193011] leading-tight tracking-wider uppercase">
+                      {badge.label.split(" ").slice(0, 2).join(" ")}
+                      {badge.label.split(" ").length > 2 && <><br />{badge.label.split(" ").slice(2).join(" ")}</>}
+                    </span>
+                  </div>
+                ))}
               </div>
 
-              <div className="pt-6">
+              <div className="pt-1 sm:pt-4">
                 <a
                   href="#flavors"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#213B14] hover:bg-[#3F622D] text-[#FAF7F2] font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
+                  className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-7 sm:py-3.5 md:px-8 md:py-3.5 bg-[#2B4C1F] hover:bg-[#1E3615] text-white text-xs sm:text-sm font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
                 >
-                  SHOP NOW
-                  <ArrowRight className="w-4 h-4" />
+                  EXPLORE FLAVORS
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </a>
               </div>
             </div>
 
             {/* Foreground Product Showcase Image on the Right */}
-            <div className="lg:col-span-7 flex justify-center z-20">
+            <div className="col-span-5 lg:col-span-6 flex justify-center items-center z-20">
               <img
-                src="/HomeProductImage.png"
-                alt="The Dry Factory Products Showcase"
-                className="w-full max-w-2xl lg:max-w-[760px] xl:max-w-[820px] h-auto object-contain lg:scale-[1.1] hover:scale-[1.12] transition-transform duration-500"
+                src="/CripsyProductImage.png"
+                alt="Crispy Bites Products Showcase"
+                className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-3xl lg:max-w-[700px] xl:max-w-[760px] h-auto object-contain transition-transform duration-500 lg:scale-[1.2] hover:scale-[1.22] drop-shadow-md"
               />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Badges Bar below Hero */}
+      <section className="bg-[#2B4C1F] text-[#FAF7F2] py-5 select-none">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap justify-between items-center gap-6 divide-y md:divide-y-0 md:divide-x divide-[#FAF7F2]/15">
+            {[
+              { title: "100% REAL FRUITS", desc: "Nothing Artificial", icon: Leaf },
+              { title: "SUPER CRUNCHY", desc: "Guilt-Free Snacking", icon: Sparkles },
+              { title: "NO ADDED SUGAR", desc: "Naturally Sweet", icon: Heart },
+              { title: "FREEZE DRIED", desc: "To Lock Nutrition", icon: Snowflake }
+            ].map((b, idx) => (
+              <div key={idx} className="flex-1 min-w-[180px] flex items-center justify-center gap-4 px-4 py-1 md:py-0">
+                <div className="text-[#FAF7F2]">
+                  <b.icon className="w-7 h-7 stroke-[1.5]" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-[11px] font-black text-white uppercase tracking-wider">{b.title}</span>
+                  <span className="text-[10px] text-gray-300 font-semibold">{b.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3 Pillars of Value Section: What It Is, Why Buy, Health Benefits */}
+      <section className="py-16 bg-white border-b border-[#213B14]/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="bg-[#2B4C1F]/10 text-[#2B4C1F] text-[11px] font-extrabold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full inline-block mb-3">
+              KNOW YOUR SNACK
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl font-extrabold text-[#193011]">
+              Why Choose Crispy Bites?
+            </h2>
+            <p className="text-gray-600 text-sm mt-2 font-medium">
+              100% real freeze-dried fruits with zero junk — healthy, crunchy & nutritious.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1: What is it? */}
+            <div className="bg-[#FAF7F2] rounded-3xl p-8 border border-[#2B4C1F]/10 hover:border-[#2B4C1F]/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#EEF4EC] border border-[#2B4C1F]/20 flex items-center justify-center text-[#2B4C1F] group-hover:scale-110 transition-transform">
+                  <Snowflake className="w-7 h-7 stroke-[1.75]" />
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#2B4C1F] block">
+                  1. WHAT IS IT?
+                </span>
+                <h3 className="font-serif text-2xl font-bold text-[#193011]">
+                  100% Real Freeze-Dried Fruit
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  Crispy Bites are made by flash-freezing farm-fresh real fruits and gently removing 98% water under vacuum. No frying, no baking, no oil — just pure fruit goodness.
+                </p>
+              </div>
+              <div className="pt-6 mt-6 border-t border-[#213B14]/10">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#2B4C1F]">
+                  <CheckCircle2 className="w-4 h-4 text-[#2B4C1F]" />
+                  <span>Real fruit crunch, no artificial flavors</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2: Why Buy? */}
+            <div className="bg-[#FAF7F2] rounded-3xl p-8 border border-[#2B4C1F]/10 hover:border-[#2B4C1F]/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#EEF4EC] border border-[#2B4C1F]/20 flex items-center justify-center text-[#2B4C1F] group-hover:scale-110 transition-transform">
+                  <Sparkles className="w-7 h-7 stroke-[1.75]" />
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#2B4C1F] block">
+                  2. WHY BUY THIS?
+                </span>
+                <h3 className="font-serif text-2xl font-bold text-[#193011]">
+                  Smart & Guilt-Free Snacking
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  Satisfy cravings without the junk food hangover. Perfect replacement for oily chips and sugary snacks. Long shelf-life, ready to eat anytime, travel & kid-approved.
+                </p>
+              </div>
+              <div className="pt-6 mt-6 border-t border-[#213B14]/10">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#2B4C1F]">
+                  <CheckCircle2 className="w-4 h-4 text-[#2B4C1F]" />
+                  <span>Zero preservatives & zero added sugar</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3: Key Benefits */}
+            <div className="bg-[#FAF7F2] rounded-3xl p-8 border border-[#2B4C1F]/10 hover:border-[#2B4C1F]/30 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#EEF4EC] border border-[#2B4C1F]/20 flex items-center justify-center text-[#2B4C1F] group-hover:scale-110 transition-transform">
+                  <Heart className="w-7 h-7 stroke-[1.75]" />
+                </div>
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#2B4C1F] block">
+                  3. HEALTH BENEFITS
+                </span>
+                <h3 className="font-serif text-2xl font-bold text-[#193011]">
+                  Retains 95%+ Natural Nutrients
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  Freeze-drying locks in vital vitamins, dietary fiber, antioxidants, and original aroma without degrading nutrients like heat processing does.
+                </p>
+              </div>
+              <div className="pt-6 mt-6 border-t border-[#213B14]/10">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#2B4C1F]">
+                  <CheckCircle2 className="w-4 h-4 text-[#2B4C1F]" />
+                  <span>Rich in vitamins, natural energy & fiber</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -213,9 +336,7 @@ export default function FruitPowderChunks() {
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center py-12">
-              <div className="w-8 h-8 border-2 border-[#2B4C1F] border-t-transparent rounded-full animate-spin" />
-            </div>
+            <Loader color="#2B4C1F" text="Loading Crispy Bites..." />
           ) : products.length === 0 ? (
             <div className="text-center py-12 bg-white/40 rounded-2xl border border-[#213B14]/5 max-w-5xl mx-auto">
               <h3 className="font-serif text-lg font-bold text-gray-400">No Fruit Snacks match your filters</h3>

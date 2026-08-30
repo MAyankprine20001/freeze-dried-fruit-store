@@ -14,6 +14,14 @@ const navLinks = [
  { label: "CONTACT", path: "/contact" },
 ];
 
+const announcementItems = [
+ { icon: Leaf, text: "100% Real Fruits" },
+ { icon: FlaskConical, text: "No Preservatives" },
+ { icon: Sparkles, text: "No Artificial Flavors" },
+ { icon: Snowflake, text: "Freeze Dried to Lock Nutrition" },
+ { icon: Heart, text: "Made in India" },
+];
+
 export default function Header() {
  const [scrolled, setScrolled] = useState(false);
  const [menuOpen, setMenuOpen] = useState(false);
@@ -44,20 +52,40 @@ export default function Header() {
  return (
   <>
    {/* Announcement Bar */}
-   <div className="fixed top-0 left-0 right-0 z-50 bg-[#1C2A18] text-[#F3EFE0] h-9 px-4 text-[10px] sm:text-xs font-semibold tracking-wider flex justify-center items-center gap-6 overflow-x-auto whitespace-nowrap border-b border-white/5 select-none shadow-sm">
-     <span className="flex items-center gap-1.5"><Leaf className="w-3.5 h-3.5 text-[#B5C99A]" /> 100% Real Fruits</span>
-     <span className="opacity-30">|</span>
-     <span className="flex items-center gap-1.5"><FlaskConical className="w-3.5 h-3.5 text-[#B5C99A]" /> No Preservatives</span>
-     <span className="opacity-30">|</span>
-     <span className="flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5 text-[#B5C99A]" /> No Artificial Flavors</span>
-     <span className="opacity-30">|</span>
-     <span className="flex items-center gap-1.5"><Snowflake className="w-3.5 h-3.5 text-[#B5C99A]" /> Freeze Dried to Lock Nutrition</span>
-     <span className="opacity-30">|</span>
-     <span className="flex items-center gap-1.5"><Heart className="w-3.5 h-3.5 text-[#B5C99A]" /> Made in India</span>
+   <div className="fixed top-0 left-0 right-0 z-50 bg-[#1C2A18] text-[#F3EFE0] h-9 px-3 sm:px-4 text-[10px] sm:text-xs font-semibold tracking-wider flex items-center overflow-hidden border-b border-white/5 select-none shadow-sm">
+     {/* Desktop: Centered List */}
+     <div className="hidden md:flex justify-center items-center gap-6 w-full whitespace-nowrap">
+       {announcementItems.map((item, idx) => (
+         <React.Fragment key={idx}>
+           <span className="flex items-center gap-1.5">
+             <item.icon className="w-3.5 h-3.5 text-[#B5C99A]" /> {item.text}
+           </span>
+           {idx < announcementItems.length - 1 && <span className="opacity-30">|</span>}
+         </React.Fragment>
+       ))}
+     </div>
+
+     {/* Mobile: Smooth Infinite Marquee */}
+     <div className="md:hidden flex overflow-hidden whitespace-nowrap w-full">
+       <motion.div
+         className="flex items-center gap-4 shrink-0"
+         animate={{ x: ["0%", "-50%"] }}
+         transition={{ repeat: Infinity, ease: "linear", duration: 16 }}
+       >
+         {[...announcementItems, ...announcementItems].map((item, idx) => (
+           <React.Fragment key={idx}>
+             <span className="flex items-center gap-1.5 shrink-0 text-[10px] font-semibold">
+               <item.icon className="w-3 h-3 text-[#B5C99A]" /> {item.text}
+             </span>
+             <span className="opacity-30 text-[10px]">|</span>
+           </React.Fragment>
+         ))}
+       </motion.div>
+     </div>
    </div>
 
    <header
-    className={`fixed top-9 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+    className={`fixed top-9 left-0 right-0 z-50 transition-all duration-300 select-none ${scrolled
      ? "bg-[#FAF7F2]/95 backdrop-blur-md shadow-md border-b border-[#213B14]/10 py-1"
      : "bg-[#FAF7F2]/90 backdrop-blur-md border-b border-[#213B14]/5 py-2"
      }`}
@@ -68,19 +96,25 @@ export default function Header() {
       {/* ── Logo ── */}
       <Link
        to="/"
-       className="flex items-center group focus:outline-none rounded-lg"
+       draggable={false}
+       className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none rounded-lg select-none shrink-0"
        aria-label="The Dry Factory Home"
       >
-       <div className="flex flex-col items-start gap-0.5">
-         <div className="flex items-center gap-1">
-           <span className="font-serif text-lg sm:text-xl font-bold text-[#1C2A18] tracking-wider uppercase">
-             THE DRY <span className="font-serif italic font-normal text-[#3F622D]">FACTORY</span>
-           </span>
-           <Leaf className="w-4 h-4 text-[#3F622D] -rotate-12 fill-[#3F622D]/10 shrink-0" />
-         </div>
-         <span className="text-[8px] sm:text-[9px] font-bold text-[#3F622D] uppercase tracking-[0.2em] leading-none">
-           REAL TASTE. REAL NUTRITION.
-         </span>
+       <img 
+        src="/logo.png" 
+        alt="The Dry Factory Logo" 
+        draggable={false}
+        className="h-10 sm:h-12 w-auto object-contain pointer-events-none select-none transition-transform duration-300 group-hover:scale-105"
+       />
+       <div className="flex flex-col items-start">
+        <div className="flex items-center gap-1">
+          <span className="font-serif text-lg sm:text-xl font-bold text-[#1C2A18] tracking-wider uppercase leading-tight">
+            THE DRY <span className="font-serif italic font-normal text-[#3F622D]">FACTORY</span>
+          </span>
+        </div>
+        <span className="text-[7.5px] sm:text-[8.5px] font-bold text-[#3F622D] uppercase tracking-[0.2em] leading-none">
+          REAL TASTE. REAL NUTRITION.
+        </span>
        </div>
       </Link>
 
@@ -233,25 +267,51 @@ export default function Header() {
         className="absolute left-4 right-4 bg-[#FAF7F2] border border-[#213B14]/10 rounded-2xl shadow-xl p-6 grid grid-cols-3 gap-6 z-50 top-full mt-1"
        >
         {/* Fruits -> Crispy Bites */}
-        <Link to="/fruit-powder-chunks" className="group block text-center space-y-3 p-4 hover:bg-[#EEF4EC] rounded-xl transition-all">
-         <div className="w-full h-32 rounded-xl overflow-hidden bg-[#EEF4EC] relative flex items-center justify-center">
-          <img src="/home_cripsey.png" alt="Crispy Bites" className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500" />
+        <Link 
+          to="/fruit-powder-chunks" 
+          draggable={false}
+          onClick={() => setShopDropdownOpen(false)}
+          className="group block text-center space-y-3 p-4 hover:bg-[#EEF4EC] rounded-xl transition-all border border-transparent hover:border-[#2B4C1F]/15 select-none"
+        >
+         <div className="w-full h-32 rounded-xl overflow-hidden bg-[#EEF4EC] relative flex items-center justify-center pointer-events-none">
+          <img src="/home_cripsey.png" alt="Crispy Bites" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
          </div>
-         <h5 className="font-serif text-sm font-black tracking-wider text-[#2B4C1F]">CRISPY BITES</h5>
+         <div className="space-y-0.5">
+           <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#2B4C1F]/60 block">Freeze Dried Snacks</span>
+           <h5 className="font-serif text-sm font-black tracking-wider text-[#2B4C1F]">CRISPY BITES</h5>
+         </div>
         </Link>
+
         {/* Ice Creams -> SipReal */}
-        <Link to="/smoothie-premix" className="group block text-center space-y-3 p-4 hover:bg-[#FCEAEB] rounded-xl transition-all">
-         <div className="w-full h-32 rounded-xl overflow-hidden bg-[#FCEAEB] relative flex items-center justify-center">
-          <img src="/home_slip_real.png" alt="SipReal" className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500" />
+        <Link 
+          to="/smoothie-premix" 
+          draggable={false}
+          onClick={() => setShopDropdownOpen(false)}
+          className="group block text-center space-y-3 p-4 hover:bg-[#FCEAEB] rounded-xl transition-all border border-transparent hover:border-[#B82A5F]/15 select-none"
+        >
+         <div className="w-full h-32 rounded-xl overflow-hidden bg-[#FCEAEB] relative flex items-center justify-center pointer-events-none">
+          <img src="/home_slip_real.png" alt="SipReal" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
          </div>
-         <h5 className="font-serif text-sm font-black tracking-wider text-[#B82A5F]">SIPREAL</h5>
+         <div className="space-y-0.5">
+           <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#B82A5F]/60 block">Smoothie Premix</span>
+           <h5 className="font-serif text-sm font-black tracking-wider text-[#B82A5F]">SIPREAL</h5>
+         </div>
         </Link>
-        {/* Candies -> FreezeFusion */}
-        <Link to="/chocolate" className="group block text-center space-y-3 p-4 hover:bg-[#F5ECE6] rounded-xl transition-all">
-         <div className="w-full h-32 rounded-xl overflow-hidden bg-[#F5ECE6] relative flex items-center justify-center">
-          <img src="/home_freexze_frozen.png" alt="FreezeFusion" className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500" />
+
+        {/* Candies -> Freeze Fusion */}
+        <Link 
+          to="/chocolate" 
+          draggable={false}
+          onClick={() => setShopDropdownOpen(false)}
+          className="group block text-center space-y-3 p-4 hover:bg-[#F5ECE6] rounded-xl transition-all border border-transparent hover:border-[#4A2D1B]/15 select-none"
+        >
+         <div className="w-full h-32 rounded-xl overflow-hidden bg-[#F5ECE6] relative flex items-center justify-center pointer-events-none">
+          <img src="/home_freexze_frozen.png" alt="Freeze Fusion" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
          </div>
-         <h5 className="font-serif text-sm font-black tracking-wider text-[#4A2D1B]">FREEZEFUSION</h5>
+         <div className="space-y-0.5">
+           <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#4A2D1B]/60 block">Chocolates</span>
+           <h5 className="font-serif text-sm font-black tracking-wider text-[#4A2D1B]">FREEZE FUSION</h5>
+         </div>
         </Link>
        </motion.div>
       )}
@@ -289,10 +349,54 @@ export default function Header() {
        >
         {navLinks.map(({ label, path }) => {
          const isActive = location.pathname === path;
+         if (label === "SHOP") {
+          return (
+           <div key={path} className="space-y-1">
+            <Link
+             to={path}
+             onClick={() => setMenuOpen(false)}
+             className={`relative flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold tracking-wider transition-all duration-200 ${isActive
+              ? "bg-[#213B14]/5 text-[#213B14]"
+              : "text-[#213B14]/70 hover:bg-[#213B14]/5 hover:text-[#213B14]"
+              }`}
+            >
+             <span>{label}</span>
+             <span className="text-[10px] font-semibold text-[#213B14]/40 uppercase tracking-widest">All</span>
+            </Link>
+            <div className="pl-3 pr-1 space-y-1">
+             <Link
+              to="/fruit-powder-chunks"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between p-2 rounded-lg text-xs font-bold text-[#2B4C1F] hover:bg-[#EEF4EC] transition-colors"
+             >
+              <span>Crispy Bites</span>
+              <span className="text-[9px] font-semibold text-[#2B4C1F]/60 uppercase">Snacks</span>
+             </Link>
+             <Link
+              to="/smoothie-premix"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between p-2 rounded-lg text-xs font-bold text-[#B82A5F] hover:bg-[#FCEAEB] transition-colors"
+             >
+              <span>SipReal</span>
+              <span className="text-[9px] font-semibold text-[#B82A5F]/60 uppercase">Smoothie</span>
+             </Link>
+             <Link
+              to="/chocolate"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between p-2 rounded-lg text-xs font-bold text-[#4A2D1B] hover:bg-[#F5ECE6] transition-colors"
+             >
+              <span>Freeze Fusion</span>
+              <span className="text-[9px] font-semibold text-[#4A2D1B]/60 uppercase">Chocolates</span>
+             </Link>
+            </div>
+           </div>
+          );
+         }
          return (
           <Link
            key={path}
            to={path}
+           onClick={() => setMenuOpen(false)}
            className={`relative flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold tracking-wider transition-all duration-200 ${isActive
             ? "bg-[#213B14]/5 text-[#213B14]"
             : "text-[#213B14]/70 hover:bg-[#213B14]/5 hover:text-[#213B14]"

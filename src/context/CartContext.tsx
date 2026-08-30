@@ -72,7 +72,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
  const updateQuantity = (id: string, quantity: number) => {
   setAppliedCoupon(null);
-  if (quantity < 1) return;
+  if (quantity <= 0) {
+   removeFromCart(id);
+   return;
+  }
   setItems((prevItems) =>
    prevItems.map((item) => (item.id === id ? { ...item, quantity } : item))
   );

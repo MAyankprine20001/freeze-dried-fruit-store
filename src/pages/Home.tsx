@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
@@ -61,12 +62,31 @@ export default function Home() {
     ["SipReal Royal Mango", "SipReal Berry Blast", "Freeze Fusion Banana Cocoa Dark", "Freeze Fusion Mango Silk White", "Crispy Bites Jamun"].includes(p.name)
   );
 
+  const [itemsPerView, setItemsPerView] = useState(4);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setItemsPerView(1);
+      } else if (window.innerWidth < 1024) {
+        setItemsPerView(2);
+      } else {
+        setItemsPerView(4);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const maxIndex = Math.max(0, bestSellers.length - itemsPerView);
+
   const handlePrevBestSeller = () => {
-    setBestSellerIndex((prev) => (prev === 0 ? Math.max(0, bestSellers.length - 4) : prev - 1));
+    setBestSellerIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
 
   const handleNextBestSeller = () => {
-    setBestSellerIndex((prev) => (prev >= bestSellers.length - 4 ? 0 : prev + 1));
+    setBestSellerIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
   };
 
   // Main banner slides
@@ -89,7 +109,7 @@ export default function Home() {
   const promoCategories = [
     {
       brand: "SipReal",
-      subtitle: "Premix Smoothie",
+      subtitle: "Smoothie Premix",
       desc: "Real fruit smoothie premixes. Just add water & sip.",
       path: "/smoothie-premix",
       btnText: "EXPLORE SIPREAL",
@@ -99,7 +119,7 @@ export default function Home() {
       image: "https://res.cloudinary.com/doi7id29n/image/upload/q_auto/f_auto/v1776528652/sipreal_group_s7d2ks.png"
     },
     {
-      brand: "FreezeFusion",
+      brand: "Freeze Fusion",
       subtitle: "Chocolates",
       desc: "Real fruit infused rich couverture chocolates.",
       path: "/chocolate",
@@ -148,7 +168,7 @@ export default function Home() {
       <Header />
 
       {/* Hero Banner Section */}
-      <section className="relative min-h-[600px] md:min-h-[700px] lg:min-h-[780px] flex items-center pt-40 pb-28 overflow-hidden">
+      <section className="relative min-h-[380px] sm:min-h-[520px] md:min-h-[680px] lg:min-h-[780px] flex items-center pt-32 pb-8 sm:pt-36 sm:pb-16 md:pt-40 md:pb-28 overflow-hidden">
         {/* Absolute Background Image */}
         <img 
           src="/Home_backgroun_Image.png" 
@@ -159,30 +179,30 @@ export default function Home() {
         <div className="absolute inset-0 bg-[#FAF7F2]/40 md:bg-transparent md:bg-gradient-to-r md:from-[#FAF7F2]/80 md:to-transparent z-10 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
-            {/* Banner Text Content */}
-            <div className="lg:col-span-5 space-y-6">
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#213B14] leading-[1.1] tracking-tight">
+          <div className="grid grid-cols-12 gap-3 sm:gap-6 lg:gap-12 items-center">
+            {/* Banner Text Content - Left Side */}
+            <div className="col-span-7 lg:col-span-5 space-y-2.5 sm:space-y-4 lg:space-y-6">
+              <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#213B14] leading-[1.08] tracking-tight">
                 Real Fruit. <br />
                 Real Taste. <br />
                 Real Nutrition.
               </h1>
-              <p className="text-[#3F622D] text-base md:text-lg font-medium max-w-md">
+              <p className="text-[#3F622D] text-[11px] sm:text-base lg:text-lg font-semibold sm:font-medium max-w-md line-clamp-2 sm:line-clamp-none">
                 {heroSlides[0].subtitle}
               </p>
 
               {/* Grid of Badges - Horizontal row with icon top, text bottom */}
-              <div className="flex flex-wrap items-start gap-4 md:gap-6 pt-4">
+              <div className="hidden xs:flex flex-wrap items-start gap-2 sm:gap-4 md:gap-6 pt-1 sm:pt-4">
                 {heroSlides[0].badges.map((badge, idx) => {
                   const words = badge.label.split(" ");
                   const line1 = words.slice(0, 2).join(" ");
                   const line2 = words.slice(2).join(" ");
                   return (
-                    <div key={idx} className="flex flex-col items-center text-center gap-1.5 w-18 md:w-20">
-                      <div className="w-9 h-9 rounded-full border border-[#213B14]/20 flex items-center justify-center text-[#213B14] bg-white/50 backdrop-blur-sm">
-                        <badge.icon className="w-4 h-4 stroke-[1.75]" />
+                    <div key={idx} className="flex flex-col items-center text-center gap-1 w-14 sm:w-18 md:w-20">
+                      <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full border border-[#213B14]/20 flex items-center justify-center text-[#213B14] bg-white/50 backdrop-blur-sm">
+                        <badge.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[1.75]" />
                       </div>
-                      <span className="text-[9px] md:text-[10px] font-bold text-[#213B14] leading-tight tracking-wider uppercase">
+                      <span className="text-[7.5px] sm:text-[9px] md:text-[10px] font-bold text-[#213B14] leading-tight tracking-wider uppercase">
                         {line1}
                         {line2 && <><br />{line2}</>}
                       </span>
@@ -192,23 +212,23 @@ export default function Home() {
               </div>
 
               {/* Shop CTA */}
-              <div className="pt-6">
+              <div className="pt-1 sm:pt-4">
                 <Link
                   to="/products"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#213B14] hover:bg-[#3F622D] text-[#FAF7F2] font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
+                  className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-7 sm:py-3.5 md:px-8 md:py-4 bg-[#213B14] hover:bg-[#3F622D] text-[#FAF7F2] text-xs sm:text-sm md:text-base font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
                 >
                   SHOP NOW
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </Link>
               </div>
             </div>
 
             {/* Foreground Product Image on the Right */}
-            <div className="lg:col-span-7 flex justify-center z-20">
+            <div className="col-span-5 lg:col-span-7 flex justify-center items-center z-20">
               <img
                 src="/HomeProductImage.png"
                 alt="The Dry Factory Products Showcase"
-                className="w-full max-w-2xl lg:max-w-[760px] xl:max-w-[820px] h-auto object-contain lg:scale-[1.1] hover:scale-[1.12] transition-transform duration-500"
+                className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-2xl lg:max-w-[760px] xl:max-w-[820px] h-auto object-contain lg:scale-[1.1] hover:scale-[1.12] transition-transform duration-500 drop-shadow-md"
               />
             </div>
           </div>
@@ -222,51 +242,49 @@ export default function Home() {
             {promoCategories.map((cat, i) => {
               const localImage = cat.brand === "SipReal" 
                 ? "/home_slip_real.png" 
-                : cat.brand === "FreezeFusion" 
+                : cat.brand === "Freeze Fusion" 
                 ? "/home_freexze_frozen.png" 
                 : "/home_cripsey.png";
 
               return (
                 <div
                   key={i}
-                  className={`rounded-2xl p-8 flex flex-col justify-between items-start transition-all duration-300 hover:shadow-lg border border-[#213B14]/5 ${cat.bgClass} relative overflow-hidden group min-h-[280px] md:min-h-[300px]`}
+                  className={`rounded-2xl p-6 sm:p-7 flex flex-col justify-between items-start transition-all duration-300 hover:shadow-lg border border-[#213B14]/5 ${cat.bgClass} relative overflow-hidden group min-h-[260px] md:min-h-[280px]`}
                 >
-                  {/* Left Side text content */}
-                  <div className="space-y-3 z-10 w-[55%]">
-                    <div>
-                      <h3 className={`font-serif text-2xl font-black ${cat.textColor}`}>
-                        {cat.brand}
-                      </h3>
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mt-0.5">
-                        {cat.subtitle}
+                  {/* Left Side text content & button container */}
+                  <div className="z-10 w-[52%] flex flex-col justify-between h-full space-y-4">
+                    <div className="space-y-2">
+                      <div>
+                        <h3 className={`font-serif text-xl sm:text-2xl font-black ${cat.textColor}`}>
+                          {cat.brand}
+                        </h3>
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mt-0.5">
+                          {cat.subtitle}
+                        </p>
+                      </div>
+                      <p className="text-gray-600 text-xs leading-relaxed">
+                        {cat.desc}
                       </p>
                     </div>
-                    <p className="text-gray-600 text-xs leading-relaxed">
-                      {cat.desc}
-                    </p>
+
+                    {/* Explore button CTA */}
+                    <div className="pt-2">
+                      <Link
+                        to={cat.path}
+                        className={`inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-[10px] font-bold tracking-wider uppercase transition-all duration-300 rounded shadow-sm hover:opacity-90 ${cat.btnClass}`}
+                      >
+                        {cat.btnText}
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </div>
                   </div>
 
-                  {/* Explore button CTA */}
-                  <div className="mt-8 z-10">
-                    <Link
-                      to={cat.path}
-                      className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 text-[10px] font-bold tracking-wider uppercase transition-all duration-300 rounded ${cat.btnClass}`}
-                    >
-                      {cat.btnText}
-                      <ArrowRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-
-                  {/* Transparent product image positioned on the right */}
-                  <div className="absolute right-0 bottom-0 w-[55%] h-full flex items-end justify-end pointer-events-none z-0">
+                  {/* Transparent product image cleanly constrained on the right with no overlap */}
+                  <div className="absolute right-0 bottom-0 w-[45%] h-[82%] flex items-end justify-end pointer-events-none z-0 pr-3 pb-3">
                     <img
                       src={localImage}
                       alt={cat.brand}
-                      className={`w-full h-full object-contain object-right-bottom origin-bottom-right transition-transform duration-500 ${
-                        cat.brand === "FreezeFusion"
-                          ? "scale-[1.1] group-hover:scale-[1.15]"
-                          : "scale-[1.35] group-hover:scale-[1.42]"
-                      }`}
+                      className="w-full h-full object-contain object-right-bottom transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                 </div>
@@ -306,59 +324,59 @@ export default function Home() {
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center py-12">
-              <div className="w-8 h-8 border-2 border-[#213B14] border-t-transparent rounded-full animate-spin" />
-            </div>
+            <Loader color="#213B14" text="Loading best sellers..." />
           ) : (
             <div className="relative overflow-hidden">
               <div
-                className="flex gap-6 transition-transform duration-500 ease-out"
+                className="flex transition-transform duration-500 ease-out"
                 style={{
-                  transform: `translateX(-${bestSellerIndex * (100 / 4)}%)`,
+                  transform: `translateX(-${bestSellerIndex * (100 / itemsPerView)}%)`,
                 }}
               >
                 {bestSellers.map((product) => (
                   <div
                     key={product._id || product.id}
-                    className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)] flex-shrink-0 bg-white rounded-2xl p-4 border border-[#213B14]/5 flex flex-col justify-between hover:shadow-md transition-shadow"
+                    className="w-full sm:w-1/2 lg:w-1/4 flex-shrink-0 px-2 sm:px-3"
                   >
-                    <div className="space-y-4">
-                      {/* Product packaging block */}
-                      <Link
-                        to={`/product/${product._id || product.id}`}
-                        className="block aspect-square w-full rounded-xl bg-[#FAF7F2] overflow-hidden relative"
-                      >
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                        />
-                      </Link>
-                      <div>
-                        <span className="text-[10px] font-bold text-[#3F622D] uppercase tracking-wider">
-                          {product.category}
-                        </span>
-                        <h4 className="font-serif text-base font-bold text-[#213B14] mt-1 line-clamp-1">
-                          {product.name}
-                        </h4>
-                        <p className="text-xs text-gray-400 mt-0.5">{product.weight}</p>
+                    <div className="bg-white rounded-2xl p-4 border border-[#213B14]/5 flex flex-col justify-between hover:shadow-md transition-shadow h-full">
+                      <div className="space-y-4">
+                        {/* Product packaging block */}
+                        <Link
+                          to={`/product/${product._id || product.id}`}
+                          className="block aspect-square w-full rounded-xl bg-[#FAF7F2] overflow-hidden relative"
+                        >
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                          />
+                        </Link>
+                        <div>
+                          <span className="text-[10px] font-bold text-[#3F622D] uppercase tracking-wider">
+                            {product.category}
+                          </span>
+                          <h4 className="font-serif text-base font-bold text-[#213B14] mt-1 line-clamp-1">
+                            {product.name}
+                          </h4>
+                          <p className="text-xs text-gray-400 mt-0.5">{product.weight}</p>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="mt-4 pt-4 border-t border-[#213B14]/5 flex items-center justify-between">
-                      <span className="font-serif text-lg font-black text-[#213B14]">
-                        ₹{product.price}
-                      </span>
-                      <button
-                        onClick={(e) => handleAddToCart(product, e)}
-                        className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
-                          addedItems[product._id || product.id]
-                            ? "bg-green-700 text-white"
-                            : "bg-[#213B14] text-[#FAF7F2] hover:bg-[#3F622D]"
-                        }`}
-                      >
-                        {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
-                      </button>
+                      <div className="mt-4 pt-4 border-t border-[#213B14]/5 flex items-center justify-between">
+                        <span className="font-serif text-lg font-black text-[#213B14]">
+                          ₹{product.price}
+                        </span>
+                        <button
+                          onClick={(e) => handleAddToCart(product, e)}
+                          className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                            addedItems[product._id || product.id]
+                              ? "bg-green-700 text-white"
+                              : "bg-[#213B14] text-[#FAF7F2] hover:bg-[#3F622D]"
+                          }`}
+                        >
+                          {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -400,30 +418,32 @@ export default function Home() {
       </section>
 
       {/* Real Ingredients. Real People. Real Results. Section */}
-      <section className="relative min-h-[400px] md:min-h-[480px] flex items-center py-20 overflow-hidden">
+      <section className="relative min-h-[440px] md:min-h-[480px] flex items-center py-16 md:py-20 overflow-hidden">
         {/* Absolute Background Image */}
         <img 
           src="/Home_banner_image.png" 
           alt="Real Ingredients Background" 
-          className="absolute inset-0 w-full h-full object-cover object-center z-0" 
+          className="absolute inset-0 w-full h-full object-cover object-right md:object-center z-0" 
         />
+        {/* Responsive Overlay for readability on mobile */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2]/95 via-[#FAF7F2]/80 to-[#FAF7F2]/40 md:from-[#FAF7F2]/90 md:via-[#FAF7F2]/40 md:to-transparent z-10 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
             {/* Text content overlaid on the left */}
-            <div className="lg:col-span-4 space-y-6 lg:-translate-x-12">
-              <h2 className="font-serif text-4xl font-extrabold text-[#213B14] leading-[1.15]">
+            <div className="lg:col-span-5 space-y-5 lg:-translate-x-12 bg-[#FAF7F2]/70 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-6 sm:p-8 md:p-0 rounded-3xl md:rounded-none border border-[#213B14]/10 md:border-none shadow-sm md:shadow-none max-w-lg">
+              <h2 className="font-serif text-3xl sm:text-4xl font-extrabold text-[#213B14] leading-[1.15]">
                 Real Ingredients. <br />
                 Real People. <br />
                 Real Results.
               </h2>
-              <p className="text-gray-750 text-base leading-relaxed max-w-md">
+              <p className="text-[#213B14]/80 text-sm sm:text-base leading-relaxed font-medium">
                 We bridge the gap between delicious taste and raw nutrition. Our products help busy professionals, children, and fitness enthusiasts fuel their bodies without sacrificing simplicity.
               </p>
               <div className="pt-2">
                 <Link
                   to="/about"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#213B14] hover:bg-[#3F622D] text-[#FAF7F2] font-bold rounded-full transition-all duration-300"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-[#213B14] hover:bg-[#3F622D] text-[#FAF7F2] font-extrabold rounded-full transition-all duration-300 shadow-md hover:scale-[1.02]"
                 >
                   OUR STORY
                   <ArrowRight className="w-4 h-4" />
@@ -432,7 +452,7 @@ export default function Home() {
             </div>
 
             {/* Right side is kept empty so the banner graphics show through */}
-            <div className="hidden lg:block lg:col-span-8" />
+            <div className="hidden lg:block lg:col-span-7" />
           </div>
         </div>
       </section>

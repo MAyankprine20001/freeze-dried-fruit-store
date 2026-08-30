@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { SlidersHorizontal, ArrowUpDown, X, Star, Heart, ShoppingBag, CheckCircle2, Award, Zap, ShieldCheck } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import { productApi } from "../api/product.api";
@@ -155,7 +156,7 @@ export default function Products() {
             {
               id: "ice-creams",
               title: "SipReal",
-              subtitle: "PREMIX SMOOTHIE",
+              subtitle: "SMOOTHIE PREMIX",
               desc: "Real fruit smoothie premixes. Just add water & sip.",
               bgClass: "bg-[#FCEAEB]",
               btnBg: "bg-[#B82A5F]",
@@ -165,7 +166,7 @@ export default function Products() {
             },
             {
               id: "candies",
-              title: "FreezeFusion",
+              title: "Freeze Fusion",
               subtitle: "CHOCOLATES",
               desc: "Real fruit infused rich couverture chocolates.",
               bgClass: "bg-[#F5ECE6]",
@@ -245,9 +246,7 @@ export default function Products() {
 
         {/* Products Grid */}
         {loading ? (
-          <div className="flex justify-center items-center py-20">
-            <div className="w-8 h-8 border-2 border-[#213B14] border-t-transparent rounded-full animate-spin" />
-          </div>
+          <Loader color="#213B14" text="Loading all products..." />
         ) : filteredProducts.length === 0 ? (
           <div className="text-center py-20 bg-white/40 rounded-2xl border border-[#213B14]/5 max-w-5xl mx-auto">
             <h3 className="font-serif text-xl font-bold text-gray-400">No Products Found</h3>
