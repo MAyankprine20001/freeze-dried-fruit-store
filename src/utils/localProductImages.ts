@@ -11,6 +11,14 @@ const LOCAL_IMAGES: Record<string, string[]> = {
     "/images/products/crispy-bites-mixed-fruit-front-800.webp",
     "/images/products/crispy-bites-mixed-fruit-back-800.webp",
   ],
+  "Crispy Bites Mango": [
+    "/images/products/crispy-bites-mango-front-800.webp",
+    "/images/products/crispy-bites-mango-back-800.webp",
+  ],
+  "Crispy Bites Jamun": [
+    "/images/products/crispy-bites-jamun-front-800.webp",
+    "/images/products/crispy-bites-jamun-back-800.webp",
+  ],
 };
 
 const STOCK_HOSTS = ["images.unsplash.com", "plus.unsplash.com"];
