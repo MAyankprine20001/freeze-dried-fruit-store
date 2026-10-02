@@ -9,10 +9,12 @@ import "./styles.css";
 import { AuthProvider } from "./src/context/AuthContext";
 import { CartProvider } from "./src/context/CartContext";
 import ProtectedRoute from "./src/components/ProtectedRoute";
+import RouteMeta from "./src/components/RouteMeta";
 
 import Home from "./src/pages/Home";
 import NotFound from "./src/pages/NotFound";
 import ContactWidget from "./src/components/ContactWidget";
+import OfferPopup from "./src/components/OfferPopup";
 
 const About = lazy(() => import("./src/pages/About"));
 const FruitPowderChunks = lazy(() => import("./src/pages/FruitPowderChunks"));
@@ -64,6 +66,7 @@ const App: React.FC = () => {
       <AuthProvider>
         <CartProvider>
           <Router>
+            <RouteMeta />
             <Suspense fallback={<Loader size="fullscreen" />}>
               <Routes>
                 {/* Public Routes */}
@@ -144,6 +147,7 @@ const App: React.FC = () => {
               pauseOnHover
             />
             <ContactWidget />
+            <OfferPopup />
           </Router>
         </CartProvider>
       </AuthProvider>

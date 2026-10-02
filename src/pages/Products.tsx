@@ -8,6 +8,7 @@ import Loader from "../components/Loader";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import { productApi } from "../api/product.api";
+import CartStepper from "../components/CartStepper";
 
 export default function Products() {
   const [allProducts, setAllProducts] = useState<any[]>([]);
@@ -273,16 +274,18 @@ export default function Products() {
 
                 <div className="mt-4 pt-4 border-t border-[#213B14]/5 flex items-center justify-between">
                   <span className="font-serif text-base font-black text-[#213B14]">₹{product.price}</span>
-                  <button
-                    onClick={(e) => handleAddToCart(product, e)}
-                    className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${
-                      addedItems[product._id || product.id]
-                        ? "bg-green-700 text-white"
-                        : "bg-[#213B14] text-white hover:bg-[#3F622D]"
-                    }`}
-                  >
-                    {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
-                  </button>
+                  <CartStepper product={product} color="#213B14" textColor="#FFFFFF">
+                    <button
+                      onClick={(e) => handleAddToCart(product, e)}
+                      className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${
+                        addedItems[product._id || product.id]
+                          ? "bg-green-700 text-white"
+                          : "bg-[#213B14] text-white hover:bg-[#3F622D]"
+                      }`}
+                    >
+                      {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
+                    </button>
+                  </CartStepper>
                 </div>
               </div>
             ))}

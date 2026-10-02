@@ -4,6 +4,8 @@ import { Menu, X, ShoppingBag, Search, User, Leaf, FlaskConical, Sparkles, Snowf
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
+import { useActiveOffer } from "../hooks/useActiveOffer";
+import OfferBanner from "./OfferBanner";
 
 const navLinks = [
  { label: "HOME", path: "/" },
@@ -30,6 +32,7 @@ export default function Header() {
  const navigate = useNavigate();
  const { user, logout, isAdmin } = useAuth();
  const { totalItems } = useCart();
+ const offer = useActiveOffer();
 
  useEffect(() => {
   const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -53,6 +56,10 @@ export default function Header() {
   <>
    {/* Announcement Bar */}
    <div className="fixed top-0 left-0 right-0 z-50 bg-[#1C2A18] text-[#F3EFE0] h-9 px-3 sm:px-4 text-[10px] sm:text-xs font-semibold tracking-wider flex items-center overflow-hidden border-b border-white/5 select-none shadow-sm">
+     {offer ? (
+      <OfferBanner offer={offer} />
+     ) : (
+     <>
      {/* Desktop: Centered List */}
      <div className="hidden md:flex justify-center items-center gap-6 w-full whitespace-nowrap">
        {announcementItems.map((item, idx) => (
@@ -82,6 +89,8 @@ export default function Header() {
          ))}
        </motion.div>
      </div>
+     </>
+     )}
    </div>
 
    <header

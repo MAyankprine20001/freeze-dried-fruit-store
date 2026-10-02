@@ -8,6 +8,7 @@ import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
+import CartStepper from "../components/CartStepper";
 
 export default function FruitPowderChunks() {
   const [allProducts, setAllProducts] = useState<any[]>([]);
@@ -378,17 +379,19 @@ export default function FruitPowderChunks() {
                       <span className="text-[10px] text-gray-400 block">{product.weight}</span>
                       <span className="font-serif text-xl font-black text-[#213B14]">₹{product.price}</span>
                     </div>
-                    <button
-                      onClick={() => handleAddToCart(product)}
-                      className={`inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
-                        addedItems[product._id || product.id]
-                          ? "bg-green-700 text-white shadow-none"
-                          : "bg-[#2B4C1F] text-white hover:bg-[#1E3615] shadow-md shadow-[#2B4C1F]/15"
-                      }`}
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5" />
-                      {addedItems[product._id || product.id] ? "Added!" : "SHOP NOW"}
-                    </button>
+                    <CartStepper product={product} color="#2B4C1F" textColor="#FFFFFF">
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className={`inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                          addedItems[product._id || product.id]
+                            ? "bg-green-700 text-white shadow-none"
+                            : "bg-[#2B4C1F] text-white hover:bg-[#1E3615] shadow-md shadow-[#2B4C1F]/15"
+                        }`}
+                      >
+                        <ShoppingBag className="w-3.5 h-3.5" />
+                        {addedItems[product._id || product.id] ? "Added!" : "SHOP NOW"}
+                      </button>
+                    </CartStepper>
                   </div>
                 </div>
               ))}

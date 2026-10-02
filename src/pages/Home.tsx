@@ -22,6 +22,7 @@ import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
+import CartStepper from "../components/CartStepper";
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
@@ -366,16 +367,18 @@ export default function Home() {
                         <span className="font-serif text-lg font-black text-[#213B14]">
                           ₹{product.price}
                         </span>
-                        <button
-                          onClick={(e) => handleAddToCart(product, e)}
-                          className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
-                            addedItems[product._id || product.id]
-                              ? "bg-green-700 text-white"
-                              : "bg-[#213B14] text-[#FAF7F2] hover:bg-[#3F622D]"
-                          }`}
-                        >
-                          {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
-                        </button>
+                        <CartStepper product={product} color="#213B14" textColor="#FAF7F2">
+                          <button
+                            onClick={(e) => handleAddToCart(product, e)}
+                            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                              addedItems[product._id || product.id]
+                                ? "bg-green-700 text-white"
+                                : "bg-[#213B14] text-[#FAF7F2] hover:bg-[#3F622D]"
+                            }`}
+                          >
+                            {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
+                          </button>
+                        </CartStepper>
                       </div>
                     </div>
                   </div>

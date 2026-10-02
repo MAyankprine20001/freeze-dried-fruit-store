@@ -12,6 +12,7 @@ import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import { getProductPrimaryImage } from "../utils/productImage";
+import CartStepper from "../components/CartStepper";
 
 export default function GiftHampers() {
   const [products, setProducts] = useState<any[]>([]);
@@ -333,24 +334,26 @@ export default function GiftHampers() {
                       )}
                     </div>
 
-                    <button
-                      onClick={(e) => handleAddToCart(product, e)}
-                      className={`px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-colors flex items-center gap-1.5 shadow-sm active:scale-95 duration-200 ${
-                        isAdded
-                          ? "bg-green-700 hover:bg-green-800 text-white"
-                          : "bg-[#213B14] hover:bg-[#3F622D] text-white"
-                      }`}
-                    >
-                      {isAdded ? (
-                        <>
-                          <Check className="w-3.5 h-3.5" /> Added
-                        </>
-                      ) : (
-                        <>
-                          <ShoppingBag className="w-3.5 h-3.5" /> Add To Cart
-                        </>
-                      )}
-                    </button>
+                    <CartStepper product={product} color="#213B14" textColor="#FFFFFF">
+                      <button
+                        onClick={(e) => handleAddToCart(product, e)}
+                        className={`px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-colors flex items-center gap-1.5 shadow-sm active:scale-95 duration-200 ${
+                          isAdded
+                            ? "bg-green-700 hover:bg-green-800 text-white"
+                            : "bg-[#213B14] hover:bg-[#3F622D] text-white"
+                        }`}
+                      >
+                        {isAdded ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" /> Added
+                          </>
+                        ) : (
+                          <>
+                            <ShoppingBag className="w-3.5 h-3.5" /> Add To Cart
+                          </>
+                        )}
+                      </button>
+                    </CartStepper>
                   </div>
                 </div>
               );
