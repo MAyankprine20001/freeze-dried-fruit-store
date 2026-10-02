@@ -273,7 +273,6 @@ export default function Checkout() {
                     {[
                       { icon: <ShieldCheck className="w-3.5 h-3.5 text-[#3F622D]" />, label: "SSL Encrypted" },
                       { icon: <Truck className="w-3.5 h-3.5 text-[#3F622D]" />, label: "Delivery in 2 - 3 Days" },
-                      { icon: <RotateCcw className="w-3.5 h-3.5 text-[#3F622D]" />, label: "Easy Returns" },
                     ].map(({ icon, label }) => (
                       <div key={label} className="flex items-center gap-1.5 text-[10px] font-extrabold text-[#213B14]/60 bg-[#FAF7F2] px-3 py-1.5 rounded-full border border-[#213B14]/10">
                         {icon} {label}
@@ -498,13 +497,6 @@ export default function Checkout() {
                     <div>
                       <p className="text-[11px] font-black text-[#1C2A18]">Multiple Payment Options</p>
                       <p className="text-[9px] text-[#213B14]/50 font-semibold">UPI, Cards, Netbanking & more</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Heart className="w-4 h-4 text-[#3F622D] shrink-0" />
-                    <div>
-                      <p className="text-[11px] font-black text-[#1C2A18]">7-Day Happiness Guarantee</p>
-                      <p className="text-[9px] text-[#213B14]/50 font-semibold">Not happy? We'll make it right.</p>
                     </div>
                   </div>
                 </div>

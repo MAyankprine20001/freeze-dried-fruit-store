@@ -63,7 +63,7 @@ export default function Contact() {
  };
 
  return (
-  <div className="min-h-screen bg-[#111111]">
+  <div className="light-form min-h-screen bg-[#FAF7F2]">
    <Header />
 
    <PageHero
@@ -71,10 +71,10 @@ export default function Contact() {
     title="We'd Love to"
     highlight="Hear from You"
     description="Whether you're curious about our products, interested in bulk orders, or just want to say hello we're a real team of real people and we read every message."
-    tint="from-[#111111]/85"
+    variant="light"
    />
 
-   <section className="py-24 bg-[#111111]">
+   <section className="py-24 bg-[#FAF7F2]">
     <div className="max-w-7xl mx-auto px-6 lg:px-8">
      <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
       {/* ── Info ─────────────────────────────────────────────────────── */}
@@ -86,10 +86,10 @@ export default function Contact() {
        className="lg:col-span-2 space-y-8"
       >
        <div>
-        <h2 className="font-serif text-2xl font-bold text-white mb-4">
+        <h2 className="font-serif text-2xl font-bold text-[#213B14] mb-4">
          Let's Start a Conversation
         </h2>
-        <p className="text-white/70 text-base leading-relaxed">
+        <p className="text-[#213B14]/75 text-base leading-relaxed">
          We're a small, passionate team and we genuinely love hearing
          from our customers. Whether you have a question about a
          product, need help with an order, or want to explore a
@@ -100,28 +100,28 @@ export default function Contact() {
 
        <div className="space-y-6">
         <div className="flex items-start gap-4">
-         <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/10">
-          <Mail className="w-5 h-5 text-[#E4B34F]" />
+         <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 border border-[#213B14]/15">
+          <Mail className="w-5 h-5 text-[#3F622D]" />
          </div>
          <div>
-          <p className="font-semibold text-white text-sm">
+          <p className="font-semibold text-[#213B14] text-sm">
            Email Us
           </p>
-          <p className="text-white/60 text-sm">
+          <p className="text-[#213B14]/65 text-sm">
            hello@thedryfactory.com
           </p>
          </div>
         </div>
 
         <div className="flex items-start gap-4">
-         <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/10">
-          <Clock className="w-5 h-5 text-[#E4B34F]" />
+         <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 border border-[#213B14]/15">
+          <Clock className="w-5 h-5 text-[#3F622D]" />
          </div>
          <div>
-          <p className="font-semibold text-white text-sm">
+          <p className="font-semibold text-[#213B14] text-sm">
            Response Time
           </p>
-          <p className="text-white/60 text-sm">
+          <p className="text-[#213B14]/65 text-sm">
            We aim to respond within 1–2 business days. For urgent
            matters, please mention it in your message.
           </p>
@@ -129,14 +129,14 @@ export default function Contact() {
         </div>
 
         <div className="flex items-start gap-4">
-         <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/10">
-          <MessageSquare className="w-5 h-5 text-[#E4B34F]" />
+         <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 border border-[#213B14]/15">
+          <MessageSquare className="w-5 h-5 text-[#3F622D]" />
          </div>
          <div>
-          <p className="font-semibold text-white text-sm">
+          <p className="font-semibold text-[#213B14] text-sm">
            Bulk &amp; Wholesale
           </p>
-          <p className="text-white/60 text-sm">
+          <p className="text-[#213B14]/65 text-sm">
            Interested in large orders or retail partnerships? Mention
            it in your message and we'll connect you with our
            wholesale team.
@@ -156,27 +156,27 @@ export default function Contact() {
       >
        <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white/5 rounded-2xl p-8 border border-white/10 space-y-6"
+        className="bg-white rounded-2xl p-8 border border-[#213B14]/15 space-y-6"
         noValidate
        >
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
          <div>
           <label
            htmlFor="name"
-           className="block text-sm font-semibold text-white mb-2"
+           className="block text-sm font-semibold text-[#213B14] mb-2"
           >
-           Your Name <span className="text-[#E4B34F]">*</span>
+           Your Name <span className="text-[#3F622D]">*</span>
           </label>
           <input
            id="name"
            type="text"
            autoComplete="name"
            {...register("name")}
-           className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#E4B34F]/40 focus:border-[#E4B34F] transition-all duration-200"
+           className="w-full px-4 py-3 bg-[#FAF7F2] border border-[#213B14]/15 rounded-lg text-[#213B14] placeholder:text-[#213B14]/35 text-sm focus:outline-none focus:ring-2 focus:ring-[#3F622D]/25 focus:border-[#3F622D] transition-all duration-200"
            placeholder="Elena Rossi"
           />
           {errors.name && (
-           <p className="mt-1.5 text-xs text-red-400">
+           <p className="mt-1.5 text-xs text-red-700">
             {errors.name.message}
            </p>
           )}
@@ -185,20 +185,20 @@ export default function Contact() {
          <div>
           <label
            htmlFor="email"
-           className="block text-sm font-semibold text-white mb-2"
+           className="block text-sm font-semibold text-[#213B14] mb-2"
           >
-           Email Address <span className="text-[#E4B34F]">*</span>
+           Email Address <span className="text-[#3F622D]">*</span>
           </label>
           <input
            id="email"
            type="email"
            autoComplete="email"
            {...register("email")}
-           className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#E4B34F]/40 focus:border-[#E4B34F] transition-all duration-200"
+           className="w-full px-4 py-3 bg-[#FAF7F2] border border-[#213B14]/15 rounded-lg text-[#213B14] placeholder:text-[#213B14]/35 text-sm focus:outline-none focus:ring-2 focus:ring-[#3F622D]/25 focus:border-[#3F622D] transition-all duration-200"
            placeholder="you@example.com"
           />
           {errors.email && (
-           <p className="mt-1.5 text-xs text-red-400">
+           <p className="mt-1.5 text-xs text-red-700">
             {errors.email.message}
            </p>
           )}
@@ -208,19 +208,19 @@ export default function Contact() {
         <div>
          <label
           htmlFor="subject"
-          className="block text-sm font-semibold text-white mb-2"
+          className="block text-sm font-semibold text-[#213B14] mb-2"
          >
-           Subject <span className="text-[#E4B34F]">*</span>
+           Subject <span className="text-[#3F622D]">*</span>
          </label>
          <input
           id="subject"
           type="text"
           {...register("subject")}
-          className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#E4B34F]/40 focus:border-[#E4B34F] transition-all duration-200"
+          className="w-full px-4 py-3 bg-[#FAF7F2] border border-[#213B14]/15 rounded-lg text-[#213B14] placeholder:text-[#213B14]/35 text-sm focus:outline-none focus:ring-2 focus:ring-[#3F622D]/25 focus:border-[#3F622D] transition-all duration-200"
           placeholder="Bulk order enquiry / Product question / ..."
          />
          {errors.subject && (
-          <p className="mt-1.5 text-xs text-red-400">
+          <p className="mt-1.5 text-xs text-red-700">
            {errors.subject.message}
           </p>
          )}
@@ -229,19 +229,19 @@ export default function Contact() {
         <div>
          <label
           htmlFor="message"
-          className="block text-sm font-semibold text-white mb-2"
+          className="block text-sm font-semibold text-[#213B14] mb-2"
          >
-           Message <span className="text-[#E4B34F]">*</span>
+           Message <span className="text-[#3F622D]">*</span>
          </label>
          <textarea
           id="message"
           rows={6}
           {...register("message")}
-          className="w-full px-4 py-3 bg-black border border-white/10 rounded-lg text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#E4B34F]/40 focus:border-[#E4B34F] transition-all duration-200 resize-none"
+          className="w-full px-4 py-3 bg-[#FAF7F2] border border-[#213B14]/15 rounded-lg text-[#213B14] placeholder:text-[#213B14]/35 text-sm focus:outline-none focus:ring-2 focus:ring-[#3F622D]/25 focus:border-[#3F622D] transition-all duration-200 resize-none"
           placeholder="Tell us how we can help..."
          />
          {errors.message && (
-          <p className="mt-1.5 text-xs text-red-400">
+          <p className="mt-1.5 text-xs text-red-700">
            {errors.message.message}
           </p>
          )}
@@ -250,7 +250,7 @@ export default function Contact() {
         <button
          type="submit"
          disabled={isSubmitting}
-         className="w-full py-4 bg-[#E4B34F] text-[#213B14] font-black rounded-full hover:bg-[#D4A13F] hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E4B34F] focus-visible:ring-offset-2 shadow-lg shadow-[#E4B34F]/10"
+         className="w-full py-4 bg-[#213B14] text-white font-black rounded-full hover:bg-[#3F622D] hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3F622D] focus-visible:ring-offset-2 shadow-lg shadow-[#213B14]/10"
         >
          {isSubmitting ? "Sending…" : "Send Message"}
         </button>
