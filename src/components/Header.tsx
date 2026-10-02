@@ -33,6 +33,15 @@ export default function Header() {
  const { user, logout, isAdmin } = useAuth();
  const { totalItems } = useCart();
  const offer = useActiveOffer();
+ // Top bar alternates between the offer and the brand highlights (pauses while hovered/focused).
+ const [showOffer, setShowOffer] = useState(true);
+ const [barPaused, setBarPaused] = useState(false);
+
+ useEffect(() => {
+  if (!offer || barPaused) return;
+  const t = window.setTimeout(() => setShowOffer((s) => !s), showOffer ? 5000 : 8000);
+  return () => window.clearTimeout(t);
+ }, [offer, barPaused, showOffer]);
 
  useEffect(() => {
   const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -55,11 +64,34 @@ export default function Header() {
  return (
   <>
    {/* Announcement Bar */}
-   <div className="fixed top-0 left-0 right-0 z-50 bg-[#1C2A18] text-[#F3EFE0] h-9 px-3 sm:px-4 text-[10px] sm:text-xs font-semibold tracking-wider flex items-center overflow-hidden border-b border-white/5 select-none shadow-sm">
-     {offer ? (
-      <OfferBanner offer={offer} />
+   <div
+    className="fixed top-0 left-0 right-0 z-50 bg-[#1C2A18] text-[#F3EFE0] h-9 px-3 sm:px-4 text-[10px] sm:text-xs font-semibold tracking-wider flex items-center overflow-hidden border-b border-white/5 select-none shadow-sm"
+    onMouseEnter={() => setBarPaused(true)}
+    onMouseLeave={() => setBarPaused(false)}
+    onFocus={() => setBarPaused(true)}
+    onBlur={() => setBarPaused(false)}
+   >
+    <AnimatePresence mode="wait" initial={false}>
+     {offer && showOffer ? (
+      <motion.div
+       key="offer"
+       className="w-full"
+       initial={{ opacity: 0, y: 6 }}
+       animate={{ opacity: 1, y: 0 }}
+       exit={{ opacity: 0, y: -6 }}
+       transition={{ duration: 0.3 }}
+      >
+       <OfferBanner offer={offer} />
+      </motion.div>
      ) : (
-     <>
+     <motion.div
+      key="highlights"
+      className="w-full"
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -6 }}
+      transition={{ duration: 0.3 }}
+     >
      {/* Desktop: Centered List */}
      <div className="hidden md:flex justify-center items-center gap-6 w-full whitespace-nowrap">
        {announcementItems.map((item, idx) => (
@@ -89,8 +121,9 @@ export default function Header() {
          ))}
        </motion.div>
      </div>
-     </>
+     </motion.div>
      )}
+    </AnimatePresence>
    </div>
 
    <header
