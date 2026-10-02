@@ -505,22 +505,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* As Seen On Brands Showcase */}
-      <section className="py-12 bg-[#FAF7F2] border-b border-[#213B14]/5 select-none">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#3F622D]/60 mb-6">
-            AS SEEN ON
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60">
-            <span className="font-sans text-lg font-black text-gray-500 tracking-wider">YourStory</span>
-            <span className="font-serif text-lg font-extrabold text-gray-500 tracking-wider italic">FEMINA</span>
-            <span className="font-sans text-lg font-black text-gray-500 tracking-widest">INDIA TODAY</span>
-            <span className="font-sans text-lg font-bold text-gray-500 uppercase">Entrepreneur</span>
-            <span className="font-serif text-lg font-black text-gray-500 tracking-tighter">mint</span>
-          </div>
-        </div>
-      </section>
-
       <Footer />
     </div>
   );
