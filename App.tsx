@@ -57,6 +57,7 @@ const AdminInventory = lazy(() => import("./src/pages/admin/AdminInventory"));
 const AdminCoupons = lazy(() => import("./src/pages/admin/AdminCoupons"));
 const AdminReviews = lazy(() => import("./src/pages/admin/AdminReviews"));
 const AdminSettings = lazy(() => import("./src/pages/admin/AdminSettings"));
+const AdminLegalPages = lazy(() => import("./src/pages/admin/AdminLegalPages"));
 
 import Loader from "./src/components/Loader";
 
@@ -132,6 +133,7 @@ const App: React.FC = () => {
                   <Route path="inventory" element={<AdminInventory />} />
                   <Route path="coupons" element={<AdminCoupons />} />
                   <Route path="reviews" element={<AdminReviews />} />
+                  <Route path="legal" element={<AdminLegalPages />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>
 

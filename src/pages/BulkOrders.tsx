@@ -193,9 +193,14 @@ export default function BulkOrders() {
             {/* Right Column: Foreground Product Showcase Image */}
             <div className="col-span-5 lg:col-span-7 flex justify-center items-center z-20 lg:translate-x-12">
               <img
-                src="/bulk_order_banner.png"
-                alt="Wholesale ingredients showcase"
-                className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-2xl lg:max-w-[850px] xl:max-w-[950px] h-auto object-contain lg:scale-[1.35] hover:scale-[1.37] transition-transform duration-500 drop-shadow-md"
+                src="/images/bulk/bulk-hero-products-1200.webp"
+                srcSet="/images/bulk/bulk-hero-products-700.webp 700w, /images/bulk/bulk-hero-products-1200.webp 1200w"
+                sizes="(min-width: 1024px) 760px, 45vw"
+                alt="Freeze-dried banana, apple, okra, kiwi, strawberry, pineapple and mixed fruit and vegetable chips in glass bowls"
+                width={1200}
+                height={715}
+                fetchPriority="high"
+                className="w-full max-w-2xl lg:max-w-[760px] h-auto object-contain lg:-translate-x-16 lg:translate-y-12 transition-transform duration-500 hover:scale-[1.02] drop-shadow-xl"
               />
             </div>
 
