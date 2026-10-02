@@ -10,6 +10,7 @@ import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import CartStepper from "../components/CartStepper";
 import ReviewSlider from "../components/ReviewSlider";
+import { PackLineup } from "../components/PackShowcase";
 import { testimonialsFor } from "../data/testimonials";
 
 export default function FruitPowderChunks() {
@@ -173,23 +174,13 @@ export default function FruitPowderChunks() {
 
             {/* Foreground Product Showcase Image on the Right */}
             <div className="col-span-5 lg:col-span-6 flex justify-center items-center z-20">
-              <div className="relative flex items-end justify-center h-[200px] sm:h-[320px] lg:h-[460px] w-full">
-                <img
-                  src="/images/products/crispy-bites-mixed-fruit-back-800.webp"
-                  alt="Back of the Crispy Bites Mixed Fruit pack with ingredients and nutrition information"
-                  width={754}
-                  height={1269}
-                  className="absolute h-[88%] w-auto object-contain -rotate-6 -translate-x-[30%] sm:-translate-x-[35%] opacity-95 drop-shadow-lg"
-                />
-                <img
-                  src="/images/products/crispy-bites-mixed-fruit-front-800.webp"
-                  alt="Crispy Bites Mixed Fruit freeze-dried fruit pack"
-                  width={754}
-                  height={1269}
-                  fetchPriority="high"
-                  className="relative h-full w-auto object-contain rotate-3 translate-x-[18%] drop-shadow-xl transition-transform duration-500 hover:scale-[1.03]"
-                />
-              </div>
+              <PackLineup
+                slides={[
+                  { name: "Mixed Fruit", front: "/images/products/crispy-bites-mixed-fruit-front-800.webp", back: "/images/products/crispy-bites-mixed-fruit-back-800.webp", color: "#C2354A" },
+                  { name: "Mango", front: "/images/products/crispy-bites-mango-front-800.webp", back: "/images/products/crispy-bites-mango-back-800.webp", color: "#D98C0A" },
+                  { name: "Jamun", front: "/images/products/crispy-bites-jamun-front-800.webp", back: "/images/products/crispy-bites-jamun-back-800.webp", color: "#6B3FA0" },
+                ]}
+              />
             </div>
           </div>
         </div>

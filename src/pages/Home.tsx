@@ -224,9 +224,9 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {promoCategories.map((cat, i) => {
               const localImage = cat.brand === "SipReal" 
-                ? "/home_slip_real.png" 
-                : cat.brand === "Freeze Fusion" 
-                ? "/home_freexze_frozen.png" 
+                ? "/images/categories/sipreal-card.webp"
+                : cat.brand === "Freeze Fusion"
+                ? "/images/categories/freeze-fusion-card.webp"
                 : "/images/products/crispy-bites-mixed-fruit-front-400.webp";
 
               return (
@@ -241,6 +241,11 @@ export default function Home() {
                         <h3 className={`font-serif text-xl sm:text-2xl font-black ${cat.textColor}`}>
                           {cat.brand}
                         </h3>
+                        {cat.brand === "SipReal" && (
+                          <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full bg-[#B82A5F] text-white text-[9px] font-bold uppercase tracking-widest">
+                            Coming Soon
+                          </span>
+                        )}
                         <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mt-0.5">
                           {cat.subtitle}
                         </p>
@@ -263,7 +268,7 @@ export default function Home() {
                   </div>
 
                   {/* Transparent product image cleanly constrained on the right with no overlap */}
-                  <div className="absolute right-0 bottom-0 w-[45%] h-[82%] flex items-end justify-end pointer-events-none z-0 pr-3 pb-3">
+                  <div className={`absolute right-0 bottom-0 ${cat.brand === "Crispy Bites" ? "w-[45%]" : "w-[55%]"} h-[82%] flex items-end justify-end pointer-events-none z-0 pr-3 pb-3`}>
                     <img
                       src={localImage}
                       alt={cat.brand}
