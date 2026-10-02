@@ -23,6 +23,8 @@ import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import CartStepper from "../components/CartStepper";
+import ReviewSlider from "../components/ReviewSlider";
+import { TESTIMONIALS } from "../data/testimonials";
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
@@ -35,7 +37,7 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await productApi.getAll();
+        const res = await productApi.getAllForStore();
         const allProducts = res.data ?? res;
         setProducts(allProducts);
       } catch (err) {
@@ -143,26 +145,6 @@ export default function Home() {
     }
   ];
 
-  // Testimonials
-  const customerReviews = [
-    {
-      stars: 5,
-      text: "Berry Blast is my everyday energy booster! Tastes amazing and so easy to make.",
-      author: "Ananya, Delhi"
-    },
-    {
-      stars: 5,
-      text: "The chocolates are luxurious and the fruit inside is so real! Absolutely love Banana Cocoa Dark.",
-      author: "Rohan, Bangalore"
-    },
-    {
-      stars: 5,
-      text: "Healthy snacking made easy. My kids love Crispy Bites Mixed Fruit!",
-      author: "Priya, Mumbai"
-    }
-  ];
-
-  const [reviewIndex, setReviewIndex] = useState(0);
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-[#213B14]">
@@ -245,7 +227,7 @@ export default function Home() {
                 ? "/home_slip_real.png" 
                 : cat.brand === "Freeze Fusion" 
                 ? "/home_freexze_frozen.png" 
-                : "/home_cripsey.png";
+                : "/images/products/crispy-bites-mixed-fruit-front-400.webp";
 
               return (
                 <div
@@ -470,38 +452,7 @@ export default function Home() {
             What Our Customers Say
           </h2>
 
-          <div className="relative min-h-[160px] flex flex-col justify-center items-center">
-            {/* Reviews controls and content */}
-            <div className="max-w-xl mx-auto">
-              <div className="flex justify-center gap-1 text-amber-500 mb-4">
-                {[...Array(customerReviews[reviewIndex].stars)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-amber-500" />
-                ))}
-              </div>
-              <p className="text-[#213B14] text-lg font-medium italic leading-relaxed">
-                "{customerReviews[reviewIndex].text}"
-              </p>
-              <h4 className="font-bold text-[#3F622D] mt-6 text-sm uppercase tracking-wider">
-                — {customerReviews[reviewIndex].author}
-              </h4>
-            </div>
-
-            {/* Arrow Nav */}
-            <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex justify-between w-full pointer-events-none px-4">
-              <button
-                onClick={() => setReviewIndex(prev => (prev === 0 ? customerReviews.length - 1 : prev - 1))}
-                className="w-10 h-10 rounded-full border border-[#213B14]/20 flex items-center justify-center text-[#213B14] hover:bg-[#213B14] hover:text-[#FAF7F2] pointer-events-auto transition-all bg-white"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => setReviewIndex(prev => (prev === customerReviews.length - 1 ? 0 : prev + 1))}
-                className="w-10 h-10 rounded-full border border-[#213B14]/20 flex items-center justify-center text-[#213B14] hover:bg-[#213B14] hover:text-[#FAF7F2] pointer-events-auto transition-all bg-white"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
+          <ReviewSlider reviews={TESTIMONIALS} />
         </div>
       </section>
 

@@ -283,7 +283,7 @@ export default function Header() {
           className="group block text-center space-y-3 p-4 hover:bg-[#EEF4EC] rounded-xl transition-all border border-transparent hover:border-[#2B4C1F]/15 select-none"
         >
          <div className="w-full h-32 rounded-xl overflow-hidden bg-[#EEF4EC] relative flex items-center justify-center pointer-events-none">
-          <img src="/home_cripsey.png" alt="Crispy Bites" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
+          <img src="/images/products/crispy-bites-mixed-fruit-front-400.webp" alt="Crispy Bites Mixed Fruit pack" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
          </div>
          <div className="space-y-0.5">
            <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#2B4C1F]/60 block">Freeze Dried Snacks</span>

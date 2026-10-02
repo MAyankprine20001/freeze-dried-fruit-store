@@ -1,4 +1,5 @@
 ﻿import axiosInstance from "./axiosInstance";
+import { withLocalImages } from "../utils/localProductImages";
 
 async function postUploadImage(file: File) {
   const formData = new FormData();
@@ -42,6 +43,23 @@ export const productApi = {
  getById: async (id: string) => {
   const response = await axiosInstance.get(`/products/${id}`);
   return response.data;
+ },
+ /** Storefront list: same as getAll, with real pack photos swapped in (see utils/localProductImages). */
+ getAllForStore: async () => {
+  const response = await axiosInstance.get("/products");
+  const body = response.data;
+  if (Array.isArray(body?.data)) body.data = body.data.map(withLocalImages);
+  return body;
+ },
+ /** Storefront product page: same as getById, with real pack photos swapped in. */
+ getByIdForStore: async (id: string) => {
+  const response = await axiosInstance.get(`/products/${id}`);
+  const body = response.data;
+  if (body?.data) {
+   body.data = withLocalImages(body.data);
+   if (Array.isArray(body.data.relatedProducts)) body.data.relatedProducts = body.data.relatedProducts.map(withLocalImages);
+  }
+  return body;
  },
  create: async (data: any) => {
   const response = await axiosInstance.post("/products", data);

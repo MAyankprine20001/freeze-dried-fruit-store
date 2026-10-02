@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { STATIC_ROUTE_META, isNoindexPath, setPageMeta } from "../utils/seo";
+import { trackPageView } from "../utils/analytics";
 
 /**
  * Sets page metadata on every route change.
@@ -22,6 +23,8 @@ export default function RouteMeta() {
       // Unknown route: rendered by NotFound, keep it out of the index.
       setPageMeta({ title: "Page Not Found", noindex: true });
     }
+    // After the title is set, so GA records the right page title.
+    trackPageView(path);
   }, [pathname]);
 
   return null;

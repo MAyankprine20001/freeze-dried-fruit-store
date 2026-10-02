@@ -16,6 +16,7 @@ import { reviewApi } from "../api/review.api";
 import { getProductPrimaryImage } from "../utils/productImage";
 import { productRealImages, setPageMeta } from "../utils/seo";
 import ProductSchema from "../components/ProductSchema";
+import { trackViewItem } from "../utils/analytics";
 import CartStepper from "../components/CartStepper";
 
 // Map badge label → icon
@@ -65,9 +66,10 @@ export default function ProductDetail() {
       try {
         setLoading(true);
         if (!id) return;
-        const res = await productApi.getById(id);
+        const res = await productApi.getByIdForStore(id);
         const p = res.data;
         setProduct(p);
+        trackViewItem(p);
         setPageMeta({
           title: [p.name, p.weight].filter(Boolean).join(", "),
           description: (p.subtitle || p.description || "").slice(0, 160) || undefined,
@@ -100,7 +102,7 @@ export default function ProductDetail() {
       toast.success("Review submitted!");
       setComment(""); setRating(5); setImageFile(null); setPreviewUrl(null);
       fetchReviews();
-      const res = await productApi.getById(id!);
+      const res = await productApi.getByIdForStore(id!);
       setProduct(res.data);
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Failed to submit review");

@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { useShippingConfig, computeCartShipping } from "../hooks/useShippingConfig";
 import { couponApi } from "../api/coupon.api";
 import { computeOrderTotalsWithCoupon } from "../utils/couponDiscount";
+import { trackCouponApplied } from "../utils/analytics";
 
 export default function Cart() {
   const { items, removeFromCart, updateQuantity, subtotal, totalItems, addToCart, appliedCoupon, setAppliedCoupon } = useCart();
@@ -61,6 +62,7 @@ export default function Cart() {
         discountValue: d.discountValue,
       });
       toast.success(`Coupon ${d.code} applied`);
+      trackCouponApplied(d.code);
     } catch (e: unknown) {
       const msg =
          typeof e === "object" && e !== null && "response" in e
@@ -73,7 +75,7 @@ export default function Cart() {
   };
 
   useEffect(() => {
-    productApi.getAll().then((res) => {
+    productApi.getAllForStore().then((res) => {
       const cartIds = new Set(items.map((i) => i.id));
       const others = res.data.filter((p: any) => !cartIds.has(p._id)).slice(0, 4);
       setUpsellProducts(others);
@@ -87,7 +89,7 @@ export default function Cart() {
 
   const handleAddCombo = async () => {
     try {
-      const res = await productApi.getAll();
+      const res = await productApi.getAllForStore();
       const mangoProd = res.data.find((p: any) => p.name.toLowerCase().includes("mango"));
       const bananaProd = res.data.find((p: any) => p.name.toLowerCase().includes("banana"));
       if (mangoProd && !hasMango) addToCart(mangoProd);

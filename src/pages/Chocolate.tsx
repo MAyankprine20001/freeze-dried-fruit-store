@@ -9,6 +9,8 @@ import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import CartStepper from "../components/CartStepper";
+import ReviewSlider from "../components/ReviewSlider";
+import { testimonialsFor } from "../data/testimonials";
 
 export default function Chocolate() {
   const [allProducts, setAllProducts] = useState<any[]>([]);
@@ -31,7 +33,7 @@ export default function Chocolate() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await productApi.getAll();
+        const res = await productApi.getAllForStore();
         const data = res.data ?? res;
         // Filter by Chocolates category
         const filtered = data.filter((p: any) =>
@@ -433,6 +435,14 @@ export default function Chocolate() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Customer Reviews */}
+      <section className="py-20 bg-[#FAF7F2]">
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#4A2D1B]">Loved by Our Customers</span>
+          <ReviewSlider reviews={testimonialsFor("freeze-fusion")} accent="#4A2D1B" card />
         </div>
       </section>
 

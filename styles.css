@@ -105,3 +105,8 @@ select:-webkit-autofill:focus {
   caret-color: #213b14;
   border-color: rgba(33, 59, 20, 0.15) !important;
 }
+/* Real pack photos (transparent cut-outs in /images/products): show the whole pack, never crop it */
+img[src*="/images/products/"] {
+  object-fit: contain !important;
+  padding: 4%;
+}

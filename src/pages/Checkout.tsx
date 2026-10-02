@@ -22,6 +22,7 @@ import { computeOrderTotalsWithCoupon } from "../utils/couponDiscount";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { trackBeginCheckout, trackPurchase } from "../utils/analytics";
 
 const schema = z.object({
   fullName: z.string().min(2, "Enter your full name"),
@@ -111,6 +112,12 @@ export default function Checkout() {
     : null;
   const priced = computeOrderTotalsWithCoupon(subtotal, finalShippingCharge, couponForPricing);
   const total = priced.total;
+
+  // GA4: checkout started (once per visit to this page)
+  useEffect(() => {
+    if (items.length) trackBeginCheckout(items, total, appliedCoupon?.code);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const discount = priced.discount;
   const freeShippingGap =
     freeShippingThreshold > 0 ? Math.max(0, freeShippingThreshold - subtotal) : 0;
@@ -179,6 +186,7 @@ export default function Checkout() {
           try {
             const verifyRes = await verifyRazorpayPayment({ razorpay_order_id: response.razorpay_order_id, razorpay_payment_id: response.razorpay_payment_id, razorpay_signature: response.razorpay_signature, dbOrderId });
             if (verifyRes.success) {
+              trackPurchase(verifyRes.data.orderId, Number(verifyRes.data.amount) || total, items, finalShippingCharge, appliedCoupon?.code);
               clearCart();
               navigate("/order-success", { state: { orderId: verifyRes.data.orderId, paymentId: verifyRes.data.razorpayPaymentId, amount: verifyRes.data.amount, customerName: formData.fullName } });
             } else { toast.error("Payment verification failed. Please contact support."); }
