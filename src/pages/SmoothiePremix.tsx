@@ -8,6 +8,9 @@ import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
+import CartStepper from "../components/CartStepper";
+import ReviewSlider from "../components/ReviewSlider";
+import { testimonialsFor } from "../data/testimonials";
 
 export default function SmoothiePremix() {
   const [allProducts, setAllProducts] = useState<any[]>([]);
@@ -30,7 +33,7 @@ export default function SmoothiePremix() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await productApi.getAll();
+        const res = await productApi.getAllForStore();
         const data = res.data ?? res;
         // Filter by Smoothie Premix category
         const filtered = data.filter((p: any) =>
@@ -96,13 +99,6 @@ export default function SmoothiePremix() {
     }, 1500);
   };
 
-  const testimonials = [
-    { text: "The Berry Blast is my everyday energy booster! Tastes amazing and so easy to make.", author: "Ananya, Delhi" },
-    { text: "Royal Mango is just like drinking a real mango shake. Love it!", author: "Rohan, Bangalore" },
-    { text: "Banana Power keeps me full and helps with my workouts.", author: "Karan, Mumbai" }
-  ];
-
-  const [reviewIdx, setReviewIdx] = useState(0);
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-[#213B14]">
@@ -375,17 +371,19 @@ export default function SmoothiePremix() {
                       <span className="text-[10px] text-gray-400 block">{product.weight} | 1 Serving</span>
                       <span className="font-serif text-xl font-black text-[#213B14]">₹{product.price}</span>
                     </div>
-                    <button
-                      onClick={() => handleAddToCart(product)}
-                      className={`inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
-                        addedItems[product._id || product.id]
-                          ? "bg-green-700 text-white shadow-none"
-                          : "bg-[#B82A5F] text-white hover:bg-[#961F4B] shadow-md shadow-[#B82A5F]/15"
-                      }`}
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5" />
-                      {addedItems[product._id || product.id] ? "Added!" : "SHOP NOW"}
-                    </button>
+                    <CartStepper product={product} color="#B82A5F" textColor="#FFFFFF">
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className={`inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                          addedItems[product._id || product.id]
+                            ? "bg-green-700 text-white shadow-none"
+                            : "bg-[#B82A5F] text-white hover:bg-[#961F4B] shadow-md shadow-[#B82A5F]/15"
+                        }`}
+                      >
+                        <ShoppingBag className="w-3.5 h-3.5" />
+                        {addedItems[product._id || product.id] ? "Added!" : "SHOP NOW"}
+                      </button>
+                    </CartStepper>
                   </div>
                 </div>
               ))}
@@ -500,30 +498,7 @@ export default function SmoothiePremix() {
       <section className="py-20 bg-[#FAF7F2]">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
           <span className="text-xs font-bold uppercase tracking-widest text-[#B82A5F]">Loved by Our Customers</span>
-          <div className="relative bg-white p-8 rounded-2xl border border-[#213B14]/5 shadow-sm min-h-[140px] flex flex-col justify-center">
-            <p className="font-serif text-lg italic text-[#213B14] leading-relaxed">
-              "{testimonials[reviewIdx].text}"
-            </p>
-            <h4 className="text-xs font-black uppercase text-[#B82A5F] tracking-widest mt-4">
-              - {testimonials[reviewIdx].author}
-            </h4>
-            <div className="absolute top-1/2 -translate-y-1/2 left-3">
-              <button
-                onClick={() => setReviewIdx((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
-                className="w-8 h-8 rounded-full border border-[#213B14]/10 bg-white flex items-center justify-center text-[#213B14] hover:bg-gray-50 transition-colors shadow-sm"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="absolute top-1/2 -translate-y-1/2 right-3">
-              <button
-                onClick={() => setReviewIdx((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
-                className="w-8 h-8 rounded-full border border-[#213B14]/10 bg-white flex items-center justify-center text-[#213B14] hover:bg-gray-50 transition-colors shadow-sm"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
+          <ReviewSlider reviews={testimonialsFor("sipreal")} accent="#B82A5F" card />
         </div>
       </section>
 

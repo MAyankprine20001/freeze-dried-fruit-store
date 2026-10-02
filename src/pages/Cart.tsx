@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { useShippingConfig, computeCartShipping } from "../hooks/useShippingConfig";
 import { couponApi } from "../api/coupon.api";
 import { computeOrderTotalsWithCoupon } from "../utils/couponDiscount";
+import { trackCouponApplied } from "../utils/analytics";
 
 export default function Cart() {
   const { items, removeFromCart, updateQuantity, subtotal, totalItems, addToCart, appliedCoupon, setAppliedCoupon } = useCart();
@@ -61,6 +62,7 @@ export default function Cart() {
         discountValue: d.discountValue,
       });
       toast.success(`Coupon ${d.code} applied`);
+      trackCouponApplied(d.code);
     } catch (e: unknown) {
       const msg =
          typeof e === "object" && e !== null && "response" in e
@@ -73,7 +75,7 @@ export default function Cart() {
   };
 
   useEffect(() => {
-    productApi.getAll().then((res) => {
+    productApi.getAllForStore().then((res) => {
       const cartIds = new Set(items.map((i) => i.id));
       const others = res.data.filter((p: any) => !cartIds.has(p._id)).slice(0, 4);
       setUpsellProducts(others);
@@ -87,7 +89,7 @@ export default function Cart() {
 
   const handleAddCombo = async () => {
     try {
-      const res = await productApi.getAll();
+      const res = await productApi.getAllForStore();
       const mangoProd = res.data.find((p: any) => p.name.toLowerCase().includes("mango"));
       const bananaProd = res.data.find((p: any) => p.name.toLowerCase().includes("banana"));
       if (mangoProd && !hasMango) addToCart(mangoProd);
@@ -156,7 +158,7 @@ export default function Cart() {
           </div>
 
           {/* ── TRUST BADGES BAR ── */}
-          <div className="bg-white rounded-2xl border border-[#213B14]/10 p-5 mb-8 shadow-sm grid grid-cols-2 md:grid-cols-4 gap-4 divide-y md:divide-y-0 md:divide-x divide-[#213B14]/10">
+          <div className="bg-white rounded-2xl border border-[#213B14]/10 p-5 mb-8 shadow-sm grid grid-cols-1 sm:grid-cols-2 gap-4 divide-y sm:divide-y-0 sm:divide-x divide-[#213B14]/10">
             <div className="flex items-center gap-3 px-3 py-2 md:py-0">
               <div className="w-10 h-10 rounded-full bg-[#213B14]/5 flex items-center justify-center text-[#213B14] shrink-0">
                 <ShieldCheck className="w-5 h-5" />
@@ -173,24 +175,6 @@ export default function Cart() {
               <div>
                 <p className="text-xs font-black uppercase tracking-wider text-[#1C2A18]">Fast & Reliable Delivery</p>
                 <p className="text-[10px] text-[#213B14]/60 font-medium">2–3 Days Delivery</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 px-3 pt-3 md:pt-0 py-2 md:py-0">
-              <div className="w-10 h-10 rounded-full bg-[#213B14]/5 flex items-center justify-center text-[#213B14] shrink-0">
-                <RotateCcw className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-black uppercase tracking-wider text-[#1C2A18]">Easy Returns</p>
-                <p className="text-[10px] text-[#213B14]/60 font-medium">7 Days Return Policy</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 px-3 pt-3 md:pt-0 py-2 md:py-0">
-              <div className="w-10 h-10 rounded-full bg-[#213B14]/5 flex items-center justify-center text-[#213B14] shrink-0">
-                <Heart className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-black uppercase tracking-wider text-[#1C2A18]">Loved by 10,000+</p>
-                <p className="text-[10px] text-[#213B14]/60 font-medium">Happy Customers</p>
               </div>
             </div>
           </div>
@@ -528,23 +512,6 @@ export default function Cart() {
                 </div>
               </div>
 
-              {/* 7-Day Guarantee Card */}
-              <div className="bg-red-500/[0.03] border border-red-500/10 rounded-3xl p-5 flex items-center justify-between gap-4 shadow-sm">
-                <div className="space-y-1">
-                  <h4 className="text-xs font-black text-red-800 uppercase tracking-wider flex items-center gap-1.5">
-                    <ShieldCheck className="w-4 h-4" /> 7-Day Happiness Guarantee
-                  </h4>
-                  <p className="text-[10px] text-red-800/70 font-semibold leading-relaxed">
-                    Not happy with your order? We'll make it right.
-                  </p>
-                </div>
-                {/* Stamp style circle */}
-                <div className="w-12 h-12 rounded-full border-2 border-dashed border-red-800/30 flex flex-col items-center justify-center shrink-0 text-red-800 font-black text-[9px] uppercase tracking-tighter leading-none select-none rotate-12">
-                  <span>7</span>
-                  <span className="text-[6px] tracking-widest mt-0.5">DAYS</span>
-                </div>
-              </div>
-
             </div>
 
           </div>
@@ -562,21 +529,6 @@ export default function Cart() {
               >
                 Our Story →
               </Link>
-              
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-[#213B14]/10">
-                <div>
-                  <p className="text-lg font-black text-[#1C2A18]">10,000+</p>
-                  <p className="text-[9px] text-[#213B14]/50 font-bold uppercase tracking-wider">Happy Customers</p>
-                </div>
-                <div>
-                  <p className="text-lg font-black text-[#1C2A18]">4.8/5</p>
-                  <p className="text-[9px] text-[#213B14]/50 font-bold uppercase tracking-wider">Average Rating</p>
-                </div>
-                <div>
-                  <p className="text-lg font-black text-[#1C2A18]">100%</p>
-                  <p className="text-[9px] text-[#213B14]/50 font-bold uppercase tracking-wider">Would Recommend</p>
-                </div>
-              </div>
             </div>
             
             <div className="h-64 md:h-full min-h-[250px] relative overflow-hidden self-stretch bg-[#FAF7F2]">

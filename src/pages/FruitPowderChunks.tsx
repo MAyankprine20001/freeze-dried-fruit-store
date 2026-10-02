@@ -8,6 +8,9 @@ import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
+import CartStepper from "../components/CartStepper";
+import ReviewSlider from "../components/ReviewSlider";
+import { testimonialsFor } from "../data/testimonials";
 
 export default function FruitPowderChunks() {
   const [allProducts, setAllProducts] = useState<any[]>([]);
@@ -30,7 +33,7 @@ export default function FruitPowderChunks() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await productApi.getAll();
+        const res = await productApi.getAllForStore();
         const data = res.data ?? res;
         // Filter by Fruit Chunks & Fruit Powders categories
         const filtered = data.filter((p: any) => {
@@ -97,13 +100,6 @@ export default function FruitPowderChunks() {
     }, 1500);
   };
 
-  const testimonials = [
-    { text: "The mango bites are super crunchy and taste exactly like real mango! My go-to healthy snack.", author: "Ananya, Delhi" },
-    { text: "Jamun bites are so unique and tasty. Love the tangy flavor and the crunch.", author: "Rohan, Bangalore" },
-    { text: "Mixed fruit is my favorite! Kids love it too. Finally a snack I can trust.", author: "Priya, Mumbai" }
-  ];
-
-  const [reviewIdx, setReviewIdx] = useState(0);
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-[#213B14]">
@@ -177,11 +173,23 @@ export default function FruitPowderChunks() {
 
             {/* Foreground Product Showcase Image on the Right */}
             <div className="col-span-5 lg:col-span-6 flex justify-center items-center z-20">
-              <img
-                src="/CripsyProductImage.png"
-                alt="Crispy Bites Products Showcase"
-                className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-3xl lg:max-w-[700px] xl:max-w-[760px] h-auto object-contain transition-transform duration-500 lg:scale-[1.2] hover:scale-[1.22] drop-shadow-md"
-              />
+              <div className="relative flex items-end justify-center h-[200px] sm:h-[320px] lg:h-[460px] w-full">
+                <img
+                  src="/images/products/crispy-bites-mixed-fruit-back-800.webp"
+                  alt="Back of the Crispy Bites Mixed Fruit pack with ingredients and nutrition information"
+                  width={754}
+                  height={1269}
+                  className="absolute h-[88%] w-auto object-contain -rotate-6 -translate-x-[30%] sm:-translate-x-[35%] opacity-95 drop-shadow-lg"
+                />
+                <img
+                  src="/images/products/crispy-bites-mixed-fruit-front-800.webp"
+                  alt="Crispy Bites Mixed Fruit freeze-dried fruit pack"
+                  width={754}
+                  height={1269}
+                  fetchPriority="high"
+                  className="relative h-full w-auto object-contain rotate-3 translate-x-[18%] drop-shadow-xl transition-transform duration-500 hover:scale-[1.03]"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -378,17 +386,19 @@ export default function FruitPowderChunks() {
                       <span className="text-[10px] text-gray-400 block">{product.weight}</span>
                       <span className="font-serif text-xl font-black text-[#213B14]">₹{product.price}</span>
                     </div>
-                    <button
-                      onClick={() => handleAddToCart(product)}
-                      className={`inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
-                        addedItems[product._id || product.id]
-                          ? "bg-green-700 text-white shadow-none"
-                          : "bg-[#2B4C1F] text-white hover:bg-[#1E3615] shadow-md shadow-[#2B4C1F]/15"
-                      }`}
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5" />
-                      {addedItems[product._id || product.id] ? "Added!" : "SHOP NOW"}
-                    </button>
+                    <CartStepper product={product} color="#2B4C1F" textColor="#FFFFFF">
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className={`inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                          addedItems[product._id || product.id]
+                            ? "bg-green-700 text-white shadow-none"
+                            : "bg-[#2B4C1F] text-white hover:bg-[#1E3615] shadow-md shadow-[#2B4C1F]/15"
+                        }`}
+                      >
+                        <ShoppingBag className="w-3.5 h-3.5" />
+                        {addedItems[product._id || product.id] ? "Added!" : "SHOP NOW"}
+                      </button>
+                    </CartStepper>
                   </div>
                 </div>
               ))}
@@ -491,30 +501,7 @@ export default function FruitPowderChunks() {
       <section className="py-20 bg-[#FAF7F2]">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
           <span className="text-xs font-bold uppercase tracking-widest text-[#2B4C1F]">Loved by Our Customers</span>
-          <div className="relative bg-white p-8 rounded-2xl border border-[#213B14]/5 shadow-sm min-h-[140px] flex flex-col justify-center">
-            <p className="font-serif text-lg italic text-[#213B14] leading-relaxed">
-              "{testimonials[reviewIdx].text}"
-            </p>
-            <h4 className="text-xs font-black uppercase text-[#2B4C1F] tracking-widest mt-4">
-              - {testimonials[reviewIdx].author}
-            </h4>
-            <div className="absolute top-1/2 -translate-y-1/2 left-3">
-              <button
-                onClick={() => setReviewIdx((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
-                className="w-8 h-8 rounded-full border border-[#213B14]/10 bg-white flex items-center justify-center text-[#213B14] hover:bg-gray-50 transition-colors shadow-sm"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="absolute top-1/2 -translate-y-1/2 right-3">
-              <button
-                onClick={() => setReviewIdx((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
-                className="w-8 h-8 rounded-full border border-[#213B14]/10 bg-white flex items-center justify-center text-[#213B14] hover:bg-gray-50 transition-colors shadow-sm"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
+          <ReviewSlider reviews={testimonialsFor("crispy-bites")} accent="#2B4C1F" card />
         </div>
       </section>
 

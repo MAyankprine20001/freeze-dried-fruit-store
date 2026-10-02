@@ -1,5 +1,10 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    {
+      "source": "/:path(about|fruit-powder-chunks|chocolate|faq|contact|products|bulk-orders|smoothie-premix|combos|gift-hampers|reviews|privacy|terms|login|signup|forgot-password|reset-password|verify-email|cart|checkout|order-success|profile|admin)",
+      "destination": "/index.html"
+    },
+    { "source": "/product/:id", "destination": "/index.html" },
+    { "source": "/admin/:path*", "destination": "/index.html" }
   ]
 }

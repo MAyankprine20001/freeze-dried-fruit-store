@@ -14,6 +14,10 @@ import { toast } from "react-toastify";
 import { productApi } from "../api/product.api";
 import { reviewApi } from "../api/review.api";
 import { getProductPrimaryImage } from "../utils/productImage";
+import { productRealImages, setPageMeta } from "../utils/seo";
+import ProductSchema from "../components/ProductSchema";
+import { trackViewItem } from "../utils/analytics";
+import CartStepper from "../components/CartStepper";
 
 // Map badge label → icon
 const BADGE_ICON_MAP: Record<string, React.ReactNode> = {
@@ -62,9 +66,16 @@ export default function ProductDetail() {
       try {
         setLoading(true);
         if (!id) return;
-        const res = await productApi.getById(id);
+        const res = await productApi.getByIdForStore(id);
         const p = res.data;
         setProduct(p);
+        trackViewItem(p);
+        setPageMeta({
+          title: [p.name, p.weight].filter(Boolean).join(", "),
+          description: (p.subtitle || p.description || "").slice(0, 160) || undefined,
+          path: `/product/${id}`,
+          image: productRealImages(p)[0],
+        });
         setActiveImg(0);
         // relatedProducts are now populated by the backend
         setRelatedProducts(Array.isArray(p.relatedProducts) ? p.relatedProducts : []);
@@ -91,7 +102,7 @@ export default function ProductDetail() {
       toast.success("Review submitted!");
       setComment(""); setRating(5); setImageFile(null); setPreviewUrl(null);
       fetchReviews();
-      const res = await productApi.getById(id!);
+      const res = await productApi.getByIdForStore(id!);
       setProduct(res.data);
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Failed to submit review");
@@ -146,6 +157,7 @@ export default function ProductDetail() {
     <div className="min-h-screen bg-[#0d0d0d] flex flex-col font-sans text-white">
       <Header />
       <main className="flex-1 pt-24 pb-20 px-4 sm:px-6">
+        <ProductSchema product={product} reviews={reviews} />
         <div className="max-w-7xl mx-auto">
 
           {/* Breadcrumb */}
@@ -353,9 +365,11 @@ export default function ProductDetail() {
                       {p.subtitle && <p className="text-white/45 text-xs mt-1 line-clamp-2">{p.subtitle}</p>}
                       <div className="mt-3 pt-3 border-t border-white/[0.06]">
                         <span className="font-bold text-white text-base block mb-2">₹{p.price}</span>
+                        <CartStepper product={p} color="#D4AF37" textColor="#000000" className="w-full">
                         <button onClick={(e) => { e.stopPropagation(); addToCart(p); toast.success(`${p.name} added!`); }} className="w-full py-2 bg-transparent border border-[#D4AF37]/50 text-[#D4AF37] rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-[#D4AF37] hover:text-black transition-all">
                           <ShoppingBag className="w-3.5 h-3.5" /> Add to Cart
                         </button>
+                        </CartStepper>
                       </div>
                     </div>
                   </div>

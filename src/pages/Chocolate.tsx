@@ -8,6 +8,9 @@ import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
+import CartStepper from "../components/CartStepper";
+import ReviewSlider from "../components/ReviewSlider";
+import { testimonialsFor } from "../data/testimonials";
 
 export default function Chocolate() {
   const [allProducts, setAllProducts] = useState<any[]>([]);
@@ -30,7 +33,7 @@ export default function Chocolate() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await productApi.getAll();
+        const res = await productApi.getAllForStore();
         const data = res.data ?? res;
         // Filter by Chocolates category
         const filtered = data.filter((p: any) =>
@@ -371,17 +374,19 @@ export default function Chocolate() {
                       <span className="text-[10px] text-gray-400 block">{product.weight}</span>
                       <span className="font-serif text-lg font-black text-[#213B14]">₹{product.price}</span>
                     </div>
-                    <button
-                      onClick={() => handleAddToCart(product)}
-                      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
-                        addedItems[product._id || product.id]
-                          ? "bg-green-700 text-white shadow-none"
-                          : "bg-[#4A2D1B] text-white hover:bg-[#382012] shadow-md shadow-[#4A2D1B]/15"
-                      }`}
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5" />
-                      {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
-                    </button>
+                    <CartStepper product={product} color="#4A2D1B" textColor="#FFFFFF">
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                          addedItems[product._id || product.id]
+                            ? "bg-green-700 text-white shadow-none"
+                            : "bg-[#4A2D1B] text-white hover:bg-[#382012] shadow-md shadow-[#4A2D1B]/15"
+                        }`}
+                      >
+                        <ShoppingBag className="w-3.5 h-3.5" />
+                        {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
+                      </button>
+                    </CartStepper>
                   </div>
                 </div>
               ))}
@@ -430,6 +435,14 @@ export default function Chocolate() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Customer Reviews */}
+      <section className="py-20 bg-[#FAF7F2]">
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#4A2D1B]">Loved by Our Customers</span>
+          <ReviewSlider reviews={testimonialsFor("freeze-fusion")} accent="#4A2D1B" card />
         </div>
       </section>
 

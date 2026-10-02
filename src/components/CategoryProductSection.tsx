@@ -7,6 +7,7 @@ import { productApi } from '../api/product.api';
 import { toast } from 'react-toastify';
 import { getProductPrimaryImage } from '../utils/productImage';
 import Loader from './Loader';
+import CartStepper from "./CartStepper";
 
 // ── Safe image with emoji fallback ──────────────────────────────────────────
 function SafeImg({
@@ -152,26 +153,28 @@ function ProductCard({ product, index }: { product: any; index: number }) {
           </div>
 
           {/* Add to Cart button */}
-          <button
-            onClick={handleAddToCart}
-            className={`w-full py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all duration-200 active:scale-[0.97] ${
-              added
-                ? 'bg-green-700 text-white shadow-none'
-                : 'bg-[#D4AF37] text-black hover:bg-[#c4a030] shadow-lg shadow-[#D4AF37]/10'
-            }`}
-          >
-            {added ? (
-              <>
-                <CheckCircle2 className="w-4 h-4" />
-                Added!
-              </>
-            ) : (
-              <>
-                <ShoppingBag className="w-4 h-4" />
-                Add to Cart
-              </>
-            )}
-          </button>
+          <CartStepper product={product} color="#D4AF37" textColor="#000000" className="w-full h-10">
+            <button
+              onClick={handleAddToCart}
+              className={`w-full py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all duration-200 active:scale-[0.97] ${
+                added
+                  ? 'bg-green-700 text-white shadow-none'
+                  : 'bg-[#D4AF37] text-black hover:bg-[#c4a030] shadow-lg shadow-[#D4AF37]/10'
+              }`}
+            >
+              {added ? (
+                <>
+                  <CheckCircle2 className="w-4 h-4" />
+                  Added!
+                </>
+              ) : (
+                <>
+                  <ShoppingBag className="w-4 h-4" />
+                  Add to Cart
+                </>
+              )}
+            </button>
+          </CartStepper>
         </div>
       </div>
     </motion.div>
@@ -201,7 +204,7 @@ export default function CategoryProductSection({
     const fetch = async () => {
       try {
         setLoading(true);
-        const res = await productApi.getAll();
+        const res = await productApi.getAllForStore();
         // Normalize both sides: lowercase + replace spaces/underscores with hyphen
         const normalize = (s: string) =>
           s.toLowerCase().replace(/[\s_]+/g, '-');
