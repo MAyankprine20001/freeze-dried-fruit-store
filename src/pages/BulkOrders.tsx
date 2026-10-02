@@ -696,6 +696,12 @@ export default function BulkOrders() {
                     </div>
                     <span>+91 7567350328</span>
                   </a>
+                  <a href="tel:+918375077360" className="flex items-center gap-3 text-xs font-bold hover:text-[#3F622D] transition-colors">
+                    <div className="w-8 h-8 rounded-full border border-[#213B14]/15 flex items-center justify-center">
+                      <Phone className="w-4 h-4 text-[#3F622D]" />
+                    </div>
+                    <span>+91 8375077360</span>
+                  </a>
                 </div>
               </div>
 
