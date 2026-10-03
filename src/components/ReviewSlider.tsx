@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import type { Testimonial } from "../data/testimonials";
 
@@ -8,18 +9,57 @@ interface Props {
   accent?: string;
   /** Wrap the quote in a white card (used on category pages). */
   card?: boolean;
+  /** Auto-advance delay in ms (0 turns it off). */
+  interval?: number;
 }
 
-/** One-at-a-time slider for real customer reviews. Stars appear only when the customer gave a rating. */
-export default function ReviewSlider({ reviews, accent = "#3F622D", card = false }: Props) {
+/**
+ * One-at-a-time slider for real customer reviews. Stars appear only when the customer gave a rating.
+ * Advances on its own; pauses while hovered/focused, and supports swipe on touch screens.
+ */
+export default function ReviewSlider({ reviews, accent = "#3F622D", card = false, interval = 4000 }: Props) {
   const [i, setI] = useState(0);
-  if (reviews.length === 0) return null;
-  const r = reviews[i];
-  const go = (d: number) => setI((p) => (p + d + reviews.length) % reviews.length);
+  const [paused, setPaused] = useState(false);
+  const touchX = useRef<number | null>(null);
+  const count = reviews.length;
+
+  // Restarts after every change (manual or automatic), so a click always gets a full interval.
+  useEffect(() => {
+    if (!interval || paused || count < 2) return;
+    const t = window.setTimeout(() => setI((p) => (p + 1) % count), interval);
+    return () => window.clearTimeout(t);
+  }, [i, paused, count, interval]);
+
+  if (count === 0) return null;
+  const idx = i % count;
+  const r = reviews[idx];
+  const go = (d: number) => setI((p) => (p + d + count) % count);
 
   return (
-    <div className={card ? "bg-white p-6 sm:p-8 rounded-2xl border border-[#213B14]/5 shadow-sm" : ""}>
-      <figure className="max-w-2xl mx-auto min-h-[150px] flex flex-col justify-center" aria-live="polite">
+    <div
+      className={card ? "bg-white p-6 sm:p-8 rounded-2xl border border-[#213B14]/5 shadow-sm" : ""}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+      onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+      onTouchEnd={(e) => {
+        if (touchX.current === null) return;
+        const dx = e.changedTouches[0].clientX - touchX.current;
+        touchX.current = null;
+        if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+      }}
+    >
+      <AnimatePresence mode="wait">
+      <motion.figure
+        key={idx}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -8 }}
+        transition={{ duration: 0.35 }}
+        className="max-w-2xl mx-auto min-h-[150px] flex flex-col justify-center"
+        aria-live={paused ? "polite" : "off"}
+      >
         {r.rating ? (
           <div className="flex justify-center gap-1 mb-4" role="img" aria-label={`${r.rating} out of 5 stars`}>
             {Array.from({ length: 5 }).map((_, s) => (
@@ -34,7 +74,8 @@ export default function ReviewSlider({ reviews, accent = "#3F622D", card = false
           </span>
           <span className="block mt-1 text-xs text-[#213B14]/55 font-semibold">{r.product}</span>
         </figcaption>
-      </figure>
+      </motion.figure>
+      </AnimatePresence>
 
       {reviews.length > 1 && (
         <div className="mt-6 flex items-center justify-center gap-4">
@@ -47,7 +88,7 @@ export default function ReviewSlider({ reviews, accent = "#3F622D", card = false
             <ChevronLeft className="w-5 h-5" />
           </button>
           <span className="text-xs font-bold text-[#213B14]/60 tabular-nums min-w-[3.5rem] text-center">
-            {i + 1} / {reviews.length}
+            {idx + 1} / {count}
           </span>
           <button
             type="button"
