@@ -66,7 +66,7 @@ export default function ProductDetail() {
       try {
         setLoading(true);
         if (!id) return;
-        const res = await productApi.getByIdForStore(id);
+        const res = await productApi.getById(id);
         const p = res.data;
         setProduct(p);
         trackViewItem(p);
@@ -102,7 +102,7 @@ export default function ProductDetail() {
       toast.success("Review submitted!");
       setComment(""); setRating(5); setImageFile(null); setPreviewUrl(null);
       fetchReviews();
-      const res = await productApi.getByIdForStore(id!);
+      const res = await productApi.getById(id!);
       setProduct(res.data);
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Failed to submit review");

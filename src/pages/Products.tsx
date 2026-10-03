@@ -40,7 +40,7 @@ export default function Products() {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const res = await productApi.getAllForStore();
+        const res = await productApi.getAll();
         const data = res.data ?? res;
         setAllProducts(data);
         setFilteredProducts(data);

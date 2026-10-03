@@ -75,7 +75,7 @@ export default function Cart() {
   };
 
   useEffect(() => {
-    productApi.getAllForStore().then((res) => {
+    productApi.getAll().then((res) => {
       const cartIds = new Set(items.map((i) => i.id));
       const others = res.data.filter((p: any) => !cartIds.has(p._id)).slice(0, 4);
       setUpsellProducts(others);
@@ -89,7 +89,7 @@ export default function Cart() {
 
   const handleAddCombo = async () => {
     try {
-      const res = await productApi.getAllForStore();
+      const res = await productApi.getAll();
       const mangoProd = res.data.find((p: any) => p.name.toLowerCase().includes("mango"));
       const bananaProd = res.data.find((p: any) => p.name.toLowerCase().includes("banana"));
       if (mangoProd && !hasMango) addToCart(mangoProd);
