@@ -28,7 +28,7 @@ export default function GiftHampers() {
     const fetchGifts = async () => {
       try {
         setLoading(true);
-        const res = await productApi.getAllForStore();
+        const res = await productApi.getAll();
         const data = res.data ?? res;
         
         // Filter by isGift flag or category options

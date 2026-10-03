@@ -34,7 +34,7 @@ export default function FruitPowderChunks() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await productApi.getAllForStore();
+        const res = await productApi.getAll();
         const data = res.data ?? res;
         // Filter by Fruit Chunks & Fruit Powders categories
         const filtered = data.filter((p: any) => {
