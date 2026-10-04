@@ -533,7 +533,7 @@ export default function Cart() {
             
             <div className="h-64 md:h-full min-h-[250px] relative overflow-hidden self-stretch bg-[#FAF7F2]">
               <img 
-                src="/freeze_dried_fruits_bowl.png" 
+                src="/freeze_dried_fruits_bowl.webp" 
                 alt="Freeze Dried Fruit Bowl" 
                 className="w-full h-full object-cover animate-fade-in" 
               />

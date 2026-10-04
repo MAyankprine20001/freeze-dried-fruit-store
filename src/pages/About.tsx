@@ -38,7 +38,7 @@ export default function About() {
         {/* Background Image matching Homepage */}
         <div className="absolute inset-0 w-full h-full z-0">
           <img 
-            src="/Home_backgroun_Image.png" 
+            src="/Home_backgroun_Image.webp" 
             alt="The Dry Factory Background" 
             className="w-full h-full object-cover object-center"
           />
@@ -82,7 +82,7 @@ export default function About() {
           >
             <div className="rounded-3xl overflow-hidden shadow-md border border-[#213B14]/10">
               <img
-                src="/AboutLeft_Side.png"
+                src="/AboutLeft_Side.webp"
                 alt="Fresh fruit packaging showcase"
                 className="w-full h-[480px] object-cover"
               />

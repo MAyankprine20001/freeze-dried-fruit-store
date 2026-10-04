@@ -110,7 +110,7 @@ export default function FruitPowderChunks() {
       <section className="relative pt-32 pb-8 sm:pt-36 sm:pb-12 md:pt-40 md:pb-16 overflow-hidden flex items-center min-h-[380px] sm:min-h-[500px] lg:min-h-[640px]">
         {/* Absolute Background Image */}
         <img 
-          src="/cripsy_background_img.png" 
+          src="/cripsy_background_img.webp" 
           alt="Crispy Bites Background" 
           className="absolute inset-0 w-full h-full object-cover object-center z-0" 
         />
@@ -438,10 +438,10 @@ export default function FruitPowderChunks() {
                 
                 <div className="grid grid-cols-4 gap-2 sm:gap-4 pt-2">
                   {[
-                    { title: "Straight from the pack", icon: "/straight_pack.png" },
-                    { title: "Top on Yogurt", icon: "/top_yogurt.png" },
-                    { title: "Add to Cereal", icon: "/add_cereal.png" },
-                    { title: "Perfect for Desserts", icon: "/perfect_desserts.png" }
+                    { title: "Straight from the pack", icon: "/straight_pack.webp" },
+                    { title: "Top on Yogurt", icon: "/top_yogurt.webp" },
+                    { title: "Add to Cereal", icon: "/add_cereal.webp" },
+                    { title: "Perfect for Desserts", icon: "/perfect_desserts.webp" }
                   ].map((item, idx) => {
                     const words = item.title.split(" ");
                     const line1 = words.slice(0, 2).join(" ");
@@ -466,7 +466,7 @@ export default function FruitPowderChunks() {
             <div className="lg:col-span-5 relative overflow-hidden rounded-2xl flex items-center p-8 md:p-10 bg-[#1C2A18] text-[#FAF7F2] shadow-sm min-h-[220px]">
               {/* Background Image of Banner */}
               <img 
-                src="/real_goodness_banner.png" 
+                src="/real_goodness_banner.webp" 
                 alt="Real Goodness Background" 
                 className="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-90" 
               />

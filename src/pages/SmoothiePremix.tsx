@@ -108,7 +108,7 @@ export default function SmoothiePremix() {
       <section className="relative pt-32 pb-8 sm:pt-36 sm:pb-12 md:pt-40 md:pb-16 overflow-hidden flex items-center min-h-[380px] sm:min-h-[500px] lg:min-h-[640px]">
         {/* Absolute Background Image */}
         <img 
-          src="/sliprealBackgrpound_image.png" 
+          src="/sliprealBackgrpound_image.webp" 
           alt="SipReal Background" 
           className="absolute inset-0 w-full h-full object-cover object-center z-0" 
         />
@@ -173,7 +173,7 @@ export default function SmoothiePremix() {
             {/* Foreground Product Image on the Right */}
             <div className="col-span-5 lg:col-span-6 flex justify-center items-center z-20">
               <img
-                src="/slipreal_product_image.png"
+                src="/slipreal_product_image.webp"
                 alt="SipReal Products Showcase"
                 className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-3xl lg:max-w-[700px] xl:max-w-[760px] h-auto object-contain transition-transform duration-500 lg:scale-[1.28] hover:scale-[1.3] lg:translate-y-16 lg:translate-x-12 drop-shadow-md"
               />
@@ -376,7 +376,7 @@ export default function SmoothiePremix() {
               {/* Left image column */}
               <div className="md:col-span-5 relative min-h-[240px] md:min-h-full">
                 <img 
-                  src="/smoothie_steps_img.png" 
+                  src="/smoothie_steps_img.webp" 
                   alt="Pink Berry Smoothie" 
                   className="absolute inset-0 w-full h-full object-cover" 
                 />

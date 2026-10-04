@@ -105,7 +105,7 @@ export default function BulkOrders() {
         {/* Absolute Background Image */}
         <div className="absolute inset-0 w-full h-full z-0">
           <img 
-            src="/Home_backgroun_Image.png" 
+            src="/Home_backgroun_Image.webp" 
             alt="Hero Background" 
             className="w-full h-full object-cover object-center"
           />
@@ -258,7 +258,7 @@ export default function BulkOrders() {
             <div>
               <div className="h-44 overflow-hidden relative">
                 <img 
-                  src="/bulk_fruit_chunks_hero.png" 
+                  src="/bulk_fruit_chunks_hero.webp" 
                   alt="Freeze Dried Fruit Chunks" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
@@ -296,7 +296,7 @@ export default function BulkOrders() {
             <div>
               <div className="h-44 overflow-hidden relative">
                 <img 
-                  src="/bulk_fruit_powder_hero.png" 
+                  src="/bulk_fruit_powder_hero.webp" 
                   alt="Freeze Dried Fruit Powders" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
@@ -333,7 +333,7 @@ export default function BulkOrders() {
             <div>
               <div className="h-44 overflow-hidden relative">
                 <img 
-                  src="/bulk_vegetable_flakes_hero.png" 
+                  src="/bulk_vegetable_flakes_hero.webp" 
                   alt="Freeze Dried Vegetable Flakes" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
@@ -371,7 +371,7 @@ export default function BulkOrders() {
             <div>
               <div className="h-44 overflow-hidden relative">
                 <img 
-                  src="/bulk_edible_flowers_hero.png" 
+                  src="/bulk_edible_flowers_hero.webp" 
                   alt="Freeze Dried Edible Flowers" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
@@ -487,7 +487,7 @@ export default function BulkOrders() {
             
             <div className="w-full md:w-44 h-32 rounded-2xl overflow-hidden bg-white border border-[#213B14]/5 shrink-0 shadow-sm">
               <img 
-                src="/bulk_why_choose.png" 
+                src="/bulk_why_choose.webp" 
                 alt="Fresh fruits and vegetables representing clean ingredients" 
                 className="w-full h-full object-cover" 
               />

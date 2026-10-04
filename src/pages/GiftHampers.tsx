@@ -127,7 +127,7 @@ export default function GiftHampers() {
         {/* Absolute Background Image */}
         <div className="absolute inset-0 w-full h-full z-0">
           <img 
-            src="/Gift_image.png" 
+            src="/Gift_image.webp" 
             alt="Gift Hampers Background" 
             className="w-full h-full object-cover object-center"
           />
@@ -214,7 +214,7 @@ export default function GiftHampers() {
             {/* Right Column: Foreground Product Showcase Image */}
             <div className="col-span-5 lg:col-span-7 flex justify-center items-center z-20 lg:translate-x-12">
               <img
-                src="/gift_product.png"
+                src="/gift_product.webp"
                 alt="Premium Gift Hamper Box Showcase"
                 className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-2xl lg:max-w-[850px] xl:max-w-[950px] h-auto object-contain lg:scale-[1.25] hover:scale-[1.27] transition-transform duration-500 drop-shadow-md"
               />
