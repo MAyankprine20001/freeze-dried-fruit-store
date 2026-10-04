@@ -127,7 +127,7 @@ export default function Chocolate() {
       <section className="relative pt-32 pb-8 sm:pt-36 sm:pb-12 md:pt-40 md:pb-16 overflow-hidden flex items-center min-h-[380px] sm:min-h-[500px] lg:min-h-[640px]">
         {/* Absolute Background Image */}
         <img 
-          src="/Home_backgroun_Image.png"
+          src="/Home_backgroun_Image.webp"
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover object-center z-0"
@@ -431,7 +431,7 @@ export default function Chocolate() {
           <div className="relative w-full rounded-2xl overflow-hidden border border-[#4A2D1B]/15 shadow-md p-8 md:p-12 bg-[#FAF7F2] min-h-[420px] flex flex-col justify-between gap-8">
             {/* Background Image showing chocolate stack on left and strawberry bowl on right */}
             <img 
-              src="/why_love_it_bg.png" 
+              src="/why_love_it_bg.webp" 
               alt="Why You'll Love It Background" 
               className="absolute inset-0 w-full h-full object-cover object-center z-0" 
             />
@@ -479,7 +479,7 @@ export default function Chocolate() {
       {/* Explore Chocolates Banner */}
       <section className="relative py-12 md:py-16 overflow-hidden bg-[#1C2A18]">
         <img
-          src="/chocolate_banner_bg.png"
+          src="/chocolate_banner_bg.webp"
           alt="Real Chocolate Banner"
           className="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-40 md:opacity-50"
         />

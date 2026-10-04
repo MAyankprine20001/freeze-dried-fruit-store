@@ -154,7 +154,7 @@ export default function Home() {
       <section className="relative min-h-[380px] sm:min-h-[520px] md:min-h-[680px] lg:min-h-[780px] flex items-center pt-32 pb-8 sm:pt-36 sm:pb-16 md:pt-40 md:pb-28 overflow-hidden">
         {/* Absolute Background Image */}
         <img 
-          src="/Home_backgroun_Image.png" 
+          src="/Home_backgroun_Image.webp" 
           alt="Hero Background" 
           className="absolute inset-0 w-full h-full object-cover object-center z-0" 
         />
@@ -209,7 +209,7 @@ export default function Home() {
             {/* Foreground Product Image on the Right */}
             <div className="col-span-5 lg:col-span-7 flex justify-center items-center z-20">
               <img
-                src="/HomeProductImage.png"
+                src="/HomeProductImage.webp"
                 alt="The Dry Factory Products Showcase"
                 className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-2xl lg:max-w-[760px] xl:max-w-[820px] h-auto object-contain lg:scale-[1.1] hover:scale-[1.12] transition-transform duration-500 drop-shadow-md"
               />
@@ -411,7 +411,7 @@ export default function Home() {
       <section className="relative min-h-[440px] md:min-h-[480px] flex items-center py-16 md:py-20 overflow-hidden">
         {/* Absolute Background Image */}
         <img 
-          src="/Home_banner_image.png" 
+          src="/Home_banner_image.webp" 
           alt="Real Ingredients Background" 
           className="absolute inset-0 w-full h-full object-cover object-right md:object-center z-0" 
         />

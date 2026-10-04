@@ -332,7 +332,7 @@ export default function Header() {
           className="group block text-center space-y-3 p-4 hover:bg-[#FCEAEB] rounded-xl transition-all border border-transparent hover:border-[#B82A5F]/15 select-none"
         >
          <div className="w-full h-32 rounded-xl overflow-hidden bg-[#FCEAEB] relative flex items-center justify-center pointer-events-none">
-          <img src="/home_slip_real.png" alt="SipReal" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
+          <img src="/home_slip_real.webp" alt="SipReal" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
          </div>
          <div className="space-y-0.5">
            <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#B82A5F]/60 block">Smoothie Premix</span>
@@ -348,7 +348,7 @@ export default function Header() {
           className="group block text-center space-y-3 p-4 hover:bg-[#F5ECE6] rounded-xl transition-all border border-transparent hover:border-[#4A2D1B]/15 select-none"
         >
          <div className="w-full h-32 rounded-xl overflow-hidden bg-[#F5ECE6] relative flex items-center justify-center pointer-events-none">
-          <img src="/home_freexze_frozen.png" alt="Freeze Fusion" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
+          <img src="/home_freexze_frozen.webp" alt="Freeze Fusion" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
          </div>
          <div className="space-y-0.5">
            <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#4A2D1B]/60 block">Chocolates</span>
