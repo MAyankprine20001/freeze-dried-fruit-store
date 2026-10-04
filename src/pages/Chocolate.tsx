@@ -12,6 +12,27 @@ import CartStepper from "../components/CartStepper";
 import ReviewSlider from "../components/ReviewSlider";
 import { testimonialsFor } from "../data/testimonials";
 
+/**
+ * Real Freeze Fusion jars for the hero. Order = front jar first.
+ * To add a flavour: put its cut-out image in public/images/chocolate and add a line here.
+ */
+const FREEZE_FUSION_JARS = [
+  { name: "Banana Cocoa Dark", src: "/images/chocolate/freeze-fusion-banana-cocoa-dark.webp", w: 275, h: 392 },
+  { name: "Mango Silk White", src: "/images/chocolate/freeze-fusion-mango-silk-white.webp", w: 274, h: 387 },
+  { name: "Strawberry Cream Crunch Milk", src: "/images/chocolate/freeze-fusion-strawberry-cream-crunch.webp", w: 234, h: 309 },
+];
+
+/** Position of each jar by how many jars there are: [front, left, right]. */
+const JAR_LAYOUT: Record<number, string[]> = {
+  1: ["z-20 h-full left-1/2 -translate-x-1/2"],
+  2: ["z-20 h-full right-0 sm:right-[2%]", "z-10 h-[84%] -left-[4%] sm:left-[2%] -rotate-[4deg]"],
+  3: [
+    "z-20 h-[94%] left-1/2 -translate-x-1/2",
+    "z-10 h-[80%] -left-[4%] sm:left-0 lg:-left-[12%] -rotate-[6deg]",
+    "z-10 h-[72%] -right-[4%] sm:right-0 lg:-right-[12%] rotate-[6deg]",
+  ],
+};
+
 export default function Chocolate() {
   const [allProducts, setAllProducts] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
@@ -106,12 +127,13 @@ export default function Chocolate() {
       <section className="relative pt-32 pb-8 sm:pt-36 sm:pb-12 md:pt-40 md:pb-16 overflow-hidden flex items-center min-h-[380px] sm:min-h-[500px] lg:min-h-[640px]">
         {/* Absolute Background Image */}
         <img 
-          src="/Freeze_background_image.png" 
-          alt="Hero Background" 
-          className="absolute inset-0 w-full h-full object-cover object-center z-0" 
+          src="/Home_backgroun_Image.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center z-0"
         />
         {/* Subtle overlay for legibility on small screens */}
-        <div className="absolute inset-0 bg-[#FAF7F2]/40 md:bg-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-[#FAF7F2]/40 md:bg-transparent md:bg-gradient-to-r md:from-[#FAF7F2]/90 md:via-[#FAF7F2]/40 md:to-transparent z-10 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
           <div className="grid grid-cols-12 gap-3 sm:gap-6 lg:gap-12 items-center">
@@ -173,13 +195,21 @@ export default function Chocolate() {
               </div>
             </div>
 
-            {/* Foreground Product Image on the Right */}
-            <div className="col-span-5 lg:col-span-6 flex justify-center items-center z-20 lg:translate-x-8">
-              <img
-                src="/freeze_product_image.png"
-                alt="Freeze Fusion Chocolates Showcase"
-                className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-lg lg:max-w-[500px] xl:max-w-[550px] h-auto object-contain transition-transform duration-500 hover:scale-[1.02] drop-shadow-md"
-              />
+            {/* Foreground: real Freeze Fusion jars, side by side */}
+            <div className="col-span-5 lg:col-span-6 flex justify-center items-end z-20 lg:translate-x-8">
+              <div className="relative w-full max-w-[680px] h-[170px] sm:h-[280px] lg:h-[400px]">
+                {FREEZE_FUSION_JARS.map((jar, n) => (
+                  <img
+                    key={jar.src}
+                    src={jar.src}
+                    alt={`Freeze Fusion ${jar.name} chocolate jar`}
+                    width={jar.w}
+                    height={jar.h}
+                    fetchPriority={n === 0 ? "high" : "auto"}
+                    className={`absolute bottom-0 w-auto object-contain drop-shadow-[0_18px_22px_rgba(74,45,27,0.35)] transition-transform duration-500 hover:-translate-y-2 ${JAR_LAYOUT[FREEZE_FUSION_JARS.length]?.[n] ?? ""}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
