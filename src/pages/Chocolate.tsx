@@ -54,7 +54,7 @@ export default function Chocolate() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await productApi.getAll();
+        const res = await productApi.getRetail();
         const data = res.data ?? res;
         // Filter by Chocolates category
         const filtered = data.filter((p: any) =>

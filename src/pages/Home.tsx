@@ -37,7 +37,7 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await productApi.getAll();
+        const res = await productApi.getRetail();
         const allProducts = res.data ?? res;
         setProducts(allProducts);
       } catch (err) {

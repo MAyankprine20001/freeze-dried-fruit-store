@@ -440,7 +440,9 @@ export default function BulkOrders() {
                 <div className="flex items-center justify-between mt-auto pt-3 border-t border-[#213B14]/5">
                   <div>
                     <span className="text-xs text-[#213B14]/50 font-bold">Price: </span>
-                    <span className="text-sm font-black text-[#213B14]">₹{product.price}</span>
+                    <span className="text-sm font-black text-[#213B14]">
+                      {Number(product.price) > 0 ? `₹${product.price}` : "On request"}
+                    </span>
                     {product.weight && <span className="text-[10px] text-[#213B14]/40 font-semibold block">{product.weight}</span>}
                   </div>
                   <button
