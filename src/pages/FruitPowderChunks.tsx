@@ -348,16 +348,22 @@ export default function FruitPowderChunks() {
                   className="bg-white rounded-2xl p-6 border border-[#213B14]/5 flex flex-col justify-between hover:shadow-lg transition-all"
                 >
                   <div className="space-y-4">
-                    <div className="aspect-[4/3] w-full rounded-xl bg-[#EEF4EC] overflow-hidden relative">
+                    <Link
+                      to={`/product/${product._id || product.id}`}
+                      className="block aspect-square -mx-4 rounded-xl bg-[#EEF4EC] overflow-hidden relative"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                       />
-                    </div>
+                    </Link>
                     <div>
                       <h3 className="font-serif text-xl font-bold text-[#213B14]">
-                        {product.name}
+                        <Link to={`/product/${product._id || product.id}`} className="hover:underline underline-offset-4">
+                          {product.name}
+                        </Link>
                       </h3>
                       <p className="text-xs text-gray-400 mt-1">{product.subtitle}</p>
                     </div>
