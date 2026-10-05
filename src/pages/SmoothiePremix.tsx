@@ -107,13 +107,14 @@ export default function SmoothiePremix() {
       {/* Hero Banner Section */}
       <section className="relative pt-32 pb-8 sm:pt-36 sm:pb-12 md:pt-40 md:pb-16 overflow-hidden flex items-center min-h-[380px] sm:min-h-[500px] lg:min-h-[640px]">
         {/* Absolute Background Image */}
-        <img 
-          src="/sliprealBackgrpound_image.webp" 
-          alt="SipReal Background" 
-          className="absolute inset-0 w-full h-full object-cover object-center z-0" 
+        <img
+          src="/Home_backgroun_Image.webp"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center z-0"
         />
         {/* Subtle overlay for legibility on small screens */}
-        <div className="absolute inset-0 bg-[#FAF7F2]/45 md:bg-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-[#FAF7F2]/45 md:bg-transparent md:bg-gradient-to-r md:from-[#FAF7F2]/90 md:via-[#FAF7F2]/40 md:to-transparent z-10 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
           <div className="grid grid-cols-12 gap-3 sm:gap-6 lg:gap-12 items-center">
