@@ -78,7 +78,7 @@ export default function ProductDetail() {
         });
         setActiveImg(0);
         // relatedProducts are now populated by the backend
-        setRelatedProducts(Array.isArray(p.relatedProducts) ? p.relatedProducts : []);
+        setRelatedProducts(Array.isArray(p.relatedProducts) ? p.relatedProducts.filter((r: any) => !r?.isBulk) : []);
         await fetchReviews();
       } catch (err) {
         console.error("Failed to fetch product", err);

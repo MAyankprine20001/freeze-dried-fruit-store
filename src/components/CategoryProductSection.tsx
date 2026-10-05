@@ -204,7 +204,7 @@ export default function CategoryProductSection({
     const fetch = async () => {
       try {
         setLoading(true);
-        const res = await productApi.getAll();
+        const res = await productApi.getRetail();
         // Normalize both sides: lowercase + replace spaces/underscores with hyphen
         const normalize = (s: string) =>
           s.toLowerCase().replace(/[\s_]+/g, '-');

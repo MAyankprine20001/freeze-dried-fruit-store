@@ -35,7 +35,7 @@ let products = [];
 try {
   const res = await fetch(`${API}/products`, { signal: AbortSignal.timeout(10000) });
   const json = await res.json();
-  products = (json.data ?? []).filter((p) => STOREFRONT_CATEGORIES.includes(String(p.category).trim().toLowerCase()));
+  products = (json.data ?? []).filter((p) => !p.isBulk && STOREFRONT_CATEGORIES.includes(String(p.category).trim().toLowerCase()));
 } catch (err) {
   console.warn(`sitemap: could not fetch products (${err.message}); writing static routes only.`);
 }
