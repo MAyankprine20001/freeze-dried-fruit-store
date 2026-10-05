@@ -202,6 +202,11 @@ export default function Products() {
                   <h3 className={`font-serif text-2xl font-black ${cat.textColor}`}>
                     {cat.title}
                   </h3>
+                  {cat.id === "ice-creams" && (
+                    <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full bg-[#B82A5F] text-white text-[9px] font-bold uppercase tracking-widest">
+                      Coming Soon
+                    </span>
+                  )}
                   <span className="text-[10px] font-bold text-gray-500 tracking-[0.15em] block mt-0.5">
                     {cat.subtitle}
                   </span>

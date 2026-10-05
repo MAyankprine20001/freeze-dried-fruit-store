@@ -333,6 +333,7 @@ export default function Header() {
         >
          <div className="w-full h-32 rounded-xl overflow-hidden bg-[#FCEAEB] relative flex items-center justify-center pointer-events-none">
           <img src="/home_slip_real.webp" alt="SipReal" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
+          <span className="absolute top-2 right-2 px-2.5 py-0.5 rounded-full bg-[#B82A5F] text-white text-[9px] font-bold uppercase tracking-widest shadow-sm">Coming Soon</span>
          </div>
          <div className="space-y-0.5">
            <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#B82A5F]/60 block">Smoothie Premix</span>
@@ -420,7 +421,7 @@ export default function Header() {
               className="flex items-center justify-between p-2 rounded-lg text-xs font-bold text-[#B82A5F] hover:bg-[#FCEAEB] transition-colors"
              >
               <span>SipReal</span>
-              <span className="text-[9px] font-semibold text-[#B82A5F]/60 uppercase">Smoothie</span>
+              <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#B82A5F] text-white text-[9px] font-bold uppercase tracking-widest">Coming Soon</span>
              </Link>
              <Link
               to="/chocolate"
