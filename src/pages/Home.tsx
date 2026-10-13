@@ -22,6 +22,9 @@ import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
+import CartStepper from "../components/CartStepper";
+import ReviewSlider from "../components/ReviewSlider";
+import { TESTIMONIALS } from "../data/testimonials";
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
@@ -34,7 +37,7 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await productApi.getAll();
+        const res = await productApi.getRetail();
         const allProducts = res.data ?? res;
         setProducts(allProducts);
       } catch (err) {
@@ -142,26 +145,6 @@ export default function Home() {
     }
   ];
 
-  // Testimonials
-  const customerReviews = [
-    {
-      stars: 5,
-      text: "Berry Blast is my everyday energy booster! Tastes amazing and so easy to make.",
-      author: "Ananya, Delhi"
-    },
-    {
-      stars: 5,
-      text: "The chocolates are luxurious and the fruit inside is so real! Absolutely love Banana Cocoa Dark.",
-      author: "Rohan, Bangalore"
-    },
-    {
-      stars: 5,
-      text: "Healthy snacking made easy. My kids love Crispy Bites Mixed Fruit!",
-      author: "Priya, Mumbai"
-    }
-  ];
-
-  const [reviewIndex, setReviewIndex] = useState(0);
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-[#213B14]">
@@ -171,7 +154,7 @@ export default function Home() {
       <section className="relative min-h-[380px] sm:min-h-[520px] md:min-h-[680px] lg:min-h-[780px] flex items-center pt-32 pb-8 sm:pt-36 sm:pb-16 md:pt-40 md:pb-28 overflow-hidden">
         {/* Absolute Background Image */}
         <img 
-          src="/Home_backgroun_Image.png" 
+          src="/Home_backgroun_Image.webp" 
           alt="Hero Background" 
           className="absolute inset-0 w-full h-full object-cover object-center z-0" 
         />
@@ -226,7 +209,7 @@ export default function Home() {
             {/* Foreground Product Image on the Right */}
             <div className="col-span-5 lg:col-span-7 flex justify-center items-center z-20">
               <img
-                src="/HomeProductImage.png"
+                src="/HomeProductImage.webp"
                 alt="The Dry Factory Products Showcase"
                 className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-2xl lg:max-w-[760px] xl:max-w-[820px] h-auto object-contain lg:scale-[1.1] hover:scale-[1.12] transition-transform duration-500 drop-shadow-md"
               />
@@ -241,10 +224,10 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {promoCategories.map((cat, i) => {
               const localImage = cat.brand === "SipReal" 
-                ? "/home_slip_real.png" 
-                : cat.brand === "Freeze Fusion" 
-                ? "/home_freexze_frozen.png" 
-                : "/home_cripsey.png";
+                ? "/images/categories/sipreal-card.webp"
+                : cat.brand === "Freeze Fusion"
+                ? "/images/categories/freeze-fusion-card.webp"
+                : "/images/products/crispy-bites-mixed-fruit-front-400.webp";
 
               return (
                 <div
@@ -258,6 +241,11 @@ export default function Home() {
                         <h3 className={`font-serif text-xl sm:text-2xl font-black ${cat.textColor}`}>
                           {cat.brand}
                         </h3>
+                        {cat.brand === "SipReal" && (
+                          <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full bg-[#B82A5F] text-white text-[9px] font-bold uppercase tracking-widest">
+                            Coming Soon
+                          </span>
+                        )}
                         <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mt-0.5">
                           {cat.subtitle}
                         </p>
@@ -280,7 +268,7 @@ export default function Home() {
                   </div>
 
                   {/* Transparent product image cleanly constrained on the right with no overlap */}
-                  <div className="absolute right-0 bottom-0 w-[45%] h-[82%] flex items-end justify-end pointer-events-none z-0 pr-3 pb-3">
+                  <div className={`absolute right-0 bottom-0 ${cat.brand === "Crispy Bites" ? "w-[45%]" : "w-[55%]"} h-[82%] flex items-end justify-end pointer-events-none z-0 pr-3 pb-3`}>
                     <img
                       src={localImage}
                       alt={cat.brand}
@@ -366,16 +354,18 @@ export default function Home() {
                         <span className="font-serif text-lg font-black text-[#213B14]">
                           ₹{product.price}
                         </span>
-                        <button
-                          onClick={(e) => handleAddToCart(product, e)}
-                          className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
-                            addedItems[product._id || product.id]
-                              ? "bg-green-700 text-white"
-                              : "bg-[#213B14] text-[#FAF7F2] hover:bg-[#3F622D]"
-                          }`}
-                        >
-                          {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
-                        </button>
+                        <CartStepper product={product} color="#213B14" textColor="#FAF7F2">
+                          <button
+                            onClick={(e) => handleAddToCart(product, e)}
+                            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                              addedItems[product._id || product.id]
+                                ? "bg-green-700 text-white"
+                                : "bg-[#213B14] text-[#FAF7F2] hover:bg-[#3F622D]"
+                            }`}
+                          >
+                            {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
+                          </button>
+                        </CartStepper>
                       </div>
                     </div>
                   </div>
@@ -421,7 +411,7 @@ export default function Home() {
       <section className="relative min-h-[440px] md:min-h-[480px] flex items-center py-16 md:py-20 overflow-hidden">
         {/* Absolute Background Image */}
         <img 
-          src="/Home_banner_image.png" 
+          src="/Home_banner_image.webp" 
           alt="Real Ingredients Background" 
           className="absolute inset-0 w-full h-full object-cover object-right md:object-center z-0" 
         />
@@ -467,54 +457,7 @@ export default function Home() {
             What Our Customers Say
           </h2>
 
-          <div className="relative min-h-[160px] flex flex-col justify-center items-center">
-            {/* Reviews controls and content */}
-            <div className="max-w-xl mx-auto">
-              <div className="flex justify-center gap-1 text-amber-500 mb-4">
-                {[...Array(customerReviews[reviewIndex].stars)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-amber-500" />
-                ))}
-              </div>
-              <p className="text-[#213B14] text-lg font-medium italic leading-relaxed">
-                "{customerReviews[reviewIndex].text}"
-              </p>
-              <h4 className="font-bold text-[#3F622D] mt-6 text-sm uppercase tracking-wider">
-                — {customerReviews[reviewIndex].author}
-              </h4>
-            </div>
-
-            {/* Arrow Nav */}
-            <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex justify-between w-full pointer-events-none px-4">
-              <button
-                onClick={() => setReviewIndex(prev => (prev === 0 ? customerReviews.length - 1 : prev - 1))}
-                className="w-10 h-10 rounded-full border border-[#213B14]/20 flex items-center justify-center text-[#213B14] hover:bg-[#213B14] hover:text-[#FAF7F2] pointer-events-auto transition-all bg-white"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => setReviewIndex(prev => (prev === customerReviews.length - 1 ? 0 : prev + 1))}
-                className="w-10 h-10 rounded-full border border-[#213B14]/20 flex items-center justify-center text-[#213B14] hover:bg-[#213B14] hover:text-[#FAF7F2] pointer-events-auto transition-all bg-white"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* As Seen On Brands Showcase */}
-      <section className="py-12 bg-[#FAF7F2] border-b border-[#213B14]/5 select-none">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#3F622D]/60 mb-6">
-            AS SEEN ON
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60">
-            <span className="font-sans text-lg font-black text-gray-500 tracking-wider">YourStory</span>
-            <span className="font-serif text-lg font-extrabold text-gray-500 tracking-wider italic">FEMINA</span>
-            <span className="font-sans text-lg font-black text-gray-500 tracking-widest">INDIA TODAY</span>
-            <span className="font-sans text-lg font-bold text-gray-500 uppercase">Entrepreneur</span>
-            <span className="font-serif text-lg font-black text-gray-500 tracking-tighter">mint</span>
-          </div>
+          <ReviewSlider reviews={TESTIMONIALS} />
         </div>
       </section>
 

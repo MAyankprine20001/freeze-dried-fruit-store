@@ -38,7 +38,7 @@ export default function Login() {
  const error = (loginMutation.error as any)?.message || "";
 
  return (
-  <div className="min-h-screen bg-black flex items-center justify-center p-6">
+  <div className="light-form min-h-screen bg-[#FAF7F2] flex items-center justify-center p-6">
    <motion.div 
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -46,13 +46,23 @@ export default function Login() {
    >
     <div className="text-center mb-8">
      <Link to="/" className="inline-block mb-6">
-      <img src="https://res.cloudinary.com/doi7id29n/image/upload/q_auto/f_auto/v1776528652/logo_2_on76wp.png" alt="Logo" className="w-20 h-20 mx-auto object-contain" />
+      <span className="inline-flex items-center gap-3 text-left">
+       <img src="/logo.png" alt="The Dry Factory logo" className="h-12 w-auto object-contain" />
+       <span className="flex flex-col items-start">
+        <span className="font-serif text-xl font-bold text-[#1C2A18] tracking-wider uppercase leading-tight">
+         THE DRY <span className="font-serif italic font-normal text-[#3F622D]">FACTORY</span>
+        </span>
+        <span className="text-[8.5px] font-bold text-[#3F622D] uppercase tracking-[0.2em] leading-none">
+         REAL TASTE. REAL NUTRITION.
+        </span>
+       </span>
+      </span>
      </Link>
-     <h1 className="text-3xl font-serif font-bold text-white mb-2">Welcome Back</h1>
-     <p className="text-white/50">Log in to access your account and orders</p>
+     <h1 className="text-3xl font-serif font-bold text-[#213B14] mb-2">Welcome Back</h1>
+     <p className="text-[#213B14]/60">Log in to access your account and orders</p>
     </div>
 
-    <div className="bg-black p-8 rounded-3xl shadow-xl border border-white/10">
+    <div className="bg-[#FAF7F2] p-8 rounded-3xl shadow-xl border border-[#213B14]/15">
      <form onSubmit={handleSubmit} className="space-y-6">
       {successMessage && !error && (
        <motion.div 
@@ -77,15 +87,15 @@ export default function Login() {
       )}
 
       <div className="space-y-1.5">
-       <label className="text-sm font-semibold text-white/70 ml-1">Email Address</label>
+       <label className="text-sm font-semibold text-[#213B14]/75 ml-1">Email Address</label>
        <div className="relative">
-        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#213B14]/50" />
         <input 
          type="email"
          required
          value={email}
          onChange={(e) => setEmail(e.target.value)}
-         className="w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-[#D4AF37]/20 focus:border-[#D4AF37] outline-none transition-all placeholder:text-white/20 text-white"
+         className="w-full pl-12 pr-4 py-3.5 bg-white border border-[#213B14]/15 rounded-2xl focus:ring-2 focus:ring-[#3F622D]/20 focus:border-[#3F622D] outline-none transition-all placeholder:text-[#213B14]/35 text-[#213B14]"
          placeholder="name@example.com"
         />
        </div>
@@ -93,25 +103,25 @@ export default function Login() {
 
       <div className="space-y-1.5">
        <div className="flex justify-between items-center ml-1">
-        <label className="text-sm font-semibold text-white/70">Password</label>
-        <Link to="/forgot-password" size="sm" className="text-xs font-bold text-[#D4AF37] hover:text-[#BF953F] transition-colors">
+        <label className="text-sm font-semibold text-[#213B14]/75">Password</label>
+        <Link to="/forgot-password" size="sm" className="text-xs font-bold text-[#3F622D] hover:text-[#213B14] transition-colors">
          Forgot?
         </Link>
        </div>
        <div className="relative">
-        <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+        <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#213B14]/50" />
         <input 
          type={showPassword ? "text" : "password"}
          required
          value={password}
          onChange={(e) => setPassword(e.target.value)}
-         className="w-full pl-12 pr-12 py-3.5 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-[#D4AF37]/20 focus:border-[#D4AF37] outline-none transition-all placeholder:text-white/20 text-white"
+         className="w-full pl-12 pr-12 py-3.5 bg-white border border-[#213B14]/15 rounded-2xl focus:ring-2 focus:ring-[#3F622D]/20 focus:border-[#3F622D] outline-none transition-all placeholder:text-[#213B14]/35 text-[#213B14]"
          placeholder="••••••••"
         />
         <button
          type="button"
          onClick={() => setShowPassword(!showPassword)}
-         className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-[#D4AF37] transition-colors"
+         className="absolute right-4 top-1/2 -translate-y-1/2 text-[#213B14]/50 hover:text-[#213B14] transition-colors"
         >
          {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
         </button>
@@ -121,7 +131,7 @@ export default function Login() {
       <button
        type="submit"
        disabled={loading}
-       className="w-full bg-[#D4AF37] text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-[#BF953F] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+       className="w-full bg-[#213B14] text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-[#3F622D] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
       >
        {loading ? (
         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -134,10 +144,10 @@ export default function Login() {
       </button>
      </form>
 
-     <div className="mt-8 pt-8 border-t border-white/10 text-center">
-      <p className="text-white/50 text-sm font-medium">
+     <div className="mt-8 pt-8 border-t border-[#213B14]/15 text-center">
+      <p className="text-[#213B14]/60 text-sm font-medium">
        Don't have an account?{" "}
-       <Link to="/signup" state={{ from: location.state?.from }} className="text-[#D4AF37] font-bold hover:text-[#BF953F] transition-colors ml-1">
+       <Link to="/signup" state={{ from: location.state?.from }} className="text-[#3F622D] font-bold hover:text-[#213B14] transition-colors ml-1">
         Sign up free
        </Link>
       </p>

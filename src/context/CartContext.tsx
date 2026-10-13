@@ -1,5 +1,6 @@
 ﻿import React, { createContext, useContext, useState, useEffect } from "react";
 import { getProductPrimaryImage } from "../utils/productImage";
+import { trackAddToCart } from "../utils/analytics";
 import type { CouponDiscountInput } from "../utils/couponDiscount";
 
 export interface CartItem {
@@ -51,6 +52,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
  }, [items]);
 
  const addToCart = (product: any) => {
+  trackAddToCart(product);
   setAppliedCoupon(null);
   const productId = product.id || product._id;
   const image = getProductPrimaryImage(product);

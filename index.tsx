@@ -2,6 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App.tsx";
+import { initAnalytics } from "./src/utils/analytics";
+
+initAnalytics();
 import "./styles.css";
 
 const queryClient = new QueryClient({

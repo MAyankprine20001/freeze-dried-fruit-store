@@ -15,6 +15,7 @@ import {
   Ticket,
   MessageSquare,
   Gift,
+  FileText,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
@@ -45,6 +46,7 @@ export default function AdminLayout() {
     { label: "Inventory", path: "/admin/inventory", icon: Box },
     { label: "Coupons", path: "/admin/coupons", icon: Ticket },
     { label: "Reviews", path: "/admin/reviews", icon: MessageSquare },
+    { label: "Legal Pages", path: "/admin/legal", icon: FileText },
     { label: "Settings", path: "/admin/settings", icon: Settings },
   ];
 

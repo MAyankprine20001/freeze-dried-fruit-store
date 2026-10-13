@@ -22,6 +22,7 @@ import { computeOrderTotalsWithCoupon } from "../utils/couponDiscount";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { trackBeginCheckout, trackPurchase } from "../utils/analytics";
 
 const schema = z.object({
   fullName: z.string().min(2, "Enter your full name"),
@@ -111,6 +112,12 @@ export default function Checkout() {
     : null;
   const priced = computeOrderTotalsWithCoupon(subtotal, finalShippingCharge, couponForPricing);
   const total = priced.total;
+
+  // GA4: checkout started (once per visit to this page)
+  useEffect(() => {
+    if (items.length) trackBeginCheckout(items, total, appliedCoupon?.code);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const discount = priced.discount;
   const freeShippingGap =
     freeShippingThreshold > 0 ? Math.max(0, freeShippingThreshold - subtotal) : 0;
@@ -179,6 +186,7 @@ export default function Checkout() {
           try {
             const verifyRes = await verifyRazorpayPayment({ razorpay_order_id: response.razorpay_order_id, razorpay_payment_id: response.razorpay_payment_id, razorpay_signature: response.razorpay_signature, dbOrderId });
             if (verifyRes.success) {
+              trackPurchase(verifyRes.data.orderId, Number(verifyRes.data.amount) || total, items, finalShippingCharge, appliedCoupon?.code);
               clearCart();
               navigate("/order-success", { state: { orderId: verifyRes.data.orderId, paymentId: verifyRes.data.razorpayPaymentId, amount: verifyRes.data.amount, customerName: formData.fullName } });
             } else { toast.error("Payment verification failed. Please contact support."); }
@@ -273,7 +281,6 @@ export default function Checkout() {
                     {[
                       { icon: <ShieldCheck className="w-3.5 h-3.5 text-[#3F622D]" />, label: "SSL Encrypted" },
                       { icon: <Truck className="w-3.5 h-3.5 text-[#3F622D]" />, label: "Delivery in 2 - 3 Days" },
-                      { icon: <RotateCcw className="w-3.5 h-3.5 text-[#3F622D]" />, label: "Easy Returns" },
                     ].map(({ icon, label }) => (
                       <div key={label} className="flex items-center gap-1.5 text-[10px] font-extrabold text-[#213B14]/60 bg-[#FAF7F2] px-3 py-1.5 rounded-full border border-[#213B14]/10">
                         {icon} {label}
@@ -498,13 +505,6 @@ export default function Checkout() {
                     <div>
                       <p className="text-[11px] font-black text-[#1C2A18]">Multiple Payment Options</p>
                       <p className="text-[9px] text-[#213B14]/50 font-semibold">UPI, Cards, Netbanking & more</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Heart className="w-4 h-4 text-[#3F622D] shrink-0" />
-                    <div>
-                      <p className="text-[11px] font-black text-[#1C2A18]">7-Day Happiness Guarantee</p>
-                      <p className="text-[9px] text-[#213B14]/50 font-semibold">Not happy? We'll make it right.</p>
                     </div>
                   </div>
                 </div>

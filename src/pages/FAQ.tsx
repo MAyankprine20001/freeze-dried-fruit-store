@@ -58,18 +58,18 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
    whileInView={{ opacity: 1, y: 0 }}
    viewport={{ once: true }}
    transition={{ duration: 0.4, delay: index * 0.06 }}
-   className="border border-white/10 rounded-xl overflow-hidden"
+   className="border border-[#213B14]/10 rounded-xl overflow-hidden bg-white shadow-sm"
   >
    <button
     id={`faq-btn-${index}`}
     onClick={() => setOpen(!open)}
-    className="w-full flex items-center justify-between gap-4 p-6 text-left bg-white/5 hover:bg-white/10 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-inset"
+    className="w-full flex items-center justify-between gap-4 p-6 text-left bg-white hover:bg-[#F3EFE0] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3F622D] focus-visible:ring-inset"
     aria-expanded={open}
     aria-controls={`faq-content-${index}`}
    >
-    <span className="font-semibold text-white text-base pr-4">{q}</span>
+    <span className="font-semibold text-[#213B14] text-base pr-4">{q}</span>
     <ChevronDown
-     className={`w-5 h-5 text-[#D4AF37] flex-shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+     className={`w-5 h-5 text-[#3F622D] flex-shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
     />
    </button>
    <AnimatePresence initial={false}>
@@ -81,8 +81,8 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
       transition={{ duration: 0.3, ease: "easeInOut" }}
      >
        <div id={`faq-content-${index}`} className="overflow-hidden">
-       <div className="px-6 pb-6 bg-white/5 border-t border-white/10">
-        <p className="text-white/70 text-sm leading-relaxed pt-4">{a}</p>
+       <div className="px-6 pb-6 bg-white border-t border-[#213B14]/10">
+        <p className="text-[#213B14]/75 text-sm leading-relaxed pt-4">{a}</p>
        </div>
       </div>
      </motion.div>
@@ -94,17 +94,18 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
 
 export default function FAQ() {
  return (
-  <div className="min-h-screen bg-black">
+  <div className="min-h-screen bg-[#FAF7F2]">
    <Header />
 
    <PageHero
+    variant="light"
     tag="Frequently Asked Questions"
     title="Everything You Need"
     highlight="to Know"
     description="Got questions about freeze-dried fruit, our products, or how to order? We've answered the most common ones below. Can't find what you're looking for? Reach out we're happy to help."
    />
 
-    <section className="py-24 bg-black">
+    <section className="py-16 sm:py-24 bg-[#FAF7F2]">
     <div className="max-w-3xl mx-auto px-6 lg:px-8">
      <div className="space-y-4">
       {faqs.map((faq, i) => (
@@ -117,18 +118,18 @@ export default function FAQ() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="mt-16 text-center p-10 bg-white/5 rounded-2xl border border-white/10"
+      className="mt-16 text-center p-10 bg-[#F3EFE0] rounded-2xl border border-[#213B14]/10"
      >
-      <h2 className="font-serif text-2xl font-bold text-white mb-3">
+      <h2 className="font-serif text-2xl font-bold text-[#213B14] mb-3">
        Still Have Questions?
       </h2>
-      <p className="text-white/60 text-sm mb-6">
+      <p className="text-[#213B14]/70 text-sm mb-6">
        Our team is happy to help with anything not covered above.
       </p>
       <Link
        id="faq-cta-contact-btn"
        to="/contact"
-       className="inline-flex items-center justify-center px-6 py-3 bg-[#D4AF37] text-black font-semibold rounded-full hover:bg-[#BF953F] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2"
+       className="inline-flex items-center justify-center px-6 py-3 bg-[#213B14] text-white font-semibold rounded-full hover:bg-[#3F622D] hover:scale-105 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3F622D] focus-visible:ring-offset-2"
       >
        Contact Us
       </Link>

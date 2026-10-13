@@ -8,6 +8,30 @@ import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
+import CartStepper from "../components/CartStepper";
+import ReviewSlider from "../components/ReviewSlider";
+import { testimonialsFor } from "../data/testimonials";
+
+/**
+ * Real Freeze Fusion jars for the hero. Order = front jar first.
+ * To add a flavour: put its cut-out image in public/images/chocolate and add a line here.
+ */
+const FREEZE_FUSION_JARS = [
+  { name: "Banana Cocoa Dark", src: "/images/chocolate/freeze-fusion-banana-cocoa-dark.webp", w: 275, h: 392 },
+  { name: "Mango Silk White", src: "/images/chocolate/freeze-fusion-mango-silk-white.webp", w: 274, h: 387 },
+  { name: "Strawberry Cream Crunch Milk", src: "/images/chocolate/freeze-fusion-strawberry-cream-crunch.webp", w: 234, h: 309 },
+];
+
+/** Position of each jar by how many jars there are: [front, left, right]. */
+const JAR_LAYOUT: Record<number, string[]> = {
+  1: ["z-20 h-full left-1/2 -translate-x-1/2"],
+  2: ["z-20 h-full right-0 sm:right-[2%]", "z-10 h-[84%] -left-[4%] sm:left-[2%] -rotate-[4deg]"],
+  3: [
+    "z-20 h-[94%] left-1/2 -translate-x-1/2",
+    "z-10 h-[80%] -left-[4%] sm:left-0 lg:-left-[12%] -rotate-[6deg]",
+    "z-10 h-[72%] -right-[4%] sm:right-0 lg:-right-[12%] rotate-[6deg]",
+  ],
+};
 
 export default function Chocolate() {
   const [allProducts, setAllProducts] = useState<any[]>([]);
@@ -30,7 +54,7 @@ export default function Chocolate() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await productApi.getAll();
+        const res = await productApi.getRetail();
         const data = res.data ?? res;
         // Filter by Chocolates category
         const filtered = data.filter((p: any) =>
@@ -103,12 +127,13 @@ export default function Chocolate() {
       <section className="relative pt-32 pb-8 sm:pt-36 sm:pb-12 md:pt-40 md:pb-16 overflow-hidden flex items-center min-h-[380px] sm:min-h-[500px] lg:min-h-[640px]">
         {/* Absolute Background Image */}
         <img 
-          src="/Freeze_background_image.png" 
-          alt="Hero Background" 
-          className="absolute inset-0 w-full h-full object-cover object-center z-0" 
+          src="/Home_backgroun_Image.webp"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center z-0"
         />
         {/* Subtle overlay for legibility on small screens */}
-        <div className="absolute inset-0 bg-[#FAF7F2]/40 md:bg-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-[#FAF7F2]/40 md:bg-transparent md:bg-gradient-to-r md:from-[#FAF7F2]/90 md:via-[#FAF7F2]/40 md:to-transparent z-10 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-20">
           <div className="grid grid-cols-12 gap-3 sm:gap-6 lg:gap-12 items-center">
@@ -170,13 +195,21 @@ export default function Chocolate() {
               </div>
             </div>
 
-            {/* Foreground Product Image on the Right */}
-            <div className="col-span-5 lg:col-span-6 flex justify-center items-center z-20 lg:translate-x-8">
-              <img
-                src="/freeze_product_image.png"
-                alt="Freeze Fusion Chocolates Showcase"
-                className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-lg lg:max-w-[500px] xl:max-w-[550px] h-auto object-contain transition-transform duration-500 hover:scale-[1.02] drop-shadow-md"
-              />
+            {/* Foreground: real Freeze Fusion jars, side by side */}
+            <div className="col-span-5 lg:col-span-6 flex justify-center items-end z-20 lg:translate-x-8">
+              <div className="relative w-full max-w-[680px] h-[170px] sm:h-[280px] lg:h-[400px]">
+                {FREEZE_FUSION_JARS.map((jar, n) => (
+                  <img
+                    key={jar.src}
+                    src={jar.src}
+                    alt={`Freeze Fusion ${jar.name} chocolate jar`}
+                    width={jar.w}
+                    height={jar.h}
+                    fetchPriority={n === 0 ? "high" : "auto"}
+                    className={`absolute bottom-0 w-auto object-contain drop-shadow-[0_18px_22px_rgba(74,45,27,0.35)] transition-transform duration-500 hover:-translate-y-2 ${JAR_LAYOUT[FREEZE_FUSION_JARS.length]?.[n] ?? ""}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -342,16 +375,22 @@ export default function Chocolate() {
                   className="bg-white rounded-2xl p-5 border border-[#213B14]/5 flex flex-col justify-between hover:shadow-lg transition-all"
                 >
                   <div className="space-y-4">
-                    <div className="aspect-[4/3] w-full rounded-xl bg-[#FAF5F0] overflow-hidden relative">
+                    <Link
+                      to={`/product/${product._id || product.id}`}
+                      className="block aspect-square -mx-3 rounded-xl bg-[#FAF5F0] overflow-hidden relative"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                       />
-                    </div>
+                    </Link>
                     <div>
                       <h3 className="font-serif text-base font-bold text-[#213B14] line-clamp-1">
-                        {product.name}
+                        <Link to={`/product/${product._id || product.id}`} className="hover:underline underline-offset-4">
+                          {product.name}
+                        </Link>
                       </h3>
                       <p className="text-xs text-gray-400 mt-1 line-clamp-2">{product.subtitle}</p>
                     </div>
@@ -371,17 +410,19 @@ export default function Chocolate() {
                       <span className="text-[10px] text-gray-400 block">{product.weight}</span>
                       <span className="font-serif text-lg font-black text-[#213B14]">₹{product.price}</span>
                     </div>
-                    <button
-                      onClick={() => handleAddToCart(product)}
-                      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
-                        addedItems[product._id || product.id]
-                          ? "bg-green-700 text-white shadow-none"
-                          : "bg-[#4A2D1B] text-white hover:bg-[#382012] shadow-md shadow-[#4A2D1B]/15"
-                      }`}
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5" />
-                      {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
-                    </button>
+                    <CartStepper product={product} color="#4A2D1B" textColor="#FFFFFF">
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                          addedItems[product._id || product.id]
+                            ? "bg-green-700 text-white shadow-none"
+                            : "bg-[#4A2D1B] text-white hover:bg-[#382012] shadow-md shadow-[#4A2D1B]/15"
+                        }`}
+                      >
+                        <ShoppingBag className="w-3.5 h-3.5" />
+                        {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
+                      </button>
+                    </CartStepper>
                   </div>
                 </div>
               ))}
@@ -396,7 +437,7 @@ export default function Chocolate() {
           <div className="relative w-full rounded-2xl overflow-hidden border border-[#4A2D1B]/15 shadow-md p-8 md:p-12 bg-[#FAF7F2] min-h-[420px] flex flex-col justify-between gap-8">
             {/* Background Image showing chocolate stack on left and strawberry bowl on right */}
             <img 
-              src="/why_love_it_bg.png" 
+              src="/why_love_it_bg.webp" 
               alt="Why You'll Love It Background" 
               className="absolute inset-0 w-full h-full object-cover object-center z-0" 
             />
@@ -433,10 +474,18 @@ export default function Chocolate() {
         </div>
       </section>
 
+      {/* Customer Reviews */}
+      <section className="py-20 bg-[#FAF7F2]">
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#4A2D1B]">Loved by Our Customers</span>
+          <ReviewSlider reviews={testimonialsFor("freeze-fusion")} accent="#4A2D1B" card />
+        </div>
+      </section>
+
       {/* Explore Chocolates Banner */}
       <section className="relative py-12 md:py-16 overflow-hidden bg-[#1C2A18]">
         <img
-          src="/chocolate_banner_bg.png"
+          src="/chocolate_banner_bg.webp"
           alt="Real Chocolate Banner"
           className="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-40 md:opacity-50"
         />

@@ -8,6 +8,10 @@ import Loader from "../components/Loader";
 import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
+import CartStepper from "../components/CartStepper";
+import ReviewSlider from "../components/ReviewSlider";
+import { PackLineup } from "../components/PackShowcase";
+import { testimonialsFor } from "../data/testimonials";
 
 export default function FruitPowderChunks() {
   const [allProducts, setAllProducts] = useState<any[]>([]);
@@ -30,7 +34,7 @@ export default function FruitPowderChunks() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await productApi.getAll();
+        const res = await productApi.getRetail();
         const data = res.data ?? res;
         // Filter by Fruit Chunks & Fruit Powders categories
         const filtered = data.filter((p: any) => {
@@ -97,13 +101,6 @@ export default function FruitPowderChunks() {
     }, 1500);
   };
 
-  const testimonials = [
-    { text: "The mango bites are super crunchy and taste exactly like real mango! My go-to healthy snack.", author: "Ananya, Delhi" },
-    { text: "Jamun bites are so unique and tasty. Love the tangy flavor and the crunch.", author: "Rohan, Bangalore" },
-    { text: "Mixed fruit is my favorite! Kids love it too. Finally a snack I can trust.", author: "Priya, Mumbai" }
-  ];
-
-  const [reviewIdx, setReviewIdx] = useState(0);
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-[#213B14]">
@@ -113,7 +110,7 @@ export default function FruitPowderChunks() {
       <section className="relative pt-32 pb-8 sm:pt-36 sm:pb-12 md:pt-40 md:pb-16 overflow-hidden flex items-center min-h-[380px] sm:min-h-[500px] lg:min-h-[640px]">
         {/* Absolute Background Image */}
         <img 
-          src="/cripsy_background_img.png" 
+          src="/cripsy_background_img.webp" 
           alt="Crispy Bites Background" 
           className="absolute inset-0 w-full h-full object-cover object-center z-0" 
         />
@@ -177,10 +174,12 @@ export default function FruitPowderChunks() {
 
             {/* Foreground Product Showcase Image on the Right */}
             <div className="col-span-5 lg:col-span-6 flex justify-center items-center z-20">
-              <img
-                src="/CripsyProductImage.png"
-                alt="Crispy Bites Products Showcase"
-                className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-3xl lg:max-w-[700px] xl:max-w-[760px] h-auto object-contain transition-transform duration-500 lg:scale-[1.2] hover:scale-[1.22] drop-shadow-md"
+              <PackLineup
+                slides={[
+                  { name: "Mixed Fruit", front: "/images/products/crispy-bites-mixed-fruit-front-800.webp", back: "/images/products/crispy-bites-mixed-fruit-back-800.webp", color: "#C2354A" },
+                  { name: "Mango", front: "/images/products/crispy-bites-mango-front-800.webp", back: "/images/products/crispy-bites-mango-back-800.webp", color: "#D98C0A" },
+                  { name: "Jamun", front: "/images/products/crispy-bites-jamun-front-800.webp", back: "/images/products/crispy-bites-jamun-back-800.webp", color: "#6B3FA0" },
+                ]}
               />
             </div>
           </div>
@@ -349,16 +348,22 @@ export default function FruitPowderChunks() {
                   className="bg-white rounded-2xl p-6 border border-[#213B14]/5 flex flex-col justify-between hover:shadow-lg transition-all"
                 >
                   <div className="space-y-4">
-                    <div className="aspect-[4/3] w-full rounded-xl bg-[#EEF4EC] overflow-hidden relative">
+                    <Link
+                      to={`/product/${product._id || product.id}`}
+                      className="block aspect-square -mx-4 rounded-xl bg-[#EEF4EC] overflow-hidden relative"
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                       />
-                    </div>
+                    </Link>
                     <div>
                       <h3 className="font-serif text-xl font-bold text-[#213B14]">
-                        {product.name}
+                        <Link to={`/product/${product._id || product.id}`} className="hover:underline underline-offset-4">
+                          {product.name}
+                        </Link>
                       </h3>
                       <p className="text-xs text-gray-400 mt-1">{product.subtitle}</p>
                     </div>
@@ -378,17 +383,19 @@ export default function FruitPowderChunks() {
                       <span className="text-[10px] text-gray-400 block">{product.weight}</span>
                       <span className="font-serif text-xl font-black text-[#213B14]">₹{product.price}</span>
                     </div>
-                    <button
-                      onClick={() => handleAddToCart(product)}
-                      className={`inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
-                        addedItems[product._id || product.id]
-                          ? "bg-green-700 text-white shadow-none"
-                          : "bg-[#2B4C1F] text-white hover:bg-[#1E3615] shadow-md shadow-[#2B4C1F]/15"
-                      }`}
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5" />
-                      {addedItems[product._id || product.id] ? "Added!" : "SHOP NOW"}
-                    </button>
+                    <CartStepper product={product} color="#2B4C1F" textColor="#FFFFFF">
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className={`inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                          addedItems[product._id || product.id]
+                            ? "bg-green-700 text-white shadow-none"
+                            : "bg-[#2B4C1F] text-white hover:bg-[#1E3615] shadow-md shadow-[#2B4C1F]/15"
+                        }`}
+                      >
+                        <ShoppingBag className="w-3.5 h-3.5" />
+                        {addedItems[product._id || product.id] ? "Added!" : "SHOP NOW"}
+                      </button>
+                    </CartStepper>
                   </div>
                 </div>
               ))}
@@ -437,10 +444,10 @@ export default function FruitPowderChunks() {
                 
                 <div className="grid grid-cols-4 gap-2 sm:gap-4 pt-2">
                   {[
-                    { title: "Straight from the pack", icon: "/straight_pack.png" },
-                    { title: "Top on Yogurt", icon: "/top_yogurt.png" },
-                    { title: "Add to Cereal", icon: "/add_cereal.png" },
-                    { title: "Perfect for Desserts", icon: "/perfect_desserts.png" }
+                    { title: "Straight from the pack", icon: "/straight_pack.webp" },
+                    { title: "Top on Yogurt", icon: "/top_yogurt.webp" },
+                    { title: "Add to Cereal", icon: "/add_cereal.webp" },
+                    { title: "Perfect for Desserts", icon: "/perfect_desserts.webp" }
                   ].map((item, idx) => {
                     const words = item.title.split(" ");
                     const line1 = words.slice(0, 2).join(" ");
@@ -465,7 +472,7 @@ export default function FruitPowderChunks() {
             <div className="lg:col-span-5 relative overflow-hidden rounded-2xl flex items-center p-8 md:p-10 bg-[#1C2A18] text-[#FAF7F2] shadow-sm min-h-[220px]">
               {/* Background Image of Banner */}
               <img 
-                src="/real_goodness_banner.png" 
+                src="/real_goodness_banner.webp" 
                 alt="Real Goodness Background" 
                 className="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-90" 
               />
@@ -491,30 +498,7 @@ export default function FruitPowderChunks() {
       <section className="py-20 bg-[#FAF7F2]">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
           <span className="text-xs font-bold uppercase tracking-widest text-[#2B4C1F]">Loved by Our Customers</span>
-          <div className="relative bg-white p-8 rounded-2xl border border-[#213B14]/5 shadow-sm min-h-[140px] flex flex-col justify-center">
-            <p className="font-serif text-lg italic text-[#213B14] leading-relaxed">
-              "{testimonials[reviewIdx].text}"
-            </p>
-            <h4 className="text-xs font-black uppercase text-[#2B4C1F] tracking-widest mt-4">
-              - {testimonials[reviewIdx].author}
-            </h4>
-            <div className="absolute top-1/2 -translate-y-1/2 left-3">
-              <button
-                onClick={() => setReviewIdx((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
-                className="w-8 h-8 rounded-full border border-[#213B14]/10 bg-white flex items-center justify-center text-[#213B14] hover:bg-gray-50 transition-colors shadow-sm"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="absolute top-1/2 -translate-y-1/2 right-3">
-              <button
-                onClick={() => setReviewIdx((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
-                className="w-8 h-8 rounded-full border border-[#213B14]/10 bg-white flex items-center justify-center text-[#213B14] hover:bg-gray-50 transition-colors shadow-sm"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
+          <ReviewSlider reviews={testimonialsFor("crispy-bites")} accent="#2B4C1F" card />
         </div>
       </section>
 

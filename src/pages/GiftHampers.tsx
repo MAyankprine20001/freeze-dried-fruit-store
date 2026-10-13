@@ -12,6 +12,7 @@ import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import { getProductPrimaryImage } from "../utils/productImage";
+import CartStepper from "../components/CartStepper";
 
 export default function GiftHampers() {
   const [products, setProducts] = useState<any[]>([]);
@@ -27,7 +28,7 @@ export default function GiftHampers() {
     const fetchGifts = async () => {
       try {
         setLoading(true);
-        const res = await productApi.getAll();
+        const res = await productApi.getRetail();
         const data = res.data ?? res;
         
         // Filter by isGift flag or category options
@@ -126,7 +127,7 @@ export default function GiftHampers() {
         {/* Absolute Background Image */}
         <div className="absolute inset-0 w-full h-full z-0">
           <img 
-            src="/Gift_image.png" 
+            src="/Gift_image.webp" 
             alt="Gift Hampers Background" 
             className="w-full h-full object-cover object-center"
           />
@@ -213,7 +214,7 @@ export default function GiftHampers() {
             {/* Right Column: Foreground Product Showcase Image */}
             <div className="col-span-5 lg:col-span-7 flex justify-center items-center z-20 lg:translate-x-12">
               <img
-                src="/gift_product.png"
+                src="/gift_product.webp"
                 alt="Premium Gift Hamper Box Showcase"
                 className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-2xl lg:max-w-[850px] xl:max-w-[950px] h-auto object-contain lg:scale-[1.25] hover:scale-[1.27] transition-transform duration-500 drop-shadow-md"
               />
@@ -333,24 +334,26 @@ export default function GiftHampers() {
                       )}
                     </div>
 
-                    <button
-                      onClick={(e) => handleAddToCart(product, e)}
-                      className={`px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-colors flex items-center gap-1.5 shadow-sm active:scale-95 duration-200 ${
-                        isAdded
-                          ? "bg-green-700 hover:bg-green-800 text-white"
-                          : "bg-[#213B14] hover:bg-[#3F622D] text-white"
-                      }`}
-                    >
-                      {isAdded ? (
-                        <>
-                          <Check className="w-3.5 h-3.5" /> Added
-                        </>
-                      ) : (
-                        <>
-                          <ShoppingBag className="w-3.5 h-3.5" /> Add To Cart
-                        </>
-                      )}
-                    </button>
+                    <CartStepper product={product} color="#213B14" textColor="#FFFFFF">
+                      <button
+                        onClick={(e) => handleAddToCart(product, e)}
+                        className={`px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-wider transition-colors flex items-center gap-1.5 shadow-sm active:scale-95 duration-200 ${
+                          isAdded
+                            ? "bg-green-700 hover:bg-green-800 text-white"
+                            : "bg-[#213B14] hover:bg-[#3F622D] text-white"
+                        }`}
+                      >
+                        {isAdded ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" /> Added
+                          </>
+                        ) : (
+                          <>
+                            <ShoppingBag className="w-3.5 h-3.5" /> Add To Cart
+                          </>
+                        )}
+                      </button>
+                    </CartStepper>
                   </div>
                 </div>
               );

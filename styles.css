@@ -89,3 +89,24 @@ select:-webkit-autofill:focus {
   border-color: rgba(255, 255, 255, 0.1) !important;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+/* Light-theme forms (Login, Signup, Contact): keep autofilled fields white with green text */
+.light-form input:-webkit-autofill,
+.light-form input:-webkit-autofill:hover,
+.light-form input:-webkit-autofill:focus,
+.light-form input:-webkit-autofill:active,
+.light-form textarea:-webkit-autofill,
+.light-form textarea:-webkit-autofill:hover,
+.light-form textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #213b14 !important;
+  color: #213b14 !important;
+  caret-color: #213b14;
+  border-color: rgba(33, 59, 20, 0.15) !important;
+}
+/* Real pack photos (transparent cut-outs in /images/products): show the whole pack, never crop it */
+img[src*="/images/products/"] {
+  object-fit: contain !important;
+  padding: 4%;
+}

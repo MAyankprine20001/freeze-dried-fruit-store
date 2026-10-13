@@ -1,6 +1,7 @@
 ﻿import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, MessageCircle, X, Plus, Send } from "lucide-react";
+import { trackWhatsAppClick } from "../utils/analytics";
 
 const PHONE_NUMBER = "917567350328";
 const FORMATTED_PHONE = "+91 75673 50328";
@@ -24,6 +25,7 @@ export default function ContactWidget() {
  const handleWhatsAppSend = () => {
   const finalMessage = customMessage || selectedMessage || "Hello! I'm interested in your products.";
   const url = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(finalMessage)}`;
+  trackWhatsAppClick("floating_widget");
   window.open(url, "_blank");
   setShowWhatsAppModal(false);
   setIsOpen(false);

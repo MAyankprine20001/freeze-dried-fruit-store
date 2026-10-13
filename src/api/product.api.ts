@@ -23,6 +23,13 @@ export const productApi = {
   const response = await axiosInstance.get("/products");
   return response.data;
  },
+ /** Shop pages: every product except bulk-only ones ("Mark as Bulk Product"), which belong on /bulk-orders. */
+ getRetail: async () => {
+  const response = await axiosInstance.get("/products");
+  const body = response.data;
+  if (Array.isArray(body?.data)) body.data = body.data.filter((p: any) => !p?.isBulk);
+  return body;
+ },
  getAdminCatalog: async (params: {
    limit?: number;
    cursor?: string | null;

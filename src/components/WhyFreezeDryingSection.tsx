@@ -96,7 +96,7 @@ export default function WhyFreezeDryingSection() {
           >
             <div className="relative overflow-hidden rounded-2xl rounded-b-[1.75rem] border border-white/10 shadow-2xl sm:rounded-3xl sm:rounded-b-[2rem]">
               <img
-                src="/freeze_dying.png"
+                src="/freeze_dying.webp"
                 alt="Freeze-dried fruit — colourful pieces and powder on a dark surface"
                 className="aspect-[4/5] w-full object-cover object-center sm:aspect-[5/6] lg:min-h-[420px] lg:aspect-auto lg:min-h-[480px]"
               />

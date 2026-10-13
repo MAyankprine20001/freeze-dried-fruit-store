@@ -1,14 +1,10 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
+# Login/signup pages are crawlable on purpose: they carry a noindex tag, which Google can only see if it may crawl them.
 Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /checkout
+Disallow: /order-success
+Disallow: /profile
+
+Sitemap: https://thedryfactory.com/sitemap.xml

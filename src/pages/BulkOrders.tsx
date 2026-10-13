@@ -105,7 +105,7 @@ export default function BulkOrders() {
         {/* Absolute Background Image */}
         <div className="absolute inset-0 w-full h-full z-0">
           <img 
-            src="/Home_backgroun_Image.png" 
+            src="/Home_backgroun_Image.webp" 
             alt="Hero Background" 
             className="w-full h-full object-cover object-center"
           />
@@ -193,9 +193,14 @@ export default function BulkOrders() {
             {/* Right Column: Foreground Product Showcase Image */}
             <div className="col-span-5 lg:col-span-7 flex justify-center items-center z-20 lg:translate-x-12">
               <img
-                src="/bulk_order_banner.png"
-                alt="Wholesale ingredients showcase"
-                className="w-full max-h-[220px] sm:max-h-[340px] lg:max-h-none max-w-2xl lg:max-w-[850px] xl:max-w-[950px] h-auto object-contain lg:scale-[1.35] hover:scale-[1.37] transition-transform duration-500 drop-shadow-md"
+                src="/images/bulk/bulk-hero-products-1200.webp"
+                srcSet="/images/bulk/bulk-hero-products-700.webp 700w, /images/bulk/bulk-hero-products-1200.webp 1200w"
+                sizes="(min-width: 1024px) 760px, 45vw"
+                alt="Freeze-dried banana, apple, okra, kiwi, strawberry, pineapple and mixed fruit and vegetable chips in glass bowls"
+                width={1200}
+                height={715}
+                fetchPriority="high"
+                className="w-full max-w-2xl lg:max-w-[760px] h-auto object-contain lg:-translate-x-16 lg:translate-y-12 transition-transform duration-500 hover:scale-[1.02] drop-shadow-xl"
               />
             </div>
 
@@ -253,7 +258,7 @@ export default function BulkOrders() {
             <div>
               <div className="h-44 overflow-hidden relative">
                 <img 
-                  src="/bulk_fruit_chunks_hero.png" 
+                  src="/bulk_fruit_chunks_hero.webp" 
                   alt="Freeze Dried Fruit Chunks" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
@@ -291,7 +296,7 @@ export default function BulkOrders() {
             <div>
               <div className="h-44 overflow-hidden relative">
                 <img 
-                  src="/bulk_fruit_powder_hero.png" 
+                  src="/bulk_fruit_powder_hero.webp" 
                   alt="Freeze Dried Fruit Powders" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
@@ -328,7 +333,7 @@ export default function BulkOrders() {
             <div>
               <div className="h-44 overflow-hidden relative">
                 <img 
-                  src="/bulk_vegetable_flakes_hero.png" 
+                  src="/bulk_vegetable_flakes_hero.webp" 
                   alt="Freeze Dried Vegetable Flakes" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
@@ -366,7 +371,7 @@ export default function BulkOrders() {
             <div>
               <div className="h-44 overflow-hidden relative">
                 <img 
-                  src="/bulk_edible_flowers_hero.png" 
+                  src="/bulk_edible_flowers_hero.webp" 
                   alt="Freeze Dried Edible Flowers" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
@@ -435,7 +440,9 @@ export default function BulkOrders() {
                 <div className="flex items-center justify-between mt-auto pt-3 border-t border-[#213B14]/5">
                   <div>
                     <span className="text-xs text-[#213B14]/50 font-bold">Price: </span>
-                    <span className="text-sm font-black text-[#213B14]">₹{product.price}</span>
+                    <span className="text-sm font-black text-[#213B14]">
+                      {Number(product.price) > 0 ? `₹${product.price}` : "On request"}
+                    </span>
                     {product.weight && <span className="text-[10px] text-[#213B14]/40 font-semibold block">{product.weight}</span>}
                   </div>
                   <button
@@ -482,7 +489,7 @@ export default function BulkOrders() {
             
             <div className="w-full md:w-44 h-32 rounded-2xl overflow-hidden bg-white border border-[#213B14]/5 shrink-0 shadow-sm">
               <img 
-                src="/bulk_why_choose.png" 
+                src="/bulk_why_choose.webp" 
                 alt="Fresh fruits and vegetables representing clean ingredients" 
                 className="w-full h-full object-cover" 
               />
@@ -695,6 +702,12 @@ export default function BulkOrders() {
                       <Phone className="w-4 h-4 text-[#3F622D]" />
                     </div>
                     <span>+91 7567350328</span>
+                  </a>
+                  <a href="tel:+918796686562" className="flex items-center gap-3 text-xs font-bold hover:text-[#3F622D] transition-colors">
+                    <div className="w-8 h-8 rounded-full border border-[#213B14]/15 flex items-center justify-center">
+                      <Phone className="w-4 h-4 text-[#3F622D]" />
+                    </div>
+                    <span>+91 8796686562</span>
                   </a>
                 </div>
               </div>

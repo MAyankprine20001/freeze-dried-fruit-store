@@ -9,10 +9,12 @@ import "./styles.css";
 import { AuthProvider } from "./src/context/AuthContext";
 import { CartProvider } from "./src/context/CartContext";
 import ProtectedRoute from "./src/components/ProtectedRoute";
+import RouteMeta from "./src/components/RouteMeta";
 
 import Home from "./src/pages/Home";
 import NotFound from "./src/pages/NotFound";
 import ContactWidget from "./src/components/ContactWidget";
+import OfferPopup from "./src/components/OfferPopup";
 
 const About = lazy(() => import("./src/pages/About"));
 const FruitPowderChunks = lazy(() => import("./src/pages/FruitPowderChunks"));
@@ -55,6 +57,7 @@ const AdminInventory = lazy(() => import("./src/pages/admin/AdminInventory"));
 const AdminCoupons = lazy(() => import("./src/pages/admin/AdminCoupons"));
 const AdminReviews = lazy(() => import("./src/pages/admin/AdminReviews"));
 const AdminSettings = lazy(() => import("./src/pages/admin/AdminSettings"));
+const AdminLegalPages = lazy(() => import("./src/pages/admin/AdminLegalPages"));
 
 import Loader from "./src/components/Loader";
 
@@ -64,6 +67,7 @@ const App: React.FC = () => {
       <AuthProvider>
         <CartProvider>
           <Router>
+            <RouteMeta />
             <Suspense fallback={<Loader size="fullscreen" />}>
               <Routes>
                 {/* Public Routes */}
@@ -129,6 +133,7 @@ const App: React.FC = () => {
                   <Route path="inventory" element={<AdminInventory />} />
                   <Route path="coupons" element={<AdminCoupons />} />
                   <Route path="reviews" element={<AdminReviews />} />
+                  <Route path="legal" element={<AdminLegalPages />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>
 
@@ -144,6 +149,7 @@ const App: React.FC = () => {
               pauseOnHover
             />
             <ContactWidget />
+            <OfferPopup />
           </Router>
         </CartProvider>
       </AuthProvider>

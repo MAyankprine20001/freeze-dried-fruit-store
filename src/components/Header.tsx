@@ -4,6 +4,8 @@ import { Menu, X, ShoppingBag, Search, User, Leaf, FlaskConical, Sparkles, Snowf
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
+import { useActiveOffer } from "../hooks/useActiveOffer";
+import OfferBanner from "./OfferBanner";
 
 const navLinks = [
  { label: "HOME", path: "/" },
@@ -30,6 +32,16 @@ export default function Header() {
  const navigate = useNavigate();
  const { user, logout, isAdmin } = useAuth();
  const { totalItems } = useCart();
+ const offer = useActiveOffer();
+ // Top bar alternates between the offer and the brand highlights (pauses while hovered/focused).
+ const [showOffer, setShowOffer] = useState(true);
+ const [barPaused, setBarPaused] = useState(false);
+
+ useEffect(() => {
+  if (!offer || barPaused) return;
+  const t = window.setTimeout(() => setShowOffer((s) => !s), showOffer ? 5000 : 8000);
+  return () => window.clearTimeout(t);
+ }, [offer, barPaused, showOffer]);
 
  useEffect(() => {
   const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -52,7 +64,34 @@ export default function Header() {
  return (
   <>
    {/* Announcement Bar */}
-   <div className="fixed top-0 left-0 right-0 z-50 bg-[#1C2A18] text-[#F3EFE0] h-9 px-3 sm:px-4 text-[10px] sm:text-xs font-semibold tracking-wider flex items-center overflow-hidden border-b border-white/5 select-none shadow-sm">
+   <div
+    className="fixed top-0 left-0 right-0 z-50 bg-[#1C2A18] text-[#F3EFE0] h-9 px-3 sm:px-4 text-[10px] sm:text-xs font-semibold tracking-wider flex items-center overflow-hidden border-b border-white/5 select-none shadow-sm"
+    onMouseEnter={() => setBarPaused(true)}
+    onMouseLeave={() => setBarPaused(false)}
+    onFocus={() => setBarPaused(true)}
+    onBlur={() => setBarPaused(false)}
+   >
+    <AnimatePresence mode="wait" initial={false}>
+     {offer && showOffer ? (
+      <motion.div
+       key="offer"
+       className="w-full"
+       initial={{ opacity: 0, y: 6 }}
+       animate={{ opacity: 1, y: 0 }}
+       exit={{ opacity: 0, y: -6 }}
+       transition={{ duration: 0.3 }}
+      >
+       <OfferBanner offer={offer} />
+      </motion.div>
+     ) : (
+     <motion.div
+      key="highlights"
+      className="w-full"
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -6 }}
+      transition={{ duration: 0.3 }}
+     >
      {/* Desktop: Centered List */}
      <div className="hidden md:flex justify-center items-center gap-6 w-full whitespace-nowrap">
        {announcementItems.map((item, idx) => (
@@ -82,6 +121,9 @@ export default function Header() {
          ))}
        </motion.div>
      </div>
+     </motion.div>
+     )}
+    </AnimatePresence>
    </div>
 
    <header
@@ -274,7 +316,7 @@ export default function Header() {
           className="group block text-center space-y-3 p-4 hover:bg-[#EEF4EC] rounded-xl transition-all border border-transparent hover:border-[#2B4C1F]/15 select-none"
         >
          <div className="w-full h-32 rounded-xl overflow-hidden bg-[#EEF4EC] relative flex items-center justify-center pointer-events-none">
-          <img src="/home_cripsey.png" alt="Crispy Bites" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
+          <img src="/images/products/crispy-bites-mixed-fruit-front-400.webp" alt="Crispy Bites Mixed Fruit pack" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
          </div>
          <div className="space-y-0.5">
            <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#2B4C1F]/60 block">Freeze Dried Snacks</span>
@@ -290,7 +332,8 @@ export default function Header() {
           className="group block text-center space-y-3 p-4 hover:bg-[#FCEAEB] rounded-xl transition-all border border-transparent hover:border-[#B82A5F]/15 select-none"
         >
          <div className="w-full h-32 rounded-xl overflow-hidden bg-[#FCEAEB] relative flex items-center justify-center pointer-events-none">
-          <img src="/home_slip_real.png" alt="SipReal" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
+          <img src="/home_slip_real.webp" alt="SipReal" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
+          <span className="absolute top-2 right-2 px-2.5 py-0.5 rounded-full bg-[#B82A5F] text-white text-[9px] font-bold uppercase tracking-widest shadow-sm">Coming Soon</span>
          </div>
          <div className="space-y-0.5">
            <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#B82A5F]/60 block">Smoothie Premix</span>
@@ -306,7 +349,7 @@ export default function Header() {
           className="group block text-center space-y-3 p-4 hover:bg-[#F5ECE6] rounded-xl transition-all border border-transparent hover:border-[#4A2D1B]/15 select-none"
         >
          <div className="w-full h-32 rounded-xl overflow-hidden bg-[#F5ECE6] relative flex items-center justify-center pointer-events-none">
-          <img src="/home_freexze_frozen.png" alt="Freeze Fusion" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
+          <img src="/home_freexze_frozen.webp" alt="Freeze Fusion" draggable={false} className="w-auto h-[90%] object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none" />
          </div>
          <div className="space-y-0.5">
            <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#4A2D1B]/60 block">Chocolates</span>
@@ -378,7 +421,7 @@ export default function Header() {
               className="flex items-center justify-between p-2 rounded-lg text-xs font-bold text-[#B82A5F] hover:bg-[#FCEAEB] transition-colors"
              >
               <span>SipReal</span>
-              <span className="text-[9px] font-semibold text-[#B82A5F]/60 uppercase">Smoothie</span>
+              <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#B82A5F] text-white text-[9px] font-bold uppercase tracking-widest">Coming Soon</span>
              </Link>
              <Link
               to="/chocolate"
