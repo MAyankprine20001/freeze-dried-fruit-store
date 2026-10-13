@@ -162,7 +162,7 @@ export default function Products() {
               btnBg: "bg-[#B82A5F]",
               textColor: "text-[#B82A5F]",
               btnText: "EXPLORE SIPREAL →",
-              image: "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400&q=80"
+              image: "/home_slip_real.png"
             },
             {
               id: "candies",
@@ -173,7 +173,7 @@ export default function Products() {
               btnBg: "bg-[#4A2D1B]",
               textColor: "text-[#4A2D1B]",
               btnText: "EXPLORE CHOCOLATES →",
-              image: "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400&q=80"
+              image: "/home_freexze_frozen.png"
             },
             {
               id: "fruits",
@@ -184,7 +184,7 @@ export default function Products() {
               btnBg: "bg-[#2B4C1F]",
               textColor: "text-[#2B4C1F]",
               btnText: "EXPLORE BITES →",
-              image: "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=400&q=80"
+              image: "/home_cripsey.png"
             }
           ].map((cat) => (
             <button
@@ -208,11 +208,12 @@ export default function Products() {
                 <p className="text-xs text-gray-600 leading-relaxed font-medium">
                   {cat.desc}
                 </p>
-                <div className="w-full h-36 rounded-xl overflow-hidden relative">
+                <div className="w-full h-36 rounded-xl overflow-hidden relative flex items-center justify-center">
                   <img
                     src={cat.image}
                     alt={cat.title}
-                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    className="h-[92%] w-auto object-contain transition-transform duration-500 hover:scale-105"
                   />
                 </div>
               </div>
