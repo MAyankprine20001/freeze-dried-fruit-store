@@ -23,6 +23,8 @@ import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import CartStepper from "../components/CartStepper";
+import PackChooser from "../components/PackChooser";
+import { usePack3Selection } from "../utils/packOf3";
 import ReviewSlider from "../components/ReviewSlider";
 import { TESTIMONIALS } from "../data/testimonials";
 
@@ -33,6 +35,7 @@ export default function Home() {
   const [bestSellerIndex, setBestSellerIndex] = useState(0);
   const { addToCart } = useCart();
   const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
+  const pack = usePack3Selection();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -63,6 +66,12 @@ export default function Home() {
   // Best Sellers Filter: select specific popular items from our seeded list
   const bestSellers = products.filter(p =>
     ["SipReal Royal Mango", "SipReal Berry Blast", "Freeze Fusion Banana Cocoa Dark", "Freeze Fusion Mango Silk White", "Crispy Bites Jamun"].includes(p.name)
+  );
+
+  // Mixed-flavour packs (e.g. Crispy Bites Mango + Jamun + Mixed Fruit): every active
+  // product the admin puts in the "Combos" category.
+  const packs = products.filter(
+    (p) => String(p.category).trim().toLowerCase() === "combos" && (p.status ?? "Active") === "Active"
   );
 
   const [itemsPerView, setItemsPerView] = useState(4);
@@ -350,13 +359,15 @@ export default function Home() {
                         </div>
                       </div>
 
+                      <div>
+                      <PackChooser product={product} pack3={pack.isPack3(product)} onChange={(on) => pack.setPack3(product, on)} color="#213B14" className="mt-4" />
                       <div className="mt-4 pt-4 border-t border-[#213B14]/5 flex items-center justify-between">
                         <span className="font-serif text-lg font-black text-[#213B14]">
-                          ₹{product.price}
+                          ₹{pack.itemFor(product).price}
                         </span>
-                        <CartStepper product={product} color="#213B14" textColor="#FAF7F2">
+                        <CartStepper product={pack.itemFor(product)} color="#213B14" textColor="#FAF7F2">
                           <button
-                            onClick={(e) => handleAddToCart(product, e)}
+                            onClick={(e) => handleAddToCart(pack.itemFor(product), e)}
                             className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
                               addedItems[product._id || product.id]
                                 ? "bg-green-700 text-white"
@@ -367,6 +378,7 @@ export default function Home() {
                           </button>
                         </CartStepper>
                       </div>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -375,6 +387,81 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      {/* Pack of 3 flavours (admin: category "Combos") */}
+      {packs.length > 0 && (
+        <section className="py-16 bg-white border-t border-[#213B14]/5">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-[#EEF4EC] text-[#2B4C1F] text-[10px] font-black uppercase tracking-[0.2em]">
+                Value Packs
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl font-black text-[#213B14] mt-4">Pack of 3 Flavours</h2>
+              <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-[#3F622D] mt-2">
+                Try every flavour together. Save more.
+              </p>
+            </div>
+
+            <div className={`grid grid-cols-1 sm:grid-cols-2 ${packs.length > 2 ? "lg:grid-cols-3 max-w-5xl" : "max-w-3xl"} gap-6 mx-auto`}>
+              {packs.map((product) => {
+                const id = product._id || product.id;
+                const save =
+                  Number(product.originalPrice) > Number(product.price)
+                    ? Number(product.originalPrice) - Number(product.price)
+                    : 0;
+                return (
+                  <div
+                    key={id}
+                    className="bg-[#FAF7F2] rounded-2xl p-4 border border-[#213B14]/5 flex flex-col justify-between hover:shadow-md transition-shadow"
+                  >
+                    <div className="space-y-4">
+                      <Link to={`/product/${id}`} className="block aspect-square w-full rounded-xl bg-white overflow-hidden relative">
+                        <span className="absolute top-3 left-3 z-10 px-3 py-1 rounded-full bg-[#213B14] text-white text-[10px] font-black uppercase tracking-widest">
+                          3 Flavours
+                        </span>
+                        {save > 0 && (
+                          <span className="absolute top-3 right-3 z-10 px-3 py-1 rounded-full bg-[#E4B34F] text-[#213B14] text-[10px] font-black uppercase tracking-wider">
+                            Save ₹{save}
+                          </span>
+                        )}
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          loading="lazy"
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        />
+                      </Link>
+                      <div>
+                        <Link to={`/product/${id}`}>
+                          <h3 className="font-serif text-lg font-bold text-[#213B14] hover:underline underline-offset-4">{product.name}</h3>
+                        </Link>
+                        {product.subtitle && <p className="text-xs text-gray-500 mt-1 line-clamp-2">{product.subtitle}</p>}
+                      </div>
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t border-[#213B14]/10 flex items-center justify-between">
+                      <div>
+                        <span className="font-serif text-xl font-black text-[#213B14]">₹{product.price}</span>
+                        {save > 0 && <span className="ml-2 text-sm text-gray-400 line-through">₹{product.originalPrice}</span>}
+                      </div>
+                      <CartStepper product={product} color="#213B14" textColor="#FAF7F2">
+                        <button
+                          onClick={(e) => handleAddToCart(product, e)}
+                          className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                            addedItems[id] ? "bg-green-700 text-white" : "bg-[#213B14] text-[#FAF7F2] hover:bg-[#3F622D]"
+                          }`}
+                        >
+                          {addedItems[id] ? "Added!" : "ADD TO CART"}
+                        </button>
+                      </CartStepper>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Why Choose The Dry Factory? Section */}
       <section className="py-20 bg-white border-t border-b border-[#213B14]/5">

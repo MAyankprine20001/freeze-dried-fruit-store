@@ -9,6 +9,8 @@ import { productApi } from "../api/product.api";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import CartStepper from "../components/CartStepper";
+import PackChooser from "../components/PackChooser";
+import { usePack3Selection } from "../utils/packOf3";
 import ReviewSlider from "../components/ReviewSlider";
 import { testimonialsFor } from "../data/testimonials";
 
@@ -39,6 +41,7 @@ export default function Chocolate() {
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
   const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
+  const pack = usePack3Selection();
 
   // Filter Drawer State
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -405,14 +408,16 @@ export default function Chocolate() {
                     </div>
                   </div>
 
-                  <div className="mt-8 pt-4 border-t border-[#213B14]/5 flex items-center justify-between">
+                  <div>
+                  <PackChooser product={product} pack3={pack.isPack3(product)} onChange={(on) => pack.setPack3(product, on)} color="#4A2D1B" className="mt-4" />
+                  <div className="mt-4 pt-4 border-t border-[#213B14]/5 flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] text-gray-400 block">{product.weight}</span>
-                      <span className="font-serif text-lg font-black text-[#213B14]">₹{product.price}</span>
+                      <span className="text-[10px] text-gray-400 block">{pack.itemFor(product).weight}</span>
+                      <span className="font-serif text-lg font-black text-[#213B14]">₹{pack.itemFor(product).price}</span>
                     </div>
-                    <CartStepper product={product} color="#4A2D1B" textColor="#FFFFFF">
+                    <CartStepper product={pack.itemFor(product)} color="#4A2D1B" textColor="#FFFFFF">
                       <button
-                        onClick={() => handleAddToCart(product)}
+                        onClick={() => handleAddToCart(pack.itemFor(product))}
                         className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
                           addedItems[product._id || product.id]
                             ? "bg-green-700 text-white shadow-none"
@@ -423,6 +428,7 @@ export default function Chocolate() {
                         {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
                       </button>
                     </CartStepper>
+                  </div>
                   </div>
                 </div>
               ))}

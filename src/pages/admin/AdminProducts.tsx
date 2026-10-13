@@ -69,6 +69,8 @@ const emptyForm = {
   description: "",
   price: 0,
   originalPrice: 0,
+  pack3Price: 0,
+  pack3OriginalPrice: 0,
   weight: "",
   stockCount: 0,
   stock: "In Stock" as string,
@@ -180,6 +182,8 @@ export default function AdminProducts() {
         description: product.description || "",
         price: product.price || 0,
         originalPrice: product.originalPrice || 0,
+        pack3Price: product.pack3Price || 0,
+        pack3OriginalPrice: product.pack3OriginalPrice || 0,
         weight: product.weight || "",
         stockCount: product.stockCount || 0,
         stock: product.stock || "In Stock",
@@ -237,6 +241,8 @@ export default function AdminProducts() {
         description: formData.description,
         price: formData.price,
         originalPrice: formData.originalPrice || undefined,
+        pack3Price: formData.pack3Price || 0,
+        pack3OriginalPrice: formData.pack3OriginalPrice || 0,
         weight: formData.weight,
         stockCount: formData.stockCount,
         stock: formData.stock,
@@ -867,6 +873,14 @@ export default function AdminProducts() {
                       <div className="space-y-1">
                         <label className={labelCls}>Original / MRP (₹)</label>
                         <input type="number" min={0} value={formData.originalPrice} onChange={(e) => setFormData({ ...formData, originalPrice: Number(e.target.value) })} className={inputCls} placeholder="0 = no strikethrough" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className={labelCls}>Pack of 3 Price (₹)</label>
+                        <input type="number" min={0} value={formData.pack3Price} onChange={(e) => setFormData({ ...formData, pack3Price: Number(e.target.value) })} className={inputCls} placeholder="0 = no Pack of 3 option" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className={labelCls}>Pack of 3 MRP (₹)</label>
+                        <input type="number" min={0} value={formData.pack3OriginalPrice} onChange={(e) => setFormData({ ...formData, pack3OriginalPrice: Number(e.target.value) })} className={inputCls} placeholder="0 = 3 × MRP" />
                       </div>
                       <div className="space-y-1">
                         <label className={labelCls}>Weight / Size</label>

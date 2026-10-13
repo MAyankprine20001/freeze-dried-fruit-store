@@ -9,6 +9,8 @@ import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import { productApi } from "../api/product.api";
 import CartStepper from "../components/CartStepper";
+import PackChooser from "../components/PackChooser";
+import { usePack3Selection } from "../utils/packOf3";
 
 export default function Products() {
   const [allProducts, setAllProducts] = useState<any[]>([]);
@@ -34,6 +36,7 @@ export default function Products() {
 
   const { addToCart } = useCart();
   const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
+  const pack = usePack3Selection();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -278,11 +281,13 @@ export default function Products() {
                   </div>
                 </div>
 
+                <div>
+                <PackChooser product={product} pack3={pack.isPack3(product)} onChange={(on) => pack.setPack3(product, on)} color="#213B14" className="mt-4" />
                 <div className="mt-4 pt-4 border-t border-[#213B14]/5 flex items-center justify-between">
-                  <span className="font-serif text-base font-black text-[#213B14]">₹{product.price}</span>
-                  <CartStepper product={product} color="#213B14" textColor="#FFFFFF">
+                  <span className="font-serif text-base font-black text-[#213B14]">₹{pack.itemFor(product).price}</span>
+                  <CartStepper product={pack.itemFor(product)} color="#213B14" textColor="#FFFFFF">
                     <button
-                      onClick={(e) => handleAddToCart(product, e)}
+                      onClick={(e) => handleAddToCart(pack.itemFor(product), e)}
                       className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${
                         addedItems[product._id || product.id]
                           ? "bg-green-700 text-white"
@@ -292,6 +297,7 @@ export default function Products() {
                       {addedItems[product._id || product.id] ? "Added!" : "ADD TO CART"}
                     </button>
                   </CartStepper>
+                </div>
                 </div>
               </div>
             ))}

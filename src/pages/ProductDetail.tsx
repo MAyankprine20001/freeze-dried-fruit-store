@@ -18,6 +18,8 @@ import { productRealImages, setPageMeta } from "../utils/seo";
 import ProductSchema from "../components/ProductSchema";
 import { trackViewItem } from "../utils/analytics";
 import CartStepper from "../components/CartStepper";
+import PackChooser from "../components/PackChooser";
+import { usePack3Selection } from "../utils/packOf3";
 
 // Map badge label → icon
 const BADGE_ICON_MAP: Record<string, React.ReactNode> = {
@@ -42,6 +44,7 @@ export default function ProductDetail() {
   const { addToCart } = useCart();
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
+  const pack = usePack3Selection();
   const [activeImg, setActiveImg] = useState(0);
 
   const [reviews, setReviews] = useState<any[]>([]);
@@ -219,9 +222,9 @@ export default function ProductDetail() {
 
               {/* Price */}
               <div className="flex items-end gap-3 mb-1">
-                <span className="text-3xl font-black text-[#213B14]">₹{product.price}</span>
-                {product.originalPrice > 0 && (
-                  <span className="text-lg text-[#213B14]/40 line-through mb-0.5">₹{product.originalPrice}</span>
+                <span className="text-3xl font-black text-[#213B14]">₹{pack.itemFor(product).price}</span>
+                {pack.itemFor(product).originalPrice > 0 && (
+                  <span className="text-lg text-[#213B14]/40 line-through mb-0.5">₹{pack.itemFor(product).originalPrice}</span>
                 )}
               </div>
               <p className="text-[#213B14]/50 text-xs mb-5">Inclusive of all taxes</p>
@@ -244,6 +247,9 @@ export default function ProductDetail() {
                 </div>
               )}
 
+              {/* Pack size */}
+              <PackChooser product={product} pack3={pack.isPack3(product)} onChange={(on) => pack.setPack3(product, on)} color="#213B14" className="mb-4 max-w-sm" />
+
               {/* CTA Row */}
               <div className="mb-5">
                 <div className="flex flex-col sm:flex-row gap-3 mb-3">
@@ -255,14 +261,14 @@ export default function ProductDetail() {
                   </div>
                   {/* Add to Cart */}
                   <button
-                    onClick={() => { for (let i = 0; i < quantity; i++) addToCart(product); toast.success(`${quantity} × ${product.name} added!`); }}
+                    onClick={() => { for (let i = 0; i < quantity; i++) addToCart(pack.itemFor(product)); toast.success(`${quantity} × ${pack.itemFor(product).name} added!`); }}
                     className="flex-1 h-14 border-2 border-[#213B14] text-[#213B14] bg-white font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-[#213B14] hover:text-white transition-all"
                   >
                     <ShoppingBag className="w-5 h-5" /> Add to Cart
                   </button>
                   {/* Buy Now */}
                   <button
-                    onClick={() => { for (let i = 0; i < quantity; i++) addToCart(product); navigate("/cart"); }}
+                    onClick={() => { for (let i = 0; i < quantity; i++) addToCart(pack.itemFor(product)); navigate("/cart"); }}
                     className="flex-1 h-14 bg-[#213B14] text-white font-bold rounded-xl hover:bg-[#3F622D] transition-all shadow-lg shadow-[#213B14]/15"
                   >
                     Buy it now
