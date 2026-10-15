@@ -28,6 +28,29 @@ import { getProductPrimaryImage } from "../../utils/productImage";
 
 const PAGE_LIMIT = 20;
 
+/** Categories offered in the product form and the Filters dropdown. */
+const CATEGORY_OPTIONS = [
+  "Smoothie Premix",
+  "Chocolates",
+  "Fruit Chunks",
+  "Fruit Powders",
+  "Combos",
+  "Gifts",
+  "Festive Specials",
+  "Corporate Gifting",
+  "Personalized",
+  "New Arrivals",
+];
+
+const ADMIN_SORTS = [
+  { value: "newest", label: "Newest first" },
+  { value: "oldest", label: "Oldest first" },
+  { value: "name-az", label: "Name, A-Z" },
+  { value: "name-za", label: "Name, Z-A" },
+  { value: "price-low", label: "Price, low to high" },
+  { value: "price-high", label: "Price, high to low" },
+];
+
 const NumberBadge = ({ n, color }: { n: number; color: string }) => (
   <span className={`w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 ${color}`}>{n}</span>
 );
@@ -97,6 +120,14 @@ export default function AdminProducts() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  // Catalog filters & sort (applied server-side)
+  const [filterCategory, setFilterCategory] = useState("All");
+  const [filterStock, setFilterStock] = useState("All");
+  const [filterStatus, setFilterStatus] = useState("All");
+  const [filterFlag, setFilterFlag] = useState("All");
+  const [sortKey, setSortKey] = useState("newest");
+  const [openMenu, setOpenMenu] = useState<"filters" | "sort" | null>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -116,7 +147,22 @@ export default function AdminProducts() {
 
   useEffect(() => {
     setPageCursors([null]);
-  }, [debouncedSearch]);
+  }, [debouncedSearch, filterCategory, filterStock, filterStatus, filterFlag, sortKey]);
+
+  // Close the Filters/Sort dropdown on outside click or Escape
+  useEffect(() => {
+    if (!openMenu) return;
+    const onDown = (e: MouseEvent) => {
+      if (toolbarRef.current && !toolbarRef.current.contains(e.target as Node)) setOpenMenu(null);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenMenu(null);
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [openMenu]);
 
   const loadFullCatalog = useCallback(async () => {
     try {
@@ -135,6 +181,11 @@ export default function AdminProducts() {
         limit: PAGE_LIMIT,
         cursor: cursor || undefined,
         search: debouncedSearch,
+        category: filterCategory === "All" ? undefined : filterCategory,
+        stock: filterStock === "All" ? undefined : filterStock,
+        status: filterStatus === "All" ? undefined : filterStatus,
+        flag: filterFlag === "All" ? undefined : filterFlag,
+        sort: sortKey,
       });
       if (res.success) {
         setCatalogItems(res.data);
@@ -147,7 +198,7 @@ export default function AdminProducts() {
     } finally {
       setLoading(false);
     }
-  }, [pageCursors, debouncedSearch]);
+  }, [pageCursors, debouncedSearch, filterCategory, filterStock, filterStatus, filterFlag, sortKey]);
 
   useEffect(() => {
     loadFullCatalog();
@@ -319,20 +370,26 @@ export default function AdminProducts() {
   const rangeStart = (pageCursors.length - 1) * PAGE_LIMIT + (catalogItems.length ? 1 : 0);
   const rangeEnd = (pageCursors.length - 1) * PAGE_LIMIT + catalogItems.length;
 
+  const activeFilterCount =
+    (filterCategory !== "All" ? 1 : 0) +
+    (filterStock !== "All" ? 1 : 0) +
+    (filterStatus !== "All" ? 1 : 0) +
+    (filterFlag !== "All" ? 1 : 0);
+
   const inputCls = "w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#D4A017]/20 focus:border-[#D4A017] outline-none";
   const labelCls = "text-xs font-bold text-gray-700";
 
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-xl font-bold text-gray-800">Products</h1>
           <p className="text-sm text-gray-500">Manage your product catalog and inventory.</p>
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 bg-[#111827] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#1f2937] transition-all shadow-sm"
+          className="flex items-center gap-2 bg-[#111827] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#1f2937] transition-all shadow-sm flex-shrink-0"
         >
           <Plus className="w-4 h-4" />
           Add Product
@@ -340,7 +397,7 @@ export default function AdminProducts() {
       </div>
 
       {/* Filters & Search */}
-      <div className="bg-white p-3 rounded-xl border border-gray-100 shadow-sm flex flex-col md:flex-row gap-3 items-center">
+      <div ref={toolbarRef} className="relative bg-white p-3 rounded-xl border border-gray-100 shadow-sm flex flex-col md:flex-row gap-3 items-center">
         <div className="relative flex-1 w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
@@ -351,13 +408,120 @@ export default function AdminProducts() {
             className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-[#D4A017]/20 focus:border-[#D4A017] transition-colors"
           />
         </div>
-        <div className="flex items-center gap-2 w-full md:w-auto flex-wrap">
-          <button className="flex items-center gap-1.5 px-3 py-2 border border-gray-200 bg-white text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors">
-            <Filter className="w-3.5 h-3.5" /> Filters
-          </button>
-          <button className="flex items-center gap-1.5 px-3 py-2 border border-gray-200 bg-white text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors">
-            <ArrowUpDown className="w-3.5 h-3.5" /> Sort
-          </button>
+        <div className="flex items-center gap-2 w-full md:w-auto">
+          {/* Filters dropdown */}
+          <div className="static md:relative flex-1 md:flex-none">
+            <button
+              type="button"
+              onClick={() => setOpenMenu(openMenu === "filters" ? null : "filters")}
+              aria-expanded={openMenu === "filters"}
+              className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-3 py-2 border border-gray-200 bg-white text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors"
+            >
+              <Filter className="w-3.5 h-3.5 flex-shrink-0" /> Filters
+              {activeFilterCount > 0 && (
+                <span className="w-5 h-5 rounded-full bg-[#D4A017] text-white text-[10px] flex items-center justify-center">
+                  {activeFilterCount}
+                </span>
+              )}
+            </button>
+
+            {openMenu === "filters" && (
+              <div className="absolute left-3 right-3 top-full -mt-1 md:left-auto md:right-0 md:mt-2 md:w-72 z-30 max-h-[70vh] overflow-y-auto bg-white rounded-xl border border-gray-200 shadow-xl p-4 space-y-3 text-left">
+                <div className="flex items-center justify-between">
+                  <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Filter products</p>
+                  <button type="button" onClick={() => setOpenMenu(null)} aria-label="Close filters" className="text-gray-400 hover:text-gray-700">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block text-xs font-bold text-gray-700">Category</label>
+                  <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)} className={inputCls}>
+                    <option value="All">All categories</option>
+                    {CATEGORY_OPTIONS.map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block text-xs font-bold text-gray-700">Stock</label>
+                  <select value={filterStock} onChange={(e) => setFilterStock(e.target.value)} className={inputCls}>
+                    <option value="All">Any stock</option>
+                    <option value="In Stock">In Stock</option>
+                    <option value="Low Stock">Low Stock</option>
+                    <option value="Out of Stock">Out of Stock</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block text-xs font-bold text-gray-700">Status</label>
+                  <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className={inputCls}>
+                    <option value="All">Any status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block text-xs font-bold text-gray-700">Type</label>
+                  <select value={filterFlag} onChange={(e) => setFilterFlag(e.target.value)} className={inputCls}>
+                    <option value="All">All products</option>
+                    <option value="featured">Featured only</option>
+                    <option value="bulk">Bulk only</option>
+                    <option value="gift">Gift only</option>
+                  </select>
+                </div>
+
+                {activeFilterCount > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFilterCategory("All");
+                      setFilterStock("All");
+                      setFilterStatus("All");
+                      setFilterFlag("All");
+                    }}
+                    className="w-full py-2 rounded-lg text-[11px] font-bold uppercase tracking-wider text-gray-600 border border-gray-200 hover:bg-gray-50"
+                  >
+                    Clear all
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Sort dropdown */}
+          <div className="static md:relative flex-1 md:flex-none">
+            <button
+              type="button"
+              onClick={() => setOpenMenu(openMenu === "sort" ? null : "sort")}
+              aria-expanded={openMenu === "sort"}
+              className="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-3 py-2 border border-gray-200 bg-white text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors whitespace-nowrap"
+            >
+              <ArrowUpDown className="w-3.5 h-3.5 flex-shrink-0" />
+              {ADMIN_SORTS.find((o) => o.value === sortKey)?.label ?? "Sort"}
+            </button>
+
+            {openMenu === "sort" && (
+              <div className="absolute left-3 right-3 top-full -mt-1 md:left-auto md:right-0 md:mt-2 md:w-56 z-30 max-h-[70vh] overflow-y-auto bg-white rounded-xl border border-gray-200 shadow-xl py-2 text-left">
+                {ADMIN_SORTS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => {
+                      setSortKey(opt.value);
+                      setOpenMenu(null);
+                    }}
+                    className="w-full flex items-center justify-between gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50"
+                  >
+                    {opt.label}
+                    {sortKey === opt.value && <CheckCircle className="w-4 h-4 text-[#D4A017] flex-shrink-0" />}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -816,16 +980,9 @@ export default function AdminProducts() {
                       <div className="space-y-1">
                         <label className={labelCls}>Category</label>
                         <select value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })} className={inputCls}>
-                          <option>Smoothie Premix</option>
-                          <option>Chocolates</option>
-                          <option>Fruit Chunks</option>
-                          <option>Fruit Powders</option>
-                          <option>Combos</option>
-                          <option>Gifts</option>
-                          <option>Festive Specials</option>
-                          <option>Corporate Gifting</option>
-                          <option>Personalized</option>
-                          <option>New Arrivals</option>
+                          {CATEGORY_OPTIONS.map((c) => (
+                            <option key={c}>{c}</option>
+                          ))}
                         </select>
                       </div>
                       <div className="space-y-1">

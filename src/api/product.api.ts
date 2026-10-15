@@ -35,12 +35,20 @@ export const productApi = {
    cursor?: string | null;
    search?: string;
    stock?: string;
+   category?: string;
+   status?: string;
+   flag?: string;
+   sort?: string;
  } = {}) => {
   const q = new URLSearchParams();
   q.set("limit", String(params.limit ?? 20));
   if (params.cursor) q.set("cursor", params.cursor);
   if (params.search) q.set("search", params.search);
   if (params.stock) q.set("stock", params.stock);
+  if (params.category) q.set("category", params.category);
+  if (params.status) q.set("status", params.status);
+  if (params.flag) q.set("flag", params.flag);
+  if (params.sort) q.set("sort", params.sort);
   const response = await axiosInstance.get<AdminCatalogResponse>(
     `/products/admin/catalog?${q.toString()}`
   );

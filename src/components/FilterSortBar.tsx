@@ -58,7 +58,7 @@ export default function FilterSortBar({
   const btn =
     "inline-flex items-center gap-2 px-5 py-2.5 border border-[#213B14]/15 rounded-full text-xs font-bold uppercase tracking-wider bg-white hover:bg-gray-50 transition-colors shadow-sm";
   const panel =
-    "absolute top-full mt-2 z-30 w-72 max-w-[85vw] bg-white rounded-2xl border border-[#213B14]/10 shadow-xl";
+    "absolute top-full mt-2 z-30 w-[min(18rem,calc(100vw-2rem))] max-h-[70vh] overflow-y-auto bg-white rounded-2xl border border-[#213B14]/10 shadow-xl";
 
   return (
     <div ref={ref} className={`relative flex justify-between items-center gap-3 ${className}`}>
