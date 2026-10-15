@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { productApi } from "../api/product.api";
 import CartStepper from "../components/CartStepper";
 import PackChooser from "../components/PackChooser";
+import FilterSortBar from "../components/FilterSortBar";
 import { usePack3Selection } from "../utils/packOf3";
 
 export default function Products() {
@@ -24,14 +25,12 @@ export default function Products() {
   }, [searchParams]);
 
   // Filter Drawer State
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [inStockOnly, setInStockOnly] = useState(false);
   const [outOfStockOnly, setOutOfStockOnly] = useState(false);
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
 
   // Sort Drawer State
-  const [isSortOpen, setIsSortOpen] = useState(false);
   const [sortOption, setSortOption] = useState("featured");
 
   const { addToCart } = useCart();
@@ -108,17 +107,7 @@ export default function Products() {
 
   useEffect(() => {
     applyFiltersAndSort();
-  }, [activeCategory, allProducts]);
-
-  const handleApplyFilter = () => {
-    applyFiltersAndSort();
-    setIsFilterOpen(false);
-  };
-
-  const handleApplySort = () => {
-    applyFiltersAndSort();
-    setIsSortOpen(false);
-  };
+  }, [activeCategory, allProducts, inStockOnly, outOfStockOnly, priceFrom, priceTo, sortOption]);
 
   const handleAddToCart = (product: any, e: React.MouseEvent) => {
     e.preventDefault();
@@ -236,23 +225,20 @@ export default function Products() {
         </section>
 
         {/* Filter and Sort Action Buttons Row */}
-        <div className="flex justify-between items-center max-w-5xl mx-auto pt-6 border-t border-[#213B14]/10">
-          <button
-            onClick={() => setIsFilterOpen(true)}
-            className="inline-flex items-center gap-2 px-5 py-3 border border-[#213B14]/15 rounded-full text-xs font-bold uppercase tracking-wider bg-white hover:bg-gray-50 transition-colors shadow-sm"
-          >
-            <SlidersHorizontal className="w-4 h-4 text-[#3F622D]" />
-            Filter
-          </button>
-
-          <button
-            onClick={() => setIsSortOpen(true)}
-            className="inline-flex items-center gap-2 px-5 py-3 border border-[#213B14]/15 rounded-full text-xs font-bold uppercase tracking-wider bg-white hover:bg-gray-50 transition-colors shadow-sm"
-          >
-            <ArrowUpDown className="w-4 h-4 text-[#3F622D]" />
-            Sort
-          </button>
-        </div>
+        <FilterSortBar
+            inStockOnly={inStockOnly}
+            setInStockOnly={setInStockOnly}
+            outOfStockOnly={outOfStockOnly}
+            setOutOfStockOnly={setOutOfStockOnly}
+            priceFrom={priceFrom}
+            setPriceFrom={setPriceFrom}
+            priceTo={priceTo}
+            setPriceTo={setPriceTo}
+            sortOption={sortOption}
+            setSortOption={setSortOption}
+            color="#3F622D"
+            className="max-w-5xl mx-auto pt-6 border-t border-[#213B14]/10"
+          />
 
         {/* Products Grid */}
         {loading ? (
@@ -304,173 +290,6 @@ export default function Products() {
           </div>
         )}
       </main>
-
-      {/* FILTER DRAWER PANEL */}
-      <AnimatePresence>
-        {isFilterOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsFilterOpen(false)}
-              className="fixed inset-0 bg-black z-50"
-            />
-            {/* Panel */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
-              className="fixed top-0 right-0 bottom-0 w-80 bg-white z-50 p-6 shadow-2xl flex flex-col justify-between"
-            >
-              <div className="space-y-6">
-                <div className="flex justify-between items-center border-b pb-4">
-                  <h3 className="font-serif text-xl font-black uppercase tracking-wider">FILTER</h3>
-                  <button onClick={() => setIsFilterOpen(false)} className="text-[#213B14]/65 hover:text-[#213B14]">
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-
-                {/* Availability Section */}
-                <div className="space-y-3">
-                  <h4 className="font-bold text-xs uppercase tracking-wider text-gray-500">Availability</h4>
-                  <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={inStockOnly}
-                        onChange={(e) => {
-                          setInStockOnly(e.target.checked);
-                          if (e.target.checked) setOutOfStockOnly(false);
-                        }}
-                        className="rounded border-[#213B14]/20 focus:ring-[#213B14]"
-                      />
-                      In stock
-                    </label>
-                    <label className="flex items-center gap-2 text-xs font-semibold text-gray-600 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={outOfStockOnly}
-                        onChange={(e) => {
-                          setOutOfStockOnly(e.target.checked);
-                          if (e.target.checked) setInStockOnly(false);
-                        }}
-                        className="rounded border-[#213B14]/20 focus:ring-[#213B14]"
-                      />
-                      Out of stock
-                    </label>
-                  </div>
-                </div>
-
-                {/* Price Section */}
-                <div className="space-y-3">
-                  <h4 className="font-bold text-xs uppercase tracking-wider text-gray-500">Price</h4>
-                  <div className="flex items-center gap-3">
-                    <div className="relative flex-1">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">₹</span>
-                      <input
-                        type="number"
-                        placeholder="From"
-                        value={priceFrom}
-                        onChange={(e) => setPriceFrom(e.target.value)}
-                        className="w-full pl-6 pr-3 py-2 bg-gray-50 border rounded-lg text-xs outline-none"
-                      />
-                    </div>
-                    <span className="text-gray-400">-</span>
-                    <div className="relative flex-1">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">₹</span>
-                      <input
-                        type="number"
-                        placeholder="To"
-                        value={priceTo}
-                        onChange={(e) => setPriceTo(e.target.value)}
-                        className="w-full pl-6 pr-3 py-2 bg-gray-50 border rounded-lg text-xs outline-none"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-6 border-t">
-                <button
-                  onClick={handleApplyFilter}
-                  className="w-full py-3 bg-[#213B14] hover:bg-[#3F622D] text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
-                >
-                  APPLY
-                </button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* SORT DRAWER PANEL */}
-      <AnimatePresence>
-        {isSortOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsSortOpen(false)}
-              className="fixed inset-0 bg-black z-50"
-            />
-            {/* Panel */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
-              className="fixed top-0 right-0 bottom-0 w-80 bg-white z-50 p-6 shadow-2xl flex flex-col justify-between"
-            >
-              <div className="space-y-6">
-                <div className="flex justify-between items-center border-b pb-4">
-                  <h3 className="font-serif text-xl font-black uppercase tracking-wider">SORT</h3>
-                  <button onClick={() => setIsSortOpen(false)} className="text-[#213B14]/65 hover:text-[#213B14]">
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-
-                <div className="space-y-3">
-                  {[
-                    { value: "featured", label: "Featured" },
-                    { value: "best-selling", label: "Best selling" },
-                    { value: "alpha-a-z", label: "Alphabetically, A-Z" },
-                    { value: "alpha-z-a", label: "Alphabetically, Z-A" },
-                    { value: "price-low-to-high", label: "Price, low to high" },
-                    { value: "price-high-to-low", label: "Price, high to low" },
-                    { value: "date-old-to-new", label: "Date, old to new" },
-                    { value: "date-new-to-old", label: "Date, new to old" }
-                  ].map((opt) => (
-                    <label key={opt.value} className="flex items-center gap-3 text-xs font-semibold text-gray-600 cursor-pointer py-1">
-                      <input
-                        type="radio"
-                        name="sort-opt"
-                        checked={sortOption === opt.value}
-                        onChange={() => setSortOption(opt.value)}
-                        className="text-[#213B14] focus:ring-[#213B14]"
-                      />
-                      {opt.label}
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-6 border-t">
-                <button
-                  onClick={handleApplySort}
-                  className="w-full py-3 bg-[#213B14] hover:bg-[#3F622D] text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
-                >
-                  APPLY
-                </button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
 
       <Footer />
     </div>
